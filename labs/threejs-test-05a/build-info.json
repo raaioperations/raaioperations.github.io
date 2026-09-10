@@ -1,11 +1,11 @@
 {
-  "build_id": "20260910224801",
+  "build_id": "20260910235940",
   "inherits": "Test 04 accepted baseline",
   "base_blob": "8ec3761c2cf4a507a072d79307220c0b315a8261",
   "three": "0.186.0",
   "pipeline": "esbuild-local-bundle",
   "runtime_external_dependencies": 0,
-  "focus": "jump tuning + explicit success proof",
+  "focus": "jump animation proof",
   "movement_parameters": [
     "walk speed LOCKED",
     "run speed LOCKED",
@@ -19,10 +19,10 @@
     "animation-speed matching PENDING"
   ],
   "proof_labels": [
-    "JUMP SUCCESS"
+    "JUMP ANIMATION SUCCESS"
   ],
   "combo_status": "deferred until movement acceptance",
-  "app_js_bytes": 663924,
+  "app_js_bytes": 665600,
   "soldier_glb_bytes": 2160468,
   "service_worker_cache": true,
   "target": "safari16.4+",
@@ -56,7 +56,8 @@
     "STOP SUCCESS",
     "WALK SUCCESS",
     "RUN SUCCESS",
-    "SPRINT SUCCESS"
+    "SPRINT SUCCESS",
+    "JUMP SUCCESS"
   ],
   "acceptance_checklist": {
     "walk": "ACCEPTED",
@@ -65,10 +66,11 @@
     "acceleration": "ACCEPTED",
     "braking": "ACCEPTED",
     "turn": "ACCEPTED",
-    "jump": "PENDING",
-    "gravity_landing": "PENDING",
+    "jump_launch_apex": "ACCEPTED",
+    "gravity_landing": "ACCEPTED",
     "camera_damping": "ACCEPTED",
-    "animation_speed_match": "PENDING"
+    "walk_run_sprint_animation_speed_match": "ACCEPTED",
+    "jump_animation": "PENDING"
   },
   "tuning_ui": {
     "slider_and_numeric_input": true,
@@ -79,11 +81,24 @@
       "acceleration",
       "braking",
       "turn",
+      "jump",
+      "gravity",
       "camera_damping"
     ],
-    "active_parameters": [
-      "jump",
-      "gravity"
-    ]
+    "active_parameters": []
+  },
+  "jump_animation": {
+    "status": "PENDING HUMAN ACCEPTANCE",
+    "implementation": "additive skeleton-keyframed clip on Soldier Mixamo rig",
+    "phases": [
+      "takeoff",
+      "rise/tuck",
+      "apex",
+      "fall/extend",
+      "landing"
+    ],
+    "physics_sync": "playback rate derives from theoretical airtime = 2 × jump velocity / gravity",
+    "root_motion": false,
+    "external_runtime_dependencies": 0
   }
 }
