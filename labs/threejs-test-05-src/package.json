@@ -1,0 +1,19 @@
+{
+  "name": "raai-threejs-test-05",
+  "private": true,
+  "version": "0.5.0",
+  "description": "Combat feel and reactive world proof built from accepted Test 04 production baseline",
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "build": "node build.mjs"
+  },
+  "dependencies": {
+    "three": "0.186.0"
+  },
+  "devDependencies": {
+    "esbuild": "0.25.9"
+  }
+}
