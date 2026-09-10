@@ -49,7 +49,8 @@ jobs:
           test -f labs/threejs-test-05a/build-info.json
           ! grep -Eqi 'cdn\.jsdelivr|unpkg\.com|esm\.sh|raw\.githubusercontent' labs/threejs-test-05a/index.html labs/threejs-test-05a/app.js labs/threejs-test-05a/sw.js
           grep -q 'Run' labs/threejs-test-05a/index.html
-          grep -q '19.8' labs/threejs-test-05a/index.html
+          grep -q '11.88' labs/threejs-test-05a/index.html
+          grep -q '1.8× Run' labs/threejs-test-05a/index.html
 
       - name: Publish built proof to main
         run: |
