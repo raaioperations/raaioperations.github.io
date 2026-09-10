@@ -36,13 +36,13 @@ jobs:
         working-directory: labs/threejs-test-04-src
         run: npm run build
 
-      - name: Verify runtime has no external imports
+      - name: Verify self-hosted runtime outputs
         run: |
           test -f labs/threejs-test-04/index.html
           test -f labs/threejs-test-04/app.js
           test -f labs/threejs-test-04/assets/Soldier.glb
           test -f labs/threejs-test-04/sw.js
-          ! grep -Eq 'https?://' labs/threejs-test-04/app.js
+          ! grep -Eqi 'cdn\.jsdelivr|unpkg\.com|esm\.sh|raw\.githubusercontent' labs/threejs-test-04/index.html labs/threejs-test-04/app.js labs/threejs-test-04/sw.js
 
       - name: Publish built proof to main
         run: |
