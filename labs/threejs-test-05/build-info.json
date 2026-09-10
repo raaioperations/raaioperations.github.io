@@ -1,0 +1,27 @@
+{
+  "build_id": "20260910205228",
+  "inherits": "Test 04 accepted baseline",
+  "base_blob": "8ec3761c2cf4a507a072d79307220c0b315a8261",
+  "three": "0.186.0",
+  "pipeline": "esbuild-local-bundle",
+  "runtime_external_dependencies": 0,
+  "combat": [
+    "lock-on",
+    "3-hit combo",
+    "dodge",
+    "block",
+    "parry",
+    "enemy telegraph",
+    "hitstop",
+    "camera impulse",
+    "directional hit reaction",
+    "particles",
+    "knockback",
+    "reactive props"
+  ],
+  "app_js_bytes": 674812,
+  "soldier_glb_bytes": 2160468,
+  "service_worker_cache": true,
+  "target": "safari16.4+",
+  "mobile_fps_target": 60
+}
