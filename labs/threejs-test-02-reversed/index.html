@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover" />
+<title>RAAI Three.js Test 02 — Reversed Camera</title>
+<style>
+html,body,iframe{margin:0;width:100%;height:100%;border:0;overflow:hidden;background:#0a0f12}iframe{display:block}
+</style>
+</head>
+<body>
+<iframe id="game" src="../threejs-test-02/" allow="fullscreen"></iframe>
+<script>
+const frame=document.getElementById('game');
+frame.addEventListener('load',()=>{
+  const w=frame.contentWindow,d=w.document,canvas=d.querySelector('canvas');
+  if(!canvas)return;
+  let active=false,guard=false,actualX=0,actualY=0,syntheticX=0,syntheticY=0,pid=0,ptype='touch';
+  d.addEventListener('pointerdown',e=>{
+    if(e.target!==canvas)return;
+    active=true;pid=e.pointerId;ptype=e.pointerType||'touch';
+    actualX=syntheticX=e.clientX;actualY=syntheticY=e.clientY;
+  },true);
+  d.addEventListener('pointermove',e=>{
+    if(guard||!active||e.pointerId!==pid||e.target!==canvas)return;
+    const dx=e.clientX-actualX,dy=e.clientY-actualY;
+    actualX=e.clientX;actualY=e.clientY;
+    syntheticX-=dx;syntheticY-=dy;
+    e.preventDefault();e.stopImmediatePropagation();
+    guard=true;
+    canvas.dispatchEvent(new PointerEvent('pointermove',{bubbles:true,cancelable:true,pointerId:pid,pointerType:ptype,clientX:syntheticX,clientY:syntheticY,buttons:e.buttons||1,pressure:e.pressure||.5,isPrimary:e.isPrimary}));
+    guard=false;
+  },true);
+  const end=e=>{if(e.pointerId===pid)active=false;};
+  d.addEventListener('pointerup',end,true);d.addEventListener('pointercancel',end,true);
+});
+</script>
+</body>
+</html>
