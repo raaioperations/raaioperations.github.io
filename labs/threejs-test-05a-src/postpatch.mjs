@@ -14,9 +14,9 @@ replace('id="sprintSpeed" type="range" min="5" max="12" step="0.1" value="8.7"',
 replace('id="accel" type="range" min="3" max="24" step="0.5" value="12"','id="accel" type="range" min="3" max="24" step="0.5" value="14"','accel default');
 replace('id="gravity" type="range" min="8" max="30" step="0.2" value="18.6"','id="gravity" type="range" min="8" max="30" step="0.2" value="23.8"','gravity default');
 
-// Keep base speed controls internal; expose Walk + Run and deterministic Sprint=3xRun.
-replace('<label><span>Walk <output id="walkV"></output></span><input id="walkSpeed"','<label class="internalSpeed"><span>Walk internal</span><input id="walkSpeed"','hide internal walk');
-replace('<label><span>Sprint <output id="sprintV"></output></span><input id="sprintSpeed"','<label class="internalSpeed"><span>Sprint internal</span><input id="sprintSpeed"','hide internal sprint');
+// Keep base speed controls internal; preserve their output bindings because the bundled runtime initializes them at boot.
+replace('<label><span>Walk <output id="walkV"></output></span><input id="walkSpeed"','<label class="internalSpeed"><span>Walk internal <output id="walkV"></output></span><input id="walkSpeed"','hide internal walk');
+replace('<label><span>Sprint <output id="sprintV"></output></span><input id="sprintSpeed"','<label class="internalSpeed"><span>Sprint internal <output id="sprintV"></output></span><input id="sprintSpeed"','hide internal sprint');
 replace('<label><span>Accel <output id="accelV"></output></span>',
 '<label><span>Walk <output id="walkTuneV">2.5</output></span><input id="walkTune" type="range" min="1.5" max="5" step="0.1" value="2.5"></label><label><span>Run <output id="runTuneV">6.6</output></span><input id="runTune" type="range" min="3" max="10" step="0.1" value="6.6"></label><label><span>Sprint <output id="sprintDerivedV">19.8</output></span><b style="font-size:9px;opacity:.72">3× Run</b></label><label><span>Accel <output id="accelV"></output></span>',
 'add visible walk run sprint');
