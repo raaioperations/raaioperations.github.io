@@ -32,13 +32,21 @@ jobs:
         working-directory: labs/threejs-test-05a-src
         run: npm install --no-audit --no-fund --no-package-lock
 
+      - name: Apply synchronized jump animation source patch
+        working-directory: labs/threejs-test-05a-src
+        run: node jump-prebuild.mjs
+
       - name: Build movement tuning proof
         working-directory: labs/threejs-test-05a-src
         run: npm run build
 
-      - name: Apply tuned walk run sprint patch
+      - name: Apply accepted movement baseline
         working-directory: labs/threejs-test-05a-src
         run: node postpatch.mjs
+
+      - name: Make jump animation the active proof
+        working-directory: labs/threejs-test-05a-src
+        run: node jump-postpatch.mjs
 
       - name: Verify production outputs
         run: |
@@ -51,6 +59,9 @@ jobs:
           grep -q 'Run' labs/threejs-test-05a/index.html
           grep -q '11.88' labs/threejs-test-05a/index.html
           grep -q '1.8× Run' labs/threejs-test-05a/index.html
+          grep -q 'JUMP ANIMATION' labs/threejs-test-05a/index.html
+          grep -q 'JumpProcedural' labs/threejs-test-05a/app.js
+          grep -q 'JUMP ANIMATION SUCCESS' labs/threejs-test-05a/app.js
 
       - name: Publish built proof to main
         run: |
@@ -61,5 +72,5 @@ jobs:
             echo 'No output changes.'
             exit 0
           fi
-          git commit -m 'Build Three.js Test 05A tuned movement proof'
+          git commit -m 'Build Three.js Test 05A jump animation proof'
           git push origin HEAD:main
