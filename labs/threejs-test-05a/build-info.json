@@ -1,5 +1,5 @@
 {
-  "build_id": "20260910221509",
+  "build_id": "20260910224043",
   "inherits": "Test 04 accepted baseline",
   "base_blob": "8ec3761c2cf4a507a072d79307220c0b315a8261",
   "three": "0.186.0",
@@ -9,7 +9,7 @@
   "movement_parameters": [
     "walk speed",
     "run speed",
-    "sprint = 3x run",
+    "sprint = 1.8x run",
     "acceleration",
     "braking",
     "turn response",
@@ -33,7 +33,7 @@
   "tuned_defaults": {
     "walk_mps": 2.5,
     "run_mps": 6.6,
-    "sprint_mps": 19.8,
+    "sprint_mps": 11.88,
     "accel": 14,
     "brake": 10,
     "turn": 14,
@@ -46,7 +46,7 @@
     "mode_toggle": "R/interface button cycles WALK → RUN → SPRINT → WALK",
     "run": "one toggle action",
     "sprint": "one toggle action",
-    "sprint_relation": "3x Run"
+    "sprint_relation": "1.8x Run"
   },
   "suppressed_proof_labels": [
     "STOP SUCCESS"
