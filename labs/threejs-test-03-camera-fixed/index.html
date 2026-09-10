@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover" />
+<title>RAAI Three.js Test 03 — Camera Fixed</title>
+<style>
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#0a0f12}iframe{position:fixed;inset:0;width:100%;height:100%;border:0;background:#0a0f12}
+</style>
+</head>
+<body>
+<iframe id="game" src="/labs/threejs-test-03/?camera_lr=reverse_v2" allow="fullscreen"></iframe>
+<script>
+const frame=document.getElementById('game');
+frame.addEventListener('load',()=>{
+  try{
+    const doc=frame.contentDocument;
+    const canvas=doc.querySelector('canvas');
+    if(!canvas)return;
+    let active=false,lastRealX=0,fakeX=0,activePointer=null;
+    canvas.addEventListener('pointerdown',e=>{
+      active=true;activePointer=e.pointerId;lastRealX=e.clientX;fakeX=e.clientX;
+    },true);
+    canvas.addEventListener('pointermove',e=>{
+      if(!active||e.pointerId!==activePointer||e.__raaiMirrored)return;
+      const dx=e.clientX-lastRealX;
+      lastRealX=e.clientX;
+      fakeX-=dx;
+      e.stopImmediatePropagation();
+      const mirrored=new PointerEvent('pointermove',{
+        bubbles:true,cancelable:true,pointerId:e.pointerId,pointerType:e.pointerType,
+        isPrimary:e.isPrimary,clientX:fakeX,clientY:e.clientY,screenX:e.screenX,screenY:e.screenY,
+        button:e.button,buttons:e.buttons,pressure:e.pressure,width:e.width,height:e.height
+      });
+      Object.defineProperty(mirrored,'__raaiMirrored',{value:true});
+      canvas.dispatchEvent(mirrored);
+    },true);
+    const stop=e=>{if(e.pointerId===activePointer){active=false;activePointer=null;}};
+    canvas.addEventListener('pointerup',stop,true);
+    canvas.addEventListener('pointercancel',stop,true);
+  }catch(err){console.warn('Camera direction patch unavailable',err);}
+});
+</script>
+</body>
+</html>
