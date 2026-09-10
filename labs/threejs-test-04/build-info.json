@@ -1,0 +1,10 @@
+{
+  "build_id": "20260910202056",
+  "three": "0.186.0",
+  "pipeline": "esbuild-local-bundle",
+  "runtime_external_dependencies": 0,
+  "app_js_bytes": 662667,
+  "soldier_glb_bytes": 2160468,
+  "service_worker_cache": true,
+  "target": "safari16.4+"
+}
