@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" />
+<title>RAAI Three.js Presentation Test 01</title>
+<style>
+  html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#0b1014;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+  canvas{display:block;width:100%;height:100%;touch-action:none}
+  #hud{position:fixed;inset:0;pointer-events:none;color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.65)}
+  .panel{position:absolute;top:16px;left:16px;max-width:420px;padding:14px 16px;border:1px solid rgba(255,255,255,.16);border-radius:14px;background:rgba(10,15,19,.58);backdrop-filter:blur(12px)}
+  .title{font-size:14px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}.sub{font-size:12px;line-height:1.45;opacity:.84;margin-top:7px}
+  .metrics{display:grid;grid-template-columns:auto auto;gap:4px 14px;margin-top:10px;font:12px/1.35 ui-monospace,SFMono-Regular,Menlo,monospace}.metrics b{text-align:right}
+  #reticle{position:absolute;left:50%;top:50%;width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.55);transform:translate(-50%,-50%)}
+  #testbar{position:absolute;right:16px;top:16px;width:260px;padding:12px 14px;border-radius:14px;background:rgba(10,15,19,.58);border:1px solid rgba(255,255,255,.16);backdrop-filter:blur(12px);pointer-events:auto}
+  #testbar label{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:12px;margin:8px 0}#testbar input[type=range]{width:135px}
+  #testbar button{width:100%;margin-top:7px;padding:8px 10px;border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.08);color:#fff;border-radius:9px;cursor:pointer}
+  #testbar button:hover{background:rgba(255,255,255,.14)}
+  #grade{position:absolute;left:50%;bottom:18px;transform:translateX(-50%);padding:9px 13px;border-radius:999px;background:rgba(10,15,19,.58);border:1px solid rgba(255,255,255,.16);font-size:12px;letter-spacing:.02em}
+  #error{display:none;position:fixed;inset:0;z-index:5;background:#111;color:#fff;padding:32px;font:14px/1.6 ui-monospace,monospace;white-space:pre-wrap}
+  #mobileControls{display:none;position:fixed;inset:0;z-index:4;pointer-events:none}
+  #stickBase{position:absolute;left:22px;bottom:28px;width:118px;height:118px;border-radius:50%;border:1px solid rgba(255,255,255,.25);background:rgba(5,10,14,.28);backdrop-filter:blur(8px);pointer-events:auto;touch-action:none}
+  #stickKnob{position:absolute;left:39px;top:39px;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.58);box-shadow:0 3px 14px rgba(0,0,0,.3);transform:translate(0,0)}
+  #sprintBtn{position:absolute;right:24px;bottom:34px;width:86px;height:86px;border-radius:50%;border:1px solid rgba(255,255,255,.28);background:rgba(12,20,26,.45);color:#fff;font-weight:800;letter-spacing:.04em;pointer-events:auto;touch-action:none}
+  #mobileHint{position:absolute;left:50%;bottom:18px;transform:translateX(-50%);font-size:11px;opacity:.75;white-space:nowrap}
+  @media (pointer:coarse), (max-width:900px){
+    #mobileControls{display:block}
+    .panel{top:10px;left:10px;max-width:calc(100vw - 20px);padding:10px 12px}
+    .panel .sub{display:none}.metrics{font-size:10px;margin-top:6px}
+    #testbar{right:10px;top:126px;width:210px;padding:9px 10px;max-height:48vh;overflow:auto}
+    #testbar label{font-size:10px;margin:6px 0}#testbar input[type=range]{width:108px}
+    #grade{display:none}
+    #reticle{opacity:.35}
+  }
+</style>
+</head>
+<body>
+<div id="hud">
+  <div class="panel">
+    <div class="title">RAAI Presentation Proof 01 — Stylized Physical Realism</div>
+    <div class="sub">WASD move · Shift sprint · drag mouse to orbit · wheel zoom. Judge the scene while moving, not from a still frame.</div>
+    <div class="metrics"><span>FPS</span><b id="fps">—</b><span>Draw calls</span><b id="calls">—</b><span>Triangles</span><b id="tris">—</b><span>Camera distance</span><b id="camd">—</b></div>
+  </div>
+  <div id="reticle"></div>
+  <div id="testbar">
+    <div class="title">Live Variables</div>
+    <label><span>Time of day</span><input id="tod" type="range" min="6" max="20" step="0.1" value="10.5"></label>
+    <label><span>Atmosphere</span><input id="fog" type="range" min="0" max="1" step="0.01" value="0.62"></label>
+    <label><span>Wind</span><input id="wind" type="range" min="0" max="1" step="0.01" value="0.48"></label>
+    <label><span>Camera damping</span><input id="damp" type="range" min="0.02" max="0.22" step="0.01" value="0.09"></label>
+    <button id="toggleMotion">Ambient motion: ON</button>
+    <button id="toggleShadows">Dynamic shadows: ON</button>
+  </div>
+  <div id="grade">Test target: coherent place + physical substance + atmospheric depth + motion + responsive camera</div>
+</div>
+<div id="mobileControls">
+  <div id="stickBase"><div id="stickKnob"></div></div>
+  <button id="sprintBtn">SPRINT</button>
+  <div id="mobileHint">Left thumb move · drag world to look · Sprint</div>
+</div>
+<div id="error"></div>
+<script type="module">
+import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.186.0/build/three.module.js';
+
+const errorBox = document.getElementById('error');
+window.addEventListener('error', e => { errorBox.style.display='block'; errorBox.textContent='Runtime error:\n'+e.message; });
+
+const scene = new THREE.Scene();
+scene.fog = new THREE.FogExp2(0xbfd3d7, 0.0105);
+
+const camera = new THREE.PerspectiveCamera(55, innerWidth/innerHeight, 0.1, 500);
+camera.position.set(0,8,13);
+
+const renderer = new THREE.WebGLRenderer({antialias:true,powerPreference:'high-performance'});
+renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+renderer.setSize(innerWidth,innerHeight);
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1.05;
+document.body.prepend(renderer.domElement);
+
+const hemi = new THREE.HemisphereLight(0xc9e9ff,0x536048,1.9);
+scene.add(hemi);
+const sun = new THREE.DirectionalLight(0xfff3d4,4.2);
+sun.position.set(-40,60,30); sun.castShadow=true;
+sun.shadow.mapSize.set(2048,2048); sun.shadow.camera.left=-55; sun.shadow.camera.right=55; sun.shadow.camera.top=55; sun.shadow.camera.bottom=-55; sun.shadow.camera.near=1; sun.shadow.camera.far=160; sun.shadow.bias=-0.00025;
+scene.add(sun);
+
+const skyMat = new THREE.ShaderMaterial({side:THREE.BackSide, uniforms:{top:{value:new THREE.Color(0x75bfe8)},bottom:{value:new THREE.Color(0xe8e0c4)},offset:{value:18},exponent:{value:0.65}},vertexShader:`varying vec3 vWorld; void main(){vec4 w=modelMatrix*vec4(position,1.0);vWorld=w.xyz;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0);}`,fragmentShader:`uniform vec3 top;uniform vec3 bottom;uniform float offset;uniform float exponent;varying vec3 vWorld;void main(){float h=normalize(vWorld+vec3(0.0,offset,0.0)).y;float f=pow(max(h,0.0),exponent);gl_FragColor=vec4(mix(bottom,top,f),1.0);}`});
+scene.add(new THREE.Mesh(new THREE.SphereGeometry(250,32,16),skyMat));
+
+function heightAt(x,z){ return Math.sin(x*.075)*1.8 + Math.cos(z*.061)*1.45 + Math.sin((x+z)*.035)*1.1 - Math.exp(-((x+16)**2+(z-4)**2)/430)*4.2; }
+const terrainGeo = new THREE.PlaneGeometry(150,150,120,120); terrainGeo.rotateX(-Math.PI/2);
+const pos=terrainGeo.attributes.position;
+for(let i=0;i<pos.count;i++){ const x=pos.getX(i), z=pos.getZ(i); pos.setY(i,heightAt(x,z)); }
+terrainGeo.computeVertexNormals();
+const terrainMat = new THREE.MeshStandardMaterial({color:0x6f8d52,roughness:.93,metalness:0});
+const terrain=new THREE.Mesh(terrainGeo,terrainMat); terrain.receiveShadow=true; scene.add(terrain);
+
+const path=new THREE.Mesh(new THREE.PlaneGeometry(7,95,1,24),new THREE.MeshStandardMaterial({color:0x9b805d,roughness:1}));
+path.geometry.rotateX(-Math.PI/2); path.position.set(0,0.08,-7); path.receiveShadow=true; scene.add(path);
+for(let i=0;i<path.geometry.attributes.position.count;i++){let a=path.geometry.attributes.position; const x=a.getX(i), z=a.getZ(i)-7; a.setY(i,heightAt(x,z)+.10);}
+path.geometry.computeVertexNormals();
+
+const waterGeo=new THREE.PlaneGeometry(34,42,40,40); waterGeo.rotateX(-Math.PI/2);
+const waterMat=new THREE.MeshPhysicalMaterial({color:0x5babc1,roughness:.18,metalness:.05,transmission:.05,transparent:true,opacity:.88,clearcoat:1,clearcoatRoughness:.15});
+const water=new THREE.Mesh(waterGeo,waterMat); water.position.set(-18,-1.95,8); water.receiveShadow=true; scene.add(water);
+
+const trunkMat=new THREE.MeshStandardMaterial({color:0x65462f,roughness:.95});
+const leafMat=new THREE.MeshStandardMaterial({color:0x315f3b,roughness:.86});
+const leafMat2=new THREE.MeshStandardMaterial({color:0x477949,roughness:.86});
+const treeGroups=[];
+function addTree(x,z,s=1){const y=heightAt(x,z); if(y<-1.4)return; const g=new THREE.Group(); g.position.set(x,y,z); const trunk=new THREE.Mesh(new THREE.CylinderGeometry(.35*s,.52*s,5.1*s,7),trunkMat); trunk.position.y=2.55*s; trunk.castShadow=true; g.add(trunk); for(let j=0;j<3;j++){ const crown=new THREE.Mesh(new THREE.IcosahedronGeometry((2.2-j*.28)*s,1),j%2?leafMat2:leafMat); crown.scale.y=.9; crown.position.set((j-1)*.38*s,(5.0+j*.75)*s,(j%2?.3:-.25)*s); crown.castShadow=true; g.add(crown);} g.userData.phase=Math.random()*6.28; scene.add(g);treeGroups.push(g);}
+for(let i=0;i<85;i++){const a=Math.random()*Math.PI*2,r=18+Math.random()*55,x=Math.cos(a)*r,z=Math.sin(a)*r;if(Math.abs(x)<5&&z<42&&z>-55)continue;addTree(x,z,.65+Math.random()*.75);}
+
+const grassGeo=new THREE.ConeGeometry(.12,.85,3); grassGeo.translate(0,.42,0);
+const grassMat=new THREE.MeshStandardMaterial({color:0x86a85c,roughness:1});
+const grass=new THREE.InstancedMesh(grassGeo,grassMat,1100); grass.castShadow=false; grass.receiveShadow=true;
+const dummy=new THREE.Object3D(); let gi=0;
+while(gi<1100){const x=(Math.random()-.5)*135,z=(Math.random()-.5)*135,y=heightAt(x,z);if(y<-1.6||Math.abs(x)<4.2&&z>-53&&z<41)continue;dummy.position.set(x,y,z);const s=.55+Math.random()*1.2;dummy.scale.set(s*.65,s,s*.65);dummy.rotation.y=Math.random()*6.28;dummy.updateMatrix();grass.setMatrixAt(gi++,dummy.matrix);} scene.add(grass);
+
+const stoneMat=new THREE.MeshStandardMaterial({color:0x8c8b7c,roughness:.9});
+function stone(x,y,z,sx,sy,sz,ry=0){const m=new THREE.Mesh(new THREE.BoxGeometry(sx,sy,sz),stoneMat);m.position.set(x,y,z);m.rotation.y=ry;m.castShadow=m.receiveShadow=true;scene.add(m);return m;}
+stone(18,heightAt(18,-18)+3.2,-18,8,6.4,2.2,.18); stone(24,heightAt(24,-18)+4.5,-18,2.1,9,2.1,.18); stone(12,heightAt(12,-18)+4.5,-18,2.1,9,2.1,.18);
+for(let k=0;k<6;k++)stone(-50+k*7,heightAt(-50+k*7,-52)+1.6,-52,5,3.2,4,(k%2-.5)*.16);
+
+const player=new THREE.Group(); scene.add(player);
+const tunic=new THREE.MeshStandardMaterial({color:0x294e74,roughness:.72}); const skin=new THREE.MeshStandardMaterial({color:0xd7a176,roughness:.78}); const dark=new THREE.MeshStandardMaterial({color:0x302b29,roughness:.9});
+const body=new THREE.Mesh(new THREE.CapsuleGeometry(.48,1.05,5,10),tunic);body.position.y=1.25;body.castShadow=true;player.add(body);
+const head=new THREE.Mesh(new THREE.SphereGeometry(.43,16,12),skin);head.position.y=2.25;head.castShadow=true;player.add(head);
+const hair=new THREE.Mesh(new THREE.IcosahedronGeometry(.47,1),dark);hair.scale.set(1.02,.65,1.06);hair.position.set(0,2.47,-.05);hair.castShadow=true;player.add(hair);
+for(const sx of [-1,1]){const leg=new THREE.Mesh(new THREE.CapsuleGeometry(.14,.55,4,8),dark);leg.position.set(.2*sx,.45,0);leg.castShadow=true;player.add(leg);}
+player.position.set(0,heightAt(0,8)+.05,8);
+
+const moteGeo=new THREE.BufferGeometry();const motePos=new Float32Array(180*3);for(let i=0;i<180;i++){motePos[i*3]=(Math.random()-.5)*90;motePos[i*3+1]=1+Math.random()*12;motePos[i*3+2]=(Math.random()-.5)*90;}moteGeo.setAttribute('position',new THREE.BufferAttribute(motePos,3));
+const motes=new THREE.Points(moteGeo,new THREE.PointsMaterial({color:0xfff0a7,size:.07,transparent:true,opacity:.48,depthWrite:false}));scene.add(motes);
+
+let yaw=0,pitch=.36,camDist=10.5,drag=false,lastX=0,lastY=0,motion=true;
+const keys={};
+const touchMove=new THREE.Vector2(); let touchSprint=false;
+addEventListener('keydown',e=>keys[e.code]=true);addEventListener('keyup',e=>keys[e.code]=false);
+renderer.domElement.addEventListener('pointerdown',e=>{if(e.pointerType==='touch' && e.clientX<innerWidth*.38 && e.clientY>innerHeight*.55)return;drag=true;lastX=e.clientX;lastY=e.clientY;renderer.domElement.setPointerCapture(e.pointerId)});
+renderer.domElement.addEventListener('pointerup',()=>drag=false);
+renderer.domElement.addEventListener('pointermove',e=>{if(!drag)return;yaw-=(e.clientX-lastX)*.006;pitch=Math.max(-.05,Math.min(1.05,pitch-(e.clientY-lastY)*.005));lastX=e.clientX;lastY=e.clientY;});
+renderer.domElement.addEventListener('wheel',e=>{camDist=Math.max(4.5,Math.min(18,camDist+e.deltaY*.008));},{passive:true});
+
+const stickBase=document.getElementById('stickBase'), stickKnob=document.getElementById('stickKnob'), sprintBtn=document.getElementById('sprintBtn');
+let stickPointer=null;
+function updateStick(e){
+  const r=stickBase.getBoundingClientRect(), cx=r.left+r.width/2, cy=r.top+r.height/2;
+  let dx=e.clientX-cx, dy=e.clientY-cy; const max=r.width*.34, len=Math.hypot(dx,dy)||1, scale=Math.min(1,max/len); dx*=scale;dy*=scale;
+  stickKnob.style.transform=`translate(${dx}px,${dy}px)`; touchMove.set(dx/max,-dy/max);
+}
+stickBase.addEventListener('pointerdown',e=>{e.preventDefault();stickPointer=e.pointerId;stickBase.setPointerCapture(e.pointerId);updateStick(e)});
+stickBase.addEventListener('pointermove',e=>{if(e.pointerId===stickPointer){e.preventDefault();updateStick(e)}});
+function releaseStick(e){if(stickPointer===null||e.pointerId===stickPointer){stickPointer=null;touchMove.set(0,0);stickKnob.style.transform='translate(0,0)'}}
+stickBase.addEventListener('pointerup',releaseStick);stickBase.addEventListener('pointercancel',releaseStick);
+sprintBtn.addEventListener('pointerdown',e=>{e.preventDefault();touchSprint=true;sprintBtn.style.transform='scale(.94)'});
+for(const ev of ['pointerup','pointercancel','pointerleave']) sprintBtn.addEventListener(ev,()=>{touchSprint=false;sprintBtn.style.transform='scale(1)'});
+
+const tod=document.getElementById('tod'),fogSlider=document.getElementById('fog'),windSlider=document.getElementById('wind'),dampSlider=document.getElementById('damp');
+document.getElementById('toggleMotion').onclick=e=>{motion=!motion;e.target.textContent='Ambient motion: '+(motion?'ON':'OFF')};
+document.getElementById('toggleShadows').onclick=e=>{renderer.shadowMap.enabled=!renderer.shadowMap.enabled;e.target.textContent='Dynamic shadows: '+(renderer.shadowMap.enabled?'ON':'OFF')};
+
+function updateEnvironment(){
+ const hour=+tod.value, t=(hour-6)/14, ang=(t*Math.PI*.92)+.08; const elev=Math.sin(ang); const az=-1.55+t*1.45;
+ sun.position.set(Math.cos(az)*68,elev*82,Math.sin(az)*68); sun.intensity=.7+elev*4.1;
+ const warm=Math.max(0,1-Math.min(1,Math.abs(hour-13)/5)); sun.color.setHSL(.105,.55,.79-.07*(1-warm));
+ hemi.intensity=.65+elev*1.5;
+ const dayTop=new THREE.Color(0x6db9e4), duskTop=new THREE.Color(0x567aab), dayBottom=new THREE.Color(0xe9e3c8), duskBottom=new THREE.Color(0xe8aa79); const edge=Math.min(1,Math.abs(hour-13)/7);
+ skyMat.uniforms.top.value.copy(dayTop).lerp(duskTop,edge*.72); skyMat.uniforms.bottom.value.copy(dayBottom).lerp(duskBottom,edge*.82);
+ scene.fog.density=.0035+(+fogSlider.value)*.012;
+ scene.fog.color.copy(skyMat.uniforms.bottom.value).lerp(skyMat.uniforms.top.value,.32);
+ renderer.toneMappingExposure=.74+elev*.44;
+}
+
+const vel=new THREE.Vector3(),move=new THREE.Vector3(),clock=new THREE.Clock();let frames=0,acc=0,lastFps=0;
+function animate(){requestAnimationFrame(animate);const dt=Math.min(.033,clock.getDelta()),time=clock.elapsedTime;updateEnvironment();
+ const forward=new THREE.Vector3(Math.sin(yaw),0,-Math.cos(yaw)); const right=new THREE.Vector3(Math.cos(yaw),0,Math.sin(yaw)); move.set(0,0,0); if(keys.KeyW)move.add(forward);if(keys.KeyS)move.sub(forward);if(keys.KeyD)move.add(right);if(keys.KeyA)move.sub(right);if(touchMove.lengthSq()>.002){move.addScaledVector(forward,touchMove.y);move.addScaledVector(right,touchMove.x);}if(move.lengthSq()>0){move.normalize(); const speed=(keys.ShiftLeft||touchSprint)?8.6:4.8;vel.lerp(move.multiplyScalar(speed),1-Math.exp(-10*dt));player.rotation.y=Math.atan2(vel.x,vel.z)+Math.PI;}else vel.multiplyScalar(Math.exp(-8*dt));
+ player.position.addScaledVector(vel,dt);player.position.x=THREE.MathUtils.clamp(player.position.x,-68,68);player.position.z=THREE.MathUtils.clamp(player.position.z,-68,68);player.position.y=heightAt(player.position.x,player.position.z)+.05;
+ const moving=vel.length();body.rotation.z=Math.sin(time*10)*.025*Math.min(1,moving/3); head.position.y=2.25+Math.abs(Math.sin(time*(moving>1?10:2)))*.035;
+ const target=player.position.clone().add(new THREE.Vector3(0,1.45,0)); const cpos=target.clone().add(new THREE.Vector3(Math.sin(yaw)*Math.cos(pitch)*camDist,Math.sin(pitch)*camDist+1.1,Math.cos(yaw)*Math.cos(pitch)*camDist)); const k=1-Math.pow(1-(+dampSlider.value),dt*60);camera.position.lerp(cpos,k);camera.lookAt(target);
+ sun.target.position.copy(player.position); sun.target.updateMatrixWorld();
+ if(motion){const w=+windSlider.value; for(let i=0;i<treeGroups.length;i++){const g=treeGroups[i];g.rotation.z=Math.sin(time*(.55+w*.8)+g.userData.phase)*(.004+w*.015);g.rotation.x=Math.cos(time*.43+g.userData.phase)*(.002+w*.008);} water.position.y=-1.95+Math.sin(time*.72)*.035;water.material.roughness=.16+Math.sin(time*1.1)*.025;motes.rotation.y=time*.012; const a=motes.geometry.attributes.position;for(let i=0;i<a.count;i++){let y=a.getY(i)+Math.sin(time*.7+i)*.0008;if(y>15)y=1;a.setY(i,y);}a.needsUpdate=true;}
+ renderer.render(scene,camera); frames++;acc+=dt;if(acc>.5){lastFps=Math.round(frames/acc);frames=0;acc=0;document.getElementById('fps').textContent=lastFps;document.getElementById('calls').textContent=renderer.info.render.calls;document.getElementById('tris').textContent=renderer.info.render.triangles.toLocaleString();document.getElementById('camd').textContent=camDist.toFixed(1)+' m';}
+}
+animate();
+addEventListener('resize',()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight)});
+</script>
+</body>
+</html>
