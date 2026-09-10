@@ -1,27 +1,24 @@
 {
-  "build_id": "20260910224043",
+  "build_id": "20260910224801",
   "inherits": "Test 04 accepted baseline",
   "base_blob": "8ec3761c2cf4a507a072d79307220c0b315a8261",
   "three": "0.186.0",
   "pipeline": "esbuild-local-bundle",
   "runtime_external_dependencies": 0,
-  "focus": "movement tuning + explicit success proof",
+  "focus": "jump tuning + explicit success proof",
   "movement_parameters": [
-    "walk speed",
-    "run speed",
-    "sprint = 1.8x run",
-    "acceleration",
-    "braking",
-    "turn response",
-    "jump velocity",
-    "gravity",
-    "camera damping",
-    "animation-speed matching"
+    "walk speed LOCKED",
+    "run speed LOCKED",
+    "sprint = 1.8x run LOCKED",
+    "acceleration LOCKED",
+    "braking LOCKED",
+    "turn response LOCKED",
+    "jump velocity ACTIVE",
+    "gravity ACTIVE",
+    "camera damping LOCKED",
+    "animation-speed matching PENDING"
   ],
   "proof_labels": [
-    "WALK SUCCESS",
-    "RUN SUCCESS",
-    "SPRINT SUCCESS",
     "JUMP SUCCESS"
   ],
   "combo_status": "deferred until movement acceptance",
@@ -36,31 +33,57 @@
     "sprint_mps": 11.88,
     "accel": 14,
     "brake": 10,
-    "turn": 14,
-    "jump": 7.7,
-    "gravity": 23.8,
+    "turn": 9,
+    "jump": 9,
+    "gravity": 24,
     "camera": 0.12
   },
+  "jump_candidate": {
+    "velocity_mps": 9,
+    "gravity_mps2": 24,
+    "theoretical_apex_m": 1.6875,
+    "time_to_apex_s": 0.375,
+    "theoretical_airtime_s": 0.75
+  },
   "control_contract": {
-    "direction": "joystick/WASD = Walk",
+    "direction": "joystick/WASD = movement",
     "mode_toggle": "R/interface button cycles WALK → RUN → SPRINT → WALK",
     "run": "one toggle action",
     "sprint": "one toggle action",
     "sprint_relation": "1.8x Run"
   },
   "suppressed_proof_labels": [
-    "STOP SUCCESS"
+    "STOP SUCCESS",
+    "WALK SUCCESS",
+    "RUN SUCCESS",
+    "SPRINT SUCCESS"
   ],
   "acceptance_checklist": {
-    "walk": "PENDING",
-    "run": "PENDING",
-    "sprint": "PENDING",
-    "acceleration": "PENDING",
-    "braking": "PENDING",
-    "turn": "PENDING",
+    "walk": "ACCEPTED",
+    "run": "ACCEPTED",
+    "sprint": "ACCEPTED",
+    "acceleration": "ACCEPTED",
+    "braking": "ACCEPTED",
+    "turn": "ACCEPTED",
     "jump": "PENDING",
     "gravity_landing": "PENDING",
-    "camera_damping": "PENDING",
+    "camera_damping": "ACCEPTED",
     "animation_speed_match": "PENDING"
+  },
+  "tuning_ui": {
+    "slider_and_numeric_input": true,
+    "locked_parameters": [
+      "walk",
+      "run",
+      "sprint",
+      "acceleration",
+      "braking",
+      "turn",
+      "camera_damping"
+    ],
+    "active_parameters": [
+      "jump",
+      "gravity"
+    ]
   }
 }
