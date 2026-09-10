@@ -1,0 +1,60 @@
+name: Build Three.js Test 05
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'labs/threejs-test-05-src/**'
+      - '.github/workflows/build-threejs-test05.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: threejs-test05-build
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install pinned build dependencies
+        working-directory: labs/threejs-test-05-src
+        run: npm install --no-audit --no-fund --no-package-lock
+
+      - name: Build inherited production baseline plus combat
+        working-directory: labs/threejs-test-05-src
+        run: npm run build
+
+      - name: Verify production outputs
+        run: |
+          test -f labs/threejs-test-05/index.html
+          test -f labs/threejs-test-05/app.js
+          test -f labs/threejs-test-05/assets/Soldier.glb
+          test -f labs/threejs-test-05/sw.js
+          test -f labs/threejs-test-05/build-info.json
+          ! grep -Eqi 'cdn\.jsdelivr|unpkg\.com|esm\.sh|raw\.githubusercontent' labs/threejs-test-05/index.html labs/threejs-test-05/app.js labs/threejs-test-05/sw.js
+          grep -q 'Combat + Reactive World' labs/threejs-test-05/index.html
+          grep -q '"mobile_fps_target": 60' labs/threejs-test-05/build-info.json
+
+      - name: Publish built proof to main
+        run: |
+          git config user.name 'raaioperations-build-bot'
+          git config user.email 'actions@users.noreply.github.com'
+          git add labs/threejs-test-05
+          if git diff --cached --quiet; then
+            echo 'No output changes.'
+            exit 0
+          fi
+          git commit -m 'Build Three.js Test 05 combat production bundle'
+          git push origin HEAD:main
