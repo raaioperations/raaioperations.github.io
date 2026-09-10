@@ -2,7 +2,11 @@
   "name": "raai-threejs-test-04",
   "private": true,
   "version": "0.4.0",
+  "description": "Production-stack visual fidelity proof for mobile Three.js",
   "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
   "scripts": {
     "build": "node build.mjs"
   },
