@@ -36,6 +36,10 @@ jobs:
         working-directory: labs/threejs-test-05a-src
         run: npm run build
 
+      - name: Apply tuned walk run sprint patch
+        working-directory: labs/threejs-test-05a-src
+        run: node postpatch.mjs
+
       - name: Verify production outputs
         run: |
           test -f labs/threejs-test-05a/index.html
@@ -44,6 +48,8 @@ jobs:
           test -f labs/threejs-test-05a/sw.js
           test -f labs/threejs-test-05a/build-info.json
           ! grep -Eqi 'cdn\.jsdelivr|unpkg\.com|esm\.sh|raw\.githubusercontent' labs/threejs-test-05a/index.html labs/threejs-test-05a/app.js labs/threejs-test-05a/sw.js
+          grep -q 'Run' labs/threejs-test-05a/index.html
+          grep -q '19.8' labs/threejs-test-05a/index.html
 
       - name: Publish built proof to main
         run: |
@@ -54,5 +60,5 @@ jobs:
             echo 'No output changes.'
             exit 0
           fi
-          git commit -m 'Build Three.js Test 05A movement tuning proof'
+          git commit -m 'Build Three.js Test 05A tuned movement proof'
           git push origin HEAD:main
