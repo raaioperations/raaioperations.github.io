@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="theme-color" content="#101719">
+<title>Test 05R — Isolated Screen Jolt</title>
+<style>
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#0b1113;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:#fff}
+*{box-sizing:border-box}
+#viewport{position:fixed;inset:0;overflow:hidden;background:#0b1113}
+#scene{position:absolute;inset:-46px;will-change:transform;transform-origin:50% 50%;overflow:hidden;background:linear-gradient(#8ec9df 0 46%,#8ab56f 46% 100%)}
+#sun{position:absolute;right:14%;top:10%;width:92px;height:92px;border-radius:50%;background:#fff8cf;box-shadow:0 0 55px rgba(255,244,184,.7)}
+#mountains{position:absolute;left:-5%;right:-5%;top:27%;height:30%;background:linear-gradient(145deg,transparent 0 18%,#607b68 18% 34%,transparent 34% 42%,#516c5d 42% 60%,transparent 60% 68%,#688273 68% 82%,transparent 82%);opacity:.8}
+#ground{position:absolute;left:0;right:0;top:46%;bottom:0;background:linear-gradient(#7eaa68,#557a4e)}
+#grid{position:absolute;left:-10%;right:-10%;top:48%;bottom:-10%;background-image:linear-gradient(rgba(255,255,255,.12) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.12) 1px,transparent 1px);background-size:70px 70px;transform:perspective(500px) rotateX(61deg) scale(1.7);transform-origin:50% 0;opacity:.55}
+#tower{position:absolute;left:50%;top:30%;width:62px;height:190px;transform:translateX(-50%);background:linear-gradient(90deg,#59696d,#9aa8aa 45%,#4b5b60);border-radius:10px 10px 4px 4px;box-shadow:0 24px 35px rgba(0,0,0,.28)}
+#tower:before{content:"";position:absolute;left:50%;top:-34px;width:118px;height:58px;transform:translateX(-50%);border-radius:50% 50% 8px 8px;background:#839497;border:5px solid #4b5b60}
+#target{position:absolute;left:50%;top:59%;width:88px;height:88px;transform:translate(-50%,-50%);border-radius:50%;border:8px solid rgba(255,255,255,.95);box-shadow:0 0 0 8px rgba(20,40,45,.42),0 12px 28px rgba(0,0,0,.3)}
+#target:before,#target:after{content:"";position:absolute;background:#fff;left:50%;top:50%;transform:translate(-50%,-50%)}
+#target:before{width:4px;height:128px}#target:after{width:128px;height:4px}
+#hud{position:fixed;inset:0;z-index:10;pointer-events:none;padding:max(14px,env(safe-area-inset-top)) max(14px,env(safe-area-inset-right)) max(18px,env(safe-area-inset-bottom)) max(14px,env(safe-area-inset-left));display:flex;flex-direction:column;justify-content:space-between}
+#titleBox{align-self:flex-start;padding:10px 12px;border:1px solid rgba(255,255,255,.2);border-radius:12px;background:rgba(8,13,16,.62);backdrop-filter:blur(9px);font-size:12px;font-weight:800;letter-spacing:.04em}
+#status{margin-top:5px;font:700 10px/1.4 ui-monospace,SFMono-Regular,Menlo,monospace;color:#d6efea}
+#controls{pointer-events:auto;align-self:center;display:flex;gap:12px;padding:10px;border:1px solid rgba(255,255,255,.18);border-radius:999px;background:rgba(8,13,16,.72);backdrop-filter:blur(10px)}
+button{min-width:118px;height:52px;border:1px solid rgba(255,255,255,.28);border-radius:999px;background:#182226;color:#fff;font:900 13px/1 system-ui;letter-spacing:.05em;touch-action:manipulation;cursor:pointer}
+button:active{transform:scale(.96)}
+#demo40{background:#40201f}
+#meter{position:fixed;right:max(14px,env(safe-area-inset-right));top:max(14px,env(safe-area-inset-top));z-index:11;padding:9px 11px;border-radius:11px;background:rgba(8,13,16,.66);border:1px solid rgba(255,255,255,.18);font:700 10px/1.45 ui-monospace,SFMono-Regular,Menlo,monospace;pointer-events:none;min-width:130px}
+#joltFlag{color:#9df2ae;font-weight:900}
+@media(max-width:600px){#titleBox{font-size:10px}button{min-width:106px;height:48px;font-size:11px}#meter{font-size:9px;min-width:112px}#tower{top:33%;height:160px}}
+</style>
+</head>
+<body>
+<div id="viewport">
+  <div id="scene">
+    <div id="sun"></div>
+    <div id="mountains"></div>
+    <div id="ground"></div>
+    <div id="grid"></div>
+    <div id="tower"></div>
+    <div id="target"></div>
+  </div>
+</div>
+<div id="hud">
+  <div id="titleBox">05R — ISOLATED SCREEN JOLT<div id="status">No combat logic. This page proves only the scene recoil.</div></div>
+  <div id="controls"><button id="demo25" type="button">DEMO 25</button><button id="demo40" type="button">DEMO 40</button></div>
+</div>
+<div id="meter"><div>STATE <span id="joltFlag">READY</span></div><div>X <span id="mx">0.0</span> px</div><div>Y <span id="my">0.0</span> px</div><div>ROT <span id="mr">0.00</span>°</div><div>SCALE <span id="ms">1.000</span></div></div>
+<script>
+(()=>{
+  const scene=document.getElementById('scene');
+  const flag=document.getElementById('joltFlag');
+  const mx=document.getElementById('mx'),my=document.getElementById('my'),mr=document.getElementById('mr'),ms=document.getElementById('ms');
+  let raf=0,runToken=0;
+
+  function setTransform(x,y,rot,scale){
+    scene.style.transform=`translate3d(${x.toFixed(2)}px,${y.toFixed(2)}px,0) rotate(${rot.toFixed(3)}deg) scale(${scale.toFixed(4)})`;
+    mx.textContent=x.toFixed(1);my.textContent=y.toFixed(1);mr.textContent=rot.toFixed(2);ms.textContent=scale.toFixed(3);
+  }
+
+  function jolt(damage){
+    runToken++;
+    const token=runToken;
+    if(raf)cancelAnimationFrame(raf);
+    const strong=damage>=40;
+    const duration=strong?300:240;
+    const ampX=strong?34:20;
+    const ampY=strong?20:12;
+    const ampRot=strong?1.15:.68;
+    const ampZoom=strong?.030:.018;
+    const start=performance.now();
+    flag.textContent=`JOLT ${damage}`;
+    flag.style.color=strong?'#ff9b91':'#ffd18a';
+
+    function frame(now){
+      if(token!==runToken)return;
+      const p=Math.min(1,(now-start)/duration);
+      const decay=Math.pow(1-p,1.65);
+      const phase=p*Math.PI*6.0;
+      const x=Math.sin(phase)*ampX*decay + (p<.16?ampX*.34*(1-p/.16):0);
+      const y=-Math.cos(phase*.91)*ampY*decay;
+      const rot=Math.sin(phase*.73)*ampRot*decay;
+      const scale=1+ampZoom*decay;
+      setTransform(x,y,rot,scale);
+      if(p<1){raf=requestAnimationFrame(frame);}else{
+        setTransform(0,0,0,1);
+        flag.textContent='READY';flag.style.color='#9df2ae';raf=0;
+      }
+    }
+    raf=requestAnimationFrame(frame);
+  }
+
+  document.getElementById('demo25').addEventListener('click',()=>jolt(25));
+  document.getElementById('demo40').addEventListener('click',()=>jolt(40));
+  window.__screenJoltDemo=jolt;
+})();
+</script>
+</body>
+</html>
