@@ -1,0 +1,26 @@
+{
+  "test": "05R-JOLT",
+  "status": "ACCEPTED",
+  "accepted_at": "2026-09-11T16:28:02-07:00",
+  "human_visual_acceptance": true,
+  "accepted_contract": {
+    "demo_25": {
+      "duration_ms": 240,
+      "amp_x_px": 20,
+      "amp_y_px": 12,
+      "rotation_deg": 0.68,
+      "zoom": 0.018
+    },
+    "demo_40": {
+      "duration_ms": 300,
+      "amp_x_px": 34,
+      "amp_y_px": 20,
+      "rotation_deg": 1.15,
+      "zoom": 0.03
+    },
+    "decay_power": 1.65,
+    "phase_multiplier": 6.0,
+    "hud_stationary": true
+  },
+  "note": "Accepted by user as 'Perfect'. This exact isolated jolt mechanism is the authority for Test 05R camera-impact integration."
+}
