@@ -1,0 +1,63 @@
+name: Build Three.js Test 05I
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'labs/threejs-test-05i-src/**'
+      - '.github/workflows/build-threejs-test05i.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: threejs-test05i-build
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install pinned build dependencies
+        working-directory: labs/threejs-test-05i-src
+        run: npm install --no-audit --no-fund --no-package-lock
+
+      - name: Build block guard proof
+        working-directory: labs/threejs-test-05i-src
+        run: npm run build
+
+      - name: Verify proof outputs
+        run: |
+          test -f labs/threejs-test-05i/index.html
+          test -f labs/threejs-test-05i/app.js
+          test -f labs/threejs-test-05i/assets/Soldier.glb
+          test -f labs/threejs-test-05i/sw.js
+          test -f labs/threejs-test-05i/build-info.json
+          ! grep -Eqi 'cdn\.jsdelivr|unpkg\.com|esm\.sh' labs/threejs-test-05i/index.html labs/threejs-test-05i/app.js labs/threejs-test-05i/sw.js
+          grep -q 'BLOCK INPUT ACCEPTED' labs/threejs-test-05i/app.js
+          grep -q 'BLOCK FRONT MITIGATION CONFIRMED' labs/threejs-test-05i/app.js
+          grep -q 'BLOCK REAR BYPASS CONFIRMED' labs/threejs-test-05i/app.js
+          grep -q 'Test 05I checklist' labs/threejs-test-05i/index.html
+          grep -q 'blockCheck5' labs/threejs-test-05i/index.html
+
+      - name: Publish built proof to main
+        run: |
+          git config user.name 'raaioperations-build-bot'
+          git config user.email 'actions@users.noreply.github.com'
+          git add labs/threejs-test-05i
+          if git diff --cached --quiet; then
+            echo 'No output changes.'
+            exit 0
+          fi
+          git commit -m 'Build Three.js Test 05I block guard proof'
+          git push origin HEAD:main
