@@ -1,5 +1,5 @@
 {
-  "build_id": "20260911080233",
+  "build_id": "20260911190936",
   "inherits": "Accepted Test 05J combat baseline: movement + lock-on + single attack + two-hit chain + dodge + i-frames + block/guard + parry timing",
   "base_blob": "8ec3761c2cf4a507a072d79307220c0b315a8261",
   "three": "0.186.0",
@@ -60,7 +60,7 @@
     "enemy_action_restored": "PENDING",
     "non_parry_no_stagger": "PENDING"
   },
-  "app_js_bytes": 676328,
+  "app_js_bytes": 676694,
   "soldier_glb_bytes": 2160468,
   "service_worker_cache": true,
   "target": "safari16.4+",
@@ -140,6 +140,7 @@
     "enemy_action_after_recovery": "allowed",
     "late_guard_triggers": false,
     "rear_bypass_triggers": false,
+    "non_parry_progress_ui": true,
     "animation": false,
     "counter_window": false
   }
