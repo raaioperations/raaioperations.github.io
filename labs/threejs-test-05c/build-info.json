@@ -6,6 +6,7 @@
   "pipeline": "esbuild-local-bundle",
   "runtime_external_dependencies": 0,
   "focus": "single-target lock-on proof",
+  "status": "ACCEPTED",
   "movement_baseline": {
     "walk_mps": 2.5,
     "run_mps": 6.6,
@@ -18,10 +19,7 @@
     "camera": 0.12
   },
   "lock_on": {
-    "input": [
-      "Q",
-      "LOCK button"
-    ],
+    "input": ["Q", "LOCK button"],
     "targets": 1,
     "acquisition_range_m": 20,
     "maintain_proof_s": 1,
@@ -36,7 +34,15 @@
     "parry": false,
     "enemy_ai": false
   },
-  "proof_labels": [
+  "accepted_proofs": [
+    "LOCK ACQUIRED",
+    "LOCK MAINTAINED",
+    "FACE CONFIRMED",
+    "LOCK RELEASED",
+    "LOCK REACQUIRED"
+  ],
+  "proof_labels": [],
+  "suppressed_proof_labels": [
     "LOCK ACQUIRED",
     "LOCK MAINTAINED",
     "FACE CONFIRMED",
@@ -44,11 +50,11 @@
     "LOCK REACQUIRED"
   ],
   "acceptance_checklist": {
-    "acquire": "PENDING",
-    "maintain": "PENDING",
-    "face": "PENDING",
-    "release": "PENDING",
-    "reacquire": "PENDING"
+    "acquire": "ACCEPTED",
+    "maintain": "ACCEPTED",
+    "face": "ACCEPTED",
+    "release": "ACCEPTED",
+    "reacquire": "ACCEPTED"
   },
   "app_js_bytes": 665521,
   "soldier_glb_bytes": 2160468,
