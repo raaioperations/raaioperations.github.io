@@ -1,0 +1,46 @@
+name: Build Three.js Test 05R
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - labs/threejs-test-05r-src/**
+      - labs/threejs-test-05q/acceptance.json
+      - .github/workflows/build-threejs-test05r.yml
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Build visual hit impact review
+        working-directory: labs/threejs-test-05r-src
+        run: npm run build
+      - name: Verify outputs
+        run: |
+          test -f labs/threejs-test-05r/index.html
+          test -f labs/threejs-test-05r/app.js
+          test -f labs/threejs-test-05r/assets/Soldier.glb
+          test -f labs/threejs-test-05r/build-info.json
+          grep -q 'Test 05R — Combat Hit Impact' labs/threejs-test-05r/index.html
+          grep -q '__r05ImpactDemo' labs/threejs-test-05r/index.html
+          grep -q 'PENDING HUMAN VISUAL ACCEPTANCE' labs/threejs-test-05r/build-info.json
+          if grep -q 'new THREE\.' labs/threejs-test-05r/index.html; then echo 'Unexpected Three namespace in 05R presentation layer'; exit 1; fi
+      - name: Publish
+        run: |
+          git config user.name raaioperations-build-bot
+          git config user.email actions@users.noreply.github.com
+          git add labs/threejs-test-05r
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'Build Three.js Test 05R combat hit impact'
+          git push origin HEAD:main
