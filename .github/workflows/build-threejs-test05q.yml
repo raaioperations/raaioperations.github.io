@@ -31,9 +31,12 @@ jobs:
           test -f labs/threejs-test-05q/app.js
           test -f labs/threejs-test-05q/assets/Soldier.glb
           test -f labs/threejs-test-05q/build-info.json
-          grep -q 'Test 05Q — human visual-review telegraph readability layer' labs/threejs-test-05q/app.js
+          grep -q 'Test 05Q — human visual-review telegraph readability layer (clone-native; no THREE namespace dependency)' labs/threejs-test-05q/app.js
           grep -q 'DEMO ATTACK' labs/threejs-test-05q/index.html
           grep -q 'PENDING HUMAN VISUAL ACCEPTANCE' labs/threejs-test-05q/build-info.json
+          grep -q '05Q-R1 clone-native' labs/threejs-test-05q/build-info.json
+          ! grep -q 'q05VisualRoot=new THREE.Group' labs/threejs-test-05q/app.js
+          node --check labs/threejs-test-05q/app.js
       - name: Publish
         run: |
           git config user.name raaioperations-build-bot
