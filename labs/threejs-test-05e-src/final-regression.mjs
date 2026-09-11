@@ -8,6 +8,7 @@ let html=await readFile(indexPath,'utf8');
 
 html=html.replaceAll('Test 05E — Movement Tuning','Test 05E — Movement + Jump Regression')
          .replaceAll('RAAI Proof 05E — Movement Tuning','RAAI Proof 05E — Movement + Jump Regression')
+         .replaceAll('RAAI Proof 05A — Movement Tuning','RAAI Proof 05E — Movement + Jump Regression')
          .replace('Starting movement tuning proof…','Starting movement + jump regression proof…')
          .replace('<button id="tuneBtn">TUNE</button>','<button id="tuneBtn">CHECK</button>');
 
@@ -15,8 +16,11 @@ if(!html.includes('<span>Speed</span><b id="speed">0.0 m/s</b>'))throw new Error
 html=html.replace('<span>Speed</span><b id="speed">0.0 m/s</b>',
 '<span>Speed</span><b id="speed">0.0 m/s</b><span>Jump type</span><b id="jumpType">—</b><span>Apex</span><b id="apexMeasured">—</b><span>Anim rate</span><b id="animRate">×1.00</b>');
 
+// Keep the inherited jumpPrediction binding in the DOM even though its old tuning readout
+// is no longer part of the visible regression UI. Removing a bound element caused the
+// startup null.textContent crash on both desktop and Safari.
 html=html.replace(/<div class="jumpFocus">[\s\S]*?<\/div>/,
-'<div class="jumpFocus"><b>ACTIVE REGRESSION — MOVEMENT / JUMP</b><span>Standing jump: stop, then JUMP. Running jump: move in RUN or SPRINT, then JUMP. Sprint: cycle mode to SPRINT and hold movement.</span></div>');
+'<div class="jumpFocus"><b>ACTIVE REGRESSION — MOVEMENT / JUMP</b><span>Standing jump: stop, then JUMP. Running jump: move in RUN or SPRINT, then JUMP. Sprint: cycle mode to SPRINT and hold movement.</span><span id="jumpPrediction" class="envHidden" aria-hidden="true"></span></div>');
 
 const checklistStart='<div class="checkTitle">Test checklist</div><div id="checklist">';
 const start=html.indexOf(checklistStart);
@@ -32,6 +36,18 @@ html=html.slice(0,start)+regression+html.slice(end);
 
 html=html.replace('JUMP ANIMATION TEST — validate the reference-guided rig motion','REGRESSION TEST — verify the four pending movement / jump checks');
 html=html.replace('</style>',`.regressionNote{display:grid;gap:4px;margin:8px 0;padding:8px;border:1px solid rgba(255,255,255,.13);border-radius:9px;background:rgba(255,255,255,.04);font-size:8.5px;line-height:1.3}.regressionNote b{font-size:8px;color:#a8f0b5;letter-spacing:.06em}</style>`);
+
+// Fail the build if the final UI removes any DOM node still required by the inherited
+// runtime/inline scripts. This guards against the exact missing-binding regression.
+const requiredBindings=[
+  'walkTune','runTune','walkSpeed','sprintSpeed','walkTuneV','runTuneV','sprintDerivedV',
+  'proofSuccess','moveState','speed','sprint','resetMove','jumpVel','gravity','jumpPrediction',
+  'panel','accel','brake','turnRate','damp','jumpType','apexMeasured','animRate'
+];
+for(const id of requiredBindings){
+  if(!html.includes(`id="${id}"`))throw new Error(`05E required DOM binding missing after final regression pass: ${id}`);
+}
+
 await writeFile(indexPath,html);
 
 const info=JSON.parse(await readFile(infoPath,'utf8'));
@@ -44,5 +60,6 @@ info.physics_contract={jump_velocity_mps:9,gravity_mps2:24,theoretical_apex_m:1.
 info.sprint_animation_sync={run_reference_speed_mps:6.6,sprint_speed_mps:11.88,sprint_ratio:1.8,run_clip_rate_at_sprint:1.8,rate_source:'actual planar speed'};
 info.jump_states={standing:{selection:'takeoff planar speed < 0.8 m/s',clip:'StandingJumpProcedural',characteristics:['deep compression','vertical launch','compact airborne pose','landing absorption']},running:{selection:'takeoff planar speed >= 0.8 m/s',clip:'RunningJumpProcedural',characteristics:['moving takeoff','forward body carriage','asymmetric stride/tuck','pre-contact extension','forward landing recovery']}};
 info.production_asset_status='Procedural skeleton-keyframed regression clips only; final production should replace them with authored/retargeted standing and running jump animations while preserving controller-owned physics.';
+info.dom_binding_guard=true;
 await writeFile(infoPath,JSON.stringify(info,null,2));
-console.log('Finalized Test 05E movement/jump regression proof.');
+console.log('Finalized Test 05E movement/jump regression proof with DOM binding guard.');
