@@ -1,0 +1,63 @@
+name: Build Three.js Test 05E
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'labs/threejs-test-05e-src/**'
+      - '.github/workflows/build-threejs-test05e.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: threejs-test05e-build
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install pinned build dependencies
+        working-directory: labs/threejs-test-05e-src
+        run: npm install --no-audit --no-fund --no-package-lock
+
+      - name: Build movement and two-state jump regression
+        working-directory: labs/threejs-test-05e-src
+        run: npm run build
+
+      - name: Verify regression outputs
+        run: |
+          test -f labs/threejs-test-05e/index.html
+          test -f labs/threejs-test-05e/app.js
+          test -f labs/threejs-test-05e/assets/Soldier.glb
+          test -f labs/threejs-test-05e/sw.js
+          test -f labs/threejs-test-05e/build-info.json
+          ! grep -Eqi 'cdn\.jsdelivr|unpkg\.com|esm\.sh|raw\.githubusercontent' labs/threejs-test-05e/index.html labs/threejs-test-05e/app.js labs/threejs-test-05e/sw.js
+          grep -q 'StandingJumpProcedural' labs/threejs-test-05e/app.js
+          grep -q 'RunningJumpProcedural' labs/threejs-test-05e/app.js
+          grep -q 'SPRINT ANIMATION SYNC CONFIRMED' labs/threejs-test-05e/app.js
+          grep -q 'JUMP APEX CONFIRMED' labs/threejs-test-05e/app.js
+          grep -q 'Regression checklist' labs/threejs-test-05e/index.html
+
+      - name: Publish built proof to main
+        run: |
+          git config user.name 'raaioperations-build-bot'
+          git config user.email 'actions@users.noreply.github.com'
+          git add labs/threejs-test-05e
+          if git diff --cached --quiet; then
+            echo 'No output changes.'
+            exit 0
+          fi
+          git commit -m 'Build Three.js Test 05E movement jump regression'
+          git push origin HEAD:main
