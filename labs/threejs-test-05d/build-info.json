@@ -1,5 +1,5 @@
 {
-  "build_id": "20260911013801",
+  "build_id": "20260911015855",
   "inherits": "Test 04 visual baseline + accepted Test 05A movement + accepted Test 05B single attack + accepted Test 05C lock-on",
   "base_blob": "8ec3761c2cf4a507a072d79307220c0b315a8261",
   "three": "0.186.0",
@@ -13,8 +13,10 @@
   "combo": {
     "attack1_duration_s": 0.44,
     "attack1_hit_s": 0.16,
-    "combo_window_open_s": 0.2,
-    "combo_window_close_s": 0.34,
+    "combo_window_open_s": 0.16,
+    "combo_window_close_s": 0.4,
+    "combo_window_width_s": 0.24,
+    "repair_revision": "05D-R1",
     "attack2_duration_s": 0.48,
     "attack2_hit_s": 0.17,
     "reach_m": 2.75,
@@ -59,7 +61,7 @@
     "attack2_hit": "PENDING",
     "late_rejection": "PENDING"
   },
-  "app_js_bytes": 667799,
+  "app_js_bytes": 668270,
   "soldier_glb_bytes": 2160468,
   "service_worker_cache": true,
   "target": "safari16.4+",
