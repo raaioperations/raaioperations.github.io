@@ -1,0 +1,57 @@
+name: Build Three.js Test 05F
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'labs/threejs-test-05f-src/**'
+      - '.github/workflows/build-threejs-test05f.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: threejs-test05f-build
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Build attack timing regression
+        working-directory: labs/threejs-test-05f-src
+        run: npm run build
+
+      - name: Verify regression outputs
+        run: |
+          test -f labs/threejs-test-05f/index.html
+          test -f labs/threejs-test-05f/app.js
+          test -f labs/threejs-test-05f/assets/Soldier.glb
+          test -f labs/threejs-test-05f/sw.js
+          test -f labs/threejs-test-05f/build-info.json
+          grep -q 'TIMING SEQUENCE CONFIRMED' labs/threejs-test-05f/index.html
+          grep -q 'Windup → active → recovery → ready sequence' labs/threejs-test-05f/index.html
+          grep -q '05B windup → active → recovery timing regression only' labs/threejs-test-05f/build-info.json
+          ! grep -Eqi 'cdn\.jsdelivr|unpkg\.com|esm\.sh|raw\.githubusercontent' labs/threejs-test-05f/index.html labs/threejs-test-05f/app.js labs/threejs-test-05f/sw.js
+
+      - name: Publish built proof to main
+        run: |
+          git config user.name 'raaioperations-build-bot'
+          git config user.email 'actions@users.noreply.github.com'
+          git add labs/threejs-test-05f
+          if git diff --cached --quiet; then
+            echo 'No output changes.'
+            exit 0
+          fi
+          git commit -m 'Build Three.js Test 05F attack timing regression'
+          git push origin HEAD:main
