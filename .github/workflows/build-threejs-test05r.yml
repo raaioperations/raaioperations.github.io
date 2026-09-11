@@ -34,8 +34,9 @@ jobs:
           test -f labs/threejs-test-05r/build-info.json
           grep -q 'Test 05R — Combat Hit Impact' labs/threejs-test-05r/index.html
           grep -q '__r05ImpactDemo' labs/threejs-test-05r/index.html
-          grep -q 'data-revision="05R-R1"' labs/threejs-test-05r/index.html
-          grep -q 'ampX=strong?12:7' labs/threejs-test-05r/index.html
+          grep -q 'data-revision="05R-R2"' labs/threejs-test-05r/index.html
+          grep -q 'r05SceneKickShell' labs/threejs-test-05r/index.html
+          grep -q 'ampX=strong?28:16' labs/threejs-test-05r/index.html
           grep -q 'PENDING HUMAN VISUAL ACCEPTANCE' labs/threejs-test-05r/build-info.json
           if grep -q 'new THREE\.' labs/threejs-test-05r/index.html; then echo 'Unexpected Three namespace in 05R presentation layer'; exit 1; fi
       - name: Publish
