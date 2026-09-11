@@ -1,5 +1,5 @@
 {
-  "build_id": "20260911222500",
+  "build_id": "20260911230434",
   "inherits": "Accepted Test 05Q visual telegraph baseline + verified Test 05P combat integration",
   "base_blob": "8ec3761c2cf4a507a072d79307220c0b315a8261",
   "three": "0.186.0",
@@ -209,7 +209,7 @@
     "status": "VERIFIED UNDER USER-DELEGATED NONVISUAL AUTHORITY"
   },
   "delegated_verification_status_05p": "PASS",
-  "visual_runtime_revision": "05R-R1 perceptible requestAnimationFrame scene kick",
+  "visual_runtime_revision": "05R-R2 isolated scene-wrapper recoil",
   "hit_impact_visual": {
     "basic_damage_reference": 25,
     "counter_damage_reference": 40,
@@ -219,6 +219,6 @@
     "camera_kick": true,
     "damage_strength_scaling": true,
     "status": "PENDING HUMAN ACCEPTANCE",
-    "camera_kick_revision": "rAF canvas scene kick: basic 7 px / counter 12 px with damped rotation and zoom"
+    "camera_kick_revision": "isolated scene wrapper: basic 16x10 px / counter 28x18 px recoil, damped rotation and zoom, HUD excluded"
   }
 }
