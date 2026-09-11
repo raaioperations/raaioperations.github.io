@@ -1,5 +1,5 @@
 {
-  "build_id": "20260911031405",
+  "build_id": "20260911031450",
   "inherits": "Test 04 visual baseline + accepted Test 05A movement values + accepted 05B/05C/05D combat contracts (combat omitted for regression isolation)",
   "base_blob": "8ec3761c2cf4a507a072d79307220c0b315a8261",
   "three": "0.186.0",
@@ -27,7 +27,7 @@
     "RUNNING JUMP SEQUENCE COMPLETE"
   ],
   "combo_status": "deferred until movement acceptance",
-  "app_js_bytes": 670144,
+  "app_js_bytes": 670382,
   "soldier_glb_bytes": 2160468,
   "service_worker_cache": true,
   "target": "safari16.4+",
