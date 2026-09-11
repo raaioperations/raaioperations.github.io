@@ -1,0 +1,11 @@
+{
+  "name": "raai-threejs-test-05n",
+  "private": true,
+  "version": "0.5.14",
+  "description": "Isolated enemy telegraph state-cycle proof built from accepted Test 05M combat baseline",
+  "type": "module",
+  "engines": {"node": ">=22"},
+  "scripts": {"build": "node build.mjs"},
+  "dependencies": {"three": "0.186.0"},
+  "devDependencies": {"esbuild": "0.25.9"}
+}
