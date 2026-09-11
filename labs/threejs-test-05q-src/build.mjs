@@ -11,59 +11,111 @@ await copyFile(path.join(base,'assets/Soldier.glb'),path.join(assets,'Soldier.gl
 
 const buildId=new Date().toISOString().replace(/[-:TZ.]/g,'').slice(0,14);
 let app=await readFile(path.join(out,'app.js'),'utf8');
+for(const symbol of ['targetRoot','playerRoot','enemyAttackPhase05O','enemyPhaseStart05O','n05StartEnemyAttack']){
+  if(!app.includes(symbol)) throw new Error(`05Q prerequisite missing from promoted runtime: ${symbol}`);
+}
+
+// IMPORTANT: this layer is appended after the bundled Three.js module. The namespace identifier
+// `THREE` is not guaranteed to survive bundling, so 05Q intentionally creates all world-space
+// presentation by cloning constructors/meshes already present in the accepted runtime.
 const visualRuntime=`
 
-// Test 05Q — human visual-review telegraph readability layer.
-const q05VisualRoot=new THREE.Group();targetRoot.add(q05VisualRoot);
-function q05SectorGeometry(radius=3.6,halfAngle=Math.PI*35/180,segments=28){
-  const s=new THREE.Shape();s.moveTo(0,0);
-  for(let i=0;i<=segments;i++){const a=-halfAngle+(halfAngle*2*i/segments);s.lineTo(Math.sin(a)*radius,Math.cos(a)*radius);}s.lineTo(0,0);return new THREE.ShapeGeometry(s);
+// Test 05Q — human visual-review telegraph readability layer (clone-native; no THREE namespace dependency).
+if(typeof targetRoot==='undefined'||typeof playerRoot==='undefined'||typeof n05StartEnemyAttack!=='function'){
+  throw new Error('05Q promoted runtime prerequisites unavailable');
 }
-const q05SectorMat=new THREE.MeshBasicMaterial({color:0xffa33a,transparent:true,opacity:0,depthWrite:false,side:THREE.DoubleSide,blending:THREE.NormalBlending});
-const q05Sector=new THREE.Mesh(q05SectorGeometry(),q05SectorMat);q05Sector.rotation.x=-Math.PI/2;q05Sector.position.y=.055;q05Sector.visible=false;q05VisualRoot.add(q05Sector);
-const q05RingMat=new THREE.MeshBasicMaterial({color:0xffbf5a,transparent:true,opacity:0,depthWrite:false,blending:THREE.AdditiveBlending});
-const q05Ring=new THREE.Mesh(new THREE.TorusGeometry(.92,.045,8,48),q05RingMat);q05Ring.rotation.x=Math.PI/2;q05Ring.position.y=.12;q05Ring.visible=false;q05VisualRoot.add(q05Ring);
-const q05HaloMat=new THREE.MeshBasicMaterial({color:0xffad42,transparent:true,opacity:0,depthWrite:false,blending:THREE.AdditiveBlending});
-const q05Halo=new THREE.Mesh(new THREE.SphereGeometry(.78,18,12),q05HaloMat);q05Halo.position.y=1.25;q05Halo.scale.set(1,.82,1);q05Halo.visible=false;q05VisualRoot.add(q05Halo);
-const q05StrikeMat=new THREE.MeshBasicMaterial({color:0xff3b2f,transparent:true,opacity:0,depthWrite:false,blending:THREE.AdditiveBlending});
-const q05Strike=new THREE.Mesh(new THREE.BoxGeometry(.18,.035,3.35),q05StrikeMat);q05Strike.position.set(0,.085,1.68);q05Strike.visible=false;q05VisualRoot.add(q05Strike);
-let q05LastPhase='READY',q05Auto=false,q05AutoTimer=0;
-function q05OrientAtPlayer(){const dx=playerRoot.position.x-targetRoot.position.x,dz=playerRoot.position.z-targetRoot.position.z;q05VisualRoot.rotation.y=Math.atan2(dx,dz);}
+const q05VisualRoot=new targetRoot.constructor();
+q05VisualRoot.position.set(0,0,0);q05VisualRoot.rotation.set(0,0,0);q05VisualRoot.scale.set(1,1,1);targetRoot.add(q05VisualRoot);
+
+let q05RingTemplate=null,q05GroundTemplate=null;
+targetRoot.traverse(o=>{
+  if(!o||!o.isMesh||!o.geometry)return;
+  if(!q05RingTemplate&&o.geometry.type==='TorusGeometry')q05RingTemplate=o;
+  if(!q05GroundTemplate&&o.geometry.type==='CylinderGeometry')q05GroundTemplate=o;
+});
+let q05LaneTemplate=null;
+if(typeof playerSword!=='undefined'&&playerSword&&playerSword.traverse){
+  playerSword.traverse(o=>{if(!q05LaneTemplate&&o&&o.isMesh&&o.geometry&&o.geometry.type==='BoxGeometry')q05LaneTemplate=o;});
+}
+if(!q05RingTemplate)throw new Error('05Q could not locate accepted target ring template');
+if(!q05LaneTemplate&&!q05GroundTemplate)throw new Error('05Q could not locate a reusable lane template');
+
+function q05CloneMesh(template){
+  const m=template.clone();
+  if(m.material&&m.material.clone)m.material=m.material.clone();
+  m.visible=false;m.castShadow=false;m.receiveShadow=false;
+  if(m.material){m.material.transparent=true;m.material.depthWrite=false;m.material.opacity=0;}
+  return m;
+}
+function q05Paint(mesh,hex,opacity){
+  if(!mesh||!mesh.material)return;
+  const mat=mesh.material;
+  if(mat.color&&mat.color.setHex)mat.color.setHex(hex);
+  if(mat.emissive&&mat.emissive.setHex){mat.emissive.setHex(hex);mat.emissiveIntensity=.45;}
+  mat.opacity=opacity;mat.transparent=true;mat.depthWrite=false;
+}
+function q05Clamp(v){return Math.max(0,Math.min(1,v));}
+
+const q05Ring=q05CloneMesh(q05RingTemplate);q05Ring.position.set(0,.12,0);q05Ring.rotation.x=Math.PI/2;q05VisualRoot.add(q05Ring);
+const q05Halo=q05CloneMesh(q05RingTemplate);q05Halo.position.set(0,1.35,0);q05Halo.rotation.set(Math.PI/2,0,0);q05Halo.scale.set(.92,.92,.92);q05VisualRoot.add(q05Halo);
+
+const q05LaneSource=q05LaneTemplate||q05GroundTemplate;
+const q05Fan=[];
+for(const angle of [-.62,-.31,0,.31,.62]){
+  const lane=q05CloneMesh(q05LaneSource);
+  lane.rotation.set(0,angle,0);
+  lane.position.set(Math.sin(angle)*1.72,.075,Math.cos(angle)*1.72);
+  if(q05LaneTemplate)lane.scale.set(5.2,.48,2.22);
+  else lane.scale.set(.32,.22,2.45);
+  q05VisualRoot.add(lane);q05Fan.push(lane);
+}
+const q05Strike=q05CloneMesh(q05LaneSource);q05Strike.position.set(0,.09,1.72);q05Strike.rotation.set(0,0,0);
+if(q05LaneTemplate)q05Strike.scale.set(9,.60,2.22);else q05Strike.scale.set(.46,.25,2.5);
+q05VisualRoot.add(q05Strike);
+
+let q05LastPhase='READY',q05Auto=false,q05AutoTimer=0,q05LastFrame=performance.now();
+function q05OrientAtPlayer(){
+  const dx=playerRoot.position.x-targetRoot.position.x,dz=playerRoot.position.z-targetRoot.position.z;
+  q05VisualRoot.rotation.y=Math.atan2(dx,dz);
+}
 function q05SetDemoButton(){const e=document.getElementById('visualDemoAuto');if(e)e.textContent=q05Auto?'AUTO: ON':'AUTO: OFF';}
 function q05StartDemo(){if(enemyAttackPhase05O!=='READY')return false;q05OrientAtPlayer();return n05StartEnemyAttack('05Q_VISUAL');}
 function q05BindVisualControls(){
   const once=document.getElementById('visualDemoAttack');if(once)once.addEventListener('pointerdown',e=>{e.preventDefault();q05StartDemo();});
   const auto=document.getElementById('visualDemoAuto');if(auto)auto.addEventListener('pointerdown',e=>{e.preventDefault();q05Auto=!q05Auto;q05AutoTimer=0;q05SetDemoButton();if(q05Auto)q05StartDemo();});
 }
+function q05HideAll(){q05Ring.visible=false;q05Halo.visible=false;q05Strike.visible=false;for(const lane of q05Fan)lane.visible=false;}
 function q05VisualLoop(now){
   const phase=enemyAttackPhase05O;
+  const dt=Math.min(.05,Math.max(0,(now-q05LastFrame)/1000));q05LastFrame=now;
   if(phase!==q05LastPhase){if(phase==='TELEGRAPH')q05OrientAtPlayer();q05LastPhase=phase;}
   const elapsed=Math.max(0,(performance.now()-enemyPhaseStart05O)/1000);
-  q05Sector.visible=q05Ring.visible=q05Halo.visible=q05Strike.visible=false;
+  q05HideAll();
   if(phase==='TELEGRAPH'){
-    const p=THREE.MathUtils.clamp(elapsed/.70,0,1),pulse=.5+.5*Math.sin(now*.018);
-    q05Sector.visible=true;q05Ring.visible=true;q05Halo.visible=true;
-    q05SectorMat.color.setHex(0xffa33a);q05SectorMat.opacity=.18+.18*p;
-    q05RingMat.color.setHex(0xffc15b);q05RingMat.opacity=.42+.28*p;q05Ring.scale.setScalar(1.38-.40*p);
-    q05HaloMat.color.setHex(0xffa33a);q05HaloMat.opacity=.08+.08*pulse;q05Halo.scale.set(1+.06*pulse,.82+.04*pulse,1+.06*pulse);
+    const p=q05Clamp(elapsed/.70),pulse=.5+.5*Math.sin(now*.018);
+    q05Ring.visible=q05Halo.visible=true;for(const lane of q05Fan)lane.visible=true;
+    q05Ring.scale.setScalar(1.38-.42*p);q05Paint(q05Ring,0xffc15b,.44+.30*p);
+    q05Halo.scale.setScalar(.92+.10*pulse);q05Paint(q05Halo,0xffa33a,.18+.12*pulse);
+    for(let i=0;i<q05Fan.length;i++)q05Paint(q05Fan[i],0xffa33a,.16+.16*p+(i===2?.08:0));
   }else if(phase==='ACTIVE'){
-    const p=THREE.MathUtils.clamp(elapsed/.12,0,1),pulse=1+Math.sin(p*Math.PI)*.18;
-    q05Sector.visible=true;q05Ring.visible=true;q05Halo.visible=true;q05Strike.visible=true;
-    q05SectorMat.color.setHex(0xff352d);q05SectorMat.opacity=.68;
-    q05RingMat.color.setHex(0xff2d24);q05RingMat.opacity=.92;q05Ring.scale.setScalar(.92*pulse);
-    q05HaloMat.color.setHex(0xff2d24);q05HaloMat.opacity=.30;q05Halo.scale.set(1.08*pulse,.90*pulse,1.08*pulse);
-    q05StrikeMat.opacity=.92*(1-p*.35);q05Strike.scale.set(1+.18*p,1,1);
+    const p=q05Clamp(elapsed/.12),pulse=1+Math.sin(p*Math.PI)*.18;
+    q05Ring.visible=q05Halo.visible=q05Strike.visible=true;for(const lane of q05Fan)lane.visible=true;
+    q05Ring.scale.setScalar(.90*pulse);q05Paint(q05Ring,0xff2d24,.95);
+    q05Halo.scale.setScalar(1.10*pulse);q05Paint(q05Halo,0xff2d24,.46);
+    for(const lane of q05Fan)q05Paint(lane,0xff352d,.62);
+    q05Strike.scale.x=(q05LaneTemplate?9:0.46)*(1+.16*p);q05Paint(q05Strike,0xff1f1a,.96-.22*p);
   }else if(phase==='RECOVERY'){
-    const p=THREE.MathUtils.clamp(elapsed/.40,0,1);
-    q05Sector.visible=true;q05Ring.visible=true;
-    q05SectorMat.color.setHex(0x7da0b8);q05SectorMat.opacity=.16*(1-p);
-    q05RingMat.color.setHex(0x8ba9bd);q05RingMat.opacity=.30*(1-p);q05Ring.scale.setScalar(1+.12*p);
+    const p=q05Clamp(elapsed/.40);
+    q05Ring.visible=true;for(const lane of q05Fan)lane.visible=true;
+    q05Ring.scale.setScalar(1+.15*p);q05Paint(q05Ring,0x8ba9bd,.34*(1-p));
+    for(const lane of q05Fan)q05Paint(lane,0x7da0b8,.15*(1-p));
   }
-  if(q05Auto){q05AutoTimer+=1/60;if(phase==='READY'&&q05AutoTimer>.75){q05AutoTimer=0;q05StartDemo();}else if(phase!=='READY')q05AutoTimer=0;}
+  if(q05Auto){q05AutoTimer+=dt;if(phase==='READY'&&q05AutoTimer>.75){q05AutoTimer=0;q05StartDemo();}else if(phase!=='READY')q05AutoTimer=0;}
   requestAnimationFrame(q05VisualLoop);
 }
 queueMicrotask(()=>{q05BindVisualControls();q05SetDemoButton();requestAnimationFrame(q05VisualLoop);});
 `;
+if(visualRuntime.includes('THREE.'))throw new Error('05Q visual runtime must not depend on stripped THREE namespace');
 app+=visualRuntime;
 await writeFile(path.join(out,'app.js'),app);
 
@@ -79,7 +131,7 @@ html=html.replace(/app\.js\?v=\d+/g,`app.js?v=${buildId}`).replace(/sw\.js\?v=\d
 await writeFile(path.join(out,'index.html'),html);
 
 let sw=await readFile(path.join(out,'sw.js'),'utf8');
-sw=sw.replace(/raai-threejs-test05o-\d+/g,`raai-threejs-test05q-${buildId}`).replace(/app\.js\?v=\d+/g,`app.js?v=${buildId}`);
+sw=sw.replace(/raai-threejs-test05o-\d+/g,`raai-threejs-test05q-${buildId}`).replace(/raai-threejs-test05q-\d+/g,`raai-threejs-test05q-${buildId}`).replace(/app\.js\?v=\d+/g,`app.js?v=${buildId}`);
 await writeFile(path.join(out,'sw.js'),sw);
 
 const info=JSON.parse(await readFile(path.join(out,'build-info.json'),'utf8'));
@@ -88,11 +140,12 @@ info.inherits='Verified Test 05P combat baseline with delegated nonvisual defens
 info.focus='human visual review of enemy telegraph readability and phase presentation';
 info.proof_labels=[];
 info.acceptance_checklist={telegraph_noticeability:'HUMAN REVIEW',direction_readability:'HUMAN REVIEW',active_impact_readability:'HUMAN REVIEW',recovery_readability:'HUMAN REVIEW',visual_clutter_and_scene_readability:'HUMAN REVIEW'};
-info.enemy_attack.visual_signal='world-space directional sector + countdown ring + body halo + ACTIVE strike lane + RECOVERY fade';
+info.enemy_attack.visual_signal='world-space cloned-mesh directional fan + countdown ring + body halo + ACTIVE strike lane + RECOVERY fade';
 info.enemy_attack.visual_review_status='PENDING HUMAN ACCEPTANCE';
 info.delegated_verification_status_05p='PASS';
 info.human_acceptance={accepted:false,status:'PENDING HUMAN VISUAL ACCEPTANCE'};
 info.disabled_systems={enemy_ai:true,authored_enemy_attack_animation:true,counter_animation:true,counter_hitstop:true,counter_vfx:true,block_stamina:true};
+info.visual_runtime_revision='05Q-R1 clone-native / no stripped THREE namespace dependency';
 info.app_js_bytes=Buffer.byteLength(app);
 await writeFile(path.join(out,'build-info.json'),JSON.stringify(info,null,2));
-console.log(`Built Test 05Q visual telegraph readability review ${buildId}.`);
+console.log(`Built Test 05Q-R1 visual telegraph readability review ${buildId}.`);
