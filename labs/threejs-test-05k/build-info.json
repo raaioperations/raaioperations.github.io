@@ -33,14 +33,7 @@
     "enemy_ai": true,
     "extra_vfx": true
   },
-  "proof_labels": [
-    "STAGGER ENTERED",
-    "STAGGER HELD",
-    "STAGGER ACTION BLOCKED",
-    "STAGGER RECOVERED",
-    "STAGGER ACTION RESTORED",
-    "STAGGER NON-PARRY BYPASS CONFIRMED"
-  ],
+  "proof_labels": [],
   "suppressed_proof_labels": [
     "LOCK ACQUIRED",
     "LOCK MAINTAINED",
@@ -50,15 +43,21 @@
     "WALK SUCCESS",
     "RUN SUCCESS",
     "SPRINT SUCCESS",
-    "JUMP SUCCESS"
+    "JUMP SUCCESS",
+    "STAGGER ENTERED",
+    "STAGGER HELD",
+    "STAGGER ACTION BLOCKED",
+    "STAGGER RECOVERED",
+    "STAGGER ACTION RESTORED",
+    "STAGGER NON-PARRY BYPASS CONFIRMED"
   ],
   "acceptance_checklist": {
-    "parry_enters_stagger": "PENDING",
-    "stagger_midpoint_held": "PENDING",
-    "enemy_action_blocked": "PENDING",
-    "stagger_recovers_ready": "PENDING",
-    "enemy_action_restored": "PENDING",
-    "non_parry_no_stagger": "PENDING"
+    "parry_enters_stagger": "ACCEPTED",
+    "stagger_midpoint_held": "ACCEPTED",
+    "enemy_action_blocked": "ACCEPTED",
+    "stagger_recovers_ready": "ACCEPTED",
+    "enemy_action_restored": "ACCEPTED",
+    "non_parry_no_stagger": "ACCEPTED"
   },
   "app_js_bytes": 676694,
   "soldier_glb_bytes": 2160468,
@@ -113,8 +112,9 @@
     "dodge_while_guarding": false
   },
   "human_acceptance": {
-    "accepted": false,
-    "status": "PENDING HUMAN ACCEPTANCE"
+    "accepted": true,
+    "status": "ACCEPTED",
+    "accepted_at": "2026-09-11T12:10:48-07:00"
   },
   "parry": {
     "window_start_s": 0,
@@ -142,6 +142,7 @@
     "rear_bypass_triggers": false,
     "non_parry_progress_ui": true,
     "animation": false,
-    "counter_window": false
+    "counter_window": false,
+    "status": "ACCEPTED"
   }
 }
