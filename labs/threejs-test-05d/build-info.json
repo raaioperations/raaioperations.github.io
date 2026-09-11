@@ -1,0 +1,67 @@
+{
+  "build_id": "20260911013801",
+  "inherits": "Test 04 visual baseline + accepted Test 05A movement + accepted Test 05B single attack + accepted Test 05C lock-on",
+  "base_blob": "8ec3761c2cf4a507a072d79307220c0b315a8261",
+  "three": "0.186.0",
+  "pipeline": "esbuild-local-bundle",
+  "runtime_external_dependencies": 0,
+  "focus": "two-hit attack chain proof",
+  "accepted_systems_active": {
+    "movement": true,
+    "lock_on": true
+  },
+  "combo": {
+    "attack1_duration_s": 0.44,
+    "attack1_hit_s": 0.16,
+    "combo_window_open_s": 0.2,
+    "combo_window_close_s": 0.34,
+    "attack2_duration_s": 0.48,
+    "attack2_hit_s": 0.17,
+    "reach_m": 2.75,
+    "damage_each": 25,
+    "max_chain_hits": 2,
+    "early_input_queues": false,
+    "late_input_queues": false,
+    "attack3": false
+  },
+  "disabled_systems": {
+    "dodge": true,
+    "block": true,
+    "parry": true,
+    "enemy_telegraph": true,
+    "enemy_ai": true,
+    "extra_vfx": true
+  },
+  "proof_labels": [
+    "ATTACK 1 HIT CONFIRMED",
+    "COMBO INPUT REJECTED · EARLY",
+    "COMBO INPUT ACCEPTED",
+    "ATTACK 2 STATE CONFIRMED",
+    "ATTACK 2 HIT CONFIRMED",
+    "COMBO INPUT REJECTED · LATE"
+  ],
+  "suppressed_proof_labels": [
+    "LOCK ACQUIRED",
+    "LOCK MAINTAINED",
+    "FACE CONFIRMED",
+    "LOCK RELEASED",
+    "LOCK REACQUIRED",
+    "WALK SUCCESS",
+    "RUN SUCCESS",
+    "SPRINT SUCCESS",
+    "JUMP SUCCESS"
+  ],
+  "acceptance_checklist": {
+    "attack1_hit": "PENDING",
+    "early_rejection": "PENDING",
+    "combo_window_accept": "PENDING",
+    "attack2_transition": "PENDING",
+    "attack2_hit": "PENDING",
+    "late_rejection": "PENDING"
+  },
+  "app_js_bytes": 667799,
+  "soldier_glb_bytes": 2160468,
+  "service_worker_cache": true,
+  "target": "safari16.4+",
+  "mobile_fps_target": 60
+}
