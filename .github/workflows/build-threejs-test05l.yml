@@ -1,0 +1,65 @@
+name: Build Three.js Test 05L
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'labs/threejs-test-05l-src/**'
+      - '.github/workflows/build-threejs-test05l.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: threejs-test05l-build
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install pinned build dependencies
+        working-directory: labs/threejs-test-05l-src
+        run: npm install --no-audit --no-fund --no-package-lock
+
+      - name: Build parry counter window proof
+        working-directory: labs/threejs-test-05l-src
+        run: npm run build
+
+      - name: Verify proof outputs
+        run: |
+          test -f labs/threejs-test-05l/index.html
+          test -f labs/threejs-test-05l/app.js
+          test -f labs/threejs-test-05l/assets/Soldier.glb
+          test -f labs/threejs-test-05l/sw.js
+          test -f labs/threejs-test-05l/build-info.json
+          ! grep -Eqi 'cdn\.jsdelivr|unpkg\.com|esm\.sh' labs/threejs-test-05l/index.html labs/threejs-test-05l/app.js labs/threejs-test-05l/sw.js
+          grep -q 'COUNTER WINDOW OPEN' labs/threejs-test-05l/app.js
+          grep -q 'COUNTER INPUT ACCEPTED' labs/threejs-test-05l/app.js
+          grep -q 'COUNTER REPEAT BLOCKED' labs/threejs-test-05l/app.js
+          grep -q 'COUNTER EARLY REJECTED' labs/threejs-test-05l/app.js
+          grep -q 'COUNTER LATE REJECTED' labs/threejs-test-05l/app.js
+          grep -q 'Test 05L checklist' labs/threejs-test-05l/index.html
+          grep -q 'counterCheck5' labs/threejs-test-05l/index.html
+
+      - name: Publish built proof to main
+        run: |
+          git config user.name 'raaioperations-build-bot'
+          git config user.email 'actions@users.noreply.github.com'
+          git add labs/threejs-test-05l
+          if git diff --cached --quiet; then
+            echo 'No output changes.'
+            exit 0
+          fi
+          git commit -m 'Build Three.js Test 05L parry counter window proof'
+          git push origin HEAD:main
