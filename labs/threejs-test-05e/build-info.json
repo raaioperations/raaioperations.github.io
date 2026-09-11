@@ -1,5 +1,5 @@
 {
-  "build_id": "20260911022500",
+  "build_id": "20260911030524",
   "inherits": "Test 04 visual baseline + accepted Test 05A movement values + accepted 05B/05C/05D combat contracts (combat omitted for regression isolation)",
   "base_blob": "8ec3761c2cf4a507a072d79307220c0b315a8261",
   "three": "0.186.0",
@@ -158,5 +158,6 @@
       ]
     }
   },
-  "production_asset_status": "Procedural skeleton-keyframed regression clips only; final production should replace them with authored/retargeted standing and running jump animations while preserving controller-owned physics."
+  "production_asset_status": "Procedural skeleton-keyframed regression clips only; final production should replace them with authored/retargeted standing and running jump animations while preserving controller-owned physics.",
+  "dom_binding_guard": true
 }
