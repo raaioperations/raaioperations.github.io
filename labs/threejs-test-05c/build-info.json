@@ -1,0 +1,58 @@
+{
+  "build_id": "20260911010637",
+  "inherits": "Test 04 visual baseline + accepted Test 05A movement contract + accepted Test 05B single attack proof (attack omitted here for isolation)",
+  "base_blob": "8ec3761c2cf4a507a072d79307220c0b315a8261",
+  "three": "0.186.0",
+  "pipeline": "esbuild-local-bundle",
+  "runtime_external_dependencies": 0,
+  "focus": "single-target lock-on proof",
+  "movement_baseline": {
+    "walk_mps": 2.5,
+    "run_mps": 6.6,
+    "sprint_mps": 11.88,
+    "accel": 14,
+    "brake": 10,
+    "turn": 9,
+    "jump": 9,
+    "gravity": 24,
+    "camera": 0.12
+  },
+  "lock_on": {
+    "input": [
+      "Q",
+      "LOCK button"
+    ],
+    "targets": 1,
+    "acquisition_range_m": 20,
+    "maintain_proof_s": 1,
+    "facing_tolerance_deg": 5,
+    "locked_facing": true,
+    "strafe_while_locked": true,
+    "camera_target_bias": 0.26,
+    "attack": false,
+    "combo": false,
+    "dodge": false,
+    "block": false,
+    "parry": false,
+    "enemy_ai": false
+  },
+  "proof_labels": [
+    "LOCK ACQUIRED",
+    "LOCK MAINTAINED",
+    "FACE CONFIRMED",
+    "LOCK RELEASED",
+    "LOCK REACQUIRED"
+  ],
+  "acceptance_checklist": {
+    "acquire": "PENDING",
+    "maintain": "PENDING",
+    "face": "PENDING",
+    "release": "PENDING",
+    "reacquire": "PENDING"
+  },
+  "app_js_bytes": 665473,
+  "soldier_glb_bytes": 2160468,
+  "service_worker_cache": true,
+  "target": "safari16.4+",
+  "mobile_fps_target": 60
+}
