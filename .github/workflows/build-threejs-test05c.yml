@@ -1,0 +1,64 @@
+name: Build Three.js Test 05C
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'labs/threejs-test-05c-src/**'
+      - '.github/workflows/build-threejs-test05c.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: threejs-test05c-build
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install pinned build dependencies
+        working-directory: labs/threejs-test-05c-src
+        run: npm install --no-audit --no-fund --no-package-lock
+
+      - name: Build lock-on proof
+        working-directory: labs/threejs-test-05c-src
+        run: npm run build
+
+      - name: Verify proof outputs
+        run: |
+          test -f labs/threejs-test-05c/index.html
+          test -f labs/threejs-test-05c/app.js
+          test -f labs/threejs-test-05c/assets/Soldier.glb
+          test -f labs/threejs-test-05c/sw.js
+          test -f labs/threejs-test-05c/build-info.json
+          ! grep -Eqi 'cdn\.jsdelivr|unpkg\.com|esm\.sh|raw\.githubusercontent' labs/threejs-test-05c/index.html labs/threejs-test-05c/app.js labs/threejs-test-05c/sw.js
+          grep -q 'LOCK ACQUIRED' labs/threejs-test-05c/app.js
+          grep -q 'LOCK MAINTAINED' labs/threejs-test-05c/app.js
+          grep -q 'FACE CONFIRMED' labs/threejs-test-05c/app.js
+          grep -q 'LOCK RELEASED' labs/threejs-test-05c/app.js
+          grep -q 'LOCK REACQUIRED' labs/threejs-test-05c/app.js
+          grep -q 'Test 05C checklist' labs/threejs-test-05c/index.html
+
+      - name: Publish built proof to main
+        run: |
+          git config user.name 'raaioperations-build-bot'
+          git config user.email 'actions@users.noreply.github.com'
+          git add labs/threejs-test-05c
+          if git diff --cached --quiet; then
+            echo 'No output changes.'
+            exit 0
+          fi
+          git commit -m 'Build Three.js Test 05C lock-on proof'
+          git push origin HEAD:main
