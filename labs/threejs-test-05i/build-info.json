@@ -8,7 +8,8 @@
   "focus": "isolated hold block / directional guard proof",
   "accepted_systems_active": {
     "movement": true,
-    "lock_on": true
+    "lock_on": true,
+    "block": true
   },
   "combo": {
     "attack1_duration_s": 0.44,
@@ -33,13 +34,7 @@
     "enemy_ai": true,
     "extra_vfx": true
   },
-  "proof_labels": [
-    "BLOCK BASELINE DAMAGE CONFIRMED",
-    "BLOCK INPUT ACCEPTED",
-    "BLOCK FRONT MITIGATION CONFIRMED",
-    "BLOCK REAR BYPASS CONFIRMED",
-    "BLOCK RELEASE CONFIRMED"
-  ],
+  "proof_labels": [],
   "suppressed_proof_labels": [
     "LOCK ACQUIRED",
     "LOCK MAINTAINED",
@@ -49,14 +44,19 @@
     "WALK SUCCESS",
     "RUN SUCCESS",
     "SPRINT SUCCESS",
-    "JUMP SUCCESS"
+    "JUMP SUCCESS",
+    "BLOCK BASELINE DAMAGE CONFIRMED",
+    "BLOCK INPUT ACCEPTED",
+    "BLOCK FRONT MITIGATION CONFIRMED",
+    "BLOCK REAR BYPASS CONFIRMED",
+    "BLOCK RELEASE CONFIRMED"
   ],
   "acceptance_checklist": {
-    "direct_hit_20": "PENDING",
-    "guard_input": "PENDING",
-    "front_mitigation_5": "PENDING",
-    "rear_bypass_20": "PENDING",
-    "guard_release": "PENDING"
+    "direct_hit_20": "ACCEPTED",
+    "guard_input": "ACCEPTED",
+    "front_mitigation_5": "ACCEPTED",
+    "rear_bypass_20": "ACCEPTED",
+    "guard_release": "ACCEPTED"
   },
   "app_js_bytes": 673282,
   "soldier_glb_bytes": 2160468,
@@ -106,10 +106,12 @@
     "parry": false,
     "stamina": false,
     "attack_while_guarding": false,
-    "dodge_while_guarding": false
+    "dodge_while_guarding": false,
+    "status": "ACCEPTED"
   },
   "human_acceptance": {
-    "accepted": false,
-    "status": "PENDING HUMAN ACCEPTANCE"
+    "accepted": true,
+    "status": "ACCEPTED",
+    "accepted_at": "2026-09-11T00:41:30-07:00"
   }
 }
