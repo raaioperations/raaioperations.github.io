@@ -16,8 +16,8 @@ html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#101719;fon
 <div id="hud"><div id="metrics"><div class="title">RAAI Proof 05Q — Enemy Telegraph Readability</div><div id="stats"><span>FPS</span><b id="fps">—</b><span>Draw calls</span><b id="calls">—</b><span>Triangles</span><b id="tris">—</b><span>Character</span><b id="char">BOOT</b><span>Render scale</span><b id="scale">—</b><span>Lock</span><b id="lockState">FREE</b><span>Attack state</span><b id="attackState">READY</b><span>Combo window</span><b id="comboWindow">—</b><span>Target HP</span><b id="targetHp">100/100</b><span>Dodge</span><b id="dodgeState">READY</b><span>Dodge dir</span><b id="dodgeDirection">—</b><span>Dodge dist</span><b id="dodgeDistance">—</b><span>Player HP</span><b id="playerHp">100/100</b><span>I-frame</span><b id="iframeState">OFF</b><span>Hit test</span><b id="hitResult">—</b><span>Guard</span><b id="blockState">READY</b><span>Block dmg</span><b id="blockDamage">—</b><span>Front dot</span><b id="blockFrontDot">—</b><span>Parry</span><b id="parryState">READY</b><span>Parry t</span><b id="parryTime">—</b><span>Parry dmg</span><b id="parryDamage">—</b><span>Enemy state</span><b id="enemyState">READY</b><span>Enemy action</span><b id="enemyAction">AVAILABLE</b><span>Counter</span><b id="counterState">IDLE</b><span>Counter t</span><b id="counterTime">—</b><span>Counter result</span><b id="counterResult">—</b><span>Counter count</span><b id="counterCount">0</b><span>Counter target HP</span><b id="counterTargetHp">100/100</b><span>Counter dmg</span><b id="counterDamage">—</b><span>Damage events</span><b id="counterDamageEvents">0</b><span>Enemy attack</span><b id="enemyAttackPhase">READY</b><span>Enemy attack result</span><b id="enemyAttackResult">READY</b><span>Enemy attack timing</span><b id="enemyAttackMeasured">—</b><span>Enemy attack cycle</span><b id="enemyAttackCycle">0</b><span>Enemy damage phase</span><b id="enemyDamagePhase">READY</b><span>Enemy damage HP</span><b id="enemyDamageHp">100/100</b><span>Enemy damage</span><b id="enemyDamageAmount">—</b><span>Enemy damage events</span><b id="enemyDamageEvents">0</b><span>Enemy damage result</span><b id="enemyDamageResult">READY</b></div></div><div id="zone">FOREST APPROACH</div><div id="proofSuccess">HIT IMPACT REVIEW — land attacks or use DEMO HIT; judge weight, clarity, camera kick, and visual clutter</div><div id="enemyAttackSignal" data-phase="READY">READY</div><button id="tuneBtn">CHECK</button><div id="panel"><div class="title">Test 05Q checklist</div><div id="checklist"><div><b>REVIEW</b><span>01 A successful hit is immediately noticeable without reading HUD text</span></div><div><b>REVIEW</b><span>02 Burst + flash are focused and disappear quickly</span></div><div><b>REVIEW</b><span>03 Camera kick adds weight without becoming disorienting</span></div><div><b>REVIEW</b><span>04 A 40-damage counter impact reads stronger than a 25-damage basic hit</span></div><div><b>REVIEW</b><span>05 Repeated hits remain readable and do not obscure combat</span></div></div><div class="contract"><b>HIT IMPACT CONTRACT</b><span>Presentation only. Accepted attack damage, counter damage, hit timing, range, guard, parry, stagger, dodge, telegraph timing, and enemy damage mechanics are unchanged.</span></div><div class="acceptedContract"><b>ACCEPTED / NOT RETESTED</b><span>05Q enemy telegraph presentation is accepted. 05P defense integration remains mechanically verified. Jump animation replacement stays deferred.</span></div><label class="envHidden"><span>Time</span><input id="tod" type="range" min="6" max="20" step="0.1" value="9.8"></label><label class="envHidden"><span>Atmosphere</span><input id="fog" type="range" min="0" max="1" step="0.01" value="0.34"></label><label class="envHidden"><span>Wind</span><input id="wind" type="range" min="0" max="1" step="0.01" value="0.48"></label><label class="envHidden"><span>Camera</span><input id="damp" type="range" min="0.05" max="0.22" step="0.005" value="0.12"></label><button id="shadowBtn">Dynamic shadows: ON</button></div><div id="toast"></div></div>
 <div id="mobile"><div id="stick"><div id="knob"></div></div><button id="jump" class="action">JUMP</button><button id="lock" class="action">LOCK</button><button id="attack" class="action">ATTACK</button><button id="dodge" class="action">DODGE</button><button id="block" class="action">BLOCK</button><button id="sprint" class="action">RUN</button></div>
 <div id="error"></div>
-<script type="module" src="./app.js?v=20260911215656"></script>
-<script>if('serviceWorker'in navigator){addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=20260911215656').catch(()=>{}));}</script>
+<script type="module" src="./app.js?v=20260911222438"></script>
+<script>if('serviceWorker'in navigator){addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=20260911222438').catch(()=>{}));}</script>
 <div id="q05Cue" data-phase="READY" aria-hidden="true"><div id="q05Cone"></div><div id="q05Lane"></div><div id="q05Ring"></div><div id="q05Phase">TELEGRAPH</div><div id="q05Direction">DANGER ▼</div></div><button id="visualDemoAttack">DEMO ATTACK</button><button id="visualDemoAuto">AUTO: OFF</button><div id="r05ImpactLayer" aria-hidden="true"><div id="r05ImpactFlash"></div><div id="r05ImpactBurst"><div id="r05ImpactCore"></div><div id="r05ImpactLabel">25</div></div></div><button id="r05Demo25">DEMO 25</button><button id="r05Demo40">DEMO 40</button><script>
 (()=>{
   const layer=document.getElementById('r05ImpactLayer');
@@ -27,14 +27,29 @@ html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#101719;fon
   let active=0;
   function kickCanvas(strength){
     const canvas=document.querySelector('canvas');
-    if(!canvas||!canvas.animate)return;
-    const px=strength>=40?5:3;
-    canvas.animate([
-      {transform:'translate(0,0)'},
-      {transform:'translate('+px+'px,-'+Math.max(1,px-1)+'px)'},
-      {transform:'translate(-'+Math.max(1,px-2)+'px,'+Math.max(1,px-3)+'px)'},
-      {transform:'translate(0,0)'}
-    ],{duration:strength>=40?115:90,easing:'ease-out'});
+    if(!canvas)return;
+    if(canvas.__r05KickRaf)cancelAnimationFrame(canvas.__r05KickRaf);
+    const strong=strength>=40;
+    const duration=strong?150:118;
+    const ampX=strong?12:7;
+    const ampY=strong?8:4.5;
+    const ampRot=strong?.32:.18;
+    const zoom=strong?.014:.009;
+    const start=performance.now();
+    canvas.style.transformOrigin='50% 50%';
+    function frame(now){
+      const p=Math.min(1,(now-start)/duration);
+      const decay=(1-p)*(1-p);
+      const phase=p*Math.PI*5.2;
+      const x=Math.sin(phase)*ampX*decay;
+      const y=-Math.cos(phase*.86)*ampY*decay;
+      const r=Math.sin(phase*.72)*ampRot*decay;
+      const s=1+zoom*decay;
+      canvas.style.transform='translate3d('+x.toFixed(2)+'px,'+y.toFixed(2)+'px,0) scale('+s.toFixed(4)+') rotate('+r.toFixed(3)+'deg)';
+      if(p<1)canvas.__r05KickRaf=requestAnimationFrame(frame);
+      else{canvas.style.transform='';canvas.__r05KickRaf=0;}
+    }
+    canvas.__r05KickRaf=requestAnimationFrame(frame);
   }
   function impact(damage){
     active++;
@@ -71,4 +86,4 @@ html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#101719;fon
   const d40=document.getElementById('r05Demo40');if(d40)d40.addEventListener('pointerdown',e=>{e.preventDefault();impact(40);});
   globalThis.__r05ImpactDemo=impact;
 })();
-</script></body></html>
+</script><div id="r05KickRevision" data-revision="05R-R1" hidden></div></body></html>
