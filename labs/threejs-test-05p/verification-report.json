@@ -1,0 +1,183 @@
+{
+  "test": "05P",
+  "status": "PASS",
+  "manual_visual_review_required": false,
+  "case_count": 10,
+  "all_pass": true,
+  "results": {
+    "telegraph_zero": {
+      "pass": true,
+      "input": {
+        "phase": "TELEGRAPH"
+      },
+      "expected": {
+        "damage": 0,
+        "result": "PHASE_BLOCKED",
+        "stagger": false
+      },
+      "actual": {
+        "damage": 0,
+        "result": "PHASE_BLOCKED",
+        "stagger": false
+      }
+    },
+    "active_unprotected_20": {
+      "pass": true,
+      "input": {
+        "phase": "ACTIVE"
+      },
+      "expected": {
+        "damage": 20,
+        "result": "HIT",
+        "stagger": false
+      },
+      "actual": {
+        "damage": 20,
+        "result": "HIT",
+        "stagger": false
+      }
+    },
+    "duplicate_active_zero": {
+      "pass": true,
+      "input": {
+        "phase": "ACTIVE",
+        "consumed": true
+      },
+      "expected": {
+        "damage": 0,
+        "result": "DUPLICATE_BLOCKED",
+        "stagger": false
+      },
+      "actual": {
+        "damage": 0,
+        "result": "DUPLICATE_BLOCKED",
+        "stagger": false
+      }
+    },
+    "recovery_zero": {
+      "pass": true,
+      "input": {
+        "phase": "RECOVERY"
+      },
+      "expected": {
+        "damage": 0,
+        "result": "PHASE_BLOCKED",
+        "stagger": false
+      },
+      "actual": {
+        "damage": 0,
+        "result": "PHASE_BLOCKED",
+        "stagger": false
+      }
+    },
+    "iframe_zero": {
+      "pass": true,
+      "input": {
+        "phase": "ACTIVE",
+        "iframe": true
+      },
+      "expected": {
+        "damage": 0,
+        "result": "EVADED",
+        "stagger": false
+      },
+      "actual": {
+        "damage": 0,
+        "result": "EVADED",
+        "stagger": false
+      }
+    },
+    "front_guard_5": {
+      "pass": true,
+      "input": {
+        "phase": "ACTIVE",
+        "blocking": true,
+        "frontDot": 1
+      },
+      "expected": {
+        "damage": 5,
+        "result": "GUARDED",
+        "stagger": false
+      },
+      "actual": {
+        "damage": 5,
+        "result": "GUARDED",
+        "stagger": false
+      }
+    },
+    "front_parry_0_stagger": {
+      "pass": true,
+      "input": {
+        "phase": "ACTIVE",
+        "blocking": true,
+        "parryActive": true,
+        "frontDot": 1
+      },
+      "expected": {
+        "damage": 0,
+        "result": "PARRIED",
+        "stagger": true
+      },
+      "actual": {
+        "damage": 0,
+        "result": "PARRIED",
+        "stagger": true
+      }
+    },
+    "rear_guard_bypass_20": {
+      "pass": true,
+      "input": {
+        "phase": "ACTIVE",
+        "blocking": true,
+        "frontDot": -1
+      },
+      "expected": {
+        "damage": 20,
+        "result": "HIT",
+        "stagger": false
+      },
+      "actual": {
+        "damage": 20,
+        "result": "HIT",
+        "stagger": false
+      }
+    },
+    "rear_parry_bypass_20": {
+      "pass": true,
+      "input": {
+        "phase": "ACTIVE",
+        "blocking": true,
+        "parryActive": true,
+        "frontDot": -1
+      },
+      "expected": {
+        "damage": 20,
+        "result": "HIT",
+        "stagger": false
+      },
+      "actual": {
+        "damage": 20,
+        "result": "HIT",
+        "stagger": false
+      }
+    },
+    "cone_edge_outside_20": {
+      "pass": true,
+      "input": {
+        "phase": "ACTIVE",
+        "blocking": true,
+        "frontDot": 0.49
+      },
+      "expected": {
+        "damage": 20,
+        "result": "HIT",
+        "stagger": false
+      },
+      "actual": {
+        "damage": 20,
+        "result": "HIT",
+        "stagger": false
+      }
+    }
+  }
+}
