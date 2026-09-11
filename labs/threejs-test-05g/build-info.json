@@ -6,6 +6,9 @@
   "pipeline": "esbuild-local-bundle",
   "runtime_external_dependencies": 0,
   "focus": "isolated dodge / evade mechanical proof",
+  "acceptance_status": "ACCEPTED",
+  "accepted_at": "2026-09-11T05:38:33Z",
+  "human_retest": "ALL 05G CHECKS RETESTED AND PASSED",
   "accepted_systems_active": {
     "movement": true,
     "lock_on": true
@@ -41,6 +44,7 @@
     "DODGE RECOVERY CONFIRMED",
     "DODGE REPEAT BLOCKED"
   ],
+  "proof_labels_status": "RETIRED AFTER HUMAN ACCEPTANCE",
   "suppressed_proof_labels": [
     "LOCK ACQUIRED",
     "LOCK MAINTAINED",
@@ -53,13 +57,13 @@
     "JUMP SUCCESS"
   ],
   "acceptance_checklist": {
-    "dodge_input": "PENDING",
-    "direction_selection": "PENDING",
-    "immediate_state": "PENDING",
-    "deterministic_distance": "PENDING",
-    "commit_steering_lock": "PENDING",
-    "recovery_to_locomotion": "PENDING",
-    "repeat_spam_block": "PENDING"
+    "dodge_input": "ACCEPTED",
+    "direction_selection": "ACCEPTED",
+    "immediate_state": "ACCEPTED",
+    "deterministic_distance": "ACCEPTED",
+    "commit_steering_lock": "ACCEPTED",
+    "recovery_to_locomotion": "ACCEPTED",
+    "repeat_spam_block": "ACCEPTED"
   },
   "app_js_bytes": 669780,
   "soldier_glb_bytes": 2160468,
