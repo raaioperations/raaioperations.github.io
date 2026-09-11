@@ -4291,7 +4291,7 @@ function o05NoExtraProgress(){
   else{o05Check(4);o05Proof('ENEMY DAMAGE EXTRA BLOCKED','DUPLICATE + RECOVERY = 0');}
 }
 function o05AttemptDamage(kind){
-  const phase=enemyAttackPhase05N;
+  const phase=enemyAttackPhase05O;
   const before=enemyDamageHp05O;
   let dealt=0;
   if(phase==='ACTIVE'&&!enemyDamageConsumed05O){
@@ -4312,14 +4312,14 @@ function o05WaitPhase(phase,token,cb,timeoutMs=1800){
   const start=performance.now();
   const tick=()=>{
     if(token!==enemyDamageRun05O)return;
-    if(enemyAttackPhase05N===phase){cb();return;}
+    if(enemyAttackPhase05O===phase){cb();return;}
     if(performance.now()-start>timeoutMs){o05Text('enemyDamageResult','TIMEOUT · '+phase);return;}
     setTimeout(tick,5);
   };
   tick();
 }
 function o05RunDamageCycle(){
-  if(enemyAttackPhase05N!=='READY'){o05Text('enemyDamageResult','WAIT FOR READY');return;}
+  if(enemyAttackPhase05O!=='READY'){o05Text('enemyDamageResult','WAIT FOR READY');return;}
   if(enemyDamageHp05O!==100||enemyDamageEvents05O!==0){o05Text('enemyDamageResult','RESET FIRST');return;}
   const token=++enemyDamageRun05O;enemyDamageConsumed05O=false;enemyDamageFirstCycle05O=false;enemyDamageDuplicateZero05O=false;enemyDamageRecoveryZero05O=false;o05Check(4,'0/2','#ffd27a');o05Text('enemyDamageResult','RUNNING FIRST CYCLE');
   if(!n05StartEnemyAttack('05O_DAMAGE'))return;
@@ -4332,7 +4332,7 @@ function o05RunDamageCycle(){
 }
 function o05RunFreshCycle(){
   if(!enemyDamageFirstCycle05O||enemyDamageHp05O!==80||enemyDamageEvents05O!==1){o05Text('enemyDamageResult','RUN FIRST CYCLE FIRST');return;}
-  if(enemyAttackPhase05N!=='READY'){o05Text('enemyDamageResult','WAIT FOR READY');return;}
+  if(enemyAttackPhase05O!=='READY'){o05Text('enemyDamageResult','WAIT FOR READY');return;}
   const token=++enemyDamageRun05O;enemyDamageConsumed05O=false;o05Text('enemyDamageResult','RUNNING FRESH CYCLE');
   if(!n05StartEnemyAttack('05O_FRESH'))return;
   o05WaitPhase('ACTIVE',token,()=>{setTimeout(()=>{if(token===enemyDamageRun05O){o05AttemptDamage('FRESH');o05Text('enemyDamageResult','FRESH DAMAGE COMPLETE');}},25);});

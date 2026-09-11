@@ -1,5 +1,5 @@
 {
-  "build_id": "20260911193535",
+  "build_id": "20260911203913",
   "inherits": "Accepted Test 05N combat baseline: movement + lock-on + attacks + dodge + i-frames + block/guard + parry + stagger + counter systems + enemy telegraph",
   "base_blob": "8ec3761c2cf4a507a072d79307220c0b315a8261",
   "three": "0.186.0",
