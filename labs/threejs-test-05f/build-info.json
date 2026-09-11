@@ -1,0 +1,20 @@
+{
+  "build_id": "20260911043341",
+  "inherits": "Accepted Test 05B single-attack runtime; accepted movement carried forward; jump animation regression omitted",
+  "focus": "05B windup → active → recovery timing regression only",
+  "active_check": "Windup → Active → Recovery → Ready state order and measured phase durations",
+  "expected_timing_ms": {
+    "windup": 115,
+    "active": 135,
+    "recovery": 190,
+    "total": 440
+  },
+  "acceptance_status": "PENDING HUMAN ACCEPTANCE",
+  "accepted_labels_suppressed": [
+    "ATTACK INPUT ACCEPTED",
+    "HIT CONFIRMED",
+    "MISS CONFIRMED"
+  ],
+  "procedural_jump_status": "CLOSED / FAILED / DEFERRED TO AUTHORED ANIMATION",
+  "runtime_external_dependencies": 0
+}
