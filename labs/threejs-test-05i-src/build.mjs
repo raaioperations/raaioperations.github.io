@@ -10,16 +10,7 @@ let src=await readFile(basePath,'utf8');
 // Reuse the accepted 05H architecture but emit a new 05I build.
 src=src.replaceAll('05H','05I').replaceAll('05h','05i');
 
-const blockPatch=String.raw`
-
-// ---- Test 05I: isolated block / guard proof ----
-replaceReq(
-  "if(!(label.startsWith('IFRAME')||label.startsWith('DAMAGE')))return;",
-  "if(!label.startsWith('BLOCK'))return;",
-  '05I proof label filter'
-);
-
-const blockCode05I=String.raw\`
+const blockCode=`
 const BLOCK_BASE_DAMAGE=20,BLOCK_DAMAGE=5,BLOCK_FRONT_DOT=.50;
 let blocking=false,armedBlockProbe='NONE';
 function setBlockCheck(n){const e=document.getElementById('blockCheck'+n);if(e){e.textContent='PASS';e.style.color='#a8f0b5';}}
@@ -50,7 +41,16 @@ function bindBlockControls(){
   for(const [id,fn] of binds){const e=document.getElementById(id);if(e)e.addEventListener('pointerdown',ev=>{ev.preventDefault();fn();});}
 }
 queueMicrotask(bindBlockControls);
-\`;
+`;
+
+const blockPatch=`
+// ---- Test 05I: isolated block / guard proof ----
+replaceReq(
+  "if(!(label.startsWith('IFRAME')||label.startsWith('DAMAGE')))return;",
+  "if(!label.startsWith('BLOCK'))return;",
+  '05I proof label filter'
+);
+const blockCode05I=${JSON.stringify(blockCode)};
 replaceReq('queueMicrotask(bindIframeControls);','queueMicrotask(bindIframeControls);\\n'+blockCode05I,'05I block state and controls');
 replaceReq("function requestAttack(){if(!grounded||dodgeState!=='READY')return;","function requestAttack(){if(!grounded||dodgeState!=='READY'||blocking)return;",'05I block attack exclusion');
 replaceReq("if(!grounded||attackPhase!==0){prove('DODGE INPUT REJECTED','BUSY');return;}","if(!grounded||attackPhase!==0||blocking){prove('DODGE INPUT REJECTED','BUSY');return;}",'05I block dodge exclusion');
