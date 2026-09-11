@@ -4365,53 +4365,41 @@ function resolveEnemyDefense05P({phase='READY',consumed=false,iframe=false,block
 globalThis.__resolveEnemyDefense05P=resolveEnemyDefense05P;
 
 
-// Test 05Q — human visual-review telegraph readability layer.
-const q05VisualRoot=new THREE.Group();targetRoot.add(q05VisualRoot);
-function q05SectorGeometry(radius=3.6,halfAngle=Math.PI*35/180,segments=28){
-  const s=new THREE.Shape();s.moveTo(0,0);
-  for(let i=0;i<=segments;i++){const a=-halfAngle+(halfAngle*2*i/segments);s.lineTo(Math.sin(a)*radius,Math.cos(a)*radius);}s.lineTo(0,0);return new THREE.ShapeGeometry(s);
-}
-const q05SectorMat=new THREE.MeshBasicMaterial({color:0xffa33a,transparent:true,opacity:0,depthWrite:false,side:THREE.DoubleSide,blending:THREE.NormalBlending});
-const q05Sector=new THREE.Mesh(q05SectorGeometry(),q05SectorMat);q05Sector.rotation.x=-Math.PI/2;q05Sector.position.y=.055;q05Sector.visible=false;q05VisualRoot.add(q05Sector);
-const q05RingMat=new THREE.MeshBasicMaterial({color:0xffbf5a,transparent:true,opacity:0,depthWrite:false,blending:THREE.AdditiveBlending});
-const q05Ring=new THREE.Mesh(new THREE.TorusGeometry(.92,.045,8,48),q05RingMat);q05Ring.rotation.x=Math.PI/2;q05Ring.position.y=.12;q05Ring.visible=false;q05VisualRoot.add(q05Ring);
-const q05HaloMat=new THREE.MeshBasicMaterial({color:0xffad42,transparent:true,opacity:0,depthWrite:false,blending:THREE.AdditiveBlending});
-const q05Halo=new THREE.Mesh(new THREE.SphereGeometry(.78,18,12),q05HaloMat);q05Halo.position.y=1.25;q05Halo.scale.set(1,.82,1);q05Halo.visible=false;q05VisualRoot.add(q05Halo);
-const q05StrikeMat=new THREE.MeshBasicMaterial({color:0xff3b2f,transparent:true,opacity:0,depthWrite:false,blending:THREE.AdditiveBlending});
-const q05Strike=new THREE.Mesh(new THREE.BoxGeometry(.18,.035,3.35),q05StrikeMat);q05Strike.position.set(0,.085,1.68);q05Strike.visible=false;q05VisualRoot.add(q05Strike);
-let q05LastPhase='READY',q05Auto=false,q05AutoTimer=0;
-function q05OrientAtPlayer(){const dx=playerRoot.position.x-targetRoot.position.x,dz=playerRoot.position.z-targetRoot.position.z;q05VisualRoot.rotation.y=Math.atan2(dx,dz);}
-function q05SetDemoButton(){const e=document.getElementById('visualDemoAuto');if(e)e.textContent=q05Auto?'AUTO: ON':'AUTO: OFF';}
-function q05StartDemo(){if(enemyAttackPhase05O!=='READY')return false;q05OrientAtPlayer();return n05StartEnemyAttack('05Q_VISUAL');}
+// Test 05Q — human visual-review telegraph readability layer (bundle-safe screen-space presentation).
+let q05LastPhase='READY',q05Auto=false,q05AutoTimer=0,q05LastFrame=performance.now();
+function q05El(id){return document.getElementById(id);}
+function q05SetDemoButton(){const e=q05El('visualDemoAuto');if(e)e.textContent=q05Auto?'AUTO: ON':'AUTO: OFF';}
+function q05StartDemo(){if(enemyAttackPhase05O!=='READY')return false;return n05StartEnemyAttack('05Q_VISUAL');}
 function q05BindVisualControls(){
-  const once=document.getElementById('visualDemoAttack');if(once)once.addEventListener('pointerdown',e=>{e.preventDefault();q05StartDemo();});
-  const auto=document.getElementById('visualDemoAuto');if(auto)auto.addEventListener('pointerdown',e=>{e.preventDefault();q05Auto=!q05Auto;q05AutoTimer=0;q05SetDemoButton();if(q05Auto)q05StartDemo();});
+  const once=q05El('visualDemoAttack');if(once)once.addEventListener('pointerdown',e=>{e.preventDefault();q05StartDemo();});
+  const auto=q05El('visualDemoAuto');if(auto)auto.addEventListener('pointerdown',e=>{e.preventDefault();q05Auto=!q05Auto;q05AutoTimer=0;q05SetDemoButton();if(q05Auto)q05StartDemo();});
 }
 function q05VisualLoop(now){
-  const phase=enemyAttackPhase05O;
-  if(phase!==q05LastPhase){if(phase==='TELEGRAPH')q05OrientAtPlayer();q05LastPhase=phase;}
+  const phase=enemyAttackPhase05O,root=q05El('q05Cue'),ring=q05El('q05Ring'),cone=q05El('q05Cone'),lane=q05El('q05Lane'),label=q05El('q05Phase');
+  const dt=Math.min(.05,Math.max(0,(now-q05LastFrame)/1000));q05LastFrame=now;
   const elapsed=Math.max(0,(performance.now()-enemyPhaseStart05O)/1000);
-  q05Sector.visible=q05Ring.visible=q05Halo.visible=q05Strike.visible=false;
+  if(root){root.dataset.phase=phase;root.style.display=phase==='READY'?'none':'block';}
+  if(phase!==q05LastPhase){q05LastPhase=phase;}
   if(phase==='TELEGRAPH'){
-    const p=THREE.MathUtils.clamp(elapsed/.70,0,1),pulse=.5+.5*Math.sin(now*.018);
-    q05Sector.visible=true;q05Ring.visible=true;q05Halo.visible=true;
-    q05SectorMat.color.setHex(0xffa33a);q05SectorMat.opacity=.18+.18*p;
-    q05RingMat.color.setHex(0xffc15b);q05RingMat.opacity=.42+.28*p;q05Ring.scale.setScalar(1.38-.40*p);
-    q05HaloMat.color.setHex(0xffa33a);q05HaloMat.opacity=.08+.08*pulse;q05Halo.scale.set(1+.06*pulse,.82+.04*pulse,1+.06*pulse);
+    const p=Math.max(0,Math.min(1,elapsed/.70)),pulse=.5+.5*Math.sin(now*.018);
+    if(cone)cone.style.opacity=String(.20+.22*p);
+    if(ring){ring.style.opacity=String(.52+.32*p);ring.style.transform='translate(-50%,-50%) scale('+(1.42-.42*p).toFixed(3)+')';}
+    if(lane)lane.style.opacity='0';
+    if(label){label.textContent='TELEGRAPH';label.style.opacity=String(.70+.25*pulse);}
   }else if(phase==='ACTIVE'){
-    const p=THREE.MathUtils.clamp(elapsed/.12,0,1),pulse=1+Math.sin(p*Math.PI)*.18;
-    q05Sector.visible=true;q05Ring.visible=true;q05Halo.visible=true;q05Strike.visible=true;
-    q05SectorMat.color.setHex(0xff352d);q05SectorMat.opacity=.68;
-    q05RingMat.color.setHex(0xff2d24);q05RingMat.opacity=.92;q05Ring.scale.setScalar(.92*pulse);
-    q05HaloMat.color.setHex(0xff2d24);q05HaloMat.opacity=.30;q05Halo.scale.set(1.08*pulse,.90*pulse,1.08*pulse);
-    q05StrikeMat.opacity=.92*(1-p*.35);q05Strike.scale.set(1+.18*p,1,1);
+    const p=Math.max(0,Math.min(1,elapsed/.12)),pulse=1+Math.sin(p*Math.PI)*.14;
+    if(cone)cone.style.opacity='.72';
+    if(ring){ring.style.opacity='.98';ring.style.transform='translate(-50%,-50%) scale('+(.92*pulse).toFixed(3)+')';}
+    if(lane){lane.style.opacity=String(.98-.18*p);lane.style.transform='translateX(-50%) scaleX('+(1+.25*p).toFixed(3)+')';}
+    if(label){label.textContent='ACTIVE';label.style.opacity='1';}
   }else if(phase==='RECOVERY'){
-    const p=THREE.MathUtils.clamp(elapsed/.40,0,1);
-    q05Sector.visible=true;q05Ring.visible=true;
-    q05SectorMat.color.setHex(0x7da0b8);q05SectorMat.opacity=.16*(1-p);
-    q05RingMat.color.setHex(0x8ba9bd);q05RingMat.opacity=.30*(1-p);q05Ring.scale.setScalar(1+.12*p);
+    const p=Math.max(0,Math.min(1,elapsed/.40));
+    if(cone)cone.style.opacity=String(.18*(1-p));
+    if(ring){ring.style.opacity=String(.34*(1-p));ring.style.transform='translate(-50%,-50%) scale('+(1+.16*p).toFixed(3)+')';}
+    if(lane)lane.style.opacity='0';
+    if(label){label.textContent='RECOVERY';label.style.opacity=String(.75*(1-p));}
   }
-  if(q05Auto){q05AutoTimer+=1/60;if(phase==='READY'&&q05AutoTimer>.75){q05AutoTimer=0;q05StartDemo();}else if(phase!=='READY')q05AutoTimer=0;}
+  if(q05Auto){q05AutoTimer+=dt;if(phase==='READY'&&q05AutoTimer>.75){q05AutoTimer=0;q05StartDemo();}else if(phase!=='READY')q05AutoTimer=0;}
   requestAnimationFrame(q05VisualLoop);
 }
 queueMicrotask(()=>{q05BindVisualControls();q05SetDemoButton();requestAnimationFrame(q05VisualLoop);});
