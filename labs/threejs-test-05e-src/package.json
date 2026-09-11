@@ -1,0 +1,11 @@
+{
+  "name": "raai-threejs-test-05e",
+  "private": true,
+  "version": "0.5.5",
+  "description": "Movement and two-state jump regression proof",
+  "type": "module",
+  "engines": {"node": ">=22"},
+  "scripts": {"build": "node prepare-copy.mjs && node jump-prebuild.mjs && node two-state-upgrade.mjs && node build.mjs && node postpatch.mjs && node jump-postpatch.mjs && node final-regression.mjs"},
+  "dependencies": {"three": "0.186.0"},
+  "devDependencies": {"esbuild": "0.25.9"}
+}
