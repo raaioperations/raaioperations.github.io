@@ -1,0 +1,11 @@
+{
+  "name": "raai-threejs-test-05l",
+  "private": true,
+  "version": "0.5.12",
+  "description": "Isolated parry counter-opportunity window proof built from accepted Test 05K stagger baseline",
+  "type": "module",
+  "engines": {"node": ">=22"},
+  "scripts": {"build": "node build.mjs"},
+  "dependencies": {"three": "0.186.0"},
+  "devDependencies": {"esbuild": "0.25.9"}
+}
