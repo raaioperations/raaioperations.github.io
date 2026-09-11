@@ -1,0 +1,62 @@
+name: Build Three.js Test 05H
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'labs/threejs-test-05h-src/**'
+      - '.github/workflows/build-threejs-test05h.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: threejs-test05h-build
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install pinned build dependencies
+        working-directory: labs/threejs-test-05h-src
+        run: npm install --no-audit --no-fund --no-package-lock
+
+      - name: Build dodge i-frame proof
+        working-directory: labs/threejs-test-05h-src
+        run: npm run build
+
+      - name: Verify proof outputs
+        run: |
+          test -f labs/threejs-test-05h/index.html
+          test -f labs/threejs-test-05h/app.js
+          test -f labs/threejs-test-05h/assets/Soldier.glb
+          test -f labs/threejs-test-05h/sw.js
+          test -f labs/threejs-test-05h/build-info.json
+          ! grep -Eqi 'cdn\.jsdelivr|unpkg\.com|esm\.sh' labs/threejs-test-05h/index.html labs/threejs-test-05h/app.js labs/threejs-test-05h/sw.js
+          grep -q 'IFRAME EVADE CONFIRMED' labs/threejs-test-05h/app.js
+          grep -q 'DAMAGE CONFIRMED' labs/threejs-test-05h/app.js
+          grep -q 'iframeCheck5' labs/threejs-test-05h/index.html
+          grep -q 'ARM I-FRAME' labs/threejs-test-05h/index.html
+
+      - name: Publish built proof to main
+        run: |
+          git config user.name 'raaioperations-build-bot'
+          git config user.email 'actions@users.noreply.github.com'
+          git add labs/threejs-test-05h
+          if git diff --cached --quiet; then
+            echo 'No output changes.'
+            exit 0
+          fi
+          git commit -m 'Build Three.js Test 05H dodge i-frame proof'
+          git push origin HEAD:main
