@@ -1,0 +1,9 @@
+{
+  "name": "raai-threejs-test-05q",
+  "private": true,
+  "version": "0.5.17",
+  "description": "Human visual-review pass for enemy telegraph readability built from verified Test 05P combat baseline",
+  "type": "module",
+  "engines": {"node": ">=22"},
+  "scripts": {"build": "node build.mjs"}
+}
