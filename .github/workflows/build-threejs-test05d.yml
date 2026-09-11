@@ -1,0 +1,64 @@
+name: Build Three.js Test 05D
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'labs/threejs-test-05d-src/**'
+      - '.github/workflows/build-threejs-test05d.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: threejs-test05d-build
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install pinned build dependencies
+        working-directory: labs/threejs-test-05d-src
+        run: npm install --no-audit --no-fund --no-package-lock
+
+      - name: Build two-hit chain proof
+        working-directory: labs/threejs-test-05d-src
+        run: npm run build
+
+      - name: Verify proof outputs
+        run: |
+          test -f labs/threejs-test-05d/index.html
+          test -f labs/threejs-test-05d/app.js
+          test -f labs/threejs-test-05d/assets/Soldier.glb
+          test -f labs/threejs-test-05d/sw.js
+          test -f labs/threejs-test-05d/build-info.json
+          ! grep -Eqi 'cdn\.jsdelivr|unpkg\.com|esm\.sh|raw\.githubusercontent' labs/threejs-test-05d/index.html labs/threejs-test-05d/app.js labs/threejs-test-05d/sw.js
+          grep -q 'ATTACK 1 HIT CONFIRMED' labs/threejs-test-05d/app.js
+          grep -q 'COMBO INPUT ACCEPTED' labs/threejs-test-05d/app.js
+          grep -q 'ATTACK 2 STATE CONFIRMED' labs/threejs-test-05d/app.js
+          grep -q 'ATTACK 2 HIT CONFIRMED' labs/threejs-test-05d/app.js
+          grep -q 'COMBO INPUT REJECTED' labs/threejs-test-05d/app.js
+          grep -q 'Test 05D checklist' labs/threejs-test-05d/index.html
+
+      - name: Publish built proof to main
+        run: |
+          git config user.name 'raaioperations-build-bot'
+          git config user.email 'actions@users.noreply.github.com'
+          git add labs/threejs-test-05d
+          if git diff --cached --quiet; then
+            echo 'No output changes.'
+            exit 0
+          fi
+          git commit -m 'Build Three.js Test 05D two-hit attack chain'
+          git push origin HEAD:main
