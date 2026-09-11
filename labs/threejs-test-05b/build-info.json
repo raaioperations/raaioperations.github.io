@@ -1,5 +1,7 @@
 {
   "build_id": "20260911004914",
+  "status": "ACCEPTED",
+  "accepted_at": "2026-09-11T01:04:15Z",
   "inherits": "Test 04 visual baseline + accepted Test 05A movement contract",
   "base_blob": "8ec3761c2cf4a507a072d79307220c0b315a8261",
   "three": "0.186.0",
@@ -18,10 +20,7 @@
     "camera": 0.12
   },
   "attack": {
-    "input": [
-      "F",
-      "ATTACK button"
-    ],
+    "input": ["F", "ATTACK button"],
     "duration_s": 0.44,
     "active_at_s": 0.16,
     "reach_m": 2.75,
@@ -39,13 +38,14 @@
     "HIT CONFIRMED",
     "MISS CONFIRMED"
   ],
+  "proof_label_status": "RETIRED AFTER ACCEPTANCE",
   "acceptance_checklist": {
-    "attack_input": "PENDING",
-    "state_timing": "PENDING",
-    "forward_hitbox_alignment": "PENDING",
-    "hit_damage_25": "PENDING",
-    "miss_zero_damage": "PENDING",
-    "recovery_to_locomotion": "PENDING"
+    "attack_input": "ACCEPTED",
+    "state_timing": "ACCEPTED",
+    "forward_hitbox_alignment": "ACCEPTED",
+    "hit_damage_25": "ACCEPTED",
+    "miss_zero_damage": "ACCEPTED",
+    "recovery_to_locomotion": "ACCEPTED"
   },
   "app_js_bytes": 665636,
   "soldier_glb_bytes": 2160468,
