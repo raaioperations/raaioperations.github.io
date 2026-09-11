@@ -1,0 +1,115 @@
+{
+  "build_id": "20260911061207",
+  "inherits": "Accepted Test 05H combat baseline: movement + lock-on + single attack + two-hit chain + dodge + i-frames",
+  "base_blob": "8ec3761c2cf4a507a072d79307220c0b315a8261",
+  "three": "0.186.0",
+  "pipeline": "esbuild-local-bundle",
+  "runtime_external_dependencies": 0,
+  "focus": "isolated hold block / directional guard proof",
+  "accepted_systems_active": {
+    "movement": true,
+    "lock_on": true
+  },
+  "combo": {
+    "attack1_duration_s": 0.44,
+    "attack1_hit_s": 0.16,
+    "combo_window_open_s": 0.16,
+    "combo_window_close_s": 0.4,
+    "combo_window_width_s": 0.24,
+    "repair_revision": "05D-R1",
+    "attack2_duration_s": 0.48,
+    "attack2_hit_s": 0.17,
+    "reach_m": 2.75,
+    "damage_each": 25,
+    "max_chain_hits": 2,
+    "early_input_queues": false,
+    "late_input_queues": false,
+    "attack3": false
+  },
+  "disabled_systems": {
+    "parry": true,
+    "block_stamina": true,
+    "enemy_telegraph": true,
+    "enemy_ai": true,
+    "extra_vfx": true
+  },
+  "proof_labels": [
+    "BLOCK BASELINE DAMAGE CONFIRMED",
+    "BLOCK INPUT ACCEPTED",
+    "BLOCK FRONT MITIGATION CONFIRMED",
+    "BLOCK REAR BYPASS CONFIRMED",
+    "BLOCK RELEASE CONFIRMED"
+  ],
+  "suppressed_proof_labels": [
+    "LOCK ACQUIRED",
+    "LOCK MAINTAINED",
+    "FACE CONFIRMED",
+    "LOCK RELEASED",
+    "LOCK REACQUIRED",
+    "WALK SUCCESS",
+    "RUN SUCCESS",
+    "SPRINT SUCCESS",
+    "JUMP SUCCESS"
+  ],
+  "acceptance_checklist": {
+    "direct_hit_20": "PENDING",
+    "guard_input": "PENDING",
+    "front_mitigation_5": "PENDING",
+    "rear_bypass_20": "PENDING",
+    "guard_release": "PENDING"
+  },
+  "app_js_bytes": 673282,
+  "soldier_glb_bytes": 2160468,
+  "service_worker_cache": true,
+  "target": "safari16.4+",
+  "mobile_fps_target": 60,
+  "dodge": {
+    "distance_m": 4.2,
+    "commit_s": 0.22,
+    "recovery_s": 0.12,
+    "cooldown_s": 0.18,
+    "distance_tolerance_m": 0.55,
+    "directional_source": "current planar movement velocity; forward fallback when stationary",
+    "steering_during_commit": "ignored/locked",
+    "iframes": true,
+    "iframe_start_s": 0.05,
+    "iframe_end_s": 0.19,
+    "attack_cancel": false,
+    "jump_cancel": false
+  },
+  "accepted_systems_active_not_retested": {
+    "movement": true,
+    "lock_on": true,
+    "single_attack": true,
+    "two_hit_chain": true,
+    "dodge": true,
+    "dodge_iframes": true
+  },
+  "iframe": {
+    "start_s": 0.05,
+    "end_s": 0.19,
+    "test_damage": 20,
+    "early_probe_s": 0.02,
+    "in_window_probe_s": 0.1,
+    "recovery_probe_s": 0.26,
+    "status": "ACCEPTED"
+  },
+  "procedural_jump_status": "CLOSED / FAILED / DEFERRED TO AUTHORED ANIMATION",
+  "block": {
+    "input": "hold",
+    "base_damage": 20,
+    "blocked_damage": 5,
+    "mitigation_percent": 75,
+    "front_dot_min": 0.5,
+    "guard_cone_degrees": 120,
+    "rear_bypass": true,
+    "parry": false,
+    "stamina": false,
+    "attack_while_guarding": false,
+    "dodge_while_guarding": false
+  },
+  "human_acceptance": {
+    "accepted": false,
+    "status": "PENDING HUMAN ACCEPTANCE"
+  }
+}
