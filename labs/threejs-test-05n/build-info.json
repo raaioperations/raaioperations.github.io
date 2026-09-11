@@ -36,14 +36,7 @@
     "block_stamina": true,
     "extra_vfx": true
   },
-  "proof_labels": [
-    "ENEMY TELEGRAPH ENTERED",
-    "ENEMY TELEGRAPH ACTIVE",
-    "ENEMY TELEGRAPH RECOVERY",
-    "ENEMY TELEGRAPH CYCLE COMPLETE",
-    "ENEMY TELEGRAPH BUSY REJECTED",
-    "ENEMY TELEGRAPH RETRIGGER CONFIRMED"
-  ],
+  "proof_labels": [],
   "suppressed_proof_labels": [
     "LOCK ACQUIRED",
     "LOCK MAINTAINED",
@@ -53,14 +46,20 @@
     "WALK SUCCESS",
     "RUN SUCCESS",
     "SPRINT SUCCESS",
-    "JUMP SUCCESS"
+    "JUMP SUCCESS",
+    "ENEMY TELEGRAPH ENTERED",
+    "ENEMY TELEGRAPH ACTIVE",
+    "ENEMY TELEGRAPH RECOVERY",
+    "ENEMY TELEGRAPH CYCLE COMPLETE",
+    "ENEMY TELEGRAPH BUSY REJECTED",
+    "ENEMY TELEGRAPH RETRIGGER CONFIRMED"
   ],
   "acceptance_checklist": {
-    "telegraph_enters_immediately": "PENDING",
-    "telegraph_to_active_070": "PENDING",
-    "active_to_recovery_012": "PENDING",
-    "recovery_to_ready_040": "PENDING",
-    "busy_rejected_fresh_accepted": "PENDING"
+    "telegraph_enters_immediately": "ACCEPTED",
+    "telegraph_to_active_070": "ACCEPTED",
+    "active_to_recovery_012": "ACCEPTED",
+    "recovery_to_ready_040": "ACCEPTED",
+    "busy_rejected_fresh_accepted": "ACCEPTED"
   },
   "app_js_bytes": 684519,
   "soldier_glb_bytes": 2160468,
@@ -118,8 +117,9 @@
     "dodge_while_guarding": false
   },
   "human_acceptance": {
-    "accepted": false,
-    "status": "PENDING HUMAN ACCEPTANCE"
+    "accepted": true,
+    "status": "ACCEPTED",
+    "accepted_at": "2026-09-11T12:32:17-07:00"
   },
   "parry": {
     "window_start_s": 0,
@@ -178,6 +178,7 @@
     "damage": false,
     "ai": false,
     "authored_animation": false,
-    "visual_signal": "HUD phase signal only"
+    "visual_signal": "HUD phase signal only",
+    "status": "ACCEPTED"
   }
 }
