@@ -1,0 +1,55 @@
+{
+  "build_id": "20260911004914",
+  "inherits": "Test 04 visual baseline + accepted Test 05A movement contract",
+  "base_blob": "8ec3761c2cf4a507a072d79307220c0b315a8261",
+  "three": "0.186.0",
+  "pipeline": "esbuild-local-bundle",
+  "runtime_external_dependencies": 0,
+  "focus": "single attack + mechanical hit proof",
+  "movement_baseline": {
+    "walk_mps": 2.5,
+    "run_mps": 6.6,
+    "sprint_mps": 11.88,
+    "accel": 14,
+    "brake": 10,
+    "turn": 9,
+    "jump": 9,
+    "gravity": 24,
+    "camera": 0.12
+  },
+  "attack": {
+    "input": [
+      "F",
+      "ATTACK button"
+    ],
+    "duration_s": 0.44,
+    "active_at_s": 0.16,
+    "reach_m": 2.75,
+    "damage": 25,
+    "target_hp": 100,
+    "required_facing_dot": 0.42,
+    "combo": false,
+    "dodge": false,
+    "block": false,
+    "parry": false,
+    "enemy_ai": false
+  },
+  "proof_labels": [
+    "ATTACK INPUT ACCEPTED",
+    "HIT CONFIRMED",
+    "MISS CONFIRMED"
+  ],
+  "acceptance_checklist": {
+    "attack_input": "PENDING",
+    "state_timing": "PENDING",
+    "forward_hitbox_alignment": "PENDING",
+    "hit_damage_25": "PENDING",
+    "miss_zero_damage": "PENDING",
+    "recovery_to_locomotion": "PENDING"
+  },
+  "app_js_bytes": 665636,
+  "soldier_glb_bytes": 2160468,
+  "service_worker_cache": true,
+  "target": "safari16.4+",
+  "mobile_fps_target": 60
+}
