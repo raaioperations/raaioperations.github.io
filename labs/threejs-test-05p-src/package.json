@@ -1,0 +1,9 @@
+{
+  "name": "raai-threejs-test-05p",
+  "private": true,
+  "version": "0.5.16",
+  "description": "Automated enemy-damage defense-integration verification from accepted Test 05O baseline",
+  "type": "module",
+  "engines": {"node": ">=22"},
+  "scripts": {"build": "node build.mjs"}
+}
