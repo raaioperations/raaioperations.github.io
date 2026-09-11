@@ -6,6 +6,7 @@
   "pipeline": "esbuild-local-bundle",
   "runtime_external_dependencies": 0,
   "focus": "two-hit attack chain proof",
+  "status": "ACCEPTED",
   "accepted_systems_active": {
     "movement": true,
     "lock_on": true
@@ -34,15 +35,14 @@
     "enemy_ai": true,
     "extra_vfx": true
   },
-  "proof_labels": [
+  "proof_labels": [],
+  "suppressed_proof_labels": [
     "ATTACK 1 HIT CONFIRMED",
     "COMBO INPUT REJECTED · EARLY",
     "COMBO INPUT ACCEPTED",
     "ATTACK 2 STATE CONFIRMED",
     "ATTACK 2 HIT CONFIRMED",
-    "COMBO INPUT REJECTED · LATE"
-  ],
-  "suppressed_proof_labels": [
+    "COMBO INPUT REJECTED · LATE",
     "LOCK ACQUIRED",
     "LOCK MAINTAINED",
     "FACE CONFIRMED",
@@ -54,12 +54,16 @@
     "JUMP SUCCESS"
   ],
   "acceptance_checklist": {
-    "attack1_hit": "PENDING",
-    "early_rejection": "PENDING",
-    "combo_window_accept": "PENDING",
-    "attack2_transition": "PENDING",
-    "attack2_hit": "PENDING",
-    "late_rejection": "PENDING"
+    "attack1_hit": "ACCEPTED",
+    "early_rejection": "ACCEPTED",
+    "combo_window_accept": "ACCEPTED",
+    "attack2_transition": "ACCEPTED",
+    "attack2_hit": "ACCEPTED",
+    "late_rejection": "ACCEPTED"
+  },
+  "human_acceptance": {
+    "accepted": true,
+    "accepted_at": "2026-09-10T19:15:47-07:00"
   },
   "app_js_bytes": 668270,
   "soldier_glb_bytes": 2160468,
