@@ -1,0 +1,159 @@
+{
+  "build_id": "20260911191400",
+  "inherits": "Accepted Test 05K combat baseline: movement + lock-on + single attack + two-hit chain + dodge + i-frames + block/guard + parry timing + enemy stagger",
+  "base_blob": "8ec3761c2cf4a507a072d79307220c0b315a8261",
+  "three": "0.186.0",
+  "pipeline": "esbuild-local-bundle",
+  "runtime_external_dependencies": 0,
+  "focus": "isolated parry counter-opportunity timing and one-shot consumption proof",
+  "accepted_systems_active": {
+    "movement": true,
+    "lock_on": true
+  },
+  "combo": {
+    "attack1_duration_s": 0.44,
+    "attack1_hit_s": 0.16,
+    "combo_window_open_s": 0.16,
+    "combo_window_close_s": 0.4,
+    "combo_window_width_s": 0.24,
+    "repair_revision": "05D-R1",
+    "attack2_duration_s": 0.48,
+    "attack2_hit_s": 0.17,
+    "reach_m": 2.75,
+    "damage_each": 25,
+    "max_chain_hits": 2,
+    "early_input_queues": false,
+    "late_input_queues": false,
+    "attack3": false
+  },
+  "disabled_systems": {
+    "counter_damage": true,
+    "counter_animation": true,
+    "block_stamina": true,
+    "enemy_telegraph": true,
+    "enemy_ai": true,
+    "extra_vfx": true
+  },
+  "proof_labels": [
+    "COUNTER WINDOW OPEN",
+    "COUNTER INPUT ACCEPTED",
+    "COUNTER REPEAT BLOCKED",
+    "COUNTER EARLY REJECTED",
+    "COUNTER LATE REJECTED"
+  ],
+  "suppressed_proof_labels": [
+    "LOCK ACQUIRED",
+    "LOCK MAINTAINED",
+    "FACE CONFIRMED",
+    "LOCK RELEASED",
+    "LOCK REACQUIRED",
+    "WALK SUCCESS",
+    "RUN SUCCESS",
+    "SPRINT SUCCESS",
+    "JUMP SUCCESS"
+  ],
+  "acceptance_checklist": {
+    "counter_window_opens": "PENDING",
+    "valid_counter_input": "PENDING",
+    "counter_consumes_opportunity": "PENDING",
+    "early_counter_rejected": "PENDING",
+    "late_counter_rejected": "PENDING"
+  },
+  "app_js_bytes": 678883,
+  "soldier_glb_bytes": 2160468,
+  "service_worker_cache": true,
+  "target": "safari16.4+",
+  "mobile_fps_target": 60,
+  "dodge": {
+    "distance_m": 4.2,
+    "commit_s": 0.22,
+    "recovery_s": 0.12,
+    "cooldown_s": 0.18,
+    "distance_tolerance_m": 0.55,
+    "directional_source": "current planar movement velocity; forward fallback when stationary",
+    "steering_during_commit": "ignored/locked",
+    "iframes": true,
+    "iframe_start_s": 0.05,
+    "iframe_end_s": 0.19,
+    "attack_cancel": false,
+    "jump_cancel": false
+  },
+  "accepted_systems_active_not_retested": {
+    "movement": true,
+    "lock_on": true,
+    "single_attack": true,
+    "two_hit_chain": true,
+    "dodge": true,
+    "dodge_iframes": true,
+    "block_guard": true,
+    "parry_timing": true,
+    "enemy_stagger": true
+  },
+  "iframe": {
+    "start_s": 0.05,
+    "end_s": 0.19,
+    "test_damage": 20,
+    "early_probe_s": 0.02,
+    "in_window_probe_s": 0.1,
+    "recovery_probe_s": 0.26,
+    "status": "ACCEPTED"
+  },
+  "procedural_jump_status": "CLOSED / FAILED / DEFERRED TO AUTHORED ANIMATION",
+  "block": {
+    "input": "hold",
+    "base_damage": 20,
+    "blocked_damage": 5,
+    "mitigation_percent": 75,
+    "front_dot_min": 0.5,
+    "guard_cone_degrees": 120,
+    "rear_bypass": true,
+    "parry": true,
+    "stamina": false,
+    "attack_while_guarding": false,
+    "dodge_while_guarding": false
+  },
+  "human_acceptance": {
+    "accepted": false,
+    "status": "PENDING HUMAN ACCEPTANCE"
+  },
+  "parry": {
+    "window_start_s": 0,
+    "window_end_s": 0.12,
+    "front_dot_min": 0.5,
+    "guard_cone_degrees": 120,
+    "successful_damage": 0,
+    "late_front_damage": 5,
+    "rear_damage": 20,
+    "front_probe_s": 0.06,
+    "late_probe_s": 0.18,
+    "rear_probe_s": 0.06,
+    "enemy_stagger": true,
+    "counter_window": true,
+    "stamina": false,
+    "timing_status": "ACCEPTED"
+  },
+  "stagger": {
+    "trigger": "successful frontal parry only",
+    "duration_s": 0.65,
+    "midpoint_probe_s": 0.3,
+    "enemy_action_during_stagger": "rejected",
+    "enemy_action_after_recovery": "allowed",
+    "late_guard_triggers": false,
+    "rear_bypass_triggers": false,
+    "non_parry_progress_ui": true,
+    "animation": false,
+    "counter_window": true,
+    "status": "ACCEPTED"
+  },
+  "counter": {
+    "trigger": "successful frontal parry only",
+    "window_start_s": 0.08,
+    "window_end_s": 0.5,
+    "valid_probe_s": 0.2,
+    "early_probe_s": 0.03,
+    "late_probe_s": 0.55,
+    "max_inputs_per_parry": 1,
+    "damage": false,
+    "animation": false
+  }
+}
