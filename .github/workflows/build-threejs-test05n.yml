@@ -1,0 +1,62 @@
+name: Build Three.js Test 05N
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'labs/threejs-test-05n-src/**'
+      - '.github/workflows/build-threejs-test05n.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: threejs-test05n-build
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install pinned build dependencies
+        working-directory: labs/threejs-test-05n-src
+        run: npm install --no-audit --no-fund --no-package-lock
+
+      - name: Build enemy telegraph proof
+        working-directory: labs/threejs-test-05n-src
+        run: npm run build
+
+      - name: Verify proof outputs
+        run: |
+          test -f labs/threejs-test-05n/index.html
+          test -f labs/threejs-test-05n/app.js
+          test -f labs/threejs-test-05n/assets/Soldier.glb
+          test -f labs/threejs-test-05n/sw.js
+          test -f labs/threejs-test-05n/build-info.json
+          ! grep -Eqi 'cdn\.jsdelivr|unpkg\.com|esm\.sh' labs/threejs-test-05n/index.html labs/threejs-test-05n/app.js labs/threejs-test-05n/sw.js
+          grep -q 'ENEMY TELEGRAPH ENTERED' labs/threejs-test-05n/app.js
+          grep -q 'ENEMY TELEGRAPH RETRIGGER CONFIRMED' labs/threejs-test-05n/app.js
+          grep -q 'enemyTelegraphCheck5' labs/threejs-test-05n/index.html
+          grep -q 'ENEMY TELEGRAPH CONTRACT' labs/threejs-test-05n/index.html
+
+      - name: Publish built proof to main
+        run: |
+          git config user.name 'raaioperations-build-bot'
+          git config user.email 'actions@users.noreply.github.com'
+          git add labs/threejs-test-05n
+          if git diff --cached --quiet; then
+            echo 'No output changes.'
+            exit 0
+          fi
+          git commit -m 'Build Three.js Test 05N enemy telegraph proof'
+          git push origin HEAD:main
