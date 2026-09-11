@@ -1,11 +1,11 @@
 {
   "name": "raai-threejs-test-05d",
   "private": true,
-  "version": "0.5.4",
+  "version": "0.5.4-r1",
   "description": "Two-hit attack chain with deterministic combo-window validation",
   "type": "module",
   "engines": {"node": ">=22"},
-  "scripts": {"build": "node build.mjs"},
+  "scripts": {"build": "node combo-window-fix.mjs"},
   "dependencies": {"three": "0.186.0"},
   "devDependencies": {"esbuild": "0.25.9"}
 }
