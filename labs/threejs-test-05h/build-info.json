@@ -6,6 +6,7 @@
   "pipeline": "esbuild-local-bundle",
   "runtime_external_dependencies": 0,
   "focus": "isolated dodge i-frame window proof",
+  "status": "ACCEPTED",
   "accepted_systems_active": {
     "movement": true,
     "lock_on": true
@@ -33,12 +34,7 @@
     "enemy_ai": true,
     "extra_vfx": true
   },
-  "proof_labels": [
-    "DAMAGE CONFIRMED · DIRECT",
-    "DAMAGE CONFIRMED · EARLY",
-    "IFRAME EVADE CONFIRMED",
-    "DAMAGE CONFIRMED · RECOVERY"
-  ],
+  "proof_labels": [],
   "suppressed_proof_labels": [
     "LOCK ACQUIRED",
     "LOCK MAINTAINED",
@@ -48,14 +44,18 @@
     "WALK SUCCESS",
     "RUN SUCCESS",
     "SPRINT SUCCESS",
-    "JUMP SUCCESS"
+    "JUMP SUCCESS",
+    "DAMAGE CONFIRMED · DIRECT",
+    "DAMAGE CONFIRMED · EARLY",
+    "IFRAME EVADE CONFIRMED",
+    "DAMAGE CONFIRMED · RECOVERY"
   ],
   "acceptance_checklist": {
-    "direct_hit_20": "PENDING",
-    "early_hit_20": "PENDING",
-    "iframe_window_active": "PENDING",
-    "iframe_hit_0": "PENDING",
-    "recovery_hit_20": "PENDING"
+    "direct_hit_20": "ACCEPTED",
+    "early_hit_20": "ACCEPTED",
+    "iframe_window_active": "ACCEPTED",
+    "iframe_hit_0": "ACCEPTED",
+    "recovery_hit_20": "ACCEPTED"
   },
   "app_js_bytes": 671270,
   "soldier_glb_bytes": 2160468,
@@ -90,7 +90,12 @@
     "early_probe_s": 0.02,
     "in_window_probe_s": 0.1,
     "recovery_probe_s": 0.26,
-    "status": "PENDING HUMAN ACCEPTANCE"
+    "status": "ACCEPTED"
+  },
+  "human_acceptance": {
+    "accepted": true,
+    "accepted_at": "2026-09-11T06:07:41Z",
+    "evidence": "User confirmed acceptance after all five Test 05H checklist items visibly passed."
   },
   "procedural_jump_status": "CLOSED / FAILED / DEFERRED TO AUTHORED ANIMATION"
 }
