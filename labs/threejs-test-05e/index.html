@@ -21,8 +21,8 @@ html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#101719;fon
 </div><div class="regressionNote"><b>ONLY THESE FOUR ARE ACTIVE</b><span>Previously accepted walk, run, sprint speeds, acceleration, braking, turn, gravity/landing, and camera damping are carried forward and are not reopened.</span></div><button id="resetMove">Reset movement defaults</button><button id="shadowBtn">Dynamic shadows: ON</button></div><div id="toast"></div></div>
 <div id="mobile"><div id="stick"><div id="knob"></div></div><button id="jump" class="action">JUMP</button><button id="sprint" class="action">SPRINT</button></div>
 <div id="error"></div>
-<script type="module" src="./app.js?v=20260911030524"></script>
-<script>if('serviceWorker'in navigator){addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=20260911030524').catch(()=>{}));}</script>
+<script type="module" src="./app.js?v=20260911031405"></script>
+<script>if('serviceWorker'in navigator){addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=20260911031405').catch(()=>{}));}</script>
 <script>addEventListener('DOMContentLoaded',()=>{const q=id=>document.getElementById(id),walk=q('walkTune'),run=q('runTune'),walkInternal=q('walkSpeed'),sprintInternal=q('sprintSpeed'),walkV=q('walkTuneV'),runV=q('runTuneV'),sprintV=q('sprintDerivedV'),proof=q('proofSuccess'),move=q('moveState'),speed=q('speed'),modeBtn=q('sprint'),reset=q('resetMove'),jump=q('jumpVel'),gravity=q('gravity'),prediction=q('jumpPrediction');const accepted=new Set(['WALK','RUN','SPRINT']);let mode='WALK',proofedMode=false,proofTimer=0,guard=false;
 function target(){return mode==='WALK'?+walk.value:mode==='RUN'?+run.value:+run.value*1.8;}
 function showProof(label,detail=''){if(accepted.has(label))return;proof.textContent='✓ '+label+' SUCCESS'+(detail?' · '+detail:'');proof.classList.add('show');clearTimeout(proofTimer);proofTimer=setTimeout(()=>proof.classList.remove('show'),1200);}
