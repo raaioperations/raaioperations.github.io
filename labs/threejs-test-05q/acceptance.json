@@ -1,0 +1,14 @@
+{
+  "test": "05Q",
+  "status": "ACCEPTED",
+  "accepted_at": "2026-09-11T14:55:04-07:00",
+  "human_visual_acceptance": true,
+  "accepted_items": {
+    "telegraph_noticeability": true,
+    "direction_readability": true,
+    "active_impact_readability": true,
+    "recovery_readability": true,
+    "visual_clutter_and_scene_readability": true
+  },
+  "accepted_visual_contract": "screen-space directional telegraph with distinct TELEGRAPH, ACTIVE, and RECOVERY presentation while preserving accepted 0.70/0.12/0.40 mechanical timing"
+}
