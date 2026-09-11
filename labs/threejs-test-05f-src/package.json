@@ -1,0 +1,9 @@
+{
+  "name": "raai-threejs-test-05f",
+  "private": true,
+  "version": "0.5.6",
+  "description": "Single attack timing regression proof",
+  "type": "module",
+  "engines": {"node": ">=22"},
+  "scripts": {"build": "node build.mjs"}
+}
