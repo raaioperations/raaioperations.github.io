@@ -1,7 +1,7 @@
 {
   "name": "raai-threejs-test-05r",
   "private": true,
-  "version": "0.5.18-r3",
+  "version": "0.5.18-r4",
   "description": "Human visual-review pass for combat hit impact built from accepted Test 05Q",
   "type": "module",
   "engines": {"node": ">=22"},
