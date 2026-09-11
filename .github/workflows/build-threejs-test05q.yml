@@ -1,0 +1,44 @@
+name: Build Three.js Test 05Q
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - labs/threejs-test-05q-src/**
+      - .github/workflows/build-threejs-test05q.yml
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Build visual telegraph review
+        working-directory: labs/threejs-test-05q-src
+        run: npm run build
+      - name: Verify outputs
+        run: |
+          test -f labs/threejs-test-05q/index.html
+          test -f labs/threejs-test-05q/app.js
+          test -f labs/threejs-test-05q/assets/Soldier.glb
+          test -f labs/threejs-test-05q/build-info.json
+          grep -q 'Test 05Q — human visual-review telegraph readability layer' labs/threejs-test-05q/app.js
+          grep -q 'DEMO ATTACK' labs/threejs-test-05q/index.html
+          grep -q 'PENDING HUMAN VISUAL ACCEPTANCE' labs/threejs-test-05q/build-info.json
+      - name: Publish
+        run: |
+          git config user.name raaioperations-build-bot
+          git config user.email actions@users.noreply.github.com
+          git add labs/threejs-test-05q
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'Build Three.js Test 05Q visual telegraph readability'
+          git push origin HEAD:main
