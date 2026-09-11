@@ -9,6 +9,7 @@ let html=await readFile(indexPath,'utf8');
 const old=/function kickCanvas\(strength\)\{[\s\S]*?\n  \}\n  function impact\(damage\)\{/;
 if(!old.test(html)) throw new Error('05R camera-kick function anchor missing.');
 
+// 05R-R3: transplant the exact human-accepted isolated jolt timing/amplitudes.
 const replacement=`function ensureSceneKickShell(){
     const canvas=document.querySelector('canvas');
     if(!canvas)return null;
@@ -32,52 +33,44 @@ const replacement=`function ensureSceneKickShell(){
     return shell;
   }
   function kickCanvas(strength){
-    const shell=ensureSceneKickShell();
-    if(!shell)return;
-    if(shell.__r05KickRaf)cancelAnimationFrame(shell.__r05KickRaf);
+    const scene=ensureSceneKickShell();
+    if(!scene)return;
+    if(scene.__r05KickRaf)cancelAnimationFrame(scene.__r05KickRaf);
     const strong=strength>=40;
-    const duration=strong?290:235;
-    const ampX=strong?28:16;
-    const ampY=strong?18:10;
-    const ampRot=strong?.78:.46;
-    const zoom=strong?.038:.024;
+    const duration=strong?300:240;
+    const ampX=strong?34:20;
+    const ampY=strong?20:12;
+    const ampRot=strong?1.15:.68;
+    const ampZoom=strong?.030:.018;
     const start=performance.now();
     function frame(now){
       const p=Math.min(1,(now-start)/duration);
-      let x=0,y=0,r=0,s=1;
-      if(p<.18){
-        const q=p/.18;
-        const ease=1-Math.pow(1-q,3);
-        x=ampX*ease;
-        y=-ampY*ease;
-        r=ampRot*ease;
-        s=1+zoom*ease;
-      }else{
-        const t=(p-.18)/.82;
-        const decay=Math.pow(1-t,2);
-        const wave=Math.cos(t*Math.PI*4.2);
-        x=-ampX*.62*wave*decay;
-        y=ampY*.50*Math.cos(t*Math.PI*3.5)*decay;
-        r=-ampRot*.58*wave*decay;
-        s=1+zoom*.72*decay;
+      const decay=Math.pow(1-p,1.65);
+      const phase=p*Math.PI*6.0;
+      const x=Math.sin(phase)*ampX*decay + (p<.16?ampX*.34*(1-p/.16):0);
+      const y=-Math.cos(phase*.91)*ampY*decay;
+      const rot=Math.sin(phase*.73)*ampRot*decay;
+      const scale=1+ampZoom*decay;
+      scene.style.transform='translate3d('+x.toFixed(2)+'px,'+y.toFixed(2)+'px,0) rotate('+rot.toFixed(3)+'deg) scale('+scale.toFixed(4)+')';
+      if(p<1){scene.__r05KickRaf=requestAnimationFrame(frame);}else{
+        scene.style.transform='';
+        scene.__r05KickRaf=0;
       }
-      shell.style.transform='translate3d('+x.toFixed(2)+'px,'+y.toFixed(2)+'px,0) rotate('+r.toFixed(3)+'deg) scale('+s.toFixed(4)+')';
-      if(p<1)shell.__r05KickRaf=requestAnimationFrame(frame);
-      else{shell.style.transform='';shell.__r05KickRaf=0;}
     }
-    shell.__r05KickRaf=requestAnimationFrame(frame);
+    scene.__r05KickRaf=requestAnimationFrame(frame);
   }
   function impact(damage){`;
 
 html=html.replace(old,replacement);
-html=html.replace('</body>','<div id="r05KickRevision" data-revision="05R-R2" hidden></div></body>');
+html=html.replace('</body>','<div id="r05KickRevision" data-revision="05R-R3-ACCEPTED-JOLT" hidden></div></body>');
 await writeFile(indexPath,html);
 
 const infoPath=path.join(out,'build-info.json');
 const info=JSON.parse(await readFile(infoPath,'utf8'));
-info.visual_runtime_revision='05R-R2 isolated scene-wrapper recoil';
+info.visual_runtime_revision='05R-R3 exact accepted isolated-jolt transplant';
 info.hit_impact_visual.camera_kick=true;
-info.hit_impact_visual.camera_kick_revision='isolated scene wrapper: basic 16x10 px / counter 28x18 px recoil, damped rotation and zoom, HUD excluded';
+info.hit_impact_visual.camera_kick_revision='human-accepted 05R-JOLT contract: 25=240ms/20x12px/0.68deg/0.018 zoom; 40=300ms/34x20px/1.15deg/0.030 zoom; decay 1.65; phase 6.0';
+info.hit_impact_visual.camera_kick_source='labs/threejs-test-05r-jolt/acceptance.json';
 info.hit_impact_visual.status='PENDING HUMAN ACCEPTANCE';
 await writeFile(infoPath,JSON.stringify(info,null,2));
-console.log('Applied Test 05R-R2 isolated scene-wrapper camera-kick repair.');
+console.log('Applied Test 05R-R3 exact accepted screen-jolt contract.');
