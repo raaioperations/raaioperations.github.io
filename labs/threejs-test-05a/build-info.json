@@ -1,11 +1,11 @@
 {
-  "build_id": "20260910235940",
+  "build_id": "20260911003659",
   "inherits": "Test 04 accepted baseline",
   "base_blob": "8ec3761c2cf4a507a072d79307220c0b315a8261",
   "three": "0.186.0",
   "pipeline": "esbuild-local-bundle",
   "runtime_external_dependencies": 0,
-  "focus": "jump animation proof",
+  "focus": "reference-guided jump animation proof",
   "movement_parameters": [
     "walk speed LOCKED",
     "run speed LOCKED",
@@ -22,7 +22,7 @@
     "JUMP ANIMATION SUCCESS"
   ],
   "combo_status": "deferred until movement acceptance",
-  "app_js_bytes": 665600,
+  "app_js_bytes": 667306,
   "soldier_glb_bytes": 2160468,
   "service_worker_cache": true,
   "target": "safari16.4+",
@@ -89,16 +89,31 @@
   },
   "jump_animation": {
     "status": "PENDING HUMAN ACCEPTANCE",
-    "implementation": "additive skeleton-keyframed clip on Soldier Mixamo rig",
-    "phases": [
-      "takeoff",
-      "rise/tuck",
-      "apex",
-      "fall/extend",
-      "landing"
+    "implementation": "reference-guided full-body skeleton-keyframed clip generated in code on the Soldier Mixamo-compatible rig",
+    "reference_characteristics": [
+      "strong leg extension at launch",
+      "asymmetric knee tuck",
+      "arm counterbalance",
+      "forward torso posture",
+      "pre-landing leg extension",
+      "impact compression",
+      "short recovery"
     ],
-    "physics_sync": "playback rate derives from theoretical airtime = 2 × jump velocity / gravity",
+    "phases": [
+      "launch",
+      "rise",
+      "tuck/apex",
+      "descent",
+      "pre-contact extension",
+      "impact absorption",
+      "recovery"
+    ],
+    "physics_sync": "airborne section reaches contact key at physical ground contact; landing recovery continues for 0.18 s after contact",
+    "contact_normalized_time": 0.82,
+    "recovery_seconds": 0.18,
     "root_motion": false,
-    "external_runtime_dependencies": 0
+    "player_translation": "physics-owned",
+    "external_runtime_dependencies": 0,
+    "production_asset_status": "prototype-only; replace with authored/retargeted jump animation for production character"
   }
 }
