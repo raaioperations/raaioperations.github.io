@@ -6,6 +6,7 @@
   "pipeline": "esbuild-local-bundle",
   "runtime_external_dependencies": 0,
   "focus": "isolated parry startup timing and directional validity proof",
+  "status": "ACCEPTED",
   "accepted_systems_active": {
     "movement": true,
     "lock_on": true
@@ -34,13 +35,7 @@
     "enemy_ai": true,
     "extra_vfx": true
   },
-  "proof_labels": [
-    "PARRY WINDOW OPEN",
-    "PARRY FRONT WINDOW CONFIRMED",
-    "PARRY WINDOW CLOSE CONFIRMED",
-    "PARRY REAR BYPASS CONFIRMED",
-    "PARRY RELEASE CONFIRMED"
-  ],
+  "proof_labels": [],
   "suppressed_proof_labels": [
     "LOCK ACQUIRED",
     "LOCK MAINTAINED",
@@ -50,14 +45,19 @@
     "WALK SUCCESS",
     "RUN SUCCESS",
     "SPRINT SUCCESS",
-    "JUMP SUCCESS"
+    "JUMP SUCCESS",
+    "PARRY WINDOW OPEN",
+    "PARRY FRONT WINDOW CONFIRMED",
+    "PARRY WINDOW CLOSE CONFIRMED",
+    "PARRY REAR BYPASS CONFIRMED",
+    "PARRY RELEASE CONFIRMED"
   ],
   "acceptance_checklist": {
-    "parry_window_opens": "PENDING",
-    "front_parry_zero_damage": "PENDING",
-    "late_front_falls_to_guard_5": "PENDING",
-    "rear_bypass_20": "PENDING",
-    "release_ready": "PENDING"
+    "parry_window_opens": "ACCEPTED",
+    "front_parry_zero_damage": "ACCEPTED",
+    "late_front_falls_to_guard_5": "ACCEPTED",
+    "rear_bypass_20": "ACCEPTED",
+    "release_ready": "ACCEPTED"
   },
   "app_js_bytes": 675228,
   "soldier_glb_bytes": 2160468,
@@ -111,8 +111,9 @@
     "dodge_while_guarding": false
   },
   "human_acceptance": {
-    "accepted": false,
-    "status": "PENDING HUMAN ACCEPTANCE"
+    "accepted": true,
+    "accepted_at": "2026-09-11T07:58:04Z",
+    "status": "ACCEPTED"
   },
   "parry": {
     "window_start_s": 0,
@@ -127,6 +128,7 @@
     "rear_probe_s": 0.06,
     "enemy_stagger": false,
     "counter_window": false,
-    "stamina": false
+    "stamina": false,
+    "status": "ACCEPTED"
   }
 }
