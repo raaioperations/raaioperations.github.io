@@ -1,0 +1,162 @@
+{
+  "build_id": "20260911022500",
+  "inherits": "Test 04 visual baseline + accepted Test 05A movement values + accepted 05B/05C/05D combat contracts (combat omitted for regression isolation)",
+  "base_blob": "8ec3761c2cf4a507a072d79307220c0b315a8261",
+  "three": "0.186.0",
+  "pipeline": "esbuild-local-bundle",
+  "runtime_external_dependencies": 0,
+  "focus": "movement + jump regression closure",
+  "movement_parameters": [
+    "walk speed LOCKED",
+    "run speed LOCKED",
+    "sprint = 1.8x run LOCKED",
+    "acceleration LOCKED",
+    "braking LOCKED",
+    "turn response LOCKED",
+    "jump velocity ACTIVE",
+    "gravity ACTIVE",
+    "camera damping LOCKED",
+    "animation-speed matching PENDING"
+  ],
+  "proof_labels": [
+    "JUMP APEX CONFIRMED",
+    "SPRINT ANIMATION SYNC CONFIRMED",
+    "STANDING JUMP ACTIVE",
+    "STANDING JUMP SEQUENCE COMPLETE",
+    "RUNNING JUMP ACTIVE",
+    "RUNNING JUMP SEQUENCE COMPLETE"
+  ],
+  "combo_status": "deferred until movement acceptance",
+  "app_js_bytes": 670144,
+  "soldier_glb_bytes": 2160468,
+  "service_worker_cache": true,
+  "target": "safari16.4+",
+  "mobile_fps_target": 60,
+  "tuned_defaults": {
+    "walk_mps": 2.5,
+    "run_mps": 6.6,
+    "sprint_mps": 11.88,
+    "accel": 14,
+    "brake": 10,
+    "turn": 9,
+    "jump": 9,
+    "gravity": 24,
+    "camera": 0.12
+  },
+  "jump_candidate": {
+    "velocity_mps": 9,
+    "gravity_mps2": 24,
+    "theoretical_apex_m": 1.6875,
+    "time_to_apex_s": 0.375,
+    "theoretical_airtime_s": 0.75
+  },
+  "control_contract": {
+    "direction": "joystick/WASD = movement",
+    "mode_toggle": "R/interface button cycles WALK → RUN → SPRINT → WALK",
+    "run": "one toggle action",
+    "sprint": "one toggle action",
+    "sprint_relation": "1.8x Run"
+  },
+  "suppressed_proof_labels": [
+    "STOP SUCCESS",
+    "WALK SUCCESS",
+    "RUN SUCCESS",
+    "SPRINT SUCCESS",
+    "JUMP SUCCESS"
+  ],
+  "acceptance_checklist": {
+    "jump_launch_apex": "PENDING",
+    "sprint_animation_speed_match": "PENDING",
+    "standing_jump_animation": "PENDING",
+    "running_jump_animation": "PENDING"
+  },
+  "tuning_ui": {
+    "slider_and_numeric_input": true,
+    "locked_parameters": [
+      "walk",
+      "run",
+      "sprint",
+      "acceleration",
+      "braking",
+      "turn",
+      "jump",
+      "gravity",
+      "camera_damping"
+    ],
+    "active_parameters": []
+  },
+  "jump_animation": {
+    "status": "PENDING HUMAN ACCEPTANCE",
+    "implementation": "reference-guided full-body skeleton-keyframed clip generated in code on the Soldier Mixamo-compatible rig",
+    "reference_characteristics": [
+      "strong leg extension at launch",
+      "asymmetric knee tuck",
+      "arm counterbalance",
+      "forward torso posture",
+      "pre-landing leg extension",
+      "impact compression",
+      "short recovery"
+    ],
+    "phases": [
+      "launch",
+      "rise",
+      "tuck/apex",
+      "descent",
+      "pre-contact extension",
+      "impact absorption",
+      "recovery"
+    ],
+    "physics_sync": "airborne section reaches contact key at physical ground contact; landing recovery continues for 0.18 s after contact",
+    "contact_normalized_time": 0.82,
+    "recovery_seconds": 0.18,
+    "root_motion": false,
+    "player_translation": "physics-owned",
+    "external_runtime_dependencies": 0,
+    "production_asset_status": "prototype-only; replace with authored/retargeted jump animation for production character"
+  },
+  "regression_scope": [
+    "jump launch/apex",
+    "sprint animation-speed synchronization",
+    "standing jump animation",
+    "running jump animation"
+  ],
+  "physics_contract": {
+    "jump_velocity_mps": 9,
+    "gravity_mps2": 24,
+    "theoretical_apex_m": 1.6875,
+    "time_to_apex_s": 0.375,
+    "theoretical_airtime_s": 0.75,
+    "translation_authority": "controller physics"
+  },
+  "sprint_animation_sync": {
+    "run_reference_speed_mps": 6.6,
+    "sprint_speed_mps": 11.88,
+    "sprint_ratio": 1.8,
+    "run_clip_rate_at_sprint": 1.8,
+    "rate_source": "actual planar speed"
+  },
+  "jump_states": {
+    "standing": {
+      "selection": "takeoff planar speed < 0.8 m/s",
+      "clip": "StandingJumpProcedural",
+      "characteristics": [
+        "deep compression",
+        "vertical launch",
+        "compact airborne pose",
+        "landing absorption"
+      ]
+    },
+    "running": {
+      "selection": "takeoff planar speed >= 0.8 m/s",
+      "clip": "RunningJumpProcedural",
+      "characteristics": [
+        "moving takeoff",
+        "forward body carriage",
+        "asymmetric stride/tuck",
+        "pre-contact extension",
+        "forward landing recovery"
+      ]
+    }
+  },
+  "production_asset_status": "Procedural skeleton-keyframed regression clips only; final production should replace them with authored/retargeted standing and running jump animations while preserving controller-owned physics."
+}
