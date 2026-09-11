@@ -36,13 +36,7 @@
     "block_stamina": true,
     "extra_vfx": true
   },
-  "proof_labels": [
-    "ENEMY DAMAGE TELEGRAPH ZERO",
-    "ENEMY DAMAGE ACTIVE CONFIRMED",
-    "ENEMY DAMAGE EXACT",
-    "ENEMY DAMAGE EXTRA BLOCKED",
-    "ENEMY DAMAGE NEW CYCLE"
-  ],
+  "proof_labels": [],
   "suppressed_proof_labels": [
     "LOCK ACQUIRED",
     "LOCK MAINTAINED",
@@ -52,14 +46,19 @@
     "WALK SUCCESS",
     "RUN SUCCESS",
     "SPRINT SUCCESS",
-    "JUMP SUCCESS"
+    "JUMP SUCCESS",
+    "ENEMY DAMAGE TELEGRAPH ZERO",
+    "ENEMY DAMAGE ACTIVE CONFIRMED",
+    "ENEMY DAMAGE EXACT",
+    "ENEMY DAMAGE EXTRA BLOCKED",
+    "ENEMY DAMAGE NEW CYCLE"
   ],
   "acceptance_checklist": {
-    "telegraph_damage_zero": "PENDING",
-    "active_only_damage_gate": "PENDING",
-    "active_exact_20": "PENDING",
-    "duplicate_and_recovery_zero": "PENDING",
-    "new_cycle_fresh_damage": "PENDING"
+    "telegraph_damage_zero": "ACCEPTED",
+    "active_only_damage_gate": "ACCEPTED",
+    "active_exact_20": "ACCEPTED",
+    "duplicate_and_recovery_zero": "ACCEPTED",
+    "new_cycle_fresh_damage": "ACCEPTED"
   },
   "app_js_bytes": 689978,
   "soldier_glb_bytes": 2160468,
@@ -118,8 +117,9 @@
     "dodge_while_guarding": false
   },
   "human_acceptance": {
-    "accepted": false,
-    "status": "PENDING HUMAN ACCEPTANCE"
+    "accepted": true,
+    "status": "ACCEPTED",
+    "accepted_at": "2026-09-11T13:41:33-07:00"
   },
   "parry": {
     "window_start_s": 0,
@@ -186,6 +186,7 @@
     "recovery_damage": 0,
     "duplicate_active_damage": 0,
     "fresh_ready_cycle_restores_damage_opportunity": true,
-    "damage_interactions_with_defense": "DEFERRED"
+    "damage_interactions_with_defense": "DEFERRED",
+    "damage_status": "ACCEPTED"
   }
 }
