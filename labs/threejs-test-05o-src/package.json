@@ -1,0 +1,11 @@
+{
+  "name": "raai-threejs-test-05o",
+  "private": true,
+  "version": "0.5.15",
+  "description": "Isolated enemy ACTIVE-window damage proof built from accepted Test 05N telegraph baseline",
+  "type": "module",
+  "engines": {"node": ">=22"},
+  "scripts": {"build": "node build.mjs"},
+  "dependencies": {"three": "0.186.0"},
+  "devDependencies": {"esbuild": "0.25.9"}
+}
