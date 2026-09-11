@@ -28,6 +28,7 @@ const staggerCode=`
 const ENEMY_STAGGER_DURATION=.65,ENEMY_STAGGER_MID=.30;
 let enemyStaggerState='READY',enemyStaggerUntil=0,lateNoStagger=false,rearNoStagger=false;
 function setStaggerCheck(n){const e=document.getElementById('staggerCheck'+n);if(e){e.textContent='PASS';e.style.color='#a8f0b5';}}
+function setNonParryProgress(){const e=document.getElementById('staggerCheck6');if(!e)return;const count=(lateNoStagger?1:0)+(rearNoStagger?1:0);if(count<2){e.textContent=count+'/2';e.style.color='#ffd27a';uiText('hitResult','NO STAGGER · LATE '+(lateNoStagger?'✓':'PENDING')+' · REAR '+(rearNoStagger?'✓':'PENDING'));}else{e.textContent='PASS';e.style.color='#a8f0b5';uiText('hitResult','NO STAGGER · LATE ✓ · REAR ✓');}}
 function enemyStaggered(){return enemyStaggerState==='STAGGERED'&&performance.now()<enemyStaggerUntil;}
 function beginEnemyStagger(){
   enemyStaggerState='STAGGERED';enemyStaggerUntil=performance.now()+ENEMY_STAGGER_DURATION*1000;
@@ -43,6 +44,7 @@ function confirmNoStagger(kind){
   if(enemyStaggered())return;
   if(kind==='LATE')lateNoStagger=true;
   if(kind==='REAR')rearNoStagger=true;
+  setNonParryProgress();
   if(lateNoStagger&&rearNoStagger){setStaggerCheck(6);prove('STAGGER NON-PARRY BYPASS CONFIRMED','LATE + REAR REMAIN READY');}
 }
 function bindStaggerControls(){const e=document.getElementById('enemyActionBtn');if(e)e.addEventListener('pointerdown',ev=>{ev.preventDefault();attemptEnemyAction();});}
@@ -82,7 +84,7 @@ html=html.replaceAll('RAAI Proof 05K — Parry Timing','RAAI Proof 05K — Parry
 html=html.replace('PARRY TEST — arm a probe in CHECK, then press + hold BLOCK','STAGGER TEST — ARM PARRY + BLOCK, then test enemy action during/after stagger');
 html=html.replace('<span>Parry dmg</span><b id="parryDamage">—</b>','<span>Parry dmg</span><b id="parryDamage">—</b><span>Enemy state</span><b id="enemyState">READY</b><span>Enemy action</span><b id="enemyAction">AVAILABLE</b>');
 html=html.replace(/<div id="checklist">[\s\S]*?<div class="acceptedContract">[\s\S]*?<\/div>/,
-`<div id="checklist"><div><b id="staggerCheck1">PENDING</b><span>01 Successful front parry enters STAGGERED</span></div><div><b id="staggerCheck2">PENDING</b><span>02 STAGGERED state is still active at 0.30 s</span></div><div><b id="staggerCheck3">PENDING</b><span>03 Enemy action during stagger is mechanically blocked</span></div><div><b id="staggerCheck4">PENDING</b><span>04 Stagger ends at 0.65 s and returns READY</span></div><div><b id="staggerCheck5">PENDING</b><span>05 Enemy action works again after recovery</span></div><div><b id="staggerCheck6">PENDING</b><span>06 Late guard + rear bypass do not trigger stagger</span></div></div><div class="contract"><b>STAGGER CONTRACT</b><span>Accepted front parry → STAGGERED for 0.65 s · enemy action rejected while staggered · action restored on recovery · late guard/rear bypass never stagger · no counter window yet</span></div><div id="staggerControls"><button id="armParryFront">ARM PARRY</button><button id="armParryLate">ARM LATE</button><button id="armParryRear">ARM REAR</button><button id="enemyActionBtn">ENEMY ACTION</button><button id="resetParryHp">RESET HP</button></div><div class="acceptedContract"><b>ACCEPTED / NOT RETESTED</b><span>Movement, lock-on, single attack, two-hit chain, dodge + i-frames, block/guard, and parry timing remain active. Jump animation replacement stays deferred.</span></div>`);
+`<div id="checklist"><div><b id="staggerCheck1">PENDING</b><span>01 Successful front parry enters STAGGERED</span></div><div><b id="staggerCheck2">PENDING</b><span>02 STAGGERED state is still active at 0.30 s</span></div><div><b id="staggerCheck3">PENDING</b><span>03 Enemy action during stagger is mechanically blocked</span></div><div><b id="staggerCheck4">PENDING</b><span>04 Stagger ends at 0.65 s and returns READY</span></div><div><b id="staggerCheck5">PENDING</b><span>05 Enemy action works again after recovery</span></div><div><b id="staggerCheck6">0/2</b><span>06 Complete both: late guard does not stagger + rear bypass does not stagger</span></div></div><div class="contract"><b>STAGGER CONTRACT</b><span>Accepted front parry → STAGGERED for 0.65 s · enemy action rejected while staggered · action restored on recovery · late guard/rear bypass never stagger · no counter window yet</span></div><div id="staggerControls"><button id="armParryFront">ARM PARRY</button><button id="armParryLate">ARM LATE</button><button id="armParryRear">ARM REAR</button><button id="enemyActionBtn">ENEMY ACTION</button><button id="resetParryHp">RESET HP</button></div><div class="acceptedContract"><b>ACCEPTED / NOT RETESTED</b><span>Movement, lock-on, single attack, two-hit chain, dodge + i-frames, block/guard, and parry timing remain active. Jump animation replacement stays deferred.</span></div>`);
 html=html.replace('</style>','#staggerControls{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin:9px 0 2px}#staggerControls button{border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.08);color:#eef7f2;border-radius:8px;padding:7px 5px;font-size:8px;font-weight:800;letter-spacing:.03em}#staggerControls #resetParryHp{grid-column:1/-1}</style>');
 await writeFile(indexPath,html);
 
@@ -96,7 +98,7 @@ info.accepted_systems_active_not_retested={movement:true,lock_on:true,single_att
 info.parry.timing_status='ACCEPTED';
 info.parry.enemy_stagger=true;
 info.parry.counter_window=false;
-info.stagger={trigger:'successful frontal parry only',duration_s:.65,midpoint_probe_s:.30,enemy_action_during_stagger:'rejected',enemy_action_after_recovery:'allowed',late_guard_triggers:false,rear_bypass_triggers:false,animation:false,counter_window:false};
+info.stagger={trigger:'successful frontal parry only',duration_s:.65,midpoint_probe_s:.30,enemy_action_during_stagger:'rejected',enemy_action_after_recovery:'allowed',late_guard_triggers:false,rear_bypass_triggers:false,non_parry_progress_ui:true,animation:false,counter_window:false};
 info.disabled_systems={parry_counterattack:true,block_stamina:true,enemy_telegraph:true,enemy_ai:true,extra_vfx:true};
 info.human_acceptance={accepted:false,status:'PENDING HUMAN ACCEPTANCE'};
 await writeFile(infoPath,JSON.stringify(info,null,2));
