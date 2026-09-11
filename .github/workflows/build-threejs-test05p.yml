@@ -1,0 +1,37 @@
+name: Build Three.js Test 05P
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - labs/threejs-test-05p-src/**
+      - .github/workflows/build-threejs-test05p.yml
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Build and verify
+        working-directory: labs/threejs-test-05p-src
+        run: npm run build
+      - name: Verify report
+        run: node -e "const r=require('./labs/threejs-test-05p/verification-report.json'); if(!r.all_pass||r.status!=='PASS') process.exit(1)"
+      - name: Publish
+        run: |
+          git config user.name raaioperations-build-bot
+          git config user.email actions@users.noreply.github.com
+          git add labs/threejs-test-05p
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'Build Three.js Test 05P defense integration verification'
+          git push origin HEAD:main
