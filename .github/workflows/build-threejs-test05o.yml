@@ -44,6 +44,8 @@ jobs:
           test -f labs/threejs-test-05o/sw.js
           test -f labs/threejs-test-05o/build-info.json
           ! grep -Eqi 'cdn\.jsdelivr|unpkg\.com|esm\.sh' labs/threejs-test-05o/index.html labs/threejs-test-05o/app.js labs/threejs-test-05o/sw.js
+          grep -q "let enemyAttackPhase05O='READY'" labs/threejs-test-05o/app.js
+          ! grep -q 'enemyAttackPhase05N' labs/threejs-test-05o/app.js
           grep -q 'ENEMY DAMAGE TELEGRAPH ZERO' labs/threejs-test-05o/app.js
           grep -q 'ENEMY DAMAGE ACTIVE CONFIRMED' labs/threejs-test-05o/app.js
           grep -q 'ENEMY DAMAGE EXACT' labs/threejs-test-05o/app.js
