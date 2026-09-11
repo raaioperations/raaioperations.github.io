@@ -1,0 +1,11 @@
+{
+  "name": "raai-threejs-test-05b",
+  "private": true,
+  "version": "0.5.2",
+  "description": "Single attack and mechanical hit confirmation proof",
+  "type": "module",
+  "engines": {"node": ">=22"},
+  "scripts": {"build": "node build.mjs"},
+  "dependencies": {"three": "0.186.0"},
+  "devDependencies": {"esbuild": "0.25.9"}
+}
