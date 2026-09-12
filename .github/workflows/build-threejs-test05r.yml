@@ -45,6 +45,10 @@ jobs:
           grep -q 'Ti.rotateZ' labs/threejs-test-05r/app.js
           grep -q 'CAMERA READY' labs/threejs-test-05r/index.html
           grep -q "addEventListener('click'" labs/threejs-test-05r/index.html
+          grep -q "e.code==='KeyK'" labs/threejs-test-05r/index.html
+          grep -q "e.code==='KeyL'" labs/threejs-test-05r/index.html
+          grep -q '"KeyK": "DEMO 25"' labs/threejs-test-05r/build-info.json
+          grep -q '"KeyL": "DEMO 40"' labs/threejs-test-05r/build-info.json
           grep -q "startsWith('raai-threejs-test05r-')" labs/threejs-test-05r/sw.js
           grep -q "cache:'no-store'" labs/threejs-test-05r/sw.js
           grep -q 'PENDING HUMAN VISUAL ACCEPTANCE' labs/threejs-test-05r/build-info.json
@@ -58,5 +62,5 @@ jobs:
           git config user.email actions@users.noreply.github.com
           git add labs/threejs-test-05r
           if git diff --cached --quiet; then exit 0; fi
-          git commit -m 'Build Three.js Test 05R R6 camera-space recoil'
+          git commit -m 'Build Three.js Test 05R R6.1 K-L bindings'
           git push origin HEAD:main
