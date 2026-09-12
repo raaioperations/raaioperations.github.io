@@ -1,7 +1,7 @@
 {
   "test": "05S",
   "status": "PASS",
-  "build_id": "20260912022235",
+  "build_id": "20260912022250",
   "delegated_nonvisual_checks": {
     "accepted_05q_required": true,
     "accepted_05r_v2_required": true,
@@ -10,7 +10,8 @@
     "counter_wired_at_successful_40_damage_source_event": true,
     "post_bundle_camera_patch": false,
     "miss_path_has_no_jolt_call": true,
-    "invalid_counter_paths_have_no_jolt_call": true
+    "invalid_counter_paths_have_no_jolt_call": true,
+    "counter_review_control_uses_existing_accepted_runtime_binding": true
   },
   "human_visual_review": "REQUIRED"
 }
