@@ -1,5 +1,5 @@
 {
-  "build_id": "20260912014739",
+  "build_id": "20260912020418",
   "purpose": "minimal source-level Three.js camera-jolt proof before clean 05Q integration",
   "three": "0.186.0",
   "pipeline": "esbuild-local-bundle",
