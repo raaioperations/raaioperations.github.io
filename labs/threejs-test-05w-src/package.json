@@ -1,0 +1,11 @@
+{
+  "name": "raai-threejs-test-05w",
+  "private": true,
+  "version": "0.5.23",
+  "description": "Average-melee micro-knockback proof layered on current micro-hitstop candidate",
+  "type": "module",
+  "engines": {"node": ">=22"},
+  "scripts": {"build": "node build.mjs"},
+  "dependencies": {"three": "0.186.0"},
+  "devDependencies": {"esbuild": "0.25.9"}
+}
