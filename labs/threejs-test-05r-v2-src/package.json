@@ -1,0 +1,8 @@
+{
+  "name": "raai-threejs-test-05r-v2",
+  "private": true,
+  "version": "0.5.18-v2",
+  "description": "Clean source-level camera-jolt integration on accepted 05Q baseline",
+  "type": "module",
+  "engines": {"node": ">=22"}
+}
