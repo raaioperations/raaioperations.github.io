@@ -14,7 +14,8 @@ const ring=new THREE.Mesh(new THREE.RingGeometry(1.9,2.0,64),new THREE.MeshBasic
 const camera=new THREE.PerspectiveCamera(50,innerWidth/innerHeight,.1,100);const baseCam=new THREE.Vector3(0,2.55,6.5),lookTarget=new THREE.Vector3(0,1.15,0),baseFov=50;
 const loader=new GLTFLoader();const [aGLB,bGLB]=await Promise.all([loader.loadAsync('./assets/Soldier.glb'),loader.loadAsync('./assets/Soldier.glb')]);
 function setupCharacter(gltf,x,yaw){const root=new THREE.Group();root.position.set(x,0,0);root.rotation.y=yaw;scene.add(root);const model=gltf.scene;root.add(model);model.traverse(o=>{if(o.isMesh){o.castShadow=true;o.receiveShadow=true;}});const mixer=new THREE.AnimationMixer(model);const idle=gltf.animations.find(c=>c.name==='Idle')||gltf.animations[0];if(idle)mixer.clipAction(idle).play();return{root,model,mixer,baseX:x,baseYaw:yaw,reaction:null,attack:null};}
-const player=setupCharacter(aGLB,-.85,Math.PI/2),enemy=setupCharacter(bGLB,.85,-Math.PI/2);
+// Visual-facing correction only: keep all accepted give/receive mechanics unchanged.
+const player=setupCharacter(aGLB,-.85,-Math.PI/2),enemy=setupCharacter(bGLB,.85,Math.PI/2);
 
 // Accepted 05T-R2 constants — unchanged.
 const MICRO={duration:82,ampX:1.65,ampY:.9,rotation:.032,zoom:.0008,decayPower:2.05,phaseMultiplier:2.8};
