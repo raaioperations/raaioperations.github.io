@@ -1,0 +1,64 @@
+name: Build Three.js Test 05S
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'labs/threejs-test-05s-src/**'
+      - 'labs/threejs-test-05r-v2-src/camera-jolt.fragment.js'
+      - 'labs/threejs-test-05q/acceptance.json'
+      - 'labs/threejs-camera-jolt-proof/integrated-05q/acceptance.json'
+      - '.github/workflows/build-threejs-test05s.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: threejs-test05s-build
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Build source-level combat hit jolt integration
+        working-directory: labs/threejs-test-05s-src
+        run: npm run build
+
+      - name: Verify 05S candidate
+        run: |
+          test -f labs/threejs-test-05s/index.html
+          test -f labs/threejs-test-05s/app.js
+          test -f labs/threejs-test-05s/build-info.json
+          test -f labs/threejs-test-05s/verification-report.json
+          grep -q 'Test 05S — Combat Hit Camera Jolt' labs/threejs-test-05s/index.html
+          grep -q '05R_V2_SOURCE_CAMERA_JOLT' labs/threejs-test-05s/app.js
+          grep -q '"combat_hit_wiring": true' labs/threejs-test-05s/build-info.json
+          grep -q '"damage": 25' labs/threejs-test-05s/build-info.json
+          grep -q '"damage": 40' labs/threejs-test-05s/build-info.json
+          grep -q '"constants_changed": false' labs/threejs-test-05s/build-info.json
+          grep -q '"status": "PASS"' labs/threejs-test-05s/verification-report.json
+          grep -q 'PENDING HUMAN COMBAT-EVENT JOLT REVIEW' labs/threejs-test-05s/build-info.json
+          if grep -q 'r05SceneKickShell\|r05JoltViewportR4\|setViewOffset(innerWidth' labs/threejs-test-05s/app.js; then echo 'Retired 05R implementation detected'; exit 1; fi
+
+      - name: Publish 05S candidate
+        run: |
+          git config user.name 'raaioperations-build-bot'
+          git config user.email 'actions@users.noreply.github.com'
+          git add labs/threejs-test-05s
+          if git diff --cached --quiet; then
+            echo 'No output changes.'
+            exit 0
+          fi
+          git commit -m 'Build Three.js Test 05S combat-hit camera jolt'
+          git push origin HEAD:main
