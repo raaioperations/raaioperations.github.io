@@ -1,10 +1,11 @@
 import { readFile, writeFile, mkdir, cp } from 'node:fs/promises';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-const root=process.cwd();
+const root=path.dirname(fileURLToPath(import.meta.url));
 const labs=path.resolve(root,'..');
 const base=path.join(labs,'threejs-test-05q');
-const out=path.join(labs,'threejs-test-05r-v2');
+const out=path.join(labs,'threejs-camera-jolt-proof','integrated-05q');
 const qAcceptance=JSON.parse(await readFile(path.join(base,'acceptance.json'),'utf8'));
 const joltAcceptance=JSON.parse(await readFile(path.join(labs,'threejs-camera-jolt-proof','acceptance.json'),'utf8'));
 if(qAcceptance.status!=='ACCEPTED'||qAcceptance.human_visual_acceptance!==true)throw new Error('Accepted 05Q required');
