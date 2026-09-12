@@ -1,0 +1,17 @@
+{
+  "test": "05V",
+  "status": "PASS",
+  "build_id": "20260912051706",
+  "delegated_nonvisual_checks": {
+    "accepted_05t_required": true,
+    "current_05u_contact_candidate_required": true,
+    "hitstop_successful_contact_only": true,
+    "hitstop_duration_ms": 24,
+    "simulation_time_pauses_during_hitstop": true,
+    "camera_uses_wall_time_and_continues": true,
+    "accepted_micro_constants_reused": true,
+    "accepted_25_40_untouched": true,
+    "damage_not_added": true
+  },
+  "human_visual_review": "REQUIRED"
+}

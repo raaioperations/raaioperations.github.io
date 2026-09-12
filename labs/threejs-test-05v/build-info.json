@@ -1,0 +1,60 @@
+{
+  "build_id": "20260912051706",
+  "test": "05V",
+  "purpose": "isolated average-melee micro-hitstop layered onto current 05U contact-sync candidate",
+  "inherits": "05T-R2 accepted; current 05U contact timing/facing retained; 05S Jolt25/Jolt40 unchanged",
+  "three": "0.186.0",
+  "pipeline": "esbuild-local-bundle",
+  "runtime_external_dependencies": 0,
+  "service_worker": false,
+  "source_level": true,
+  "melee_event": {
+    "windup_ms": 110,
+    "recovery_ms": 190,
+    "total_ms": 300,
+    "reach_m": 2.1,
+    "contact_drives_feedback": true,
+    "max_feedback_events_per_attack": 1
+  },
+  "micro_jolt": {
+    "duration_ms": 82,
+    "amp_x_px": 1.65,
+    "amp_y_px": 0.9,
+    "rotation_deg": 0.032,
+    "zoom": 0.0008,
+    "decay_power": 2.05,
+    "phase_multiplier": 2.8
+  },
+  "hit_reaction": {
+    "duration_ms": 145,
+    "peak_ms": 42,
+    "recoil_m": 0.052,
+    "lean_deg": 2.35,
+    "attacker_lunge_m": 0.028,
+    "same_start_timestamp_as_camera_jolt": true,
+    "contact_pose_preload_ms": 18
+  },
+  "hitstop": {
+    "duration_ms": 24,
+    "scope": "attacker + receiver animation/procedural character time only",
+    "camera_continues": true,
+    "world_simulation_freeze": false,
+    "start": "successful CONTACT only"
+  },
+  "damage": false,
+  "controls": {
+    "KeyM": "GIVE MELEE",
+    "KeyN": "RECEIVE MELEE"
+  },
+  "accepted_25_40_constants_changed": false,
+  "human_visual_review": "REQUIRED",
+  "review_items": [
+    "contact feels slightly more solid than 05U",
+    "24 ms pause is felt but not consciously distracting",
+    "camera micro-jolt continues during local hitstop",
+    "receiver reaction still reads synchronized with contact",
+    "repeated average melee remains comfortable"
+  ],
+  "app_js_bytes": 635528,
+  "soldier_glb_bytes": 2160468
+}
