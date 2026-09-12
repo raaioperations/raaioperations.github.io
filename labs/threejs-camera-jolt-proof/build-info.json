@@ -1,0 +1,37 @@
+{
+  "build_id": "20260912014739",
+  "purpose": "minimal source-level Three.js camera-jolt proof before clean 05Q integration",
+  "three": "0.186.0",
+  "pipeline": "esbuild-local-bundle",
+  "runtime_external_dependencies": 0,
+  "service_worker": false,
+  "target": "safari16.4+",
+  "source_level_camera_rig": true,
+  "post_bundle_patching": false,
+  "controls": {
+    "KeyK": "DEMO 25",
+    "KeyL": "DEMO 40"
+  },
+  "accepted_reference": {
+    "source": "05R-JOLT accepted isolated proof",
+    "demo_25": {
+      "duration_ms": 240,
+      "amp_x_px": 20,
+      "amp_y_px": 12,
+      "rotation_deg": 0.68,
+      "zoom": 0.018
+    },
+    "demo_40": {
+      "duration_ms": 300,
+      "amp_x_px": 34,
+      "amp_y_px": 20,
+      "rotation_deg": 1.15,
+      "zoom": 0.03
+    },
+    "decay_power": 1.65,
+    "phase_multiplier": 6
+  },
+  "integration_status": "NOT CONNECTED TO 05Q OR COMBAT",
+  "human_visual_review": "PENDING",
+  "app_js_bytes": 547680
+}

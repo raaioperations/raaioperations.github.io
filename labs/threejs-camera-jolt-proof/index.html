@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="theme-color" content="#101719">
+<title>Three.js Camera Jolt Proof</title>
+<style>
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#101719;color:#fff;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}canvas{display:block;width:100%;height:100%;touch-action:none}#hud{position:fixed;inset:0;z-index:5;pointer-events:none;padding:max(12px,env(safe-area-inset-top)) max(12px,env(safe-area-inset-right)) max(14px,env(safe-area-inset-bottom)) max(12px,env(safe-area-inset-left));display:flex;flex-direction:column;justify-content:space-between}#top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}#title,#meter{padding:9px 11px;border:1px solid rgba(255,255,255,.18);border-radius:12px;background:rgba(8,13,16,.66);backdrop-filter:blur(9px)}#title{font-size:11px;font-weight:850;letter-spacing:.05em}#subtitle{margin-top:5px;font:700 9px/1.35 ui-monospace,SFMono-Regular,Menlo,monospace;color:#cce7e2}#meter{font:700 9px/1.45 ui-monospace,SFMono-Regular,Menlo,monospace;min-width:155px}#state{font-weight:900;color:#9df2ae}.row{display:flex;justify-content:space-between;gap:14px}.label{color:#a8c3c0}.value{font-variant-numeric:tabular-nums}#controls{pointer-events:auto;align-self:center;display:flex;gap:12px;padding:10px;border:1px solid rgba(255,255,255,.18);border-radius:999px;background:rgba(8,13,16,.72);backdrop-filter:blur(10px)}button{min-width:126px;height:50px;border:1px solid rgba(255,255,255,.28);border-radius:999px;background:#182226;color:#fff;font:900 12px/1 system-ui;letter-spacing:.05em;touch-action:manipulation;cursor:pointer}button:active{transform:scale(.96)}#demo40{background:#40201f}@media(max-width:650px){#title{font-size:9px}#subtitle,#meter{font-size:8px}#meter{min-width:130px}button{min-width:108px;height:46px;font-size:10px}}
+</style>
+</head>
+<body>
+<div id="hud">
+  <div id="top">
+    <div id="title">THREE.JS CAMERA JOLT PROOF<div id="subtitle">Clean source-level camera rig · Three.js 0.186.0 · K = 25 · L = 40</div></div>
+    <div id="meter">
+      <div class="row"><span class="label">STATE</span><span id="state">READY</span></div>
+      <div class="row"><span class="label">X</span><span id="mx" class="value">0.0 px</span></div>
+      <div class="row"><span class="label">Y</span><span id="my" class="value">0.0 px</span></div>
+      <div class="row"><span class="label">ROLL</span><span id="mr" class="value">0.00°</span></div>
+      <div class="row"><span class="label">ZOOM</span><span id="mz" class="value">1.000</span></div>
+      <div class="row"><span class="label">CAM X</span><span id="cx" class="value">0.000</span></div>
+      <div class="row"><span class="label">CAM Y</span><span id="cy" class="value">0.000</span></div>
+      <div class="row"><span class="label">FOV</span><span id="cfov" class="value">53.00°</span></div>
+    </div>
+  </div>
+  <div id="controls"><button id="demo25" type="button">DEMO 25 · K</button><button id="demo40" type="button">DEMO 40 · L</button></div>
+</div>
+<script type="module" src="./app.js?v=20260912014739"></script>
+</body>
+</html>
