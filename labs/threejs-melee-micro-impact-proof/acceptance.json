@@ -1,0 +1,31 @@
+{
+  "test": "05T-preview-R2",
+  "status": "ACCEPTED",
+  "accepted_at": "2026-09-12T04:31:43Z",
+  "human_visual_acceptance": true,
+  "accepted_items": {
+    "micro_jolt_is_subtle_enough_for_average_melee": true,
+    "hit_reaction_is_in_sync_with_micro_jolt": true,
+    "give_and_receive_both_read_as_one_contact_event": true,
+    "reaction_is_comfortable_for_frequent_melee": true,
+    "effect_is_clearly_below_jolt_25": true
+  },
+  "micro_jolt": {
+    "duration_ms": 82,
+    "amp_x_px": 1.65,
+    "amp_y_px": 0.9,
+    "rotation_deg": 0.032,
+    "zoom": 0.0008,
+    "decay_power": 2.05,
+    "phase_multiplier": 2.8
+  },
+  "hit_reaction": {
+    "duration_ms": 145,
+    "peak_ms": 42,
+    "recoil_m": 0.052,
+    "lean_deg": 2.35,
+    "attacker_lunge_m": 0.028,
+    "same_start_timestamp_as_camera_jolt": true
+  },
+  "accepted_05s_jolt_25_40_constants_changed": false
+}
