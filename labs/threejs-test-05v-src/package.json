@@ -1,0 +1,11 @@
+{
+  "name": "raai-threejs-test-05v",
+  "private": true,
+  "version": "0.5.22",
+  "description": "Average-melee micro-hitstop proof layered on accepted micro-jolt and hit reaction",
+  "type": "module",
+  "engines": {"node": ">=22"},
+  "scripts": {"build": "node build.mjs"},
+  "dependencies": {"three": "0.186.0"},
+  "devDependencies": {"esbuild": "0.25.9"}
+}
