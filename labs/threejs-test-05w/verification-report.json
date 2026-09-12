@@ -1,0 +1,20 @@
+{
+  "test": "05W",
+  "status": "PASS",
+  "build_id": "20260912055644",
+  "delegated_nonvisual_checks": {
+    "accepted_05t_required": true,
+    "current_05v_required": true,
+    "knockback_successful_contact_only": true,
+    "knockback_distance_m": 0.07,
+    "knockback_duration_ms": 100,
+    "direction_away_from_attacker": true,
+    "persistent_displacement": true,
+    "future_reach_uses_displaced_anchor_positions": true,
+    "reset_restores_positions": true,
+    "accepted_micro_constants_reused": true,
+    "accepted_25_40_untouched": true,
+    "damage_not_added": true
+  },
+  "human_visual_review": "REQUIRED"
+}
