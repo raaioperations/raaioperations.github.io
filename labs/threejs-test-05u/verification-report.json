@@ -1,0 +1,15 @@
+{
+  "test": "05U",
+  "status": "PASS",
+  "build_id": "20260912043614",
+  "checks": {
+    "accepted_05t_required": true,
+    "source_level_melee_state_machine": true,
+    "contact_only_feedback": true,
+    "one_feedback_event_per_attack": true,
+    "give_and_receive_supported": true,
+    "accepted_micro_constants_reused": true,
+    "accepted_25_40_untouched": true
+  },
+  "human_visual_review": "REQUIRED"
+}

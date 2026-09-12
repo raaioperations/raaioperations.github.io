@@ -1,0 +1,52 @@
+{
+  "build_id": "20260912043614",
+  "test": "05U",
+  "purpose": "actual average-melee contact event driving accepted micro camera jolt and accepted synchronized hit reaction",
+  "inherits": "05T-preview-R2 accepted; 05S Jolt25/Jolt40 unchanged",
+  "three": "0.186.0",
+  "pipeline": "esbuild-local-bundle",
+  "runtime_external_dependencies": 0,
+  "service_worker": false,
+  "source_level": true,
+  "melee_event": {
+    "windup_ms": 110,
+    "recovery_ms": 190,
+    "total_ms": 300,
+    "reach_m": 2.1,
+    "contact_drives_feedback": true,
+    "max_feedback_events_per_attack": 1
+  },
+  "micro_jolt": {
+    "duration_ms": 82,
+    "amp_x_px": 1.65,
+    "amp_y_px": 0.9,
+    "rotation_deg": 0.032,
+    "zoom": 0.0008,
+    "decay_power": 2.05,
+    "phase_multiplier": 2.8
+  },
+  "hit_reaction": {
+    "duration_ms": 145,
+    "peak_ms": 42,
+    "recoil_m": 0.052,
+    "lean_deg": 2.35,
+    "attacker_lunge_m": 0.028,
+    "same_start_timestamp_as_camera_jolt": true
+  },
+  "damage": false,
+  "controls": {
+    "KeyM": "GIVE MELEE",
+    "KeyN": "RECEIVE MELEE"
+  },
+  "accepted_25_40_constants_changed": false,
+  "human_visual_review": "REQUIRED",
+  "review_items": [
+    "feedback occurs at CONTACT rather than input",
+    "camera micro-jolt and receiver reaction begin together",
+    "give and receive both read cleanly",
+    "frequent average melee remains comfortable",
+    "effect remains below Jolt25"
+  ],
+  "app_js_bytes": 635339,
+  "soldier_glb_bytes": 2160468
+}
