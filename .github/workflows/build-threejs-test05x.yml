@@ -1,0 +1,58 @@
+name: Build Three.js Test 05X
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'labs/threejs-test-05x-src/**'
+      - 'labs/threejs-test-05w/acceptance.json'
+      - '.github/workflows/build-threejs-test05x.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: threejs-test05x-build
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install pinned dependencies
+        working-directory: labs/threejs-test-05x-src
+        run: npm install --no-audit --no-fund --no-package-lock
+      - name: Build 05X
+        working-directory: labs/threejs-test-05x-src
+        run: npm run build
+      - name: Verify 05X
+        run: |
+          test -f labs/threejs-test-05x/index.html
+          test -f labs/threejs-test-05x/app.js
+          test -f labs/threejs-test-05x/build-info.json
+          test -f labs/threejs-test-05x/verification-report.json
+          test -f labs/threejs-test-05x/assets/Soldier.glb
+          grep -q '05X — AVERAGE MELEE TWO-HIT CADENCE' labs/threejs-test-05x/index.html
+          grep -q '"a1_contact_ms": 160' labs/threejs-test-05x/build-info.json
+          grep -q '"a2_contact_ms": 170' labs/threejs-test-05x/build-info.json
+          grep -q '"duration_ms": 24' labs/threejs-test-05x/build-info.json
+          grep -q '"distance_m": 0.07' labs/threejs-test-05x/build-info.json
+          grep -q '"accepted_25_40_constants_changed": false' labs/threejs-test-05x/build-info.json
+          grep -q '"status": "PASS"' labs/threejs-test-05x/verification-report.json
+          ! test -f labs/threejs-test-05x/sw.js
+      - name: Publish 05X
+        run: |
+          git config user.name 'raaioperations-build-bot'
+          git config user.email 'actions@users.noreply.github.com'
+          git add labs/threejs-test-05x
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'Build Three.js Test 05X two-hit impact cadence'
+          git push origin HEAD:main
