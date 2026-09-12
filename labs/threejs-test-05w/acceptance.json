@@ -1,0 +1,20 @@
+{
+  "test": "05W",
+  "status": "ACCEPTED",
+  "accepted_at": "2026-09-12T19:08:54Z",
+  "human_visual_acceptance": true,
+  "accepted_items": {
+    "micro_knockback_reads_as_physical_contact": true,
+    "knockback_remains_subtle_for_average_melee": true,
+    "persistent_world_displacement_is_acceptable": true,
+    "existing_micro_jolt_reaction_and_hitstop_remain_good": true
+  },
+  "knockback": {
+    "distance_m": 0.07,
+    "duration_ms": 100,
+    "direction": "away from attacker",
+    "persistent_world_displacement": true
+  },
+  "accepted_micro_feedback_constants_changed": false,
+  "accepted_jolt_25_40_constants_changed": false
+}
