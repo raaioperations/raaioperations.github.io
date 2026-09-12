@@ -1,0 +1,15 @@
+{
+  "test": "05S",
+  "status": "ACCEPTED",
+  "accepted_at": "2026-09-12T02:27:19Z",
+  "human_visual_acceptance": true,
+  "accepted_items": {
+    "real_25_damage_hit_triggers_jolt_25": true,
+    "miss_does_not_jolt": true,
+    "real_40_damage_counter_triggers_jolt_40": true,
+    "jolt_40_remains_stronger_than_jolt_25": true,
+    "accepted_combat_and_05q_readability_remain_intact": true
+  },
+  "camera_jolt_constants_changed": false,
+  "architecture": "source-level combat events drive the accepted source-level Three.js camera jolt system"
+}
