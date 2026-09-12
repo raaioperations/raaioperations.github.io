@@ -1,5 +1,5 @@
 {
-  "build_id": "20260912010800",
+  "build_id": "20260912010827",
   "inherits": "Accepted Test 05Q visual telegraph baseline + verified Test 05P combat integration",
   "base_blob": "8ec3761c2cf4a507a072d79307220c0b315a8261",
   "three": "0.186.0",

@@ -1,5 +1,5 @@
-const CACHE='raai-threejs-test05r-20260912010800';
-const CORE=['./app.js?v=20260912010800','./assets/Soldier.glb'];
+const CACHE='raai-threejs-test05r-20260912010827';
+const CORE=['./app.js?v=20260912010827','./assets/Soldier.glb'];
 self.addEventListener('install',event=>event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(CORE)).then(()=>self.skipWaiting())));
 self.addEventListener('activate',event=>event.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(key=>key.startsWith('raai-threejs-test05r-')&&key!==CACHE).map(key=>caches.delete(key)))).then(()=>self.clients.claim())));
 self.addEventListener('fetch',event=>{
