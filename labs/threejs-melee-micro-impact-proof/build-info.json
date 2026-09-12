@@ -1,0 +1,45 @@
+{
+  "build_id": "20260912031459",
+  "test": "05T-preview",
+  "purpose": "isolated average-melee micro impact review before combat integration",
+  "inherits_acceptance": "05S accepted; 25/40 jolt contracts unchanged",
+  "three": "0.186.0",
+  "pipeline": "esbuild-local-bundle",
+  "runtime_external_dependencies": 0,
+  "service_worker": false,
+  "source_level_camera_rig": true,
+  "authored_character_asset": "existing local Soldier.glb; Idle clip only for base pose",
+  "micro_jolt": {
+    "duration_ms": 100,
+    "amp_x_px": 3.2,
+    "amp_y_px": 1.8,
+    "rotation_deg": 0.07,
+    "zoom": 0.002,
+    "decay_power": 1.9,
+    "phase_multiplier": 3.25
+  },
+  "hit_reaction": {
+    "duration_ms": 180,
+    "peak_ms": 52,
+    "recoil_m": 0.1,
+    "lean_deg": 4.5,
+    "attacker_lunge_m": 0.055,
+    "same_start_timestamp_as_camera_jolt": true
+  },
+  "controls": {
+    "KeyM": "GIVE AVERAGE MELEE",
+    "KeyN": "RECEIVE AVERAGE MELEE"
+  },
+  "accepted_25_40_constants_changed": false,
+  "combat_wiring": false,
+  "human_visual_review": "REQUIRED",
+  "review_items": [
+    "micro jolt is perceptible but very small",
+    "hit character reaction begins in sync with jolt",
+    "give and receive both feel connected",
+    "reaction recovers quickly without disrupting readability",
+    "effect is clearly below accepted Jolt 25"
+  ],
+  "app_js_bytes": 634501,
+  "soldier_glb_bytes": 2160468
+}
