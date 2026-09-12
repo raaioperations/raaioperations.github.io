@@ -1,0 +1,54 @@
+name: Build Three.js Melee Micro Impact Proof
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'labs/threejs-melee-micro-impact-proof-src/**'
+      - 'labs/threejs-test-05s/acceptance.json'
+      - '.github/workflows/build-threejs-melee-micro-impact-proof.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: threejs-melee-micro-impact-proof
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install pinned dependencies
+        working-directory: labs/threejs-melee-micro-impact-proof-src
+        run: npm install --no-audit --no-fund --no-package-lock
+      - name: Build proof
+        working-directory: labs/threejs-melee-micro-impact-proof-src
+        run: npm run build
+      - name: Verify proof
+        run: |
+          test -f labs/threejs-melee-micro-impact-proof/index.html
+          test -f labs/threejs-melee-micro-impact-proof/app.js
+          test -f labs/threejs-melee-micro-impact-proof/build-info.json
+          test -f labs/threejs-melee-micro-impact-proof/assets/Soldier.glb
+          grep -q 'AVERAGE MELEE — MICRO IMPACT PROOF' labs/threejs-melee-micro-impact-proof/index.html
+          grep -q '"duration_ms": 100' labs/threejs-melee-micro-impact-proof/build-info.json
+          grep -q '"same_start_timestamp_as_camera_jolt": true' labs/threejs-melee-micro-impact-proof/build-info.json
+          grep -q '"accepted_25_40_constants_changed": false' labs/threejs-melee-micro-impact-proof/build-info.json
+          ! test -f labs/threejs-melee-micro-impact-proof/sw.js
+      - name: Publish proof
+        run: |
+          git config user.name 'raaioperations-build-bot'
+          git config user.email 'actions@users.noreply.github.com'
+          git add labs/threejs-melee-micro-impact-proof
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'Build average melee micro impact proof'
+          git push origin HEAD:main
