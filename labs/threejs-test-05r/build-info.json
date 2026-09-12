@@ -1,5 +1,5 @@
 {
-  "build_id": "20260912004101",
+  "build_id": "20260912010800",
   "inherits": "Accepted Test 05Q visual telegraph baseline + verified Test 05P combat integration",
   "base_blob": "8ec3761c2cf4a507a072d79307220c0b315a8261",
   "three": "0.186.0",
@@ -229,6 +229,10 @@
       "05R-R5 FAILED"
     ],
     "architecture": "additive camera impulse channel inside established Three.js camera render pipeline",
-    "input_confirmation": "CAMERA JOLT 25/40 runtime indicator"
+    "input_confirmation": "CAMERA JOLT 25/40 runtime indicator",
+    "keyboard_bindings": {
+      "KeyK": "DEMO 25",
+      "KeyL": "DEMO 40"
+    }
   }
 }
