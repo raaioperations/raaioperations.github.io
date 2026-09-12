@@ -1,0 +1,11 @@
+{
+  "name": "raai-threejs-melee-micro-impact-proof",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Average-melee micro camera jolt plus synchronized hit-reaction proof",
+  "type": "module",
+  "engines": {"node": ">=22"},
+  "scripts": {"build": "node build.mjs"},
+  "dependencies": {"three": "0.186.0"},
+  "devDependencies": {"esbuild": "0.25.9"}
+}
