@@ -1,5 +1,5 @@
 {
-  "build_id": "20260911233800",
+  "build_id": "20260912002844",
   "inherits": "Accepted Test 05Q visual telegraph baseline + verified Test 05P combat integration",
   "base_blob": "8ec3761c2cf4a507a072d79307220c0b315a8261",
   "three": "0.186.0",
@@ -209,7 +209,7 @@
     "status": "VERIFIED UNDER USER-DELEGATED NONVISUAL AUTHORITY"
   },
   "delegated_verification_status_05p": "PASS",
-  "visual_runtime_revision": "05R-R4 accepted-jolt oversized frame compositor",
+  "visual_runtime_revision": "05R-R5 native Three.js camera-projection jolt",
   "hit_impact_visual": {
     "basic_damage_reference": 25,
     "counter_damage_reference": 40,
@@ -219,12 +219,14 @@
     "camera_kick": true,
     "damage_strength_scaling": true,
     "status": "PENDING HUMAN ACCEPTANCE",
-    "camera_kick_revision": "accepted 05R-JOLT waveform on 46px-overscanned captured gameplay scene; live WebGL canvas stays fixed beneath; HUD stationary; black-edge exposure eliminated",
+    "camera_kick_revision": "accepted 05R-JOLT waveform applied directly to PerspectiveCamera projection: setViewOffset screen displacement + local Z roll + camera.zoom; no DOM movement or canvas snapshot",
     "camera_kick_source": "labs/threejs-test-05r-jolt/acceptance.json",
     "previous_integrated_revisions": [
       "05R-R1 FAILED",
       "05R-R2 FAILED",
-      "05R-R3 FAILED"
-    ]
+      "05R-R3 FAILED",
+      "05R-R4 FAILED"
+    ],
+    "browser_fix": "R5 removes Safari WebGL snapshot dependency and uses click activation matching accepted isolated demo"
   }
 }

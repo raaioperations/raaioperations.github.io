@@ -16,122 +16,22 @@ html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#101719;fon
 <div id="hud"><div id="metrics"><div class="title">RAAI Proof 05Q — Enemy Telegraph Readability</div><div id="stats"><span>FPS</span><b id="fps">—</b><span>Draw calls</span><b id="calls">—</b><span>Triangles</span><b id="tris">—</b><span>Character</span><b id="char">BOOT</b><span>Render scale</span><b id="scale">—</b><span>Lock</span><b id="lockState">FREE</b><span>Attack state</span><b id="attackState">READY</b><span>Combo window</span><b id="comboWindow">—</b><span>Target HP</span><b id="targetHp">100/100</b><span>Dodge</span><b id="dodgeState">READY</b><span>Dodge dir</span><b id="dodgeDirection">—</b><span>Dodge dist</span><b id="dodgeDistance">—</b><span>Player HP</span><b id="playerHp">100/100</b><span>I-frame</span><b id="iframeState">OFF</b><span>Hit test</span><b id="hitResult">—</b><span>Guard</span><b id="blockState">READY</b><span>Block dmg</span><b id="blockDamage">—</b><span>Front dot</span><b id="blockFrontDot">—</b><span>Parry</span><b id="parryState">READY</b><span>Parry t</span><b id="parryTime">—</b><span>Parry dmg</span><b id="parryDamage">—</b><span>Enemy state</span><b id="enemyState">READY</b><span>Enemy action</span><b id="enemyAction">AVAILABLE</b><span>Counter</span><b id="counterState">IDLE</b><span>Counter t</span><b id="counterTime">—</b><span>Counter result</span><b id="counterResult">—</b><span>Counter count</span><b id="counterCount">0</b><span>Counter target HP</span><b id="counterTargetHp">100/100</b><span>Counter dmg</span><b id="counterDamage">—</b><span>Damage events</span><b id="counterDamageEvents">0</b><span>Enemy attack</span><b id="enemyAttackPhase">READY</b><span>Enemy attack result</span><b id="enemyAttackResult">READY</b><span>Enemy attack timing</span><b id="enemyAttackMeasured">—</b><span>Enemy attack cycle</span><b id="enemyAttackCycle">0</b><span>Enemy damage phase</span><b id="enemyDamagePhase">READY</b><span>Enemy damage HP</span><b id="enemyDamageHp">100/100</b><span>Enemy damage</span><b id="enemyDamageAmount">—</b><span>Enemy damage events</span><b id="enemyDamageEvents">0</b><span>Enemy damage result</span><b id="enemyDamageResult">READY</b></div></div><div id="zone">FOREST APPROACH</div><div id="proofSuccess">HIT IMPACT REVIEW — land attacks or use DEMO HIT; judge weight, clarity, camera kick, and visual clutter</div><div id="enemyAttackSignal" data-phase="READY">READY</div><button id="tuneBtn">CHECK</button><div id="panel"><div class="title">Test 05Q checklist</div><div id="checklist"><div><b>REVIEW</b><span>01 A successful hit is immediately noticeable without reading HUD text</span></div><div><b>REVIEW</b><span>02 Burst + flash are focused and disappear quickly</span></div><div><b>REVIEW</b><span>03 Camera kick adds weight without becoming disorienting</span></div><div><b>REVIEW</b><span>04 A 40-damage counter impact reads stronger than a 25-damage basic hit</span></div><div><b>REVIEW</b><span>05 Repeated hits remain readable and do not obscure combat</span></div></div><div class="contract"><b>HIT IMPACT CONTRACT</b><span>Presentation only. Accepted attack damage, counter damage, hit timing, range, guard, parry, stagger, dodge, telegraph timing, and enemy damage mechanics are unchanged.</span></div><div class="acceptedContract"><b>ACCEPTED / NOT RETESTED</b><span>05Q enemy telegraph presentation is accepted. 05P defense integration remains mechanically verified. Jump animation replacement stays deferred.</span></div><label class="envHidden"><span>Time</span><input id="tod" type="range" min="6" max="20" step="0.1" value="9.8"></label><label class="envHidden"><span>Atmosphere</span><input id="fog" type="range" min="0" max="1" step="0.01" value="0.34"></label><label class="envHidden"><span>Wind</span><input id="wind" type="range" min="0" max="1" step="0.01" value="0.48"></label><label class="envHidden"><span>Camera</span><input id="damp" type="range" min="0.05" max="0.22" step="0.005" value="0.12"></label><button id="shadowBtn">Dynamic shadows: ON</button></div><div id="toast"></div></div>
 <div id="mobile"><div id="stick"><div id="knob"></div></div><button id="jump" class="action">JUMP</button><button id="lock" class="action">LOCK</button><button id="attack" class="action">ATTACK</button><button id="dodge" class="action">DODGE</button><button id="block" class="action">BLOCK</button><button id="sprint" class="action">RUN</button></div>
 <div id="error"></div>
-<script type="module" src="./app.js?v=20260911233800"></script>
-<script>if('serviceWorker'in navigator){addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=20260911233800').catch(()=>{}));}</script>
-<div id="q05Cue" data-phase="READY" aria-hidden="true"><div id="q05Cone"></div><div id="q05Lane"></div><div id="q05Ring"></div><div id="q05Phase">TELEGRAPH</div><div id="q05Direction">DANGER ▼</div></div><button id="visualDemoAttack">DEMO ATTACK</button><button id="visualDemoAuto">AUTO: OFF</button><div id="r05ImpactLayer" aria-hidden="true"><div id="r05ImpactFlash"></div><div id="r05ImpactBurst"><div id="r05ImpactCore"></div><div id="r05ImpactLabel">25</div></div></div><button id="r05Demo25">DEMO 25</button><button id="r05Demo40">DEMO 40</button><script>
+<script type="module" src="./app.js?v=20260912002844"></script>
+<script>if('serviceWorker'in navigator){addEventListener('load',()=>navigator.serviceWorker.register('./sw.js?v=20260912002844').catch(()=>{}));}</script>
+<div id="q05Cue" data-phase="READY" aria-hidden="true"><div id="q05Cone"></div><div id="q05Lane"></div><div id="q05Ring"></div><div id="q05Phase">TELEGRAPH</div><div id="q05Direction">DANGER ▼</div></div><button id="visualDemoAttack">DEMO ATTACK</button><button id="visualDemoAuto">AUTO: OFF</button><div id="r05ImpactLayer" aria-hidden="true"><div id="r05ImpactFlash"></div><div id="r05ImpactBurst"><div id="r05ImpactCore"></div><div id="r05ImpactLabel">25</div></div></div><button id="r05Demo25" type="button">DEMO 25</button><button id="r05Demo40" type="button">DEMO 40</button><script>
 (()=>{
   const layer=document.getElementById('r05ImpactLayer');
   const flash=document.getElementById('r05ImpactFlash');
   const burst=document.getElementById('r05ImpactBurst');
   const label=document.getElementById('r05ImpactLabel');
   let active=0;
-  function ensureJoltCompositor(){
-    let viewport=document.getElementById('r05JoltViewportR4');
-    if(viewport)return {
-      viewport,
-      scene:document.getElementById('r05JoltSceneR4'),
-      snapshot:document.getElementById('r05JoltSnapshotR4')
-    };
-    viewport=document.createElement('div');
-    viewport.id='r05JoltViewportR4';
-    viewport.style.position='fixed';
-    viewport.style.inset='0';
-    viewport.style.overflow='hidden';
-    viewport.style.pointerEvents='none';
-    viewport.style.zIndex='4';
-    viewport.style.display='none';
-    const scene=document.createElement('div');
-    scene.id='r05JoltSceneR4';
-    scene.style.position='absolute';
-    scene.style.inset='-46px';
-    scene.style.transformOrigin='50% 50%';
-    scene.style.willChange='transform';
-    const snapshot=document.createElement('canvas');
-    snapshot.id='r05JoltSnapshotR4';
-    snapshot.style.position='absolute';
-    snapshot.style.inset='0';
-    snapshot.style.width='100%';
-    snapshot.style.height='100%';
-    snapshot.style.display='block';
-    scene.appendChild(snapshot);
-    viewport.appendChild(scene);
-    document.body.appendChild(viewport);
-    return {viewport,scene,snapshot};
-  }
-  function paintJoltSnapshot(live,snapshot){
-    const pad=46;
-    const rect=live.getBoundingClientRect();
-    const w=Math.max(1,Math.round(rect.width||innerWidth));
-    const h=Math.max(1,Math.round(rect.height||innerHeight));
-    const dpr=Math.max(1,Math.min(devicePixelRatio||1,2));
-    snapshot.width=Math.round((w+pad*2)*dpr);
-    snapshot.height=Math.round((h+pad*2)*dpr);
-    const ctx=snapshot.getContext('2d',{alpha:false,desynchronized:true});
-    if(!ctx)return false;
-    ctx.setTransform(dpr,0,0,dpr,0,0);
-    ctx.fillStyle='#101719';
-    ctx.fillRect(0,0,w+pad*2,h+pad*2);
-    try{
-      // Preserve the live frame at 1:1 inside a 46 px overscan border.
-      ctx.drawImage(live,0,0,live.width,live.height,pad,pad,w,h);
-      // Extend the actual edge pixels into the overscan border. This prevents
-      // exposed black body pixels without zooming the central gameplay frame.
-      const sx=Math.max(1,Math.round(live.width*pad/w));
-      const sy=Math.max(1,Math.round(live.height*pad/h));
-      ctx.drawImage(live,0,0,sx,live.height,0,pad,pad,h);
-      ctx.drawImage(live,Math.max(0,live.width-sx),0,sx,live.height,pad+w,pad,pad,h);
-      ctx.drawImage(live,0,0,live.width,sy,pad,0,w,pad);
-      ctx.drawImage(live,0,Math.max(0,live.height-sy),live.width,sy,pad,pad+h,w,pad);
-      ctx.drawImage(live,0,0,sx,sy,0,0,pad,pad);
-      ctx.drawImage(live,Math.max(0,live.width-sx),0,sx,sy,pad+w,0,pad,pad);
-      ctx.drawImage(live,0,Math.max(0,live.height-sy),sx,sy,0,pad+h,pad,pad);
-      ctx.drawImage(live,Math.max(0,live.width-sx),Math.max(0,live.height-sy),sx,sy,pad+w,pad+h,pad,pad);
-      return true;
-    }catch(err){
-      console.warn('05R-R4 snapshot capture failed',err);
-      return false;
-    }
-  }
-  function runAcceptedJolt(scene,viewport,strength){
-    if(scene.__r05KickRaf)cancelAnimationFrame(scene.__r05KickRaf);
-    const strong=strength>=40;
-    const duration=strong?300:240;
-    const ampX=strong?34:20;
-    const ampY=strong?20:12;
-    const ampRot=strong?1.15:.68;
-    const ampZoom=strong?.030:.018;
-    const token=(scene.__r05KickToken||0)+1;
-    scene.__r05KickToken=token;
-    const start=performance.now();
-    viewport.style.display='block';
-    function frame(now){
-      if(token!==scene.__r05KickToken)return;
-      const p=Math.min(1,(now-start)/duration);
-      const decay=Math.pow(1-p,1.65);
-      const phase=p*Math.PI*6.0;
-      const x=Math.sin(phase)*ampX*decay + (p<.16?ampX*.34*(1-p/.16):0);
-      const y=-Math.cos(phase*.91)*ampY*decay;
-      const rot=Math.sin(phase*.73)*ampRot*decay;
-      const scale=1+ampZoom*decay;
-      scene.style.transform='translate3d('+x.toFixed(2)+'px,'+y.toFixed(2)+'px,0) rotate('+rot.toFixed(3)+'deg) scale('+scale.toFixed(4)+')';
-      if(p<1){scene.__r05KickRaf=requestAnimationFrame(frame);}else{
-        scene.style.transform='';
-        viewport.style.display='none';
-        scene.__r05KickRaf=0;
-      }
-    }
-    scene.__r05KickRaf=requestAnimationFrame(frame);
-  }
   function kickCanvas(strength){
-    const live=[...document.querySelectorAll('canvas')].find(c=>c.id!=='r05JoltSnapshotR4');
-    if(!live)return;
-    const compositor=ensureJoltCompositor();
-    // Capture immediately after the game's next rendered frame. The second RAF
-    // keeps this after the established Three.js animation callback on Safari.
-    requestAnimationFrame(()=>requestAnimationFrame(()=>{
-      if(!paintJoltSnapshot(live,compositor.snapshot))return;
-      runAcceptedJolt(compositor.scene,compositor.viewport,strength);
-    }));
+    const trigger=globalThis.__r05NativeCameraJolt;
+    if(typeof trigger==='function'){
+      trigger(strength);
+      return;
+    }
+    console.warn('05R-R5 native camera jolt bridge not ready');
   }
   function impact(damage){
     active++;
@@ -164,8 +64,8 @@ html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#101719;fon
   }
   watchHp('targetHp',25);
   watchHp('counterTargetHp',40);
-  const d25=document.getElementById('r05Demo25');if(d25)d25.addEventListener('pointerdown',e=>{e.preventDefault();impact(25);});
-  const d40=document.getElementById('r05Demo40');if(d40)d40.addEventListener('pointerdown',e=>{e.preventDefault();impact(40);});
+  const d25=document.getElementById('r05Demo25');if(d25)d25.addEventListener('click',e=>{e.preventDefault();impact(25);});
+  const d40=document.getElementById('r05Demo40');if(d40)d40.addEventListener('click',e=>{e.preventDefault();impact(40);});
   globalThis.__r05ImpactDemo=impact;
 })();
-</script><div id="r05KickRevision" data-revision="05R-R4-OVERSCAN-COMPOSITOR" hidden></div></body></html>
+</script><div id="r05KickRevision" data-revision="05R-R5-NATIVE-CAMERA" hidden></div></body></html>
