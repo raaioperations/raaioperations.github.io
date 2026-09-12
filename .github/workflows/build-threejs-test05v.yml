@@ -1,0 +1,57 @@
+name: Build Three.js Test 05V
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'labs/threejs-test-05v-src/**'
+      - 'labs/threejs-melee-micro-impact-proof/acceptance.json'
+      - 'labs/threejs-test-05u/build-info.json'
+      - '.github/workflows/build-threejs-test05v.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: threejs-test05v-build
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install pinned dependencies
+        working-directory: labs/threejs-test-05v-src
+        run: npm install --no-audit --no-fund --no-package-lock
+      - name: Build 05V
+        working-directory: labs/threejs-test-05v-src
+        run: npm run build
+      - name: Verify 05V
+        run: |
+          test -f labs/threejs-test-05v/index.html
+          test -f labs/threejs-test-05v/app.js
+          test -f labs/threejs-test-05v/build-info.json
+          test -f labs/threejs-test-05v/verification-report.json
+          test -f labs/threejs-test-05v/assets/Soldier.glb
+          grep -q '05V — AVERAGE MELEE MICRO HITSTOP' labs/threejs-test-05v/index.html
+          grep -q '"duration_ms": 24' labs/threejs-test-05v/build-info.json
+          grep -q '"camera_continues": true' labs/threejs-test-05v/build-info.json
+          grep -q '"accepted_25_40_constants_changed": false' labs/threejs-test-05v/build-info.json
+          grep -q '"status": "PASS"' labs/threejs-test-05v/verification-report.json
+          ! test -f labs/threejs-test-05v/sw.js
+      - name: Publish 05V
+        run: |
+          git config user.name 'raaioperations-build-bot'
+          git config user.email 'actions@users.noreply.github.com'
+          git add labs/threejs-test-05v
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'Build Three.js Test 05V micro-hitstop'
+          git push origin HEAD:main
