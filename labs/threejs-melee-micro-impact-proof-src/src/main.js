@@ -39,8 +39,9 @@ function setupCharacter(gltf,x,yaw){
 const player=setupCharacter(aGLB,-.85,Math.PI/2);
 const enemy=setupCharacter(bGLB,.85,-Math.PI/2);
 
-const MICRO={duration:100,ampX:3.2,ampY:1.8,rotation:.07,zoom:.002,decayPower:1.9,phaseMultiplier:3.25};
-const REACTION={duration:180,peak:52,recoil:.10,lean:THREE.MathUtils.degToRad(4.5),lunge:.055};
+// R2: average-melee feedback should register subconsciously, not read as a heavy impact.
+const MICRO={duration:82,ampX:1.65,ampY:.9,rotation:.032,zoom:.0008,decayPower:2.05,phaseMultiplier:2.8};
+const REACTION={duration:145,peak:42,recoil:.052,lean:THREE.MathUtils.degToRad(2.35),lunge:.028};
 let jolt=null;
 
 function triggerMicroJolt(direction){jolt={start:performance.now(),direction};}
@@ -61,12 +62,12 @@ function impactEnvelope(p){if(p<=.29)return Math.sin((p/.29)*Math.PI/2);return 1
 function updateCharacter(c,now){
   c.root.position.x=c.baseX;c.root.position.z=0;c.root.rotation.set(0,c.baseY,0);
   if(c.lunge){const p=Math.min(1,(now-c.lunge.start)/REACTION.duration);const e=Math.sin(Math.PI*p);c.root.position.x+=c.lunge.direction*REACTION.lunge*e;if(p>=1)c.lunge=null;}
-  if(c.reaction){const p=Math.min(1,(now-c.reaction.start)/REACTION.duration),e=impactEnvelope(p);c.root.position.x+=c.reaction.direction*REACTION.recoil*e;c.root.rotation.z=-c.reaction.direction*REACTION.lean*e;c.root.rotation.x=.035*e;if(p>=1){c.reaction=null;reactionEl.textContent='IDLE';}}
+  if(c.reaction){const p=Math.min(1,(now-c.reaction.start)/REACTION.duration),e=impactEnvelope(p);c.root.position.x+=c.reaction.direction*REACTION.recoil*e;c.root.rotation.z=-c.reaction.direction*REACTION.lean*e;c.root.rotation.x=.018*e;if(p>=1){c.reaction=null;reactionEl.textContent='IDLE';}}
 }
 function joltWave(now){
   if(!jolt)return{x:0,y:0,rot:0,scale:1,done:false};
   const p=Math.min(1,(now-jolt.start)/MICRO.duration),decay=Math.pow(1-p,MICRO.decayPower),phase=p*Math.PI*MICRO.phaseMultiplier;
-  return{x:jolt.direction*(Math.sin(phase)*MICRO.ampX*decay+(p<.18?MICRO.ampX*.25*(1-p/.18):0)),y:-Math.cos(phase*.9)*MICRO.ampY*decay,rot:jolt.direction*Math.sin(phase*.72)*MICRO.rotation*decay,scale:1+MICRO.zoom*decay,done:p>=1};
+  return{x:jolt.direction*(Math.sin(phase)*MICRO.ampX*decay+(p<.15?MICRO.ampX*.18*(1-p/.15):0)),y:-Math.cos(phase*.9)*MICRO.ampY*decay,rot:jolt.direction*Math.sin(phase*.72)*MICRO.rotation*decay,scale:1+MICRO.zoom*decay,done:p>=1};
 }
 function applyCamera(now){
   const w=joltWave(now);camera.position.copy(baseCam);camera.fov=baseFov;camera.lookAt(lookTarget);
