@@ -1,9 +1,9 @@
 {
   "name": "raai-threejs-test-05s",
   "private": true,
-  "version": "0.5.19",
+  "version": "0.5.19-r1",
   "description": "Source-level wiring of accepted camera jolt to real 25-damage hits and 40-damage counters",
   "type": "module",
   "engines": {"node": ">=22"},
-  "scripts": {"build": "node build.mjs"}
+  "scripts": {"build": "node build.mjs && node ui-review.mjs"}
 }
