@@ -21,8 +21,8 @@ const js=await stat(path.join(out,'app.js'));
 const glb=await stat(path.join(assets,'Soldier.glb'));
 const info={
   build_id:buildId,
-  test:'05T-preview',
-  purpose:'isolated average-melee micro impact review before combat integration',
+  test:'05T-preview-R2',
+  purpose:'isolated lower-intensity average-melee micro impact review before combat integration',
   inherits_acceptance:'05S accepted; 25/40 jolt contracts unchanged',
   three:'0.186.0',
   pipeline:'esbuild-local-bundle',
@@ -30,13 +30,13 @@ const info={
   service_worker:false,
   source_level_camera_rig:true,
   authored_character_asset:'existing local Soldier.glb; Idle clip only for base pose',
-  micro_jolt:{duration_ms:100,amp_x_px:3.2,amp_y_px:1.8,rotation_deg:.07,zoom:.002,decay_power:1.9,phase_multiplier:3.25},
-  hit_reaction:{duration_ms:180,peak_ms:52,recoil_m:.10,lean_deg:4.5,attacker_lunge_m:.055,same_start_timestamp_as_camera_jolt:true},
+  micro_jolt:{duration_ms:82,amp_x_px:1.65,amp_y_px:.9,rotation_deg:.032,zoom:.0008,decay_power:2.05,phase_multiplier:2.8},
+  hit_reaction:{duration_ms:145,peak_ms:42,recoil_m:.052,lean_deg:2.35,attacker_lunge_m:.028,same_start_timestamp_as_camera_jolt:true},
   controls:{KeyM:'GIVE AVERAGE MELEE',KeyN:'RECEIVE AVERAGE MELEE'},
   accepted_25_40_constants_changed:false,
   combat_wiring:false,
   human_visual_review:'REQUIRED',
-  review_items:['micro jolt is perceptible but very small','hit character reaction begins in sync with jolt','give and receive both feel connected','reaction recovers quickly without disrupting readability','effect is clearly below accepted Jolt 25'],
+  review_items:['micro jolt is just perceptible rather than obvious','hit character reaction begins in sync with jolt','give and receive both feel connected','reaction is subtle enough for frequent melee','effect remains clearly below accepted Jolt 25'],
   app_js_bytes:js.size,soldier_glb_bytes:glb.size
 };
 await writeFile(path.join(out,'build-info.json'),JSON.stringify(info,null,2));
