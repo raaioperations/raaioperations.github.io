@@ -36,14 +36,16 @@ jobs:
           test -f labs/threejs-test-05r/sw.js
           grep -q 'Test 05R — Combat Hit Impact' labs/threejs-test-05r/index.html
           grep -q '__r05ImpactDemo' labs/threejs-test-05r/index.html
-          grep -q 'data-revision="05R-R4-OVERSCAN-COMPOSITOR"' labs/threejs-test-05r/index.html
-          grep -q 'r05JoltViewportR4' labs/threejs-test-05r/index.html
-          grep -q "scene.style.inset='-46px'" labs/threejs-test-05r/index.html
-          grep -q 'ampX=strong?34:20' labs/threejs-test-05r/index.html
-          grep -q 'duration=strong?300:240' labs/threejs-test-05r/index.html
+          grep -q 'data-revision="05R-R5-NATIVE-CAMERA"' labs/threejs-test-05r/index.html
+          grep -q '__r05NativeCameraJolt' labs/threejs-test-05r/index.html
+          grep -q '__r05NativeCameraJolt' labs/threejs-test-05r/app.js
+          grep -q 'r05ApplyCameraJolt()' labs/threejs-test-05r/app.js
+          grep -q 'setViewOffset(innerWidth,innerHeight' labs/threejs-test-05r/app.js
+          grep -q "addEventListener('click'" labs/threejs-test-05r/index.html
           grep -q "startsWith('raai-threejs-test05r-')" labs/threejs-test-05r/sw.js
           grep -q "cache:'no-store'" labs/threejs-test-05r/sw.js
           grep -q 'PENDING HUMAN VISUAL ACCEPTANCE' labs/threejs-test-05r/build-info.json
+          if grep -q 'r05JoltViewportR4' labs/threejs-test-05r/index.html; then echo 'Stale R4 snapshot compositor found'; exit 1; fi
           if grep -q 'r05SceneKickShell' labs/threejs-test-05r/index.html; then echo 'Stale failed camera-kick shell found'; exit 1; fi
           if grep -q 'new THREE\.' labs/threejs-test-05r/index.html; then echo 'Unexpected Three namespace in 05R presentation layer'; exit 1; fi
       - name: Publish
@@ -52,5 +54,5 @@ jobs:
           git config user.email actions@users.noreply.github.com
           git add labs/threejs-test-05r
           if git diff --cached --quiet; then exit 0; fi
-          git commit -m 'Build Three.js Test 05R R4 overscan compositor'
+          git commit -m 'Build Three.js Test 05R R5 native camera jolt'
           git push origin HEAD:main
