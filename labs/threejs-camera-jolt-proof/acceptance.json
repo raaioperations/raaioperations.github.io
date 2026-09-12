@@ -1,0 +1,30 @@
+{
+  "test": "THREEJS-CAMERA-JOLT-PROOF",
+  "status": "ACCEPTED",
+  "accepted_at": "2026-09-11T18:51:59-07:00",
+  "human_visual_acceptance": true,
+  "user_statement": "That is a camera jolt ⚡️",
+  "accepted_contract": {
+    "source_level_camera_rig": true,
+    "post_bundle_patching": false,
+    "KeyK": "DEMO 25",
+    "KeyL": "DEMO 40",
+    "demo_25": {
+      "duration_ms": 240,
+      "amp_x_px": 20,
+      "amp_y_px": 12,
+      "rotation_deg": 0.68,
+      "zoom": 0.018
+    },
+    "demo_40": {
+      "duration_ms": 300,
+      "amp_x_px": 34,
+      "amp_y_px": 20,
+      "rotation_deg": 1.15,
+      "zoom": 0.03
+    },
+    "decay_power": 1.65,
+    "phase_multiplier": 6.0
+  },
+  "next_eligible_step": "Integrate this proven source-level camera impulse architecture into a clean accepted Test 05Q baseline, with camera jolt only before reconnecting combat hit events."
+}
