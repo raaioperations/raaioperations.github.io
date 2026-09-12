@@ -1,11 +1,14 @@
 import { readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
-const root=process.cwd();
+const root=path.dirname(fileURLToPath(import.meta.url));
 const labs=path.resolve(root,'..');
 const builderPath=path.join(labs,'threejs-test-05d-src','build.mjs');
+const backupPath=path.join(root,'.05d-build.backup.mjs');
 const fragment=await readFile(path.join(root,'camera-jolt.fragment.js'),'utf8');
 let builder=await readFile(builderPath,'utf8');
+await writeFile(backupPath,builder);
 
 const sourceAnchor="let html=await readFile(path.join(baseRoot,'index.template.html'),'utf8');";
 if(!builder.includes(sourceAnchor)) throw new Error('05D source anchor missing');
