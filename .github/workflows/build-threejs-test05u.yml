@@ -1,0 +1,55 @@
+name: Build Three.js Test 05U
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'labs/threejs-test-05u-src/**'
+      - 'labs/threejs-melee-micro-impact-proof/acceptance.json'
+      - '.github/workflows/build-threejs-test05u.yml'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: threejs-test05u-build
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install pinned dependencies
+        working-directory: labs/threejs-test-05u-src
+        run: npm install --no-audit --no-fund --no-package-lock
+      - name: Build 05U
+        working-directory: labs/threejs-test-05u-src
+        run: npm run build
+      - name: Verify 05U
+        run: |
+          test -f labs/threejs-test-05u/index.html
+          test -f labs/threejs-test-05u/app.js
+          test -f labs/threejs-test-05u/build-info.json
+          test -f labs/threejs-test-05u/verification-report.json
+          test -f labs/threejs-test-05u/assets/Soldier.glb
+          grep -q '05U — AVERAGE MELEE CONTACT SYNC' labs/threejs-test-05u/index.html
+          grep -q '"contact_drives_feedback": true' labs/threejs-test-05u/build-info.json
+          grep -q '"accepted_25_40_constants_changed": false' labs/threejs-test-05u/build-info.json
+          grep -q '"status": "PASS"' labs/threejs-test-05u/verification-report.json
+          ! test -f labs/threejs-test-05u/sw.js
+      - name: Publish 05U
+        run: |
+          git config user.name 'raaioperations-build-bot'
+          git config user.email 'actions@users.noreply.github.com'
+          git add labs/threejs-test-05u
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'Build Three.js Test 05U average melee contact sync'
+          git push origin HEAD:main
