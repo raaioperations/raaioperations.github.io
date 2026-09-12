@@ -32,9 +32,14 @@ html=html.replace('<button id="r05Demo40">','<button id="r05Demo40" type="button
 html=html.replace("d25.addEventListener('pointerdown',e=>{e.preventDefault();impact(25);});","d25.addEventListener('click',e=>{e.preventDefault();impact(25);});");
 html=html.replace("d40.addEventListener('pointerdown',e=>{e.preventDefault();impact(40);});","d40.addEventListener('click',e=>{e.preventDefault();impact(40);});");
 
-// Visible runtime indicator: confirms the button reached the camera system.
+// PC diagnostic bindings requested by the user. These invoke the exact same
+// DEMO 25 / DEMO 40 impact entry point as the buttons, so keyboard and button
+// behavior cannot diverge.
+const keyBindings=`<script id="r05KeyboardBindings">(()=>{addEventListener('keydown',e=>{if(e.repeat)return;if(e.code==='KeyK'){e.preventDefault();globalThis.__r05ImpactDemo?.(25);}else if(e.code==='KeyL'){e.preventDefault();globalThis.__r05ImpactDemo?.(40);}});})();</script>`;
+
+// Visible runtime indicator: confirms the input reached the camera system.
 const indicator=`<div id="r05CameraState" aria-hidden="true" style="position:fixed;z-index:15;left:50%;top:122px;transform:translateX(-50%);padding:5px 8px;border-radius:999px;background:rgba(8,13,16,.72);border:1px solid rgba(255,255,255,.18);color:#9df2ae;font:800 8px/1 system-ui;letter-spacing:.06em;pointer-events:none">CAMERA READY</div>`;
-html=html.replace('</body>',indicator+'<div id="r05KickRevision" data-revision="05R-R6-CAMERA-SPACE-IMPULSE" hidden></div></body>');
+html=html.replace('</body>',keyBindings+indicator+'<div id="r05KickRevision" data-revision="05R-R6-CAMERA-SPACE-IMPULSE" hidden></div></body>');
 
 const stateAnchor='var Mm=new xo,$u=0,hl=0,ul=0,ju=0;function yg(){';
 if(!app.includes(stateAnchor)) throw new Error('05R-R6 camera state anchor missing.');
@@ -59,5 +64,6 @@ info.hit_impact_visual.status='PENDING HUMAN ACCEPTANCE';
 info.hit_impact_visual.previous_integrated_revisions=['05R-R1 FAILED','05R-R2 FAILED','05R-R3 FAILED','05R-R4 FAILED','05R-R5 FAILED'];
 info.hit_impact_visual.architecture='additive camera impulse channel inside established Three.js camera render pipeline';
 info.hit_impact_visual.input_confirmation='CAMERA JOLT 25/40 runtime indicator';
+info.hit_impact_visual.keyboard_bindings={KeyK:'DEMO 25',KeyL:'DEMO 40'};
 await writeFile(infoPath,JSON.stringify(info,null,2));
-console.log('Applied Test 05R-R6 additive camera-space recoil.');
+console.log('Applied Test 05R-R6 additive camera-space recoil with K/L demo bindings.');
