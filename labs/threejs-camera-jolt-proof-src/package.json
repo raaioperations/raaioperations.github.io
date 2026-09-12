@@ -1,0 +1,11 @@
+{
+  "name": "raai-threejs-camera-jolt-proof",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Minimal Three.js camera impulse proof derived from the accepted 05R isolated jolt contract",
+  "type": "module",
+  "engines": {"node": ">=22"},
+  "scripts": {"build": "node build.mjs"},
+  "dependencies": {"three": "0.186.0"},
+  "devDependencies": {"esbuild": "0.25.9"}
+}
