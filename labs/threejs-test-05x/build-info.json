@@ -1,0 +1,68 @@
+{
+  "build_id": "20260912191154",
+  "test": "05X",
+  "purpose": "two-hit average-melee impact cadence using accepted 05D chain timing and accepted 05W feedback stack",
+  "inherits": "05W accepted micro-jolt/reaction/hitstop/knockback; 05D two-hit timing; 05S Jolt25/Jolt40 unchanged",
+  "three": "0.186.0",
+  "pipeline": "esbuild-local-bundle",
+  "runtime_external_dependencies": 0,
+  "service_worker": false,
+  "source_level": true,
+  "chain": {
+    "a1_duration_ms": 440,
+    "a1_contact_ms": 160,
+    "a2_duration_ms": 480,
+    "a2_contact_ms": 170,
+    "total_sim_ms": 920,
+    "accepted_combo_window_ms": [
+      160,
+      400
+    ],
+    "auto_queue_a2_for_visual_review": true
+  },
+  "micro_jolt": {
+    "duration_ms": 82,
+    "amp_x_px": 1.65,
+    "amp_y_px": 0.9,
+    "rotation_deg": 0.032,
+    "zoom": 0.0008,
+    "decay_power": 2.05,
+    "phase_multiplier": 2.8
+  },
+  "hit_reaction": {
+    "duration_ms": 145,
+    "peak_ms": 42,
+    "recoil_m": 0.052,
+    "lean_deg": 2.35,
+    "attacker_lunge_m": 0.028,
+    "contact_pose_preload_ms": 18
+  },
+  "hitstop": {
+    "duration_ms": 24,
+    "camera_continues": true
+  },
+  "knockback": {
+    "distance_m": 0.07,
+    "duration_ms": 100,
+    "persistent_world_displacement": true,
+    "per_successful_contact": true
+  },
+  "reach_m": 2.1,
+  "damage": false,
+  "controls": {
+    "KeyM": "GIVE 2-HIT",
+    "KeyN": "RECEIVE 2-HIT",
+    "KeyP": "RESET POSITIONS"
+  },
+  "accepted_25_40_constants_changed": false,
+  "human_visual_review": "REQUIRED",
+  "review_items": [
+    "both contacts feel distinct and readable",
+    "micro-jolt/reaction/hitstop remain comfortable across two hits",
+    "second hit does not feel over-emphasized",
+    "two knockbacks remain subtle rather than pushy",
+    "cadence feels coherent with the accepted two-hit chain timing"
+  ],
+  "app_js_bytes": 636899,
+  "soldier_glb_bytes": 2160468
+}

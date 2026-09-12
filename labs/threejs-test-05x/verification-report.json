@@ -1,0 +1,20 @@
+{
+  "test": "05X",
+  "status": "PASS",
+  "build_id": "20260912191154",
+  "delegated_nonvisual_checks": {
+    "accepted_05w_required": true,
+    "a1_duration_ms": 440,
+    "a1_contact_ms": 160,
+    "a2_duration_ms": 480,
+    "a2_contact_ms": 170,
+    "accepted_combo_window_preserved": true,
+    "a2_auto_queue_is_review_only": true,
+    "feedback_max_one_event_per_contact": true,
+    "two_contacts_max_per_chain": true,
+    "accepted_micro_feedback_constants_unchanged": true,
+    "accepted_25_40_untouched": true,
+    "damage_not_added": true
+  },
+  "human_visual_review": "REQUIRED"
+}
