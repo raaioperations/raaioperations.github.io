@@ -40,7 +40,9 @@ jobs:
           test -f labs/threejs-melee-micro-impact-proof/build-info.json
           test -f labs/threejs-melee-micro-impact-proof/assets/Soldier.glb
           grep -q 'AVERAGE MELEE — MICRO IMPACT PROOF' labs/threejs-melee-micro-impact-proof/index.html
-          grep -q '"duration_ms": 100' labs/threejs-melee-micro-impact-proof/build-info.json
+          grep -q '"test": "05T-preview-R2"' labs/threejs-melee-micro-impact-proof/build-info.json
+          grep -q '"duration_ms": 82' labs/threejs-melee-micro-impact-proof/build-info.json
+          grep -q '"amp_x_px": 1.65' labs/threejs-melee-micro-impact-proof/build-info.json
           grep -q '"same_start_timestamp_as_camera_jolt": true' labs/threejs-melee-micro-impact-proof/build-info.json
           grep -q '"accepted_25_40_constants_changed": false' labs/threejs-melee-micro-impact-proof/build-info.json
           ! test -f labs/threejs-melee-micro-impact-proof/sw.js
