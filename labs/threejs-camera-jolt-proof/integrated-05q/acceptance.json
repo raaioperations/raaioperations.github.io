@@ -1,14 +1,36 @@
 {
-  "test": "05Q",
+  "test": "05R-v2",
   "status": "ACCEPTED",
-  "accepted_at": "2026-09-11T14:55:04-07:00",
+  "accepted_at": "2026-09-12T02:08:00Z",
   "human_visual_acceptance": true,
   "accepted_items": {
-    "telegraph_noticeability": true,
-    "direction_readability": true,
-    "active_impact_readability": true,
-    "recovery_readability": true,
-    "visual_clutter_and_scene_readability": true
+    "jolt_25_visible": true,
+    "jolt_40_visible_and_stronger": true,
+    "hud_stationary": true,
+    "accepted_05q_baseline_remains_readable": true
   },
-  "accepted_visual_contract": "screen-space directional telegraph with distinct TELEGRAPH, ACTIVE, and RECOVERY presentation while preserving accepted 0.70/0.12/0.40 mechanical timing"
+  "accepted_camera_jolt_contract": {
+    "architecture": "source-level Three.js camera impulse integrated into the clean accepted 05Q baseline before bundling",
+    "demo_25": {
+      "duration_ms": 240,
+      "amp_x_px": 20,
+      "amp_y_px": 12,
+      "rotation_deg": 0.68,
+      "zoom": 0.018
+    },
+    "demo_40": {
+      "duration_ms": 300,
+      "amp_x_px": 34,
+      "amp_y_px": 20,
+      "rotation_deg": 1.15,
+      "zoom": 0.03
+    },
+    "decay_power": 1.65,
+    "phase_multiplier": 6.0,
+    "hud_stationary": true,
+    "combat_hit_wiring": false,
+    "extra_hit_vfx": false
+  },
+  "retired_line": "05R R1-R6 failed experimental integration line; do not inherit or revive",
+  "note": "Accepted by user after clean integrated review: 'Yep yep yep 👍🏽 you did it!'"
 }
