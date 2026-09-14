@@ -1,0 +1,16 @@
+{
+  "test": "05X",
+  "status": "ACCEPTED",
+  "accepted_at": "2026-09-14T23:20:01Z",
+  "human_visual_acceptance": true,
+  "accepted": {
+    "two_hit_cadence_feels_good": true,
+    "both_contacts_read_cleanly": true,
+    "micro_jolt_reaction_hitstop_comfortable_across_two_hits": true,
+    "two_knockbacks_remain_subtle": true,
+    "accepted_05d_chain_timing_preserved": true
+  },
+  "damage": false,
+  "accepted_25_40_constants_changed": false,
+  "user_note": "Feels good. Next."
+}
