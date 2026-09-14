@@ -56,7 +56,7 @@ const buildId=new Date().toISOString().replace(/\D/g,'').slice(0,14);
 let html=await readFile('index.template.html','utf8');html=html.replaceAll('__BUILD_ID__',buildId);await writeFile(path.join(out,'index.html'),html);
 await copyFile(path.resolve(root,'../threejs-test-05s/assets/Soldier.glb'),path.join(assets,'Soldier.glb'));
 await writeFile(path.join(out,'source-main.js'),source);
-await build({stdin:{contents:source,resolveDir:path.resolve(root,'../threejs-test-05x-src/src'),sourcefile:'main.js',loader:'js'},bundle:true,minify:true,format:'esm',target:['safari16.4'],outfile:path.join(out,'app.js'),legalComments:'none',treeShaking:true});
+await build({stdin:{contents:source,resolveDir:root,sourcefile:'main.js',loader:'js'},bundle:true,minify:true,format:'esm',target:['safari16.4'],outfile:path.join(out,'app.js'),legalComments:'none',treeShaking:true});
 const js=await stat(path.join(out,'app.js')),glb=await stat(path.join(assets,'Soldier.glb'));
 const info={
   build_id:buildId,
