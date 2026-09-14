@@ -1,0 +1,17 @@
+{
+  "test": "05Y",
+  "status": "PASS",
+  "build_id": "20260914232318",
+  "delegated_nonvisual_checks": {
+    "accepted_05x_required": true,
+    "burst_successful_contact_only": true,
+    "burst_max_one_per_successful_contact": true,
+    "burst_duration_ms": 92,
+    "burst_uses_wall_time": true,
+    "no_screen_flash": true,
+    "inherited_feedback_unchanged": true,
+    "accepted_25_40_untouched": true,
+    "damage_not_added": true
+  },
+  "human_visual_review": "REQUIRED"
+}

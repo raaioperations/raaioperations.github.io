@@ -1,0 +1,41 @@
+{
+  "build_id": "20260914232318",
+  "test": "05Y",
+  "purpose": "isolated small world-space contact burst layered onto accepted 05X two-hit average-melee cadence",
+  "inherits": "05X accepted two-hit cadence + accepted micro-jolt/reaction/hitstop/knockback; 05S Jolt25/Jolt40 unchanged",
+  "three": "0.186.0",
+  "pipeline": "source-level transform + esbuild local bundle",
+  "runtime_external_dependencies": 0,
+  "service_worker": false,
+  "source_level": true,
+  "contact_burst": {
+    "duration_ms": 92,
+    "ring_inner_m": 0.075,
+    "ring_outer_m": 0.105,
+    "ray_count": 8,
+    "ray_length_m": 0.14,
+    "world_space": true,
+    "additive": true,
+    "screen_flash": false,
+    "successful_contact_only": true,
+    "uses_wall_time_during_hitstop": true
+  },
+  "inherited_feedback_unchanged": true,
+  "damage": false,
+  "controls": {
+    "KeyM": "GIVE 2-HIT",
+    "KeyN": "RECEIVE 2-HIT",
+    "KeyP": "RESET POSITIONS"
+  },
+  "accepted_25_40_constants_changed": false,
+  "human_visual_review": "REQUIRED",
+  "review_items": [
+    "burst appears exactly at each successful contact",
+    "burst is small and readable rather than flashy",
+    "burst complements jolt/reaction/hitstop without overpowering them",
+    "both A1 and A2 bursts feel consistent",
+    "frequent melee remains visually comfortable"
+  ],
+  "app_js_bytes": 637933,
+  "soldier_glb_bytes": 2160468
+}
