@@ -1,0 +1,14 @@
+{
+  "test": "05Y",
+  "status": "ACCEPTED",
+  "accepted_at": "2026-09-14T23:59:30Z",
+  "human_visual_acceptance": true,
+  "user_feedback": "Looks good for a default.",
+  "default_melee_contact_burst": true,
+  "burst_duration_ms": 92,
+  "world_space": true,
+  "screen_flash": false,
+  "successful_contact_only": true,
+  "inherited_feedback_unchanged": true,
+  "notes": "Accepted as the default ordinary-melee contact burst. Stronger impact profiles remain separate."
+}
