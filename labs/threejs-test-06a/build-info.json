@@ -1,0 +1,50 @@
+{
+  "build_id": "20260915022619",
+  "test": "06A",
+  "roadmap": "Test06 — Living World",
+  "purpose": "prove one deterministic environmental actor family visibly reacts to player proximity without broadening scope",
+  "prerequisite": {
+    "test05z": "ACCEPTED / FROZEN"
+  },
+  "inherits": "Accepted Test04 visual/exploration environment; Test05 combat is closed/frozen and intentionally not under review in this isolated world-response proof",
+  "base_blob": "8ec3761c2cf4a507a072d79307220c0b315a8261",
+  "three": "0.186.0",
+  "pipeline": "source-level fragment + esbuild local bundle",
+  "runtime_external_dependencies": 0,
+  "service_worker_cache": false,
+  "target": "safari16.4+",
+  "mobile_fps_target": 60,
+  "actor": {
+    "type": "stylized instanced bird flock",
+    "count": 12,
+    "draw_call_budget_added": 3
+  },
+  "stimulus": {
+    "type": "player proximity",
+    "trigger_radius_m": 7
+  },
+  "states": [
+    "CALM",
+    "FLEEING",
+    "DISPERSED",
+    "RETURNING"
+  ],
+  "response": {
+    "flee_duration_ms": 1450,
+    "reset_radius_m": 13.5,
+    "far_hold_ms": 1400,
+    "return_duration_ms": 1350
+  },
+  "mechanics_changed": false,
+  "combat_changed": false,
+  "acceptance_checklist": {
+    "flock_visibly_present": "HUMAN REVIEW",
+    "approach_triggers_flee_response": "HUMAN REVIEW",
+    "response_direction_reads_as_away_from_player": "HUMAN REVIEW",
+    "player_retreat_allows_return_cycle": "HUMAN REVIEW",
+    "world_response_feels_alive_not_like_ui_only": "HUMAN REVIEW"
+  },
+  "human_visual_review": "REQUIRED",
+  "app_js_bytes": 666014,
+  "soldier_glb_bytes": 2160468
+}

@@ -1,0 +1,25 @@
+{
+  "test": "06A",
+  "status": "PASS",
+  "build_id": "20260915022619",
+  "delegated_nonvisual_checks": {
+    "accepted_05z_frozen_required": true,
+    "accepted_test04_blob_verified": true,
+    "actor_count": 12,
+    "actor_instanced": true,
+    "added_draw_call_budget": 3,
+    "stimulus_is_player_proximity": true,
+    "trigger_radius_m": 7,
+    "deterministic_state_machine": true,
+    "states": [
+      "CALM",
+      "FLEEING",
+      "DISPERSED",
+      "RETURNING"
+    ],
+    "reset_requires_player_retreat": true,
+    "combat_not_modified": true,
+    "source_level": true
+  },
+  "human_visual_review": "REQUIRED"
+}
