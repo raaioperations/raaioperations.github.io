@@ -1,0 +1,21 @@
+{
+  "test": "05Z",
+  "status": "PASS",
+  "build_id": "20260915001956",
+  "delegated_nonvisual_checks": {
+    "accepted_05q_required": true,
+    "accepted_05r_v2_required": true,
+    "accepted_05y_default_required": true,
+    "default_impact_source_level": true,
+    "normal_hit_wired_after_authoritative_25_damage_mutation": true,
+    "miss_path_has_no_default_impact_call": true,
+    "local_hitstop_duration_ms": 24,
+    "local_hitstop_does_not_freeze_camera_or_world_controller_time": true,
+    "persistent_knockback_distance_m": 0.07,
+    "contact_burst_successful_hit_only": true,
+    "counter_40_still_calls_accepted_jolt40": true,
+    "default_layers_not_added_to_counter": true,
+    "post_bundle_camera_patch": false
+  },
+  "human_visual_review": "REQUIRED"
+}
