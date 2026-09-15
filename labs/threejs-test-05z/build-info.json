@@ -1,5 +1,5 @@
 {
-  "build_id": "20260915001956",
+  "build_id": "20260915003609",
   "inherits": "Verified Test 05P combat baseline with delegated nonvisual defense integration",
   "base_blob": "8ec3761c2cf4a507a072d79307220c0b315a8261",
   "three": "0.186.0",
@@ -53,7 +53,7 @@
     "real_40_damage_counter_retains_jolt40_only": "DELEGATED PASS",
     "accepted_combat_and_telegraph_readability_remain_intact": "HUMAN REVIEW"
   },
-  "app_js_bytes": 699365,
+  "app_js_bytes": 699662,
   "soldier_glb_bytes": 2160468,
   "service_worker_cache": false,
   "target": "safari16.4+",
