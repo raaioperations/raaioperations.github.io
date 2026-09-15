@@ -1,0 +1,9 @@
+{
+  "name": "raai-threejs-test-05z",
+  "private": true,
+  "version": "0.5.26",
+  "description": "Real-combat integration of the accepted default melee impact presentation stack",
+  "type": "module",
+  "engines": {"node": ">=22"},
+  "scripts": {"build": "node build.mjs"}
+}
