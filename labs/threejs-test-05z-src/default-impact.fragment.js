@@ -5,9 +5,13 @@ const DEFAULT_HITSTOP={duration:24};
 const DEFAULT_KNOCKBACK={distance:.07,duration:100};
 const DEFAULT_BURST={duration:92,ringInner:.075,ringOuter:.105,rayCount:8,rayLength:.14};
 
-const defaultImpactBasePosition=targetRoot.position.clone();
-const defaultImpactBaseRotation=targetRoot.rotation.clone();
-const defaultImpactPersistentOffset=new THREE.Vector3();
+// Store primitive baseline values rather than retaining Vector/Euler copies. This keeps the
+// presentation layer independent of Three.js copy() calls during startup on Safari.
+const defaultImpactBase={
+  px:targetRoot.position.x,py:targetRoot.position.y,pz:targetRoot.position.z,
+  rx:targetRoot.rotation.x,ry:targetRoot.rotation.y,rz:targetRoot.rotation.z
+};
+let defaultImpactPersistentX=0,defaultImpactPersistentZ=0;
 let defaultImpactSimNow=performance.now();
 let defaultImpactHitstopRemaining=0;
 let defaultImpactReaction=null;
@@ -23,27 +27,27 @@ for(let i=0;i<DEFAULT_BURST.rayCount;i++){const a=i/DEFAULT_BURST.rayCount*Math.
 let defaultBurstFx=null;
 
 function defaultImpactDirection(){
-  const d=new THREE.Vector3(targetRoot.position.x-playerRoot.position.x,0,targetRoot.position.z-playerRoot.position.z);
-  if(d.lengthSq()<.000001)d.set(Math.sin(playerRoot.rotation.y),0,Math.cos(playerRoot.rotation.y));
-  return d.normalize();
+  let x=targetRoot.position.x-playerRoot.position.x,z=targetRoot.position.z-playerRoot.position.z;
+  let len=Math.hypot(x,z);
+  if(len<.000001){x=Math.sin(playerRoot.rotation.y);z=Math.cos(playerRoot.rotation.y);len=Math.max(.000001,Math.hypot(x,z));}
+  return{x:x/len,z:z/len};
 }
 function setDefaultImpactHud(text,color='#9df2ae'){
   const e=document.getElementById('defaultImpactState');if(e){e.textContent=text;e.style.color=color;}
   const c=document.getElementById('defaultImpactCount');if(c)c.textContent=String(defaultImpactCount);
 }
 function beginDefaultBurst(wallNow,dir){
-  const surface=targetRoot.position.clone().addScaledVector(dir,-.48);surface.y+=1.22;
-  defaultBurstGroup.position.copy(surface);defaultBurstGroup.scale.setScalar(1);defaultBurstGroup.rotation.set(0,0,0);defaultBurstGroup.visible=true;
+  defaultBurstGroup.position.set(targetRoot.position.x-dir.x*.48,targetRoot.position.y+1.22,targetRoot.position.z-dir.z*.48);
+  defaultBurstGroup.scale.setScalar(1);defaultBurstGroup.rotation.set(0,0,0);defaultBurstGroup.visible=true;
   defaultBurstFx={start:wallNow};
 }
 function triggerDefaultMeleeImpact(wallNow=performance.now()){
   const dir=defaultImpactDirection();
   defaultImpactCount++;
   defaultMicroJoltActive={start:wallNow,direction:1};
-  defaultImpactReaction={start:defaultImpactSimNow,direction:dir.clone()};
+  defaultImpactReaction={start:defaultImpactSimNow,x:dir.x,z:dir.z};
   defaultImpactHitstopRemaining=DEFAULT_HITSTOP.duration;
-  const from=defaultImpactPersistentOffset.clone(),to=from.clone().addScaledVector(dir,DEFAULT_KNOCKBACK.distance);
-  defaultImpactKnockback={start:defaultImpactSimNow,from,to};
+  defaultImpactKnockback={start:defaultImpactSimNow,fromX:defaultImpactPersistentX,fromZ:defaultImpactPersistentZ,toX:defaultImpactPersistentX+dir.x*DEFAULT_KNOCKBACK.distance,toZ:defaultImpactPersistentZ+dir.z*DEFAULT_KNOCKBACK.distance};
   beginDefaultBurst(wallNow,dir);
   setDefaultImpactHud('DEFAULT IMPACT '+defaultImpactCount,'#ffd18a');
 }
@@ -51,18 +55,38 @@ function defaultImpactEnvelope(p){if(p<=.29)return Math.sin((p/.29)*Math.PI/2);c
 function updateDefaultBurst(wallNow){
   if(!defaultBurstFx)return;
   const p=Math.min(1,(wallNow-defaultBurstFx.start)/DEFAULT_BURST.duration),e=1-Math.pow(1-p,3),fade=Math.pow(1-p,1.45);
-  defaultBurstGroup.scale.setScalar(.78+e*.72);defaultBurstGroup.quaternion.copy(camera.quaternion);defaultBurstRingMat.opacity=.72*fade;defaultBurstRayMat.opacity=.84*fade;
+  defaultBurstGroup.scale.setScalar(.78+e*.72);
+  // Copy quaternion components explicitly; avoid a startup/runtime dependency on copy(undefined).
+  defaultBurstGroup.quaternion.set(camera.quaternion.x,camera.quaternion.y,camera.quaternion.z,camera.quaternion.w);
+  defaultBurstRingMat.opacity=.72*fade;defaultBurstRayMat.opacity=.84*fade;
   if(p>=1){defaultBurstFx=null;defaultBurstGroup.visible=false;defaultBurstRingMat.opacity=0;defaultBurstRayMat.opacity=0;}
 }
 function updateDefaultMeleeImpact(dt,wallNow){
   let localDt=dt;
   if(defaultImpactHitstopRemaining>0){defaultImpactHitstopRemaining=Math.max(0,defaultImpactHitstopRemaining-dt*1000);localDt=0;}
   defaultImpactSimNow+=localDt*1000;
-  if(defaultImpactKnockback){const p=Math.min(1,(defaultImpactSimNow-defaultImpactKnockback.start)/DEFAULT_KNOCKBACK.duration),e=1-Math.pow(1-p,3);defaultImpactPersistentOffset.lerpVectors(defaultImpactKnockback.from,defaultImpactKnockback.to,e);if(p>=1){defaultImpactPersistentOffset.copy(defaultImpactKnockback.to);defaultImpactKnockback=null;}}
-  const visualOffset=new THREE.Vector3();let leanX=0,leanZ=0;
-  if(defaultImpactReaction){const elapsed=Math.max(0,defaultImpactSimNow-defaultImpactReaction.start+DEFAULT_REACTION.preload),p=Math.min(1,elapsed/DEFAULT_REACTION.duration),e=defaultImpactEnvelope(p);visualOffset.addScaledVector(defaultImpactReaction.direction,DEFAULT_REACTION.recoil*e);leanX=defaultImpactReaction.direction.z*DEFAULT_REACTION.lean*e;leanZ=-defaultImpactReaction.direction.x*DEFAULT_REACTION.lean*e;if(p>=1)defaultImpactReaction=null;}
-  targetRoot.position.copy(defaultImpactBasePosition).add(defaultImpactPersistentOffset).add(visualOffset);
-  targetRoot.rotation.copy(defaultImpactBaseRotation);targetRoot.rotation.x+=leanX;targetRoot.rotation.z+=leanZ;
+
+  // Before the first real combat hit, this layer must be a true no-op so the accepted 05Q/05S
+  // startup path remains untouched.
+  if(defaultImpactCount===0&&!defaultImpactReaction&&!defaultImpactKnockback&&!defaultBurstFx&&defaultImpactHitstopRemaining===0)return localDt;
+
+  if(defaultImpactKnockback){
+    const p=Math.min(1,(defaultImpactSimNow-defaultImpactKnockback.start)/DEFAULT_KNOCKBACK.duration),e=1-Math.pow(1-p,3);
+    defaultImpactPersistentX=THREE.MathUtils.lerp(defaultImpactKnockback.fromX,defaultImpactKnockback.toX,e);
+    defaultImpactPersistentZ=THREE.MathUtils.lerp(defaultImpactKnockback.fromZ,defaultImpactKnockback.toZ,e);
+    if(p>=1){defaultImpactPersistentX=defaultImpactKnockback.toX;defaultImpactPersistentZ=defaultImpactKnockback.toZ;defaultImpactKnockback=null;}
+  }
+
+  let visualX=0,visualZ=0,leanX=0,leanZ=0;
+  if(defaultImpactReaction){
+    const elapsed=Math.max(0,defaultImpactSimNow-defaultImpactReaction.start+DEFAULT_REACTION.preload),p=Math.min(1,elapsed/DEFAULT_REACTION.duration),e=defaultImpactEnvelope(p);
+    visualX=defaultImpactReaction.x*DEFAULT_REACTION.recoil*e;visualZ=defaultImpactReaction.z*DEFAULT_REACTION.recoil*e;
+    leanX=defaultImpactReaction.z*DEFAULT_REACTION.lean*e;leanZ=-defaultImpactReaction.x*DEFAULT_REACTION.lean*e;
+    if(p>=1)defaultImpactReaction=null;
+  }
+
+  targetRoot.position.set(defaultImpactBase.px+defaultImpactPersistentX+visualX,defaultImpactBase.py,defaultImpactBase.pz+defaultImpactPersistentZ+visualZ);
+  targetRoot.rotation.set(defaultImpactBase.rx+leanX,defaultImpactBase.ry,defaultImpactBase.rz+leanZ);
   updateDefaultBurst(wallNow);
   if(!defaultImpactReaction&&!defaultImpactKnockback&&defaultImpactHitstopRemaining===0&&defaultImpactCount>0)setDefaultImpactHud('DEFAULT READY');
   return localDt;
@@ -74,7 +98,12 @@ function defaultMicroWaveform(now){
 }
 function applyDefaultMicroJolt(now,target,baseFov){
   const w=defaultMicroWaveform(now);
-  if(w.x||w.y||w.rot||w.scale!==1){const distance=camera.position.distanceTo(target),verticalWorld=2*distance*Math.tan(THREE.MathUtils.degToRad(baseFov)/2),worldPerPixel=verticalWorld/Math.max(1,innerHeight);camera.translateX(w.x*worldPerPixel);camera.translateY(-w.y*worldPerPixel);camera.rotateZ(THREE.MathUtils.degToRad(w.rot));camera.fov=camera.fov/w.scale;}
+  if(w.x||w.y||w.rot||w.scale!==1){
+    if(!target||!Number.isFinite(target.x)||!Number.isFinite(target.y)||!Number.isFinite(target.z))return;
+    const dx=camera.position.x-target.x,dy=camera.position.y-target.y,dz=camera.position.z-target.z,distance=Math.hypot(dx,dy,dz);
+    const verticalWorld=2*distance*Math.tan(THREE.MathUtils.degToRad(baseFov)/2),worldPerPixel=verticalWorld/Math.max(1,innerHeight);
+    camera.translateX(w.x*worldPerPixel);camera.translateY(-w.y*worldPerPixel);camera.rotateZ(THREE.MathUtils.degToRad(w.rot));camera.fov=camera.fov/w.scale;
+  }
   if(w.done&&defaultMicroJoltActive)defaultMicroJoltActive=null;
 }
 globalThis.__defaultMeleeImpact=triggerDefaultMeleeImpact;
