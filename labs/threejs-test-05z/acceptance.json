@@ -1,0 +1,20 @@
+{
+  "test": "05Z",
+  "status": "ACCEPTED",
+  "accepted_at": "2026-09-15T02:22:37Z",
+  "human_visual_acceptance": true,
+  "real_25_damage_hit_triggers_default_impact_stack": true,
+  "default_impact_stack": {
+    "micro_jolt": true,
+    "synchronized_hit_reaction": true,
+    "local_hitstop_24ms": true,
+    "persistent_knockback_0_07m": true,
+    "contact_burst": true
+  },
+  "miss_has_no_default_feedback": true,
+  "counter_40_retains_accepted_jolt40": true,
+  "accepted_combat_behavior_preserved": true,
+  "architecture": "authoritative successful combat damage event drives source-level presentation",
+  "frozen": true,
+  "notes": "Closes Test05 Combat Feel as the accepted production-direction candidate. Authored jump/combat animation replacement remains deferred asset-quality debt; not a blocker for Test06."
+}
