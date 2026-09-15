@@ -5,8 +5,12 @@ const DEFAULT_HITSTOP={duration:24};
 const DEFAULT_KNOCKBACK={distance:.07,duration:100};
 const DEFAULT_BURST={duration:92,ringInner:.075,ringOuter:.105,rayCount:8,rayLength:.14};
 
-// Store primitive baseline values rather than retaining Vector/Euler copies. This keeps the
-// presentation layer independent of Three.js copy() calls during startup on Safari.
+// This fragment is appended after the inherited main-loop source. Safari/esbuild may hoist
+// function declarations while the fragment state below has not initialized yet. The inherited
+// loop can therefore call updateDefaultMeleeImpact() once before this block finishes executing.
+// Gate every frame-level entry point through a global readiness flag that is safe while undefined.
+globalThis.__defaultImpactRuntimeReady=false;
+
 const defaultImpactBase={
   px:targetRoot.position.x,py:targetRoot.position.y,pz:targetRoot.position.z,
   rx:targetRoot.rotation.x,ry:targetRoot.rotation.y,rz:targetRoot.rotation.z
@@ -42,6 +46,7 @@ function beginDefaultBurst(wallNow,dir){
   defaultBurstFx={start:wallNow};
 }
 function triggerDefaultMeleeImpact(wallNow=performance.now()){
+  if(globalThis.__defaultImpactRuntimeReady!==true)return;
   const dir=defaultImpactDirection();
   defaultImpactCount++;
   defaultMicroJoltActive={start:wallNow,direction:1};
@@ -53,21 +58,22 @@ function triggerDefaultMeleeImpact(wallNow=performance.now()){
 }
 function defaultImpactEnvelope(p){if(p<=.29)return Math.sin((p/.29)*Math.PI/2);const t=(p-.29)/.71;return 1-(1-Math.pow(1-t,3));}
 function updateDefaultBurst(wallNow){
-  if(!defaultBurstFx)return;
+  if(globalThis.__defaultImpactRuntimeReady!==true||!defaultBurstFx)return;
   const p=Math.min(1,(wallNow-defaultBurstFx.start)/DEFAULT_BURST.duration),e=1-Math.pow(1-p,3),fade=Math.pow(1-p,1.45);
   defaultBurstGroup.scale.setScalar(.78+e*.72);
-  // Copy quaternion components explicitly; avoid a startup/runtime dependency on copy(undefined).
   defaultBurstGroup.quaternion.set(camera.quaternion.x,camera.quaternion.y,camera.quaternion.z,camera.quaternion.w);
   defaultBurstRingMat.opacity=.72*fade;defaultBurstRayMat.opacity=.84*fade;
   if(p>=1){defaultBurstFx=null;defaultBurstGroup.visible=false;defaultBurstRingMat.opacity=0;defaultBurstRayMat.opacity=0;}
 }
 function updateDefaultMeleeImpact(dt,wallNow){
+  // Critical startup guard: the inherited render loop can run once before this appended fragment
+  // finishes initializing. Never touch defaultImpactBase/state until initialization is complete.
+  if(globalThis.__defaultImpactRuntimeReady!==true)return dt;
+
   let localDt=dt;
   if(defaultImpactHitstopRemaining>0){defaultImpactHitstopRemaining=Math.max(0,defaultImpactHitstopRemaining-dt*1000);localDt=0;}
   defaultImpactSimNow+=localDt*1000;
 
-  // Before the first real combat hit, this layer must be a true no-op so the accepted 05Q/05S
-  // startup path remains untouched.
   if(defaultImpactCount===0&&!defaultImpactReaction&&!defaultImpactKnockback&&!defaultBurstFx&&defaultImpactHitstopRemaining===0)return localDt;
 
   if(defaultImpactKnockback){
@@ -92,11 +98,12 @@ function updateDefaultMeleeImpact(dt,wallNow){
   return localDt;
 }
 function defaultMicroWaveform(now){
-  if(!defaultMicroJoltActive)return{x:0,y:0,rot:0,scale:1,done:false};
+  if(globalThis.__defaultImpactRuntimeReady!==true||!defaultMicroJoltActive)return{x:0,y:0,rot:0,scale:1,done:false};
   const p=Math.min(1,(now-defaultMicroJoltActive.start)/DEFAULT_MICRO.duration),decay=Math.pow(1-p,DEFAULT_MICRO.decayPower),phase=p*Math.PI*DEFAULT_MICRO.phaseMultiplier,d=defaultMicroJoltActive.direction;
   return{x:d*(Math.sin(phase)*DEFAULT_MICRO.ampX*decay+(p<.18?DEFAULT_MICRO.ampX*.25*(1-p/.18):0)),y:-Math.cos(phase*.9)*DEFAULT_MICRO.ampY*decay,rot:d*Math.sin(phase*.72)*DEFAULT_MICRO.rotation*decay,scale:1+DEFAULT_MICRO.zoom*decay,done:p>=1};
 }
 function applyDefaultMicroJolt(now,target,baseFov){
+  if(globalThis.__defaultImpactRuntimeReady!==true)return;
   const w=defaultMicroWaveform(now);
   if(w.x||w.y||w.rot||w.scale!==1){
     if(!target||!Number.isFinite(target.x)||!Number.isFinite(target.y)||!Number.isFinite(target.z))return;
@@ -108,3 +115,4 @@ function applyDefaultMicroJolt(now,target,baseFov){
 }
 globalThis.__defaultMeleeImpact=triggerDefaultMeleeImpact;
 globalThis.__defaultImpactSourceMarker=DEFAULT_IMPACT_SOURCE_MARKER;
+globalThis.__defaultImpactRuntimeReady=true;
