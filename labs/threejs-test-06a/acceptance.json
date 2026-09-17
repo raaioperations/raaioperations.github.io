@@ -1,0 +1,26 @@
+{
+  "test": "06A",
+  "roadmap": "Test06 — Living World",
+  "status": "ACCEPTED",
+  "human_visual_acceptance": true,
+  "accepted_at": "2026-09-17T21:59:51Z",
+  "decision": "PASS",
+  "frozen": true,
+  "accepted_scope": {
+    "flock_visibly_present": true,
+    "approach_triggers_flee_response": true,
+    "response_direction_reads_as_away_from_player": true,
+    "player_retreat_allows_return_cycle": true,
+    "world_response_feels_alive_not_like_ui_only": true
+  },
+  "frozen_baseline": {
+    "actor_type": "stylized instanced bird flock",
+    "actor_count": 12,
+    "trigger_radius_m": 7,
+    "reset_radius_m": 13.5,
+    "far_hold_ms": 1400,
+    "flee_duration_ms": 1450,
+    "return_duration_ms": 1350,
+    "states": ["CALM", "FLEEING", "DISPERSED", "RETURNING"]
+  }
+}
