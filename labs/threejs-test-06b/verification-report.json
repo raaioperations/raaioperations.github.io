@@ -1,0 +1,22 @@
+{
+  "test": "06B",
+  "status": "PASS",
+  "build_id": "20260917220545",
+  "delegated_nonvisual_checks": {
+    "accepted_06a_frozen_required": true,
+    "accepted_test04_blob_verified": true,
+    "accepted_06a_fragment_reused_unchanged": true,
+    "secondary_actor_count": 10,
+    "secondary_actor_instanced": true,
+    "secondary_added_draw_call_budget": 3,
+    "secondary_direct_player_trigger": false,
+    "propagation_source": "06A primary state transition to FLEEING",
+    "propagation_distance_m": 8.746,
+    "propagation_speed_m_s": 18,
+    "propagation_delay_ms": 486,
+    "secondary_state_machine": true,
+    "combat_not_modified": true,
+    "source_level": true
+  },
+  "human_visual_review": "REQUIRED"
+}

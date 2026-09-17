@@ -1,0 +1,55 @@
+{
+  "build_id": "20260917220545",
+  "test": "06B",
+  "roadmap": "Test06 — Living World",
+  "purpose": "prove deterministic world actor → world actor stimulus propagation without adding combat or direct secondary player triggering",
+  "prerequisite": {
+    "test06a": "ACCEPTED / FROZEN"
+  },
+  "inherits": "Frozen accepted 06A flock response + accepted Test04 environment; 06A behavior is not modified",
+  "base_blob": "8ec3761c2cf4a507a072d79307220c0b315a8261",
+  "three": "0.186.0",
+  "pipeline": "source-level accepted 06A fragment + isolated propagation fragment + esbuild local bundle",
+  "runtime_external_dependencies": 0,
+  "service_worker_cache": false,
+  "target": "safari16.4+",
+  "mobile_fps_target": 60,
+  "primary_actor": {
+    "type": "accepted 06A flock",
+    "count": 12,
+    "trigger": "player proximity <= 7m"
+  },
+  "secondary_actor": {
+    "type": "second stylized instanced bird flock",
+    "count": 10,
+    "draw_call_budget_added": 3,
+    "direct_player_trigger": false
+  },
+  "propagation": {
+    "source": "primary flock enters FLEEING",
+    "mechanism": "state-transition adapter -> disturbance event -> travel delay -> secondary response",
+    "distance_m": 8.746,
+    "speed_m_s": 18,
+    "travel_delay_ms": 486
+  },
+  "secondary_states": [
+    "CALM",
+    "ALERT_DELAY",
+    "FLEEING",
+    "DISPERSED",
+    "RETURNING"
+  ],
+  "mechanics_changed": false,
+  "combat_changed": false,
+  "acceptance_checklist": {
+    "both_flocks_visibly_present": "HUMAN REVIEW",
+    "primary_flock_reacts_first": "HUMAN REVIEW",
+    "secondary_flock_reacts_after_clear_delay": "HUMAN REVIEW",
+    "secondary_response_reads_as_caused_by_world_not_direct_player": "HUMAN REVIEW",
+    "retreat_allows_both_flocks_to_recover": "HUMAN REVIEW",
+    "world_feels_more_systemic_than_06a": "HUMAN REVIEW"
+  },
+  "human_visual_review": "REQUIRED",
+  "app_js_bytes": 670183,
+  "soldier_glb_bytes": 2160468
+}
