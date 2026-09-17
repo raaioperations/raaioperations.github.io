@@ -1,0 +1,11 @@
+{
+  "name": "raai-threejs-test-06b",
+  "private": true,
+  "version": "0.6.2",
+  "description": "Living World disturbance propagation proof: one accepted flock response causes a delayed secondary flock response",
+  "type": "module",
+  "engines": {"node": ">=22"},
+  "scripts": {"build": "node build.mjs"},
+  "dependencies": {"three": "0.186.0"},
+  "devDependencies": {"esbuild": "0.25.9"}
+}
