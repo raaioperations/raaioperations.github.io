@@ -12,7 +12,7 @@ Static GitHub Pages site intended for `https://raaioperations.github.io/`.
 - `.nojekyll` — disables Jekyll processing
 
 ## Support
-Customer support: `raaioperationssupport@gmail.com`
+Customer support: `raaioperat.ions@gmail.com`
 
 ## Before paid sales
 Review the legal pages against the final merchant-of-record and refund configuration before enabling live paid sales.
