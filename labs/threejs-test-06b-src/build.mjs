@@ -50,6 +50,7 @@ if(!app.includes('06A_LIVING_WORLD_FLOCK'))throw new Error('Accepted 06A marker 
 if(!app.includes('06B_WORLD_DISTURBANCE_PROPAGATION'))throw new Error('06B propagation marker missing from bundle');
 if(!app.includes('TRAVELING'))throw new Error('06B propagation state missing from bundle');
 if(!app.includes('directPlayerTrigger'))throw new Error('06B direct-player-trigger guard missing from bundle');
+if(!app.includes('frustumCulled=!1')&&!app.includes('frustumCulled=false'))throw new Error('06B dynamic flock visibility guard missing from bundle');
 
 const sw=`self.addEventListener('install',()=>self.skipWaiting());\nself.addEventListener('activate',e=>e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k.startsWith('raai-threejs-test06b-')).map(k=>caches.delete(k)))).then(()=>self.clients.claim())));\n`;
 await writeFile(path.join(out,'sw.js'),sw);
@@ -68,6 +69,7 @@ const info={
   three:'0.186.0',pipeline:'source-level accepted 06A fragment + isolated propagation fragment + esbuild local bundle',runtime_external_dependencies:0,service_worker_cache:false,target:'safari16.4+',mobile_fps_target:60,
   primary_actor:{type:'accepted 06A flock',count:12,trigger:'player proximity <= 7m'},
   secondary_actor:{type:'second stylized instanced bird flock',count:10,draw_call_budget_added:3,direct_player_trigger:false},
+  visibility_revision:{revision:'06B-R1',issue:'dynamic instanced flock could visually blink out from stale frustum bounds',fix:'disable per-mesh frustum culling for the two tiny proof flocks so complete flight paths remain visually continuous',timings_changed:false,paths_changed:false,propagation_changed:false,draw_calls_changed:false},
   propagation:{source:'primary flock enters FLEEING',mechanism:'state-transition adapter -> disturbance event -> travel delay -> secondary response',distance_m:Number(primaryToSecondaryDistance.toFixed(3)),speed_m_s:18,travel_delay_ms:Math.round(propagationTravelMs)},
   secondary_states:['CALM','ALERT_DELAY','FLEEING','DISPERSED','RETURNING'],
   mechanics_changed:false,
@@ -79,7 +81,7 @@ const info={
 await writeFile(path.join(out,'build-info.json'),JSON.stringify(info,null,2));
 await writeFile(path.join(out,'verification-report.json'),JSON.stringify({
   test:'06B',status:'PASS',build_id:buildId,
-  delegated_nonvisual_checks:{accepted_06a_frozen_required:true,accepted_test04_blob_verified:true,accepted_06a_fragment_reused_unchanged:true,secondary_actor_count:10,secondary_actor_instanced:true,secondary_added_draw_call_budget:3,secondary_direct_player_trigger:false,propagation_source:'06A primary state transition to FLEEING',propagation_distance_m:Number(primaryToSecondaryDistance.toFixed(3)),propagation_speed_m_s:18,propagation_delay_ms:Math.round(propagationTravelMs),secondary_state_machine:true,combat_not_modified:true,source_level:true},
+  delegated_nonvisual_checks:{accepted_06a_frozen_required:true,accepted_test04_blob_verified:true,accepted_06a_fragment_reused_unchanged:true,secondary_actor_count:10,secondary_actor_instanced:true,secondary_added_draw_call_budget:3,secondary_direct_player_trigger:false,propagation_source:'06A primary state transition to FLEEING',propagation_distance_m:Number(primaryToSecondaryDistance.toFixed(3)),propagation_speed_m_s:18,propagation_delay_ms:Math.round(propagationTravelMs),secondary_state_machine:true,dynamic_flock_frustum_culling_disabled:true,flight_paths_and_timings_unchanged:true,combat_not_modified:true,source_level:true},
   human_visual_review:'REQUIRED'
 },null,2));
 console.log(JSON.stringify({buildId,status:'PASS',output:'threejs-test-06b'}));
