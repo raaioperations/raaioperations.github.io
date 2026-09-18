@@ -1,5 +1,5 @@
 {
-  "build_id": "20260917220545",
+  "build_id": "20260918063536",
   "test": "06B",
   "roadmap": "Test06 — Living World",
   "purpose": "prove deterministic world actor → world actor stimulus propagation without adding combat or direct secondary player triggering",
@@ -50,6 +50,6 @@
     "world_feels_more_systemic_than_06a": "HUMAN REVIEW"
   },
   "human_visual_review": "REQUIRED",
-  "app_js_bytes": 670183,
+  "app_js_bytes": 670303,
   "soldier_glb_bytes": 2160468
 }

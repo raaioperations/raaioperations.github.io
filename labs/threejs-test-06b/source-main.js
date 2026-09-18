@@ -213,6 +213,15 @@ const PROPAGATION_06B={secondaryCount:10,disturbanceSpeed:18.0,fleeMs:1250,retur
 const primaryApi=globalThis.__livingWorld06A;
 if(!primaryApi||primaryApi.marker!=='06A_LIVING_WORLD_FLOCK')throw new Error('06B requires accepted 06A public world-state API');
 
+// 06B-R1 visibility correction.
+// Dynamic InstancedMesh transforms can outrun stale frustum bounds on mobile Safari/WebGL,
+// making a flock appear to blink out even though its state machine is still flying it away.
+// Keep the tiny proof flocks render-visible for their complete deterministic travel path.
+// This changes no positions, timings, triggers, propagation, or draw-call count.
+flockBodies.frustumCulled=false;
+flockLeftWings.frustumCulled=false;
+flockRightWings.frustumCulled=false;
+
 const spawnYaw06B=Number.isFinite(playerRoot.rotation.y)?playerRoot.rotation.y:0;
 const spawnX06B=playerRoot.position.x,spawnZ06B=playerRoot.position.z;
 const fwdX06B=Math.sin(spawnYaw06B),fwdZ06B=Math.cos(spawnYaw06B);
@@ -233,6 +242,10 @@ const secondaryBodies06B=new THREE.InstancedMesh(secondaryBodyGeo06B,secondaryBo
 const secondaryLeftWings06B=new THREE.InstancedMesh(secondaryWingGeo06B,secondaryWingMat06B,PROPAGATION_06B.secondaryCount);
 const secondaryRightWings06B=new THREE.InstancedMesh(secondaryWingGeo06B,secondaryWingMat06B,PROPAGATION_06B.secondaryCount);
 secondaryBodies06B.castShadow=true;secondaryLeftWings06B.castShadow=true;secondaryRightWings06B.castShadow=true;
+// Same dynamic-instancing visibility rule for Flock B.
+secondaryBodies06B.frustumCulled=false;
+secondaryLeftWings06B.frustumCulled=false;
+secondaryRightWings06B.frustumCulled=false;
 scene.add(secondaryBodies06B,secondaryLeftWings06B,secondaryRightWings06B);
 
 const secondaryBirds06B=[];
