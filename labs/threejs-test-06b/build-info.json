@@ -1,5 +1,5 @@
 {
-  "build_id": "20260918063536",
+  "build_id": "20260918063600",
   "test": "06B",
   "roadmap": "Test06 — Living World",
   "purpose": "prove deterministic world actor → world actor stimulus propagation without adding combat or direct secondary player triggering",
@@ -24,6 +24,15 @@
     "count": 10,
     "draw_call_budget_added": 3,
     "direct_player_trigger": false
+  },
+  "visibility_revision": {
+    "revision": "06B-R1",
+    "issue": "dynamic instanced flock could visually blink out from stale frustum bounds",
+    "fix": "disable per-mesh frustum culling for the two tiny proof flocks so complete flight paths remain visually continuous",
+    "timings_changed": false,
+    "paths_changed": false,
+    "propagation_changed": false,
+    "draw_calls_changed": false
   },
   "propagation": {
     "source": "primary flock enters FLEEING",
