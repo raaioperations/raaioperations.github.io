@@ -1,0 +1,24 @@
+{
+  "test": "06C",
+  "status": "PASS",
+  "build_id": "20260918070057",
+  "delegated_nonvisual_checks": {
+    "accepted_06b_r1_frozen_required": true,
+    "accepted_test04_blob_verified": true,
+    "accepted_06a_fragment_reused_unchanged": true,
+    "accepted_06b_r1_fragment_reused_unchanged": true,
+    "memory_actor_count": 28,
+    "memory_actor_instanced": true,
+    "memory_added_draw_call_budget": 1,
+    "memory_direct_player_trigger": false,
+    "memory_trigger": "06B secondary flock state transition to FLEEING",
+    "disturbed_ms": 2300,
+    "settling_ms": 2800,
+    "total_memory_ms": 5100,
+    "memory_state_machine": true,
+    "dynamic_memory_actor_frustum_culling_disabled": true,
+    "combat_not_modified": true,
+    "source_level": true
+  },
+  "human_visual_review": "REQUIRED"
+}

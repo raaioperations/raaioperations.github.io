@@ -1,0 +1,53 @@
+{
+  "build_id": "20260918070057",
+  "test": "06C",
+  "roadmap": "Test06 — Living World",
+  "purpose": "prove that an accepted world-to-world disturbance can leave a visible local environmental state that persists after the initiating actors move on and then settles without player input",
+  "prerequisite": {
+    "test06b": "ACCEPTED / FROZEN / 06B-R1"
+  },
+  "inherits": "Frozen accepted 06A + 06B-R1 living-world behavior unchanged; accepted Test04 environment",
+  "base_blob": "8ec3761c2cf4a507a072d79307220c0b315a8261",
+  "frozen_source_blobs": {
+    "test06a": "e79d37ccb063aeb3cd1852ecabeefdea25089a3f",
+    "test06b_r1": "0a7725c5f53c0f6ed582456a6baceaa886af2ade"
+  },
+  "three": "0.186.0",
+  "pipeline": "source-level frozen 06A + frozen 06B-R1 + isolated memory fragment + esbuild local bundle",
+  "runtime_external_dependencies": 0,
+  "service_worker_cache": false,
+  "target": "safari16.4+",
+  "mobile_fps_target": 60,
+  "memory_actor": {
+    "type": "instanced tall-reed patch",
+    "count": 28,
+    "draw_call_budget_added": 1,
+    "direct_player_trigger": false,
+    "trigger": "accepted Flock B transition into FLEEING"
+  },
+  "memory_states": [
+    "CALM",
+    "DISTURBED",
+    "SETTLING"
+  ],
+  "persistence": {
+    "disturbed_ms": 2300,
+    "settling_ms": 2800,
+    "total_memory_ms": 5100
+  },
+  "mechanics_changed": false,
+  "combat_changed": false,
+  "accepted_06a_changed": false,
+  "accepted_06b_changed": false,
+  "acceptance_checklist": {
+    "reed_patch_visibly_present": "HUMAN REVIEW",
+    "flock_a_and_b_chain_remains_intact": "HUMAN REVIEW",
+    "flock_b_takeoff_visibly_disturbs_reeds": "HUMAN REVIEW",
+    "reeds_remain_disturbed_after_birds_move_on": "HUMAN REVIEW",
+    "reeds_gradually_settle_without_player_input": "HUMAN REVIEW",
+    "lingering_state_reads_as_world_memory_not_one_frame_vfx": "HUMAN REVIEW"
+  },
+  "human_visual_review": "REQUIRED",
+  "app_js_bytes": 672909,
+  "soldier_glb_bytes": 2160468
+}
