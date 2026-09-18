@@ -11,7 +11,7 @@ const assets=path.join(out,'assets');
 await rm(out,{recursive:true,force:true});
 await mkdir(assets,{recursive:true});
 
-function gitBlobSha(text){const b=Buffer.from(text);return crypto.createHash('sha1').update(Buffer.concat([Buffer.from(`blob ${b.length}\\0`),b])).digest('hex');}
+function gitBlobSha(text){const b=Buffer.from(text);return crypto.createHash('sha1').update(Buffer.concat([Buffer.from(`blob ${b.length}\0`),b])).digest('hex');}
 function mustReplace(text,find,repl,label){const i=text.indexOf(find);if(i<0)throw new Error(`06C anchor missing: ${label}`);if(text.indexOf(find,i+find.length)>=0)throw new Error(`06C anchor not unique: ${label}`);return text.slice(0,i)+repl+text.slice(i+find.length);}
 
 const accepted06B=JSON.parse(await readFile(path.join(labs,'threejs-test-06b','acceptance.json'),'utf8'));
