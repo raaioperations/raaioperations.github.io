@@ -1,0 +1,29 @@
+{
+  "test": "06B",
+  "roadmap": "Test06 — Living World",
+  "status": "ACCEPTED",
+  "human_visual_acceptance": true,
+  "accepted_at": "2026-09-18T06:52:57Z",
+  "decision": "ACCEPTED",
+  "frozen": true,
+  "revision": "06B-R1",
+  "accepted_scope": {
+    "both_flocks_visibly_present": true,
+    "primary_flock_reacts_first": true,
+    "secondary_flock_reacts_after_clear_delay": true,
+    "secondary_response_reads_as_caused_by_world_not_direct_player": true,
+    "retreat_allows_both_flocks_to_recover": true,
+    "world_feels_more_systemic_than_06a": true,
+    "complete_flight_paths_visually_trackable": true
+  },
+  "frozen_baseline": {
+    "primary_actor": "accepted 06A flock",
+    "secondary_actor": "second stylized instanced bird flock",
+    "secondary_direct_player_trigger": false,
+    "propagation_distance_m": 8.746,
+    "propagation_speed_m_s": 18,
+    "propagation_delay_ms": 486,
+    "visibility_revision": "06B-R1 — dynamic proof flocks remain render-visible through full flight path"
+  },
+  "user_note": "Accepted"
+}
