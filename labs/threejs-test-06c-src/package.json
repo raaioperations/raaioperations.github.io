@@ -1,0 +1,11 @@
+{
+  "name": "raai-threejs-test-06c",
+  "private": true,
+  "version": "0.6.3",
+  "description": "Living World local disturbance-memory proof: accepted world propagation leaves a visible environmental state that persists and settles",
+  "type": "module",
+  "engines": {"node": ">=22"},
+  "scripts": {"build": "node build.mjs"},
+  "dependencies": {"three": "0.186.0"},
+  "devDependencies": {"esbuild": "0.25.9"}
+}
