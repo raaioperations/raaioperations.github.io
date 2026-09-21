@@ -1,5 +1,5 @@
 {
-  "build_id": "20260921044235",
+  "build_id": "20260921053845",
   "test": "07A",
   "roadmap": "Test07 — Production Promotion",
   "milestone": "Production Architecture Promotion",
@@ -92,6 +92,6 @@
     "frozen_06j_real_device_regression_pass": "HUMAN REVIEW"
   },
   "human_visual_review": "REQUIRED ONLY FOR REGRESSION / NO VISIBLE BREAKAGE",
-  "app_js_bytes": 736421,
+  "app_js_bytes": 736374,
   "soldier_glb_bytes": 2160468
 }

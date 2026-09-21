@@ -2151,8 +2151,8 @@ const archResultEl07A=document.getElementById('archResult07A');
 
 function setArchText07A(el,value,color){
   if(!el)return;
-  el.textContent=value;
-  if(color)el.style.color=color;
+  if(el.textContent!==value)el.textContent=value;
+  if(color&&el.style.color!==color)el.style.color=color;
 }
 
 function runProductionArchitectureProof07A(){
@@ -2258,10 +2258,12 @@ function updateProductionArchitecture07A(){
   }
 }
 
-const frameHooks07A=globalThis.__raaiFrameHooks||(globalThis.__raaiFrameHooks=[]);
-const frameHook07A=()=>updateProductionArchitecture07A();
-frameHook07A.productionArchitectureId='07A_PRODUCTION_ARCHITECTURE';
-if(!frameHooks07A.some(h=>h.productionArchitectureId==='07A_PRODUCTION_ARCHITECTURE'))frameHooks07A.push(frameHook07A);
+updateProductionArchitecture07A();
+const architectureStatusTimer07A=setInterval(()=>{
+  updateProductionArchitecture07A();
+  const regression=globalThis.__livingWorld06J?.stage||'WAITING';
+  if(regression==='PASS'||regression==='FAIL')clearInterval(architectureStatusTimer07A);
+},1000);
 
 globalThis.__productionArchitecture07A={
   marker:PRODUCTION_ARCHITECTURE_07A_MARKER,
