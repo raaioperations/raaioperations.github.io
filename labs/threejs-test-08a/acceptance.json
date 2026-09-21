@@ -49,5 +49,7 @@
     "multi_region_world_fragment": "f0f51e7e1a51f0ea85c7bc94a6c28e965739b2b5",
     "build_script": "78feb0e64090e1544f2bfffed81c3e300ca0678c"
   },
-  "user_note": "Accepted. Freeze. Proceed."
+  "user_note": "Accepted. Freeze. Proceed.",
+  "next_milestone": "08B — Predictive Region Handoff",
+  "next_milestone_authorized": true
 }
