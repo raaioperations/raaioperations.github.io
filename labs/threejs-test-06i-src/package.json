@@ -1,0 +1,11 @@
+{
+  "name": "raai-threejs-test-06i",
+  "private": true,
+  "version": "0.6.9",
+  "description": "Living World simulation LOD proof: full-rate near, reduced mid, coarse far, serialized dormant sleep/wake",
+  "type": "module",
+  "engines": {"node": ">=22"},
+  "scripts": {"build": "node build.mjs"},
+  "dependencies": {"three": "0.186.0"},
+  "devDependencies": {"esbuild": "0.25.9"}
+}
