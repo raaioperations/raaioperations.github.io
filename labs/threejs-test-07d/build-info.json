@@ -1,0 +1,84 @@
+{
+  "build_id": "20260921063759",
+  "test": "07D",
+  "roadmap": "Test07 — Production Promotion",
+  "milestone": "Production Vertical Slice",
+  "purpose": "prove the frozen production architecture operates as one coherent slice: accepted memory/arbitration/goal recovery through production actor animation binding, followed by production-region stream-out/restore and inherited mobile performance regression",
+  "prerequisite": {
+    "test07c": "ACCEPTED / FROZEN"
+  },
+  "inherits": "Frozen accepted 07C source, 07B actor pipeline, 07A architecture, and Test06 behavior unchanged",
+  "frozen_artifact_blobs": {
+    "test07c_source_main": "97541df4c34c952a5db42bdcc53e730aa45ac170",
+    "test07c_index": "c9bb1db3c79c5db231464cae0d93adb2ddf4c8d9",
+    "living_world_kernel": "8ff673728f18546168e339d888889bfbbc6b8828",
+    "stream_cell_core": "af77396834311e0e5b328c7c4438317202613466",
+    "simulation_lod_core": "2458e99eec9988067a9c3a62bd1c6b88ea1ab4e8",
+    "production_index": "836bf853a996dc7fbdb968aa9b12e09e32594dac",
+    "actor_pipeline_core": "37fa1ef67038f9f14e289814eb2d07b07259b74f",
+    "three_actor_adapter": "c31460159e3d2a581cb113229b8bb2eebd70cce1",
+    "actor_index": "4c20fecc38af942041b733eefdaff5032bbf4451",
+    "production_region_core": "424632248ab868c931174b30821cb45ca9f2fde0",
+    "production_region_index": "4ae232115c3d90e5185ac2889a02f0a2dd856d5f",
+    "production_region_fragment": "c27735524d33e0a08eada1e87fd0d442b3d2998e"
+  },
+  "vertical_slice": {
+    "actor_id": "07C_REGION_ACTOR_A",
+    "automated_behavior_sequence": [
+      "FOOD / WALK",
+      "HAZARD / RUN",
+      "FOOD / WALK"
+    ],
+    "behavior_source": "accepted 07A LivingWorldKernel only",
+    "hazard_trigger": "one deterministic vertical-slice proof event after region actor becomes active",
+    "stream_cycle": "frozen 07C 38m unload / 24m reload",
+    "asset_pipeline": "frozen 07B cache + SkeletonUtils clone + independent mixer",
+    "performance_gate": "inherited 06J real-device audit must remain PASS"
+  },
+  "delegated_vertical_slice_proof": {
+    "actor_count": 2,
+    "behavior_event_count": 1,
+    "hazard_observed": true,
+    "recovery_observed": true,
+    "goal_progress_preserved": true,
+    "streamed_out": true,
+    "restored": true,
+    "actor_ids_stable": true,
+    "region_progress_preserved": true,
+    "duplicate_region_count": 0,
+    "duplicate_binding_count": 0,
+    "asset_load_count_contract": 1,
+    "regression_contract": "PASS",
+    "final_goal": "FOOD",
+    "final_memory": "CALM",
+    "completion_pass": true
+  },
+  "runtime_external_dependencies": 0,
+  "target": "safari16.4+",
+  "mobile_fps_target": 60,
+  "frame_integration": {
+    "inherited_request_animation_frame_calls": 15,
+    "final_request_animation_frame_calls": 15,
+    "added_request_animation_frame_calls": 0
+  },
+  "mechanics_changed": false,
+  "combat_changed": false,
+  "new_ai_behavior": false,
+  "new_assets": false,
+  "disk_persistence": false,
+  "multiplayer": false,
+  "acceptance_checklist": {
+    "production_behavior_cycle_visible": "HUMAN REVIEW",
+    "behavior_loop_reports_pass": "HUMAN RUNTIME",
+    "region_streams_out_and_restores": "HUMAN REVIEW",
+    "actor_ids_stable_after_restore": "HUMAN RUNTIME",
+    "progress_preserved_after_restore": "HUMAN RUNTIME",
+    "asset_load_count_remains_one": "HUMAN RUNTIME",
+    "zero_duplicate_bindings": "HUMAN RUNTIME",
+    "inherited_06j_real_device_regression_pass": "HUMAN REVIEW",
+    "final_vertical_slice_status_pass": "HUMAN REVIEW"
+  },
+  "human_visual_review": "REQUIRED",
+  "app_js_bytes": 767872,
+  "soldier_glb_bytes": 2160468
+}
