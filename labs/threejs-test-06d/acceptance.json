@@ -1,0 +1,37 @@
+{
+  "test": "06D",
+  "roadmap": "Test06 — Living World",
+  "status": "ACCEPTED",
+  "human_visual_acceptance": true,
+  "accepted_at": "2026-09-21T01:08:55Z",
+  "decision": "ACCEPTED",
+  "frozen": true,
+  "build_id": "20260921010638",
+  "accepted_scope": {
+    "forager_visibly_readable": true,
+    "accepted_a_to_b_to_reeds_chain_remains_intact": true,
+    "forager_arrives_after_original_bird_disturbance": true,
+    "active_world_memory_produces_clear_detour": true,
+    "cleared_world_memory_allows_direct_return": true,
+    "route_difference_reads_as_world_state_affecting_behavior": true
+  },
+  "frozen_baseline": {
+    "actor": "stylized low-poly hare/forager",
+    "direct_player_trigger": false,
+    "decision_source": "06C persistent memory state at late arrival",
+    "arrival_delay_ms": 1800,
+    "detour_offset_m": 2.8,
+    "detour_travel_ms": 2450,
+    "calm_hold_ms": 550,
+    "direct_return_ms": 2500,
+    "states": [
+      "WAITING",
+      "ARRIVAL_DELAY",
+      "AVOIDING",
+      "HOLDING",
+      "DIRECT_RETURN",
+      "COMPLETE"
+    ]
+  },
+  "user_note": "accepted."
+}
