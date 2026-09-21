@@ -1,0 +1,86 @@
+{
+  "build_id": "20260921062601",
+  "test": "07C",
+  "roadmap": "Test07 — Production Promotion",
+  "milestone": "Streamed Production Region",
+  "purpose": "prove one production region can serialize, unbind, remove, restore, and rebind real 07B production actors through the same cached asset pipeline without identity/progress loss or duplicate bindings",
+  "prerequisite": {
+    "test07b": "ACCEPTED / FROZEN"
+  },
+  "inherits": "Frozen accepted 07B source, production actor pipeline, and 07A production architecture unchanged",
+  "frozen_artifact_blobs": {
+    "test07b_source_main": "b3cdda29aa660f0680bff8aa6373260f65029603",
+    "test07b_index": "252e04fdeb208405355ab32d7894b1125d890a2b",
+    "living_world_kernel": "8ff673728f18546168e339d888889bfbbc6b8828",
+    "stream_cell_core": "af77396834311e0e5b328c7c4438317202613466",
+    "simulation_lod_core": "2458e99eec9988067a9c3a62bd1c6b88ea1ab4e8",
+    "production_index": "836bf853a996dc7fbdb968aa9b12e09e32594dac",
+    "actor_pipeline_core": "37fa1ef67038f9f14e289814eb2d07b07259b74f",
+    "three_actor_adapter": "c31460159e3d2a581cb113229b8bb2eebd70cce1",
+    "actor_pipeline_fragment": "0d6a40cfed98069380980c30ffb083e83c71b4ff"
+  },
+  "production_region": {
+    "region_id": "07C_PRODUCTION_REGION_A",
+    "actor_count": 2,
+    "actor_ids": [
+      "07C_REGION_ACTOR_A",
+      "07C_REGION_ACTOR_B"
+    ],
+    "load_radius_m": 24,
+    "unload_radius_m": 38,
+    "hysteresis_m": 14,
+    "snapshot_schema_version": 1,
+    "state_store": "in-memory ProductionRegionStateStore",
+    "asset_cache": "reuse frozen 07B ThreeActorAssetCache",
+    "expected_asset_loads": 1,
+    "control_group": "07B_ACTOR_A + 07B_ACTOR_B remain continuously loaded",
+    "production_vertical_slice": "deferred to 07D"
+  },
+  "delegated_region_proof": {
+    "schema_version": 1,
+    "actor_count": 2,
+    "load_radius_m": 24,
+    "unload_radius_m": 38,
+    "hysteresis_m": 14,
+    "unload_cycles": 3,
+    "restore_cycles": 3,
+    "final_active_actor_count": 2,
+    "final_bound_actor_count": 2,
+    "actor_ids_stable": true,
+    "actor_progress_preserved": true,
+    "expired_memory_resolved": true,
+    "interrupted_goal_resumed": true,
+    "duplicate_region_count": 0,
+    "duplicate_binding_count": 0,
+    "dormant_actor_simulation": "stopped because actor records are removed from active pipeline",
+    "snapshot_store": "in-memory ProductionRegionStateStore"
+  },
+  "runtime_external_dependencies": 0,
+  "target": "safari16.4+",
+  "mobile_fps_target": 60,
+  "frame_integration": {
+    "inherited_request_animation_frame_calls": 15,
+    "final_request_animation_frame_calls": 15,
+    "added_request_animation_frame_calls": 0
+  },
+  "mechanics_changed": false,
+  "combat_changed": false,
+  "new_ai_behavior": false,
+  "disk_persistence": false,
+  "broad_world_streaming": false,
+  "acceptance_checklist": {
+    "region_initially_loads_two_production_actors": "HUMAN REVIEW",
+    "leaving_38m_unloads_only_region_actors": "HUMAN REVIEW",
+    "frozen_07b_control_actors_remain": "HUMAN REVIEW",
+    "snapshot_saved_before_actor_removal": "HUMAN RUNTIME",
+    "returning_inside_24m_rehydrates_two_actors": "HUMAN REVIEW",
+    "actor_ids_stable": "HUMAN RUNTIME",
+    "actor_progress_preserved": "HUMAN RUNTIME",
+    "asset_load_count_remains_one": "HUMAN RUNTIME",
+    "zero_duplicate_bindings": "HUMAN RUNTIME",
+    "frozen_06j_real_device_regression_pass": "HUMAN REVIEW"
+  },
+  "human_visual_review": "REQUIRED",
+  "app_js_bytes": 760272,
+  "soldier_glb_bytes": 2160468
+}
