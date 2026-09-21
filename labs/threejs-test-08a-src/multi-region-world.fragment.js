@@ -8,6 +8,24 @@ const MULTI_REGION_PRODUCTION_WORLD_08A_MARKER='08A_MULTI_REGION_PRODUCTION_WORL
 const actorSystem08A=globalThis.__productionActorPipeline07B;
 if(!actorSystem08A)throw new Error('08A requires frozen accepted 07B actor pipeline');
 
+// Test07 is frozen. Its 07C/07D diagnostic frame hooks are superseded by the
+// production-world manager in 08A and must not stack underneath World Expansion.
+// Production modules and the 06J regression remain untouched.
+const inheritedHooks08A=globalThis.__raaiFrameHooks||(globalThis.__raaiFrameHooks=[]);
+for(let i=inheritedHooks08A.length-1;i>=0;i--){
+  const hook=inheritedHooks08A[i];
+  if(hook?.productionRegionId==='07C_PRODUCTION_REGION'||
+     hook?.productionVerticalSliceId==='07D_PRODUCTION_VERTICAL_SLICE'){
+    inheritedHooks08A.splice(i,1);
+  }
+}
+for(const child of [...scene.children]){
+  if(child.userData?.productionRegionDiagnostic===true||
+     child.userData?.productionVerticalSliceBeacon===true){
+    scene.remove(child);
+  }
+}
+
 const pipeline08A=actorSystem08A.pipeline;
 const factory08A=actorSystem08A.factory;
 const definition08A=pipeline08A.definitions.get('HUMANOID_FORAGER_V1');
@@ -89,6 +107,9 @@ let returnAProgress08A=null;
 let stepPending08A=false;
 let stepError08A='';
 let hudNext08A=0;
+let worldLogicNext08A=0;
+let worldLogicAccumMs08A=0;
+const WORLD_LOGIC_INTERVAL_MS_08A=100;
 
 const ringGeo08A=new THREE.RingGeometry(4.8,5.15,48);
 ringGeo08A.rotateX(-Math.PI/2);
@@ -235,7 +256,13 @@ function updateWorldHud08A(){
 
 const frameHooks08A=globalThis.__raaiFrameHooks||(globalThis.__raaiFrameHooks=[]);
 const frameHook08A=(now,dt)=>{
-  stepWorld08A(now,dt);
+  worldLogicAccumMs08A+=Math.max(0,dt*1000);
+  if(now>=worldLogicNext08A&&!stepPending08A){
+    const logicDt=worldLogicAccumMs08A/1000;
+    worldLogicAccumMs08A=0;
+    worldLogicNext08A=now+WORLD_LOGIC_INTERVAL_MS_08A;
+    stepWorld08A(now,logicDt);
+  }
   if(now>=hudNext08A){
     updateWorldHud08A();
     hudNext08A=now+500;
