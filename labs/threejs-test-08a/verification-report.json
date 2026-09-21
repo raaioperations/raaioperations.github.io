@@ -1,0 +1,51 @@
+{
+  "test": "08A",
+  "status": "PASS",
+  "build_id": "20260921071701",
+  "delegated_nonvisual_checks": {
+    "accepted_07d_frozen_required": true,
+    "test07_closed_required": true,
+    "accepted_07d_source_reused_unchanged": true,
+    "accepted_07a_through_07d_production_modules_reused_unchanged": true,
+    "world_core_three_independent": true,
+    "world_core_dom_independent": true,
+    "three_region_registration": true,
+    "route_a_b_c_a": true,
+    "at_most_one_active_proof_region": true,
+    "per_region_snapshots": true,
+    "return_actor_ids_stable": true,
+    "return_progress_preserved": true,
+    "state_isolated_between_regions": true,
+    "zero_duplicate_region_state": true,
+    "zero_duplicate_binding_state": true,
+    "shared_asset_load_contract_one": true,
+    "added_request_animation_frame_calls": 0,
+    "runtime_external_dependencies": 0,
+    "safari_target": "16.4+"
+  },
+  "world_proof": {
+    "region_count": 3,
+    "route": [
+      "A",
+      "B",
+      "C",
+      "A"
+    ],
+    "max_active_regions": 1,
+    "active_actor_count": 2,
+    "snapshots_saved": [
+      "A",
+      "B",
+      "C"
+    ],
+    "return_region": "A",
+    "return_ids_stable": true,
+    "return_progress_preserved": true,
+    "isolated_region_progress": true,
+    "duplicate_region_count": 0,
+    "duplicate_binding_count": 0,
+    "shared_asset_load_contract": 1
+  },
+  "real_device_regression": "REQUIRED",
+  "human_visual_review": "REQUIRED"
+}

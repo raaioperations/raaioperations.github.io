@@ -1,0 +1,96 @@
+{
+  "build_id": "20260921071701",
+  "test": "08A",
+  "roadmap": "Test08 — World Expansion",
+  "milestone": "Multi-Region Production World",
+  "purpose": "prove the frozen production stack scales from one streamed region to multiple independent production regions with isolated snapshots, stable identity/progress restoration, one shared asset cache, and preserved mobile performance",
+  "prerequisite": {
+    "test07": "CLOSED / FROZEN",
+    "test07d": "ACCEPTED / FROZEN"
+  },
+  "inherits": "Frozen accepted 07D source and all 07A–07D production modules unchanged",
+  "frozen_artifact_blobs": {
+    "test07d_source_main": "36ae54bc0fc70de82071bcec588545c190c7f4dd",
+    "test07d_index": "220c30d480cc4808fb8993315170859d07924ede",
+    "living_world_kernel": "8ff673728f18546168e339d888889bfbbc6b8828",
+    "stream_cell_core": "af77396834311e0e5b328c7c4438317202613466",
+    "simulation_lod_core": "2458e99eec9988067a9c3a62bd1c6b88ea1ab4e8",
+    "production_index": "836bf853a996dc7fbdb968aa9b12e09e32594dac",
+    "actor_pipeline_core": "37fa1ef67038f9f14e289814eb2d07b07259b74f",
+    "three_actor_adapter": "c31460159e3d2a581cb113229b8bb2eebd70cce1",
+    "actor_index": "4c20fecc38af942041b733eefdaff5032bbf4451",
+    "production_region_core": "424632248ab868c931174b30821cb45ca9f2fde0",
+    "production_region_index": "4ae232115c3d90e5185ac2889a02f0a2dd856d5f",
+    "production_vertical_slice_core": "94140d67efc32d1260bd1576251787a7fbb3df24",
+    "production_vertical_slice_index": "e923fc52535885142419d2d423750f3e4054c6bf",
+    "production_vertical_slice_fragment": "53ff1f42ff6c43aa4211e0b2a42c75603f5dd765"
+  },
+  "world_expansion": {
+    "regions": 3,
+    "route": [
+      "A",
+      "B",
+      "C",
+      "A"
+    ],
+    "actors_per_region": 2,
+    "maximum_expected_active_proof_regions": 1,
+    "shared_asset_cache": "frozen 07B ThreeActorAssetCache",
+    "expected_asset_loads": 1,
+    "snapshot_store": "shared ProductionRegionStateStore keyed by region ID",
+    "load_radius_m": 24,
+    "unload_radius_m": 38,
+    "world_content_expansion": "diagnostic regions only; no new gameplay content"
+  },
+  "delegated_world_proof": {
+    "region_count": 3,
+    "route": [
+      "A",
+      "B",
+      "C",
+      "A"
+    ],
+    "max_active_regions": 1,
+    "active_actor_count": 2,
+    "snapshots_saved": [
+      "A",
+      "B",
+      "C"
+    ],
+    "return_region": "A",
+    "return_ids_stable": true,
+    "return_progress_preserved": true,
+    "isolated_region_progress": true,
+    "duplicate_region_count": 0,
+    "duplicate_binding_count": 0,
+    "shared_asset_load_contract": 1
+  },
+  "runtime_external_dependencies": 0,
+  "target": "safari16.4+",
+  "mobile_fps_target": 60,
+  "frame_integration": {
+    "inherited_request_animation_frame_calls": 15,
+    "final_request_animation_frame_calls": 15,
+    "added_request_animation_frame_calls": 0
+  },
+  "mechanics_changed": false,
+  "combat_changed": false,
+  "new_ai_behavior": false,
+  "new_assets": false,
+  "disk_persistence": false,
+  "multiplayer": false,
+  "acceptance_checklist": {
+    "three_regions_exist": "HUMAN REVIEW",
+    "visit_a_b_c_and_return_a": "HUMAN REVIEW",
+    "only_one_08a_region_active_along_route": "HUMAN RUNTIME",
+    "snapshots_isolated_per_region": "HUMAN RUNTIME",
+    "a_ids_stable_on_return": "HUMAN RUNTIME",
+    "a_progress_preserved_on_return": "HUMAN RUNTIME",
+    "asset_load_count_remains_one": "HUMAN RUNTIME",
+    "zero_duplicate_bindings": "HUMAN RUNTIME",
+    "inherited_06j_real_device_regression_pass": "HUMAN REVIEW"
+  },
+  "human_visual_review": "REQUIRED",
+  "app_js_bytes": 775494,
+  "soldier_glb_bytes": 2160468
+}
