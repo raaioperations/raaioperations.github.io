@@ -1,0 +1,61 @@
+{
+  "test": "06J",
+  "roadmap": "Test06 — Living World",
+  "milestone": "Living World Integration / Scale Audit",
+  "status": "ACCEPTED",
+  "human_visual_acceptance": true,
+  "accepted_at": "2026-09-21T04:36:37Z",
+  "decision": "ACCEPTED",
+  "frozen": true,
+  "build_id": "20260921042453",
+  "closes_roadmap": "Test06 — Living World",
+  "test06_closed": true,
+  "real_device_audit": {
+    "platform": "iPhone Safari",
+    "status": "PASS",
+    "actors": "192/192",
+    "tier_mix": "48/48/48/48",
+    "frame_avg_ms": 16.67,
+    "frame_p95_ms": 17,
+    "frame_p99_ms": 17,
+    "audit_cpu_avg_ms": 0.07,
+    "audit_cpu_p95_ms": 1,
+    "draw_calls": 105,
+    "triangles": 287336,
+    "shader_programs": 21,
+    "shader_warmup_delta": 0,
+    "dormant_snapshots": 48,
+    "scale_audit_roots": 1,
+    "final_result": "192 ACTORS ✓ · BUDGET PASS ✓ · STATE STABLE ✓"
+  },
+  "accepted_scope": {
+    "meaningful_192_actor_system_load": true,
+    "near_mid_far_dormant_distribution": true,
+    "integrated_memory_priority_goal_snapshot_lod_sleepwake": true,
+    "deterministic_scale_proof": true,
+    "real_device_performance_budget_pass": true,
+    "state_stability_under_load": true,
+    "no_actor_multiplication": true,
+    "no_added_request_animation_frame_loop": true
+  },
+  "frozen_source_blobs": {
+    "integration_scale_core": "43254444d546d71eb2f89e9c86dd32c882940b0f",
+    "integration_scale_fragment": "42f712cf45f2cf94abb23cec0bdde5afc8188aed",
+    "build_script": "3f35eb6855502b1278a72ac612431ea8214850a2"
+  },
+  "canonical_test06_builds": {
+    "06A": "20260915022619",
+    "06B-R1": "20260918063600",
+    "06C": "20260918070057",
+    "06D": "20260921010638",
+    "06E": "20260921011401",
+    "06F": "20260921012117",
+    "06G": "20260921013901",
+    "06H": "20260921032452",
+    "06I": "20260921035916",
+    "06J": "20260921042453"
+  },
+  "next_milestone": "07A — Production Architecture Promotion",
+  "next_milestone_authorized": true,
+  "user_note": "Accepted. Freeze. Proceed."
+}
