@@ -1,0 +1,56 @@
+{
+  "build_id": "20260921011401",
+  "test": "06E",
+  "roadmap": "Test06 — Living World",
+  "purpose": "prove persistent world memory is spatially scoped rather than acting as a global world flag",
+  "prerequisite": {
+    "test06d": "ACCEPTED / FROZEN"
+  },
+  "inherits": "Frozen accepted 06A + 06B-R1 + 06C + 06D unchanged; accepted Test04 environment",
+  "base_blob": "8ec3761c2cf4a507a072d79307220c0b315a8261",
+  "frozen_source_blobs": {
+    "test06a": "e79d37ccb063aeb3cd1852ecabeefdea25089a3f",
+    "test06b_r1": "0a7725c5f53c0f6ed582456a6baceaa886af2ade",
+    "test06c": "4016f6780987bc33dc3bc353b9d0ec507bde7215",
+    "test06d": "c5b73ef81dd2752c1d357c0178f0c33b1ce415ab"
+  },
+  "three": "0.186.0",
+  "pipeline": "source-level frozen 06A/06B-R1/06C/06D + isolated spatial-control fragment + esbuild local bundle",
+  "runtime_external_dependencies": 0,
+  "service_worker_cache": false,
+  "target": "safari16.4+",
+  "mobile_fps_target": 60,
+  "new_actor": {
+    "type": "gray stylized control hare/forager",
+    "geometry_draw_call_budget_added": 2,
+    "direct_player_trigger": false,
+    "arrival_delay_ms": 1800
+  },
+  "spatial_memory": {
+    "memory_radius_m": 1.8,
+    "control_lane_offset_m": 3.35,
+    "control_path_closest_distance_m": 3.35,
+    "expected_overlap": false,
+    "active_memory_still_read": true,
+    "expected_route": "direct"
+  },
+  "comparison": "accepted brown 06D forager crosses memory zone and detours; gray 06E control actor reads same active memory but remains outside zone and travels direct",
+  "mechanics_changed": false,
+  "combat_changed": false,
+  "accepted_06a_changed": false,
+  "accepted_06b_changed": false,
+  "accepted_06c_changed": false,
+  "accepted_06d_changed": false,
+  "acceptance_checklist": {
+    "both_foragers_visibly_distinguishable": "HUMAN REVIEW",
+    "frozen_a_to_b_to_reeds_chain_remains_intact": "HUMAN REVIEW",
+    "brown_forager_still_detours_through_memory_case": "HUMAN REVIEW",
+    "gray_control_reads_same_active_memory": "HUMAN REVIEW",
+    "gray_control_path_remains_outside_memory_location": "HUMAN REVIEW",
+    "gray_control_remains_direct_while_brown_actor_detours": "HUMAN REVIEW",
+    "effect_reads_as_spatially_local_not_global": "HUMAN REVIEW"
+  },
+  "human_visual_review": "REQUIRED",
+  "app_js_bytes": 680558,
+  "soldier_glb_bytes": 2160468
+}
