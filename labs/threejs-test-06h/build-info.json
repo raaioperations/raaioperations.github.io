@@ -1,8 +1,8 @@
 {
-  "build_id": "20260921031228",
+  "build_id": "20260921032452",
   "test": "06H",
   "roadmap": "Test06 — Living World",
-  "purpose": "prove a local world actor can be serialized, logically deactivated/disposed offscreen, restored later, and resolve elapsed timers from absolute wall time without replaying events",
+  "purpose": "prove one dedicated living-world cell can serialize, unload, stop simulation/rendering, preserve timed memory plus autonomous FOOD-goal progress, and rehydrate with correct offscreen time resolution",
   "prerequisite": {
     "test06g": "ACCEPTED / FROZEN"
   },
@@ -18,36 +18,85 @@
     "test06g": "91b9da7b56010987ba30902cf5b9491c60bb519d"
   },
   "three": "0.186.0",
-  "pipeline": "source-level frozen 06A–06G + isolated streamed-persistence fragment + esbuild local bundle",
+  "pipeline": "source-level frozen 06A–06G + isolated StreamCell core + shared-frame-hook 06H fragment + esbuild local bundle",
   "runtime_external_dependencies": 0,
   "service_worker_cache": false,
   "target": "safari16.4+",
   "mobile_fps_target": 60,
-  "stream_actor": {
-    "type": "streamable disturbance beacon",
-    "loaded_draw_call_budget_added": 3,
-    "unloaded_draw_call_budget_added": 0,
-    "behavioral_trigger": "06C memory event",
-    "direct_player_behavior_trigger": false
-  },
-  "stream_lifecycle": {
-    "load_radius_m": 18,
+  "stream_cell": {
+    "id": "06H_CELL_A",
+    "schema_version": 1,
+    "lifecycle": [
+      "ACTIVE",
+      "SERIALIZE",
+      "UNLOAD",
+      "UNLOADED",
+      "REHYDRATE",
+      "ACTIVE"
+    ],
+    "load_radius_m": 14,
     "unload_radius_m": 22,
-    "hysteresis_m": 4,
-    "unload_action": "serialize state, remove actor from scene, dispose geometry/material resources",
-    "restore_action": "deserialize snapshot, resolve absolute wall-clock expiry, reconstruct actor"
+    "hysteresis_m": 8,
+    "contents": [
+      "one local timed environmental memory",
+      "one autonomous FOOD-goal forager with measurable progress"
+    ],
+    "loaded_draw_call_budget_added": 3,
+    "unloaded_draw_call_budget_added": 0
+  },
+  "snapshot": {
+    "versioned": true,
+    "store": "in-memory StreamStateStore",
+    "uses_absolute_timestamps": true,
+    "fields": [
+      "version",
+      "cellId",
+      "serializedAt",
+      "memory.state",
+      "memory.startedAt",
+      "memory.expiresAt",
+      "memory.eventId",
+      "actor.goal",
+      "actor.suspendedGoal",
+      "actor.behaviorState",
+      "actor.progress",
+      "actor.position",
+      "actor.destination"
+    ]
   },
   "persistence": {
-    "states": [
-      "CALM",
-      "ALERT"
+    "memory_states": [
+      "DISTURBED",
+      "SETTLING",
+      "CALM"
     ],
-    "alert_duration_ms": 9000,
-    "clock": "Date.now absolute wall time",
-    "offscreen_simulation": "none for actor state",
-    "elapsed_timer_resolution": "on restore",
+    "disturbed_ms": 2300,
+    "settling_ms": 2800,
+    "actor_goal": "FOOD",
+    "actor_progress_cap": 0.34,
+    "dormant_actor_simulation": "stopped",
+    "elapsed_timer_resolution": "on rehydrate from absolute wall time",
     "event_identity_persisted": true,
     "duplicate_replay_expected": false
+  },
+  "frame_integration": {
+    "inherited_request_animation_frame_calls": 15,
+    "final_request_animation_frame_calls": 15,
+    "added_request_animation_frame_calls": 0,
+    "mechanism": "single shared base render-loop hook for 06H"
+  },
+  "mechanical_cycle_proof": {
+    "cycles": 3,
+    "final_active_roots": 1,
+    "unload_count": 3,
+    "restore_count": 3,
+    "memory_activation_count": 1,
+    "duplicate_count": 0,
+    "disposed_geometries": 3,
+    "disposed_materials": 3,
+    "actor_goal": "FOOD",
+    "actor_progress_preserved": true,
+    "expired_timer_resolved": true
   },
   "mechanics_changed": false,
   "combat_changed": false,
@@ -59,16 +108,17 @@
   "accepted_06f_changed": false,
   "accepted_06g_changed": false,
   "acceptance_checklist": {
-    "beacon_visible_and_calm_before_event": "HUMAN REVIEW",
-    "memory_event_turns_beacon_alert": "HUMAN REVIEW",
-    "moving_beyond_unload_radius_reports_unloaded_and_actor_is_absent": "HUMAN REVIEW",
-    "alert_countdown_continues_as_wall_time_while_actor_is_unloaded": "HUMAN REVIEW",
-    "returning_inside_load_radius_reconstructs_actor": "HUMAN REVIEW",
-    "expired_offscreen_alert_restores_as_calm_not_replayed_alert": "HUMAN REVIEW",
-    "unload_restore_counts_increment_once_per_cycle": "HUMAN REVIEW",
-    "result_reads_as_state_persistence_not_reset_to_default": "HUMAN REVIEW"
+    "cell_initially_active": "HUMAN REVIEW",
+    "local_memory_becomes_disturbed_after_accepted_world_event": "HUMAN REVIEW",
+    "forager_has_food_goal_and_visible_progress": "HUMAN REVIEW",
+    "leaving_beyond_unload_radius_removes_cell": "HUMAN REVIEW",
+    "offscreen_time_increases_while_unloaded": "HUMAN REVIEW",
+    "return_rehydrates_from_snapshot": "HUMAN REVIEW",
+    "expired_memory_returns_calm_not_restarted": "HUMAN REVIEW",
+    "actor_food_goal_and_progress_do_not_reset": "HUMAN REVIEW",
+    "nothing_visibly_duplicates": "HUMAN REVIEW"
   },
   "human_visual_review": "REQUIRED",
-  "app_js_bytes": 693787,
+  "app_js_bytes": 700234,
   "soldier_glb_bytes": 2160468
 }

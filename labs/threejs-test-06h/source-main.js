@@ -87,7 +87,7 @@ function cameraCollision(target,desired){let best=desired.clone(),ray=desired.cl
 function zoneName(x,z){if(Math.hypot(x-bx,z-bz)<10)return'OVERLOOK BEACON';if(Math.hypot(x-ruinX,z-ruinZ)<16)return'RUINED OBSERVATORY';if(onBridge(x,z))return'OLD RIVER BRIDGE';if(Math.abs(x-streamCenter(z))<9)return'RIVER VALLEY';if(z<2)return'HIGHLAND TRAIL';return'FOREST APPROACH';}
 
 const clock=new THREE.Clock();let frames=0,acc=0,qualityAcc=0,qualityFrames=0;
-function animate(){requestAnimationFrame(animate);const dt=Math.min(.033,clock.getDelta()),time=clock.elapsedTime;updateEnvironment();const fwd=new THREE.Vector3(-Math.sin(yaw),0,-Math.cos(yaw)),right=new THREE.Vector3(Math.cos(yaw),0,-Math.sin(yaw)),input=new THREE.Vector3();if(keys.KeyW)input.add(fwd);if(keys.KeyS)input.sub(fwd);if(keys.KeyD)input.add(right);if(keys.KeyA)input.sub(right);if(touchMove.lengthSq()>.002){input.addScaledVector(fwd,touchMove.y);input.addScaledVector(right,touchMove.x);}const sprinting=(keys.ShiftLeft||touchSprint)&&input.lengthSq()>.01;const wet=inWater(playerRoot.position.x,playerRoot.position.z)&&groundHeight(playerRoot.position.x,playerRoot.position.z)<-1.1;const maxSpeed=(sprinting?8.7:4.8)*(wet?.58:1);if(input.lengthSq()>0){input.normalize();const tv=input.multiplyScalar(maxSpeed),blend=1-Math.exp(-(grounded?12:5)*dt);velocity.x=THREE.MathUtils.lerp(velocity.x,tv.x,blend);velocity.z=THREE.MathUtils.lerp(velocity.z,tv.z,blend);}else{const d=Math.exp(-(grounded?10:2.5)*dt);velocity.x*=d;velocity.z*=d;}if(jumpQueued&&grounded){verticalVel=7.7;grounded=false;}jumpQueued=false;verticalVel-=18.6*dt;playerRoot.position.x+=velocity.x*dt;playerRoot.position.z+=velocity.z*dt;playerRoot.position.x=THREE.MathUtils.clamp(playerRoot.position.x,-112,112);playerRoot.position.z=THREE.MathUtils.clamp(playerRoot.position.z,-112,112);resolveObstacles(playerRoot.position);const gh=groundHeight(playerRoot.position.x,playerRoot.position.z);playerRoot.position.y+=verticalVel*dt;if(playerRoot.position.y<=gh){playerRoot.position.y=gh;if(verticalVel<0)verticalVel=0;grounded=true;}else grounded=false;const speed=Math.hypot(velocity.x,velocity.z);if(speed>.18){const targetYaw=Math.atan2(velocity.x,velocity.z);let d=((targetYaw-playerRoot.rotation.y+Math.PI)%(Math.PI*2))-Math.PI;playerRoot.rotation.y+=d*(1-Math.exp(-14*dt));}if(characterMode==='GLB'&&grounded){if(speed<.22)setAction(actions.Idle?'Idle':Object.keys(actions)[0]);else if(speed<6)setAction(actions.Walk?'Walk':(actions.Run?'Run':Object.keys(actions)[0]));else setAction(actions.Run?'Run':Object.keys(actions)[0]);}if(mixer)mixer.update(dt*(sprinting?1.08:1));const target=playerRoot.position.clone().add(new THREE.Vector3(0,1.42,0));let desired=target.clone().add(new THREE.Vector3(Math.sin(yaw)*Math.cos(pitch)*camDist,Math.sin(pitch)*camDist+1.0,Math.cos(yaw)*Math.cos(pitch)*camDist));desired=cameraCollision(target,desired);const ck=1-Math.pow(1-(+dampS.value),dt*60);camera.position.lerp(desired,ck);camera.lookAt(target);camera.fov=THREE.MathUtils.lerp(camera.fov,sprinting?60:53,1-Math.exp(-5*dt));camera.updateProjectionMatrix();sun.target.position.copy(playerRoot.position);sun.target.updateMatrixWorld();waterU.time.value=time;const w=+windS.value;for(const mat of [leafA,leafB,leafC,bushMat,grassMat,flowerMat])if(mat.userData.shader){mat.userData.shader.uniforms.uTime.value=time;mat.userData.shader.uniforms.uWind.value=w;}orb.position.y=7.8+Math.sin(time*1.5)*.10;orbLight.intensity=5.0+Math.sin(time*2.1)*.6;zoneEl.textContent=zoneName(playerRoot.position.x,playerRoot.position.z);renderer.render(scene,camera);frames++;acc+=dt;qualityFrames++;qualityAcc+=dt;if(acc>.55){const fps=Math.round(frames/acc);fpsEl.textContent=fps;frames=0;acc=0;callsEl.textContent=renderer.info.render.calls;trisEl.textContent=renderer.info.render.triangles.toLocaleString();}if(COARSE&&qualityAcc>1.8){const avg=qualityFrames/qualityAcc;let next=renderScale;if(avg<53.5)next=Math.max(minScale,renderScale-.08);else if(avg>58.7)next=Math.min(maxScale,renderScale+.04);if(Math.abs(next-renderScale)>.001){renderScale=next;renderer.setPixelRatio(renderScale);renderer.setSize(innerWidth,innerHeight,false);scaleEl.textContent=renderScale.toFixed(2)+'×';}qualityAcc=0;qualityFrames=0;}}
+function animate(){requestAnimationFrame(animate);const dt=Math.min(.033,clock.getDelta()),time=clock.elapsedTime;updateEnvironment();const fwd=new THREE.Vector3(-Math.sin(yaw),0,-Math.cos(yaw)),right=new THREE.Vector3(Math.cos(yaw),0,-Math.sin(yaw)),input=new THREE.Vector3();if(keys.KeyW)input.add(fwd);if(keys.KeyS)input.sub(fwd);if(keys.KeyD)input.add(right);if(keys.KeyA)input.sub(right);if(touchMove.lengthSq()>.002){input.addScaledVector(fwd,touchMove.y);input.addScaledVector(right,touchMove.x);}const sprinting=(keys.ShiftLeft||touchSprint)&&input.lengthSq()>.01;const wet=inWater(playerRoot.position.x,playerRoot.position.z)&&groundHeight(playerRoot.position.x,playerRoot.position.z)<-1.1;const maxSpeed=(sprinting?8.7:4.8)*(wet?.58:1);if(input.lengthSq()>0){input.normalize();const tv=input.multiplyScalar(maxSpeed),blend=1-Math.exp(-(grounded?12:5)*dt);velocity.x=THREE.MathUtils.lerp(velocity.x,tv.x,blend);velocity.z=THREE.MathUtils.lerp(velocity.z,tv.z,blend);}else{const d=Math.exp(-(grounded?10:2.5)*dt);velocity.x*=d;velocity.z*=d;}if(jumpQueued&&grounded){verticalVel=7.7;grounded=false;}jumpQueued=false;verticalVel-=18.6*dt;playerRoot.position.x+=velocity.x*dt;playerRoot.position.z+=velocity.z*dt;playerRoot.position.x=THREE.MathUtils.clamp(playerRoot.position.x,-112,112);playerRoot.position.z=THREE.MathUtils.clamp(playerRoot.position.z,-112,112);resolveObstacles(playerRoot.position);const gh=groundHeight(playerRoot.position.x,playerRoot.position.z);playerRoot.position.y+=verticalVel*dt;if(playerRoot.position.y<=gh){playerRoot.position.y=gh;if(verticalVel<0)verticalVel=0;grounded=true;}else grounded=false;const speed=Math.hypot(velocity.x,velocity.z);if(speed>.18){const targetYaw=Math.atan2(velocity.x,velocity.z);let d=((targetYaw-playerRoot.rotation.y+Math.PI)%(Math.PI*2))-Math.PI;playerRoot.rotation.y+=d*(1-Math.exp(-14*dt));}if(characterMode==='GLB'&&grounded){if(speed<.22)setAction(actions.Idle?'Idle':Object.keys(actions)[0]);else if(speed<6)setAction(actions.Walk?'Walk':(actions.Run?'Run':Object.keys(actions)[0]));else setAction(actions.Run?'Run':Object.keys(actions)[0]);}if(mixer)mixer.update(dt*(sprinting?1.08:1));const target=playerRoot.position.clone().add(new THREE.Vector3(0,1.42,0));let desired=target.clone().add(new THREE.Vector3(Math.sin(yaw)*Math.cos(pitch)*camDist,Math.sin(pitch)*camDist+1.0,Math.cos(yaw)*Math.cos(pitch)*camDist));desired=cameraCollision(target,desired);const ck=1-Math.pow(1-(+dampS.value),dt*60);camera.position.lerp(desired,ck);camera.lookAt(target);camera.fov=THREE.MathUtils.lerp(camera.fov,sprinting?60:53,1-Math.exp(-5*dt));camera.updateProjectionMatrix();sun.target.position.copy(playerRoot.position);sun.target.updateMatrixWorld();waterU.time.value=time;const w=+windS.value;for(const mat of [leafA,leafB,leafC,bushMat,grassMat,flowerMat])if(mat.userData.shader){mat.userData.shader.uniforms.uTime.value=time;mat.userData.shader.uniforms.uWind.value=w;}orb.position.y=7.8+Math.sin(time*1.5)*.10;orbLight.intensity=5.0+Math.sin(time*2.1)*.6;zoneEl.textContent=zoneName(playerRoot.position.x,playerRoot.position.z);if(globalThis.__raaiFrameHooks){for(const hook of globalThis.__raaiFrameHooks)hook(performance.now(),dt);}renderer.render(scene,camera);frames++;acc+=dt;qualityFrames++;qualityAcc+=dt;if(acc>.55){const fps=Math.round(frames/acc);fpsEl.textContent=fps;frames=0;acc=0;callsEl.textContent=renderer.info.render.calls;trisEl.textContent=renderer.info.render.triangles.toLocaleString();}if(COARSE&&qualityAcc>1.8){const avg=qualityFrames/qualityAcc;let next=renderScale;if(avg<53.5)next=Math.max(minScale,renderScale-.08);else if(avg>58.7)next=Math.min(maxScale,renderScale+.04);if(Math.abs(next-renderScale)>.001){renderScale=next;renderer.setPixelRatio(renderScale);renderer.setSize(innerWidth,innerHeight,false);scaleEl.textContent=renderScale.toFixed(2)+'×';}qualityAcc=0;qualityFrames=0;}}
 animate();
 addEventListener('resize',()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setPixelRatio(renderScale);renderer.setSize(innerWidth,innerHeight);});
 
@@ -1293,200 +1293,223 @@ globalThis.__livingWorld06G={
 };
 
 
-// ---- Test 06H: Living World — streamed/offscreen persistence ----
-const LIVING_WORLD_06H_MARKER='06H_STREAMED_PERSISTENCE';
-const STREAM_06H={
-  loadRadiusM:18,
-  unloadRadiusM:22,
-  alertDurationMs:9000,
-  directPlayerBehaviorTrigger:false
-};
+// ---- Test 06H: Living World — offscreen / streamed persistence ----
+import {StreamCell,StreamStateStore,STREAM_CELL_SCHEMA_VERSION,DEFAULT_STREAM_CONFIG} from './stream-cell-core.js';
 
+const LIVING_WORLD_06H_MARKER='06H_STREAMED_PERSISTENCE';
 const memoryApi06H=globalThis.__livingWorld06C;
 if(!memoryApi06H||memoryApi06H.marker!=='06C_LOCAL_DISTURBANCE_MEMORY')throw new Error('06H requires frozen accepted 06C memory API');
+
+const STREAM_06H={
+  ...DEFAULT_STREAM_CONFIG,
+  cellId:'06H_CELL_A',
+  directPlayerBehaviorTrigger:false
+};
 
 const spawnYaw06H=Number.isFinite(playerRoot.rotation.y)?playerRoot.rotation.y:0;
 const spawnX06H=playerRoot.position.x,spawnZ06H=playerRoot.position.z;
 const fwdX06H=Math.sin(spawnYaw06H),fwdZ06H=Math.cos(spawnYaw06H);
 const rightX06H=Math.cos(spawnYaw06H),rightZ06H=-Math.sin(spawnYaw06H);
 
-// Streamed proof actor sits beside the remembered area.
-const streamX06H=spawnX06H+fwdX06H*15.7+rightX06H*8.4;
-const streamZ06H=spawnZ06H+fwdZ06H*15.7+rightZ06H*8.4;
+const cellCenterX06H=spawnX06H+fwdX06H*10.5+rightX06H*6.0;
+const cellCenterZ06H=spawnZ06H+fwdZ06H*10.5+rightZ06H*6.0;
+const actorStart06H={
+  x:cellCenterX06H-rightX06H*2.2-fwdX06H*.4,
+  z:cellCenterZ06H-rightZ06H*2.2-fwdZ06H*.4
+};
+const actorDestination06H={
+  x:cellCenterX06H+rightX06H*3.6+fwdX06H*.7,
+  z:cellCenterZ06H+rightZ06H*3.6+fwdZ06H*.7
+};
 
-let streamLoaded06H=false;
-let streamRoot06H=null;
-let streamMeshes06H=[];
-let streamState06H={phase:'CALM',alertEndsAtWallMs:0,lastHandledMemoryEvent:memoryApi06H.events,eventCount:0};
-let serialized06H=null;
-let streamLifecycle06H='BOOT';
-let unloadCount06H=0;
-let restoreCount06H=0;
-let duplicateCount06H=0;
-let offscreenExpired06H=false;
-let lastPlayerDistance06H=Infinity;
+const streamStore06H=new StreamStateStore();
+let streamDistance06H=Infinity;
+let lastRestoreTimerCaughtUp06H=false;
+let lastRestoreProgressPreserved06H=false;
+let lastResult06H='READY';
 
 const streamLifecycleEl06H=document.getElementById('worldStreamLifecycle');
-const streamStateEl06H=document.getElementById('worldStreamState');
-const streamRemainingEl06H=document.getElementById('worldStreamRemaining');
-const streamRestoreEl06H=document.getElementById('worldStreamRestore');
+const streamDistanceEl06H=document.getElementById('worldStreamDistance');
+const streamSnapshotEl06H=document.getElementById('worldStreamSnapshot');
+const streamOffscreenEl06H=document.getElementById('worldStreamOffscreen');
+const streamMemoryEl06H=document.getElementById('worldStreamMemory');
+const streamGoalEl06H=document.getElementById('worldStreamGoal');
+const streamProgressEl06H=document.getElementById('worldStreamProgress');
+const streamDuplicatesEl06H=document.getElementById('worldStreamDuplicates');
 const streamResultEl06H=document.getElementById('worldStreamResult');
 
-function setStreamLifecycle06H(value,color='#a8f0b5'){
-  streamLifecycle06H=value;
-  if(streamLifecycleEl06H){streamLifecycleEl06H.textContent=value;streamLifecycleEl06H.style.color=color;}
+function set06HText(el,value,color){
+  if(!el)return;
+  el.textContent=value;
+  if(color)el.style.color=color;
 }
-function setStreamResult06H(value,color='#a8f0b5'){
-  if(streamResultEl06H){streamResultEl06H.textContent=value;streamResultEl06H.style.color=color;}
+function memoryColor06H(state){
+  if(state==='DISTURBED')return 0xd98a38;
+  if(state==='SETTLING')return 0xc2ad62;
+  return 0x78925d;
 }
-function resolveSerialized06H(snapshot,wallNow){
-  const next={...snapshot};
-  if(next.phase==='ALERT'&&wallNow>=next.alertEndsAtWallMs){
-    next.phase='CALM';
-    offscreenExpired06H=true;
-  }
-  return next;
+function disposeMaterial06H(material){
+  if(Array.isArray(material)){for(const item of material)item.dispose();}
+  else if(material)material.dispose();
 }
-function actorColor06H(){
-  return streamState06H.phase==='ALERT'?0xd98a38:0x4f98b8;
-}
-function createStreamActor06H(){
-  if(streamRoot06H)return;
+function attachCellVisual06H(state){
   const root=new THREE.Group();
-  const bodyGeo=new THREE.CylinderGeometry(.42,.56,1.7,10);
-  const crownGeo=new THREE.TorusGeometry(.62,.075,8,24);
-  const orbGeo=new THREE.SphereGeometry(.24,10,8);
-  const bodyMat=new THREE.MeshStandardMaterial({color:0x7c7468,roughness:.9,metalness:0});
-  const glowMat=new THREE.MeshStandardMaterial({color:actorColor06H(),emissive:actorColor06H(),emissiveIntensity:.72,roughness:.38,metalness:.04});
-  const body=new THREE.Mesh(bodyGeo,bodyMat);
-  const crown=new THREE.Mesh(crownGeo,glowMat);
-  const orb=new THREE.Mesh(orbGeo,glowMat.clone());
-  body.position.y=.85;
-  crown.position.y=1.72;crown.rotation.x=Math.PI/2;
-  orb.position.y=2.08;
-  body.castShadow=true;crown.castShadow=true;orb.castShadow=true;
-  root.add(body,crown,orb);
-  root.position.set(streamX06H,groundHeight(streamX06H,streamZ06H)+.03,streamZ06H);
-  root.userData.glowMaterials=[glowMat,orb.material];
+  root.userData.streamCellId=STREAM_06H.cellId;
+
+  const reedGeo=new THREE.PlaneGeometry(.18,1.42,1,2);
+  reedGeo.translate(0,.71,0);
+  const reedMat=new THREE.MeshStandardMaterial({
+    color:memoryColor06H(state.memory.state),
+    roughness:.96,
+    metalness:0,
+    side:THREE.DoubleSide
+  });
+  const reeds=new THREE.InstancedMesh(reedGeo,reedMat,14);
+  reeds.castShadow=true;
+  reeds.receiveShadow=true;
+  reeds.frustumCulled=false;
+  const temp=new THREE.Object3D();
+  for(let i=0;i<14;i++){
+    const a=i*2.399963229728653;
+    const r=.55+(i%5)*.19;
+    const x=cellCenterX06H+Math.cos(a)*r;
+    const z=cellCenterZ06H+Math.sin(a)*r;
+    temp.position.set(x,groundHeight(x,z)+.03,z);
+    temp.rotation.set(0,a*.37,0);
+    temp.scale.set(.82,.78+(i%4)*.10,1);
+    temp.updateMatrix();
+    reeds.setMatrixAt(i,temp.matrix);
+  }
+  reeds.instanceMatrix.needsUpdate=true;
+
+  const actorGeo=new THREE.DodecahedronGeometry(.48,1);
+  const actorMat=new THREE.MeshStandardMaterial({color:0x3f8f88,roughness:.9,metalness:0});
+  const actor=new THREE.Mesh(actorGeo,actorMat);
+  actor.castShadow=true;
+
+  const foodGeo=new THREE.SphereGeometry(.20,10,8);
+  const foodMat=new THREE.MeshStandardMaterial({color:0xd8b35a,emissive:0x6c4d18,emissiveIntensity:.28,roughness:.72});
+  const food=new THREE.Mesh(foodGeo,foodMat);
+  food.castShadow=true;
+
+  root.add(reeds,actor,food);
   scene.add(root);
-  streamRoot06H=root;
-  streamMeshes06H=[body,crown,orb];
-  streamLoaded06H=true;
+
+  const handle={root,reeds,reedGeo,reedMat,actor,actorGeo,actorMat,food,foodGeo,foodMat};
+  updateCellVisual06H(handle,state,Date.now());
+  return handle;
 }
-function destroyStreamActor06H(){
-  if(!streamRoot06H)return;
-  scene.remove(streamRoot06H);
-  for(const mesh of streamMeshes06H){
-    if(mesh.geometry)mesh.geometry.dispose();
-    if(mesh.material){
-      if(Array.isArray(mesh.material))mesh.material.forEach(m=>m.dispose());
-      else mesh.material.dispose();
-    }
-  }
-  streamRoot06H.clear();
-  streamRoot06H=null;
-  streamMeshes06H=[];
-  streamLoaded06H=false;
+function updateCellVisual06H(handle,state,wallNow){
+  if(!handle)return;
+  const p=state.actor.position;
+  handle.actor.position.set(p.x,groundHeight(p.x,p.z)+.48,p.z);
+  const d=state.actor.destination;
+  handle.food.position.set(d.x,groundHeight(d.x,d.z)+.23,d.z);
+  const color=memoryColor06H(state.memory.state);
+  handle.reedMat.color.setHex(color);
+  const pulse=state.memory.state==='DISTURBED'?1+Math.sin(wallNow*.012)*.08:1;
+  handle.reeds.scale.setScalar(pulse);
 }
-function applyStreamVisual06H(now){
-  if(!streamRoot06H)return;
-  const c=actorColor06H();
-  for(const m of streamRoot06H.userData.glowMaterials||[]){
-    m.color.setHex(c);m.emissive.setHex(c);
-    m.emissiveIntensity=streamState06H.phase==='ALERT'?.82:.55;
-  }
-  const pulse=1+Math.sin(now*.006)*(streamState06H.phase==='ALERT'?.08:.025);
-  streamRoot06H.scale.setScalar(pulse);
-  streamRoot06H.rotation.y+=streamState06H.phase==='ALERT'?.008:.0025;
+function detachCellVisual06H(handle){
+  if(!handle)return;
+  scene.remove(handle.root);
+  handle.root.traverse(obj=>{
+    if(obj.geometry)obj.geometry.dispose();
+    if(obj.material)disposeMaterial06H(obj.material);
+  });
+  handle.root.clear();
 }
-function serializeAndUnload06H(){
-  serialized06H=JSON.parse(JSON.stringify(streamState06H));
-  unloadCount06H++;
-  destroyStreamActor06H();
-  setStreamLifecycle06H('UNLOADED','#ffd18a');
-  setStreamResult06H('STATE SERIALIZED · ACTOR DISPOSED','#ffe59a');
+
+const streamCell06H=new StreamCell({
+  id:STREAM_06H.cellId,
+  store:streamStore06H,
+  actorStart:actorStart06H,
+  actorDestination:actorDestination06H,
+  config:STREAM_06H,
+  initialEventId:memoryApi06H.events,
+  attachVisual:attachCellVisual06H,
+  detachVisual:detachCellVisual06H,
+  updateVisual:updateCellVisual06H
+});
+
+streamCell06H.load(Date.now());
+
+function updateStreamHud06H(wallNow){
+  const lifecycle=streamCell06H.isActive?'ACTIVE':'UNLOADED';
+  set06HText(streamLifecycleEl06H,lifecycle,lifecycle==='ACTIVE'?'#a8f0b5':'#ffd18a');
+  set06HText(streamDistanceEl06H,streamDistance06H.toFixed(1)+' m');
+  set06HText(streamSnapshotEl06H,streamCell06H.hasSnapshot?'SAVED':'NONE',streamCell06H.hasSnapshot?'#9fe0ff':'#d8ebe5');
+  set06HText(streamOffscreenEl06H,(streamCell06H.offscreenMs(wallNow)/1000).toFixed(1)+' s');
+  set06HText(streamMemoryEl06H,streamCell06H.state.memory.state,streamCell06H.state.memory.state==='CALM'?'#a8f0b5':'#ffd18a');
+  set06HText(streamGoalEl06H,streamCell06H.state.actor.goal);
+  set06HText(streamProgressEl06H,Math.round(streamCell06H.state.actor.progress*100)+'%');
+  set06HText(streamDuplicatesEl06H,String(streamCell06H.duplicateCount),streamCell06H.duplicateCount===0?'#a8f0b5':'#ff8f8f');
+  set06HText(streamResultEl06H,lastResult06H,lastResult06H.includes('✓')?'#a8f0b5':'#ffe59a');
 }
-function restoreFromSerialized06H(){
+
+function updateLivingWorld06H(now,dt){
   const wallNow=Date.now();
-  if(serialized06H){
-    streamState06H=resolveSerialized06H(serialized06H,wallNow);
-    serialized06H=null;
-  }
-  createStreamActor06H();
-  restoreCount06H++;
-  setStreamLifecycle06H('RESTORED','#9fe0ff');
-  if(offscreenExpired06H)setStreamResult06H('OFFSCREEN TIMER RESOLVED ✓','#a8f0b5');
-  else setStreamResult06H('STATE RESTORED ✓','#a8f0b5');
-}
-function handleMemoryEvent06H(){
-  const eventId=memoryApi06H.events;
-  if(eventId<=streamState06H.lastHandledMemoryEvent){
-    if(eventId<streamState06H.lastHandledMemoryEvent)duplicateCount06H++;
-    return;
-  }
-  streamState06H.lastHandledMemoryEvent=eventId;
-  streamState06H.eventCount++;
-  streamState06H.phase='ALERT';
-  streamState06H.alertEndsAtWallMs=Date.now()+STREAM_06H.alertDurationMs;
-  offscreenExpired06H=false;
-  setStreamResult06H('ALERT STATE ACTIVE · LEAVE AREA','#ffd18a');
-}
-function updateStreamHud06H(){
-  if(streamStateEl06H){
-    streamStateEl06H.textContent=streamState06H.phase;
-    streamStateEl06H.style.color=streamState06H.phase==='ALERT'?'#ffd18a':'#a8f0b5';
-  }
-  if(streamRemainingEl06H){
-    let remaining=0;
-    const source=serialized06H||streamState06H;
-    if(source.phase==='ALERT')remaining=Math.max(0,source.alertEndsAtWallMs-Date.now());
-    streamRemainingEl06H.textContent=(remaining/1000).toFixed(1)+' s';
-  }
-  if(streamRestoreEl06H)streamRestoreEl06H.textContent=`${unloadCount06H}/${restoreCount06H}`;
-}
-function updateLivingWorld06H(now){
-  handleMemoryEvent06H();
+  streamDistance06H=Math.hypot(playerRoot.position.x-cellCenterX06H,playerRoot.position.z-cellCenterZ06H);
 
-  const dx=playerRoot.position.x-streamX06H,dz=playerRoot.position.z-streamZ06H;
-  lastPlayerDistance06H=Math.hypot(dx,dz);
-
-  if(streamLoaded06H){
-    // State advances only while loaded. When unloaded, decay is resolved from persisted wall time on restore.
-    if(streamState06H.phase==='ALERT'&&Date.now()>=streamState06H.alertEndsAtWallMs){
-      streamState06H.phase='CALM';
+  if(streamCell06H.isActive&&streamDistance06H>=STREAM_06H.unloadRadiusM){
+    streamCell06H.unload(wallNow);
+    lastResult06H='STATE SERIALIZED · SIMULATION STOPPED';
+  }else if(!streamCell06H.isActive&&streamDistance06H<=STREAM_06H.loadRadiusM){
+    const saved=streamStore06H.load(STREAM_06H.cellId);
+    const savedProgress=saved?.actor?.progress;
+    const savedMemoryState=saved?.memory?.state;
+    const savedExpiresAt=saved?.memory?.expiresAt||0;
+    const restore=streamCell06H.load(wallNow);
+    if(restore.rehydrated){
+      lastRestoreProgressPreserved06H=Math.abs(streamCell06H.state.actor.progress-savedProgress)<1e-9;
+      lastRestoreTimerCaughtUp06H=savedMemoryState!=='CALM'&&wallNow>=savedExpiresAt&&streamCell06H.state.memory.state==='CALM';
+      if(lastRestoreTimerCaughtUp06H&&lastRestoreProgressPreserved06H&&streamCell06H.duplicateCount===0){
+        lastResult06H='STATE RESTORED ✓ · TIMER CAUGHT UP ✓ · NO DUPLICATES ✓';
+      }else if(lastRestoreProgressPreserved06H&&streamCell06H.duplicateCount===0){
+        lastResult06H='STATE RESTORED ✓ · NO DUPLICATES ✓';
+      }else{
+        lastResult06H='RESTORE CHECK FAILED';
+      }
     }
-    applyStreamVisual06H(now);
-    if(lastPlayerDistance06H>STREAM_06H.unloadRadiusM)serializeAndUnload06H();
-  }else{
-    if(lastPlayerDistance06H<STREAM_06H.loadRadiusM)restoreFromSerialized06H();
   }
 
-  updateStreamHud06H();
-}
-function livingWorld06HLoop(now){
-  requestAnimationFrame(livingWorld06HLoop);
-  updateLivingWorld06H(now);
+  if(streamCell06H.isActive){
+    streamCell06H.update({
+      dtMs:Math.max(0,dt*1000),
+      wallNow,
+      eventId:memoryApi06H.events
+    });
+    if(streamCell06H.state.memory.state==='DISTURBED'&&streamCell06H.lastTransition==='MEMORY_DISTURBED'){
+      lastResult06H='MEMORY DISTURBED · LEAVE CELL';
+    }
+  }
+
+  updateStreamHud06H(wallNow);
 }
 
-// Initial load is explicit, then distance hysteresis controls subsequent lifecycle.
-createStreamActor06H();
-setStreamLifecycle06H('LOADED','#a8f0b5');
-requestAnimationFrame(livingWorld06HLoop);
+const frameHooks06H=globalThis.__raaiFrameHooks||(globalThis.__raaiFrameHooks=[]);
+const frameHook06H=(now,dt)=>updateLivingWorld06H(now,dt);
+frameHook06H.streamCellId=STREAM_06H.cellId;
+if(!frameHooks06H.some(h=>h.streamCellId===STREAM_06H.cellId))frameHooks06H.push(frameHook06H);
 
 globalThis.__livingWorld06H={
   marker:LIVING_WORLD_06H_MARKER,
-  get loaded(){return streamLoaded06H;},
-  get lifecycle(){return streamLifecycle06H;},
-  get state(){return streamState06H.phase;},
-  get serialized(){return serialized06H?JSON.parse(JSON.stringify(serialized06H)):null;},
-  get playerDistanceM(){return lastPlayerDistance06H;},
-  get unloadCount(){return unloadCount06H;},
-  get restoreCount(){return restoreCount06H;},
-  get duplicateCount(){return duplicateCount06H;},
-  get offscreenExpired(){return offscreenExpired06H;},
+  schemaVersion:STREAM_CELL_SCHEMA_VERSION,
+  get lifecycle(){return streamCell06H.lifecycle;},
+  get loaded(){return streamCell06H.isActive;},
+  get state(){return streamCell06H.state.memory.state;},
+  get snapshot(){return streamStore06H.load(STREAM_06H.cellId);},
+  get playerDistanceM(){return streamDistance06H;},
+  get actorGoal(){return streamCell06H.state.actor.goal;},
+  get actorProgress(){return streamCell06H.state.actor.progress;},
+  get unloadCount(){return streamCell06H.unloadCount;},
+  get restoreCount(){return streamCell06H.restoreCount;},
+  get duplicateCount(){return streamCell06H.duplicateCount;},
+  get lastOffscreenMs(){return streamCell06H.lastOffscreenMs;},
+  get timerCaughtUp(){return lastRestoreTimerCaughtUp06H;},
+  get progressPreserved(){return lastRestoreProgressPreserved06H;},
   loadRadiusM:STREAM_06H.loadRadiusM,
   unloadRadiusM:STREAM_06H.unloadRadiusM,
-  alertDurationMs:STREAM_06H.alertDurationMs,
   directPlayerBehaviorTrigger:false,
-  persistence:'serialized state + absolute wall-clock expiry'
+  activeSceneRootCount:()=>scene.children.filter(o=>o.userData?.streamCellId===STREAM_06H.cellId).length
 };
