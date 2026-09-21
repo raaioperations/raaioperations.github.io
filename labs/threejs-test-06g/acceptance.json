@@ -1,0 +1,32 @@
+{
+  "test": "06G",
+  "roadmap": "Test06 — Living World",
+  "status": "ACCEPTED",
+  "human_visual_acceptance": true,
+  "accepted_at": "2026-09-21T02:00:27Z",
+  "decision": "ACCEPTED",
+  "frozen": true,
+  "build_id": "20260921013901",
+  "accepted_scope": {
+    "teal_forager_and_food_target_visibly_readable": true,
+    "food_goal_is_visibly_active_before_interruption": true,
+    "hazard_visibly_interrupts_food_pursuit": true,
+    "food_goal_is_shown_suspended_not_deleted": true,
+    "actor_waits_until_world_memory_clears": true,
+    "same_food_goal_resumes_after_clear": true,
+    "actor_reaches_original_food_target": true,
+    "sequence_reads_as_interrupt_recover_resume_not_random_retasking": true
+  },
+  "frozen_baseline": {
+    "original_goal": "FOOD",
+    "interruption": "HAZARD",
+    "original_goal_is_suspended_not_deleted": true,
+    "evade_travel_ms": 1450,
+    "recovery_requires_memory_calm": true,
+    "clear_hold_ms": 450,
+    "resumed_goal": "FOOD",
+    "resume_travel_ms": 3000,
+    "terminal_goal": "FOOD REACHED"
+  },
+  "user_note": "Accepted"
+}
