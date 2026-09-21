@@ -1,0 +1,11 @@
+{
+  "name": "raai-threejs-test-08a",
+  "private": true,
+  "version": "0.8.0",
+  "description": "Test08A multi-region production world for the reusable Three.js living-world stack",
+  "type": "module",
+  "engines": {"node": ">=22"},
+  "scripts": {"build": "node build.mjs"},
+  "dependencies": {"three": "0.186.0"},
+  "devDependencies": {"esbuild": "0.25.9"}
+}
