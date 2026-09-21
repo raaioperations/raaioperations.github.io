@@ -1,0 +1,53 @@
+{
+  "test": "06H",
+  "roadmap": "Test06 — Living World",
+  "status": "ACCEPTED",
+  "human_visual_acceptance": true,
+  "accepted_at": "2026-09-21T03:52:03Z",
+  "decision": "ACCEPTED",
+  "frozen": true,
+  "build_id": "20260921032452",
+  "accepted_scope": {
+    "stream_cell_visibly_unloads_beyond_unload_radius": true,
+    "canonical_snapshot_is_saved_before_unload": true,
+    "unloaded_cell_visibly_stops_simulating": true,
+    "offscreen_elapsed_time_accumulates": true,
+    "rehydrate_restores_from_saved_snapshot": true,
+    "expired_memory_resolves_to_calm_after_offscreen_time": true,
+    "actor_food_goal_survives_streaming": true,
+    "actor_progress_survives_streaming": true,
+    "duplicate_count_remains_zero": true,
+    "repeated_streaming_cycle_remains_stable": true,
+    "final_timer_catchup_visible": true
+  },
+  "frozen_baseline": {
+    "schema_version": 1,
+    "cell_id": "06H_CELL_A",
+    "load_radius_m": 14,
+    "unload_radius_m": 22,
+    "hysteresis_m": 8,
+    "memory_states": [
+      "DISTURBED",
+      "SETTLING",
+      "CALM"
+    ],
+    "disturbed_ms": 2300,
+    "settling_ms": 2800,
+    "actor_goal": "FOOD",
+    "actor_progress_cap": 0.34,
+    "persistence_store": "in-memory StreamStateStore",
+    "absolute_wall_clock_deadlines": true,
+    "dormant_actor_simulation": "stopped",
+    "expected_duplicate_count": 0,
+    "automated_cycle_proof_count": 3,
+    "added_request_animation_frame_calls": 0
+  },
+  "frozen_source_blobs": {
+    "stream_cell_core": "af77396834311e0e5b328c7c4438317202613466",
+    "streamed_persistence_fragment": "96938945da47082958bf65d1dbd49929f9b40a01",
+    "build_script": "b8ad76a29f635dbebb51e2116870402d742c102f"
+  },
+  "user_note": "Accepted",
+  "next_milestone": "06I — Simulation LOD + Sleep/Wake",
+  "next_milestone_authorized": false
+}
