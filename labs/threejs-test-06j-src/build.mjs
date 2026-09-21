@@ -102,6 +102,18 @@ for(let i=0;i<SCALE_ACTOR_COUNT_06J;i++){
 }
 
 let proofNow=proofNowStart;
+// Settle each controller into its intended ring tier without advancing simulation time.
+for(let settle=0;settle<3;settle++){
+  for(const actor of proofActors){
+    actor.controller.step({
+      distanceM:SCALE_RING_RADII_06J[actor.ring],
+      dtMs:0,
+      wallNow:proofNow
+    });
+  }
+}
+proofTicksByRing=[0,0,0,0];
+
 for(let frame=0;frame<100;frame++){
   proofNow+=10;
   for(const actor of proofActors){
