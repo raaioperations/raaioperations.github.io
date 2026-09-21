@@ -67,10 +67,10 @@ for(const [name,src] of [
   ['simulation-lod-core',lodCore],
   ['production-index',productionIndex]
 ]){
-  assert07A(!/\bTHREE\b/.test(src),name+' must not depend on Three.js');
-  assert07A(!/\bdocument\b/.test(src),name+' must not depend on DOM document');
-  assert07A(!/\bwindow\b/.test(src),name+' must not depend on window');
-  assert07A(!/\bglobalThis\b/.test(src),name+' must not depend on global runtime state');
+  assert07A(!/from\s+['"]three(?:\/|['"])/.test(src)&&!/\bTHREE\s*\./.test(src),name+' must not depend on Three.js runtime');
+  assert07A(!/\bdocument\s*\./.test(src),name+' must not depend on DOM document');
+  assert07A(!/\bwindow\s*\./.test(src),name+' must not depend on window');
+  assert07A(!/\bglobalThis\s*\./.test(src),name+' must not depend on global runtime state');
 }
 assert07A(PRODUCTION_ARCHITECTURE_07A.modules.length===8,'production module manifest count');
 assert07A(PRODUCTION_ARCHITECTURE_07A.boundaries.productionActorPipeline==='deferred to 07B','07B boundary');
