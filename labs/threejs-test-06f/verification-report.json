@@ -1,0 +1,28 @@
+{
+  "test": "06F",
+  "status": "PASS",
+  "build_id": "20260921012117",
+  "delegated_nonvisual_checks": {
+    "accepted_06e_frozen_required": true,
+    "accepted_test04_blob_verified": true,
+    "accepted_06a_fragment_reused_unchanged": true,
+    "accepted_06b_r1_fragment_reused_unchanged": true,
+    "accepted_06c_fragment_reused_unchanged": true,
+    "accepted_06d_fragment_reused_unchanged": true,
+    "accepted_06e_fragment_reused_unchanged": true,
+    "arbitration_actor_direct_player_trigger": false,
+    "hazard_priority": 100,
+    "food_priority": 40,
+    "hazard_valid_first": true,
+    "food_valid_later_by_ms": 120,
+    "decision_wait_ms": 180,
+    "newest_stimulus": "FOOD",
+    "expected_winner": "HAZARD",
+    "winner_selected_by_priority_not_recency": true,
+    "goal_resume_intentionally_deferred_to_06g": true,
+    "added_draw_call_budget": 3,
+    "combat_not_modified": true,
+    "source_level": true
+  },
+  "human_visual_review": "REQUIRED"
+}

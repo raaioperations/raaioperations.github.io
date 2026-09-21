@@ -1,0 +1,69 @@
+{
+  "build_id": "20260921012117",
+  "test": "06F",
+  "roadmap": "Test06 — Living World",
+  "purpose": "prove an autonomous actor resolves simultaneous valid motivations by deterministic priority rather than whichever stimulus became valid most recently",
+  "prerequisite": {
+    "test06e": "ACCEPTED / FROZEN"
+  },
+  "inherits": "Frozen accepted 06A + 06B-R1 + 06C + 06D + 06E unchanged; accepted Test04 environment",
+  "base_blob": "8ec3761c2cf4a507a072d79307220c0b315a8261",
+  "frozen_source_blobs": {
+    "test06a": "e79d37ccb063aeb3cd1852ecabeefdea25089a3f",
+    "test06b_r1": "0a7725c5f53c0f6ed582456a6baceaa886af2ade",
+    "test06c": "4016f6780987bc33dc3bc353b9d0ec507bde7215",
+    "test06d": "c5b73ef81dd2752c1d357c0178f0c33b1ce415ab",
+    "test06e": "cf0a28460679adc2f2cd05fa9458e376d901400c"
+  },
+  "three": "0.186.0",
+  "pipeline": "source-level frozen 06A–06E + isolated arbitration fragment + esbuild local bundle",
+  "runtime_external_dependencies": 0,
+  "service_worker_cache": false,
+  "target": "safari16.4+",
+  "mobile_fps_target": 60,
+  "new_actor": {
+    "type": "amber stylized hare/forager",
+    "geometry_draw_call_budget_added": 2,
+    "direct_player_trigger": false,
+    "arrival_delay_ms": 1800
+  },
+  "goal_target": {
+    "type": "visible food patch",
+    "draw_call_budget_added": 1
+  },
+  "arbitration": {
+    "hazard_priority": 100,
+    "food_priority": 40,
+    "hazard_valid_first": true,
+    "food_valid_later_by_ms": 120,
+    "arbitration_after_hazard_ms": 180,
+    "newest_stimulus": "FOOD",
+    "expected_winner": "HAZARD",
+    "decision_rule": "highest priority, deterministic id tie-break; recency does not control winner"
+  },
+  "result_motion": {
+    "winning_response": "escape away from remembered location and food target",
+    "escape_offset_m": 3.2,
+    "escape_travel_ms": 2550,
+    "original_food_goal_not_resumed_in_06f": true
+  },
+  "mechanics_changed": false,
+  "combat_changed": false,
+  "accepted_06a_changed": false,
+  "accepted_06b_changed": false,
+  "accepted_06c_changed": false,
+  "accepted_06d_changed": false,
+  "accepted_06e_changed": false,
+  "acceptance_checklist": {
+    "amber_forager_and_food_target_visibly_readable": "HUMAN REVIEW",
+    "frozen_living_world_chain_remains_intact": "HUMAN REVIEW",
+    "actor_visibly_has_food_goal_across_memory_area": "HUMAN REVIEW",
+    "hud_shows_food_as_newer_valid_stimulus": "HUMAN REVIEW",
+    "higher_priority_hazard_wins_despite_newer_food": "HUMAN REVIEW",
+    "actor_motion_visibly_matches_hazard_winner_not_food_goal": "HUMAN REVIEW",
+    "decision_reads_as_priority_arbitration_not_last_event": "HUMAN REVIEW"
+  },
+  "human_visual_review": "REQUIRED",
+  "app_js_bytes": 685323,
+  "soldier_glb_bytes": 2160468
+}
