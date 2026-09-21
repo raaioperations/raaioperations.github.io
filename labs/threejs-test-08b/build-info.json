@@ -1,0 +1,97 @@
+{
+  "build_id": "20260921235022",
+  "test": "08B",
+  "roadmap": "Test08 — World Expansion",
+  "milestone": "Predictive Region Handoff",
+  "purpose": "prepare future region visual actor instances off-scene before activation so real ProductionRegion handoff consumes prepared instances without changing simulation authority, actor behavior, snapshots, or asset identity",
+  "prerequisite": {
+    "test08a": "ACCEPTED / FROZEN"
+  },
+  "inherits": "Frozen accepted 08A source and all 07A–08A production modules unchanged",
+  "frozen_artifact_blobs": {
+    "test08a_source_main": "4f4d0607cc8f5abf15ec62bedf3958f5c71c353a",
+    "test08a_index": "7314ca1f274f79a3f17bcc9f6eb4368bbea6fa92",
+    "living_world_kernel": "8ff673728f18546168e339d888889bfbbc6b8828",
+    "stream_cell_core": "af77396834311e0e5b328c7c4438317202613466",
+    "simulation_lod_core": "2458e99eec9988067a9c3a62bd1c6b88ea1ab4e8",
+    "production_index": "836bf853a996dc7fbdb968aa9b12e09e32594dac",
+    "actor_pipeline_core": "37fa1ef67038f9f14e289814eb2d07b07259b74f",
+    "three_actor_adapter": "c31460159e3d2a581cb113229b8bb2eebd70cce1",
+    "actor_index": "4c20fecc38af942041b733eefdaff5032bbf4451",
+    "production_region_core": "424632248ab868c931174b30821cb45ca9f2fde0",
+    "production_region_index": "4ae232115c3d90e5185ac2889a02f0a2dd856d5f",
+    "production_vertical_slice_core": "94140d67efc32d1260bd1576251787a7fbb3df24",
+    "production_vertical_slice_index": "e923fc52535885142419d2d423750f3e4054c6bf",
+    "production_world_manager": "a7a2a38ce2efd495aa0d6d01ed11b5c5dca825e5",
+    "production_world_index": "8c018c63edc545c760aa083dfb35876ac661bb55",
+    "multi_region_world_fragment": "f0f51e7e1a51f0ea85c7bc94a6c28e965739b2b5"
+  },
+  "predictive_handoff": {
+    "route": [
+      "A",
+      "B",
+      "A"
+    ],
+    "prefetch_radius_m": 58,
+    "activation_radius_m": 24,
+    "unload_radius_m": 38,
+    "prepared_instances_per_target_region": 2,
+    "simulation_created_during_prefetch": false,
+    "shared_asset_cache": "frozen 07B ThreeActorAssetCache",
+    "expected_asset_loads": 1,
+    "initial_a_bind_path": "fallback allowed",
+    "b_bind_path": "prefetched required",
+    "a_return_bind_path": "prefetched required",
+    "world_reconciliation_hz": 10,
+    "inherited_08a_diagnostic_hook": "quiesced"
+  },
+  "delegated_predictive_handoff_proof": {
+    "route": [
+      "A",
+      "B",
+      "A"
+    ],
+    "prefetch_radius_m": 58,
+    "initial_fallback_instances": 2,
+    "b_prefetched_instances": 2,
+    "a_return_prefetched_instances": 2,
+    "prepared_instances_consumed": 4,
+    "fallback_instances_total": 2,
+    "shared_asset_load_count": 1,
+    "a_return_ids_stable": true,
+    "a_return_progress_preserved": true,
+    "duplicate_binding_count": 0,
+    "duplicate_region_count": 0,
+    "prefetch_creates_simulation_records": false
+  },
+  "runtime_external_dependencies": 0,
+  "target": "safari16.4+",
+  "mobile_fps_target": 60,
+  "frame_integration": {
+    "inherited_request_animation_frame_calls": 15,
+    "final_request_animation_frame_calls": 15,
+    "added_request_animation_frame_calls": 0
+  },
+  "mechanics_changed": false,
+  "combat_changed": false,
+  "new_ai_behavior": false,
+  "new_assets": false,
+  "disk_persistence": false,
+  "multiplayer": false,
+  "acceptance_checklist": {
+    "inherited_06j_regression_pass_before_route": "HUMAN REVIEW",
+    "enter_region_a": "HUMAN REVIEW",
+    "b_prefetch_visible_before_b_activation": "HUMAN RUNTIME",
+    "b_uses_two_prepared_instances": "HUMAN RUNTIME",
+    "return_a_prefetched_before_reactivation": "HUMAN RUNTIME",
+    "prepared_consumed_total_at_least_four": "HUMAN RUNTIME",
+    "fallback_instances_remain_initial_a_only": "HUMAN RUNTIME",
+    "return_state_stable": "HUMAN RUNTIME",
+    "asset_load_count_remains_one": "HUMAN RUNTIME",
+    "zero_duplicate_bindings": "HUMAN RUNTIME",
+    "final_performance_pass": "HUMAN REVIEW"
+  },
+  "human_visual_review": "REQUIRED",
+  "app_js_bytes": 787753,
+  "soldier_glb_bytes": 2160468
+}

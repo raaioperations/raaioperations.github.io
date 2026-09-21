@@ -1,0 +1,46 @@
+{
+  "test": "08B",
+  "status": "PASS",
+  "build_id": "20260921235022",
+  "delegated_nonvisual_checks": {
+    "accepted_08a_frozen_required": true,
+    "accepted_08a_source_reused_unchanged": true,
+    "accepted_07a_through_08a_production_modules_reused_unchanged": true,
+    "predictive_core_three_independent": true,
+    "predictive_core_dom_independent": true,
+    "planner_selects_forward_unloaded_region": true,
+    "prefetch_prepares_two_instances_without_actor_records": true,
+    "b_load_consumes_prefetched_instances": true,
+    "a_return_consumes_prefetched_instances": true,
+    "fallback_remains_initial_a_only": true,
+    "return_actor_ids_stable": true,
+    "return_progress_preserved": true,
+    "shared_asset_load_contract_one": true,
+    "zero_duplicate_region_state": true,
+    "zero_duplicate_binding_state": true,
+    "added_request_animation_frame_calls": 0,
+    "runtime_external_dependencies": 0,
+    "safari_target": "16.4+"
+  },
+  "predictive_handoff_proof": {
+    "route": [
+      "A",
+      "B",
+      "A"
+    ],
+    "prefetch_radius_m": 58,
+    "initial_fallback_instances": 2,
+    "b_prefetched_instances": 2,
+    "a_return_prefetched_instances": 2,
+    "prepared_instances_consumed": 4,
+    "fallback_instances_total": 2,
+    "shared_asset_load_count": 1,
+    "a_return_ids_stable": true,
+    "a_return_progress_preserved": true,
+    "duplicate_binding_count": 0,
+    "duplicate_region_count": 0,
+    "prefetch_creates_simulation_records": false
+  },
+  "real_device_regression": "REQUIRED",
+  "human_visual_review": "REQUIRED"
+}
