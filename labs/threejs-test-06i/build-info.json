@@ -1,0 +1,119 @@
+{
+  "build_id": "20260921035916",
+  "test": "06I",
+  "roadmap": "Test06 — Living World",
+  "purpose": "prove distance-tiered simulation effort: NEAR full-rate, MID reduced-rate, FAR coarse-rate, and DORMANT serialized sleep with correct wake continuity",
+  "prerequisite": {
+    "test06h": "ACCEPTED / FROZEN"
+  },
+  "inherits": "Frozen accepted 06A–06H unchanged; accepted Test04 environment",
+  "base_blob": "8ec3761c2cf4a507a072d79307220c0b315a8261",
+  "frozen_source_blobs": {
+    "test06a": "e79d37ccb063aeb3cd1852ecabeefdea25089a3f",
+    "test06b_r1": "0a7725c5f53c0f6ed582456a6baceaa886af2ade",
+    "test06c": "4016f6780987bc33dc3bc353b9d0ec507bde7215",
+    "test06d": "c5b73ef81dd2752c1d357c0178f0c33b1ce415ab",
+    "test06e": "cf0a28460679adc2f2cd05fa9458e376d901400c",
+    "test06f": "458af887ded745b9252be59d12a41fe488c19b2f",
+    "test06g": "91b9da7b56010987ba30902cf5b9491c60bb519d",
+    "test06h_core": "af77396834311e0e5b328c7c4438317202613466",
+    "test06h_fragment": "96938945da47082958bf65d1dbd49929f9b40a01",
+    "test06h_build": "b8ad76a29f635dbebb51e2116870402d742c102f"
+  },
+  "three": "0.186.0",
+  "pipeline": "frozen 06A–06H + isolated SimulationLODController + shared frame hook + esbuild local bundle",
+  "runtime_external_dependencies": 0,
+  "service_worker_cache": false,
+  "target": "safari16.4+",
+  "mobile_fps_target": 60,
+  "simulation_lod": {
+    "tiers": [
+      "NEAR",
+      "MID",
+      "FAR",
+      "DORMANT"
+    ],
+    "near": {
+      "exit_m": 16,
+      "cadence": "frame-driven"
+    },
+    "mid": {
+      "enter_m": 12,
+      "exit_m": 30,
+      "cadence_hz": 10
+    },
+    "far": {
+      "enter_m": 26,
+      "sleep_m": 58,
+      "cadence_hz": 2
+    },
+    "dormant": {
+      "sleep_radius_m": 58,
+      "wake_radius_m": 50,
+      "normal_simulation": false,
+      "visual_root_present": false
+    },
+    "hysteresis": {
+      "near_enter_m": 12,
+      "near_exit_m": 16,
+      "mid_enter_m": 26,
+      "mid_exit_m": 30,
+      "wake_radius_m": 50,
+      "sleep_radius_m": 58
+    }
+  },
+  "sleep_wake": {
+    "store": "frozen 06H in-memory StreamStateStore",
+    "snapshot_schema_version": 1,
+    "actor_goal": "FOOD",
+    "actor_progress_preserved": true,
+    "dormant_actor_progress": "stopped",
+    "wake_restores_saved_state": true
+  },
+  "frame_integration": {
+    "inherited_request_animation_frame_calls": 15,
+    "final_request_animation_frame_calls": 15,
+    "added_request_animation_frame_calls": 0,
+    "mechanism": "shared base render-loop hook"
+  },
+  "mechanical_cycle_proof": {
+    "near_input_frames": 100,
+    "near_logic_ticks": 100,
+    "mid_input_frames": 100,
+    "mid_logic_ticks": 10,
+    "far_input_frames": 100,
+    "far_logic_ticks": 2,
+    "sleep_cycles": 3,
+    "wake_cycles": 3,
+    "dormant_logic_ticks_added": 0,
+    "final_active_roots": 1,
+    "duplicate_count": 0,
+    "actor_goal": "FOOD",
+    "actor_progress_preserved": true,
+    "last_offscreen_ms": 1200
+  },
+  "mechanics_changed": false,
+  "combat_changed": false,
+  "accepted_06a_changed": false,
+  "accepted_06b_changed": false,
+  "accepted_06c_changed": false,
+  "accepted_06d_changed": false,
+  "accepted_06e_changed": false,
+  "accepted_06f_changed": false,
+  "accepted_06g_changed": false,
+  "accepted_06h_changed": false,
+  "acceptance_checklist": {
+    "near_full_rate_visibly_active": "HUMAN REVIEW",
+    "mid_reduced_rate_reported": "HUMAN REVIEW",
+    "far_coarse_rate_reported": "HUMAN REVIEW",
+    "dormant_actor_disappears_and_snapshot_saves": "HUMAN REVIEW",
+    "dormant_logic_ticks_fall_to_zero": "HUMAN REVIEW",
+    "wake_reconstructs_actor": "HUMAN REVIEW",
+    "actor_food_goal_and_progress_survive_sleep": "HUMAN REVIEW",
+    "repeated_sleep_wake_does_not_duplicate_actor": "HUMAN REVIEW",
+    "full_lod_ladder_reads_logically": "HUMAN REVIEW"
+  },
+  "human_visual_review": "REQUIRED",
+  "app_js_bytes": 708144,
+  "soldier_glb_bytes": 2160468
+}
