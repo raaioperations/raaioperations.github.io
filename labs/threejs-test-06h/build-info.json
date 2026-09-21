@@ -1,0 +1,74 @@
+{
+  "build_id": "20260921031228",
+  "test": "06H",
+  "roadmap": "Test06 — Living World",
+  "purpose": "prove a local world actor can be serialized, logically deactivated/disposed offscreen, restored later, and resolve elapsed timers from absolute wall time without replaying events",
+  "prerequisite": {
+    "test06g": "ACCEPTED / FROZEN"
+  },
+  "inherits": "Frozen accepted 06A + 06B-R1 + 06C + 06D + 06E + 06F + 06G unchanged; accepted Test04 environment",
+  "base_blob": "8ec3761c2cf4a507a072d79307220c0b315a8261",
+  "frozen_source_blobs": {
+    "test06a": "e79d37ccb063aeb3cd1852ecabeefdea25089a3f",
+    "test06b_r1": "0a7725c5f53c0f6ed582456a6baceaa886af2ade",
+    "test06c": "4016f6780987bc33dc3bc353b9d0ec507bde7215",
+    "test06d": "c5b73ef81dd2752c1d357c0178f0c33b1ce415ab",
+    "test06e": "cf0a28460679adc2f2cd05fa9458e376d901400c",
+    "test06f": "458af887ded745b9252be59d12a41fe488c19b2f",
+    "test06g": "91b9da7b56010987ba30902cf5b9491c60bb519d"
+  },
+  "three": "0.186.0",
+  "pipeline": "source-level frozen 06A–06G + isolated streamed-persistence fragment + esbuild local bundle",
+  "runtime_external_dependencies": 0,
+  "service_worker_cache": false,
+  "target": "safari16.4+",
+  "mobile_fps_target": 60,
+  "stream_actor": {
+    "type": "streamable disturbance beacon",
+    "loaded_draw_call_budget_added": 3,
+    "unloaded_draw_call_budget_added": 0,
+    "behavioral_trigger": "06C memory event",
+    "direct_player_behavior_trigger": false
+  },
+  "stream_lifecycle": {
+    "load_radius_m": 18,
+    "unload_radius_m": 22,
+    "hysteresis_m": 4,
+    "unload_action": "serialize state, remove actor from scene, dispose geometry/material resources",
+    "restore_action": "deserialize snapshot, resolve absolute wall-clock expiry, reconstruct actor"
+  },
+  "persistence": {
+    "states": [
+      "CALM",
+      "ALERT"
+    ],
+    "alert_duration_ms": 9000,
+    "clock": "Date.now absolute wall time",
+    "offscreen_simulation": "none for actor state",
+    "elapsed_timer_resolution": "on restore",
+    "event_identity_persisted": true,
+    "duplicate_replay_expected": false
+  },
+  "mechanics_changed": false,
+  "combat_changed": false,
+  "accepted_06a_changed": false,
+  "accepted_06b_changed": false,
+  "accepted_06c_changed": false,
+  "accepted_06d_changed": false,
+  "accepted_06e_changed": false,
+  "accepted_06f_changed": false,
+  "accepted_06g_changed": false,
+  "acceptance_checklist": {
+    "beacon_visible_and_calm_before_event": "HUMAN REVIEW",
+    "memory_event_turns_beacon_alert": "HUMAN REVIEW",
+    "moving_beyond_unload_radius_reports_unloaded_and_actor_is_absent": "HUMAN REVIEW",
+    "alert_countdown_continues_as_wall_time_while_actor_is_unloaded": "HUMAN REVIEW",
+    "returning_inside_load_radius_reconstructs_actor": "HUMAN REVIEW",
+    "expired_offscreen_alert_restores_as_calm_not_replayed_alert": "HUMAN REVIEW",
+    "unload_restore_counts_increment_once_per_cycle": "HUMAN REVIEW",
+    "result_reads_as_state_persistence_not_reset_to_default": "HUMAN REVIEW"
+  },
+  "human_visual_review": "REQUIRED",
+  "app_js_bytes": 693787,
+  "soldier_glb_bytes": 2160468
+}
