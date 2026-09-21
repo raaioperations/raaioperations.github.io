@@ -1,0 +1,11 @@
+{
+  "name": "raai-threejs-test-06g",
+  "private": true,
+  "version": "0.6.7",
+  "description": "Living World interrupted-goal recovery proof: autonomous food goal is suspended by hazard and resumes after memory clears",
+  "type": "module",
+  "engines": {"node": ">=22"},
+  "scripts": {"build": "node build.mjs"},
+  "dependencies": {"three": "0.186.0"},
+  "devDependencies": {"esbuild": "0.25.9"}
+}
