@@ -1,0 +1,56 @@
+{
+  "test": "06I",
+  "roadmap": "Test06 — Living World",
+  "status": "ACCEPTED",
+  "human_visual_acceptance": true,
+  "accepted_at": "2026-09-21T04:13:24Z",
+  "decision": "ACCEPTED",
+  "frozen": true,
+  "build_id": "20260921035916",
+  "accepted_scope": {
+    "near_full_rate_visibly_active": true,
+    "mid_reduced_rate_visibly_active": true,
+    "far_coarse_rate_visibly_active": true,
+    "dormant_zero_normal_simulation_visibly_active": true,
+    "dormant_snapshot_saved": true,
+    "dormant_actor_removed": true,
+    "wake_reconstructs_actor": true,
+    "actor_goal_survives_sleep_wake": true,
+    "actor_progress_survives_sleep_wake": true,
+    "duplicate_count_remains_zero": true,
+    "full_lod_ladder_visibly_completed": true
+  },
+  "frozen_baseline": {
+    "tiers": [
+      "NEAR",
+      "MID",
+      "FAR",
+      "DORMANT"
+    ],
+    "near_exit_m": 16,
+    "mid_enter_m": 12,
+    "mid_exit_m": 30,
+    "far_enter_m": 26,
+    "sleep_radius_m": 58,
+    "wake_radius_m": 50,
+    "near_cadence": "frame-driven",
+    "mid_cadence_hz": 10,
+    "far_cadence_hz": 2,
+    "dormant_normal_simulation": false,
+    "sleep_snapshot_schema_version": 1,
+    "persistence_store": "in-memory StreamStateStore",
+    "actor_goal": "FOOD",
+    "actor_progress_preserved": true,
+    "automated_sleep_wake_cycles": 3,
+    "expected_duplicate_count": 0,
+    "added_request_animation_frame_calls": 0
+  },
+  "frozen_source_blobs": {
+    "simulation_lod_core": "2458e99eec9988067a9c3a62bd1c6b88ea1ab4e8",
+    "simulation_lod_fragment": "aadb77bb2cb462400e9d1b5b9c284835614e9ce0",
+    "build_script": "c7e1cd022526170fa7e6c29572507eaff1ec1384"
+  },
+  "user_note": "Accepted",
+  "next_milestone": "06J — Performance Budgets",
+  "next_milestone_authorized": false
+}
