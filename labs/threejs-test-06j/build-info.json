@@ -1,0 +1,110 @@
+{
+  "build_id": "20260921042453",
+  "test": "06J",
+  "roadmap": "Test06 — Living World",
+  "milestone": "Living World Integration / Scale Audit",
+  "purpose": "stress the accepted Living World stack under meaningful actor/system load and enforce explicit browser performance budgets without adding new gameplay behavior",
+  "prerequisite": {
+    "test06i": "ACCEPTED / FROZEN"
+  },
+  "inherits": "Frozen accepted 06A–06I unchanged",
+  "frozen_artifact_blobs": {
+    "test06i_source_main": "75237c68ac58fff097a241e181ecfd369ca3a3e5",
+    "test06i_index": "5cd833eaa12b7d98fb9de120a2fc7797e3a31686",
+    "test06h_stream_core": "af77396834311e0e5b328c7c4438317202613466",
+    "test06i_lod_core": "2458e99eec9988067a9c3a62bd1c6b88ea1ab4e8",
+    "test06i_lod_fragment": "aadb77bb2cb462400e9d1b5b9c284835614e9ce0",
+    "test06i_build": "c7e1cd022526170fa7e6c29572507eaff1ec1384"
+  },
+  "three": "0.186.0",
+  "pipeline": "frozen accepted 06I generated source + isolated 06J integration/scale audit + shared frame hook + esbuild bundle",
+  "runtime_external_dependencies": 0,
+  "service_worker_cache": false,
+  "target": "safari16.4+",
+  "mobile_fps_target": 60,
+  "scale_load": {
+    "actors": 192,
+    "ring_size": 48,
+    "ring_radii_m": [
+      10,
+      20,
+      40,
+      64
+    ],
+    "initial_intended_mix": {
+      "near": 48,
+      "mid": 48,
+      "far": 48,
+      "dormant": 48
+    },
+    "visual_representation": "one InstancedMesh; fixed instance identities; dormant actors zero-scaled inside shared audit container",
+    "integrated_concepts": [
+      "timed local memory",
+      "priority winner HAZARD > FOOD",
+      "goal suspension/recovery",
+      "versioned snapshots",
+      "simulation LOD",
+      "sleep/wake"
+    ]
+  },
+  "performance_budget": {
+    "warmup_ms": 4000,
+    "measurement_ms": 15000,
+    "min_measured_frames": 300,
+    "avg_frame_ms_max": 17.8,
+    "p95_frame_ms_max": 20.5,
+    "p99_frame_ms_max": 34,
+    "avg_06j_cpu_ms_max": 2,
+    "p95_06j_cpu_ms_max": 4,
+    "draw_calls_max": 120,
+    "triangles_max": 350000,
+    "worst_frame": "reported, not a hard gate",
+    "object_count": "reported",
+    "geometry_texture_count": "reported",
+    "shader_program_count_and_warmup_delta": "reported",
+    "js_heap": "reported where performance.memory is exposed",
+    "gpu_frame_cost": "N/A in this WebGL proof because a reliable portable GPU timer is not exposed by the current runtime"
+  },
+  "deterministic_integration_proof": {
+    "actor_count": 192,
+    "initial_tier_counts": {
+      "NEAR": 48,
+      "MID": 48,
+      "FAR": 48,
+      "DORMANT": 48
+    },
+    "one_second_logic_ticks": {
+      "near": 4800,
+      "mid": 480,
+      "far": 96,
+      "dormant": 0,
+      "total": 5376
+    },
+    "dormant_snapshots": 48,
+    "wake_progress_preserved": true,
+    "expired_dormant_memory_resolved": true,
+    "duplicate_count": 0,
+    "budget_evaluator_known_good_passed": true,
+    "budget_evaluator_known_bad_rejected": true
+  },
+  "frame_integration": {
+    "inherited_request_animation_frame_calls": 15,
+    "final_request_animation_frame_calls": 15,
+    "added_request_animation_frame_calls": 0
+  },
+  "mechanics_changed": false,
+  "combat_changed": false,
+  "accepted_06a_through_06i_changed": false,
+  "runtime_performance_audit": "REQUIRED ON REAL DEVICE",
+  "acceptance_checklist": {
+    "audit_reaches_192_actor_load": "HUMAN REVIEW",
+    "tier_counts_and_state_load_remain_coherent": "HUMAN REVIEW",
+    "fifteen_second_measurement_completes": "HUMAN REVIEW",
+    "actual_device_budget_reports_pass_or_specific_failures": "HUMAN REVIEW",
+    "no_visible_stutter_or_actor_multiplication": "HUMAN REVIEW",
+    "mobile_target_iPhone_Safari": "HUMAN REVIEW"
+  },
+  "human_visual_review": "REQUIRED",
+  "app_js_bytes": 717629,
+  "soldier_glb_bytes": 2160468
+}

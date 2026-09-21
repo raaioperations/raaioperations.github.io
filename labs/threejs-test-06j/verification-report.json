@@ -1,0 +1,50 @@
+{
+  "test": "06J",
+  "status": "PASS",
+  "build_id": "20260921042453",
+  "delegated_nonvisual_checks": {
+    "accepted_06i_frozen_required": true,
+    "accepted_06i_generated_source_reused_unchanged": true,
+    "accepted_06h_stream_core_reused_unchanged": true,
+    "accepted_06i_lod_core_reused_unchanged": true,
+    "actor_load_count": 192,
+    "initial_four_ring_distribution_verified": true,
+    "integrated_near_mid_far_dormant_tick_load_verified": true,
+    "dormant_normal_tick_count_zero": true,
+    "dormant_snapshot_count_verified": true,
+    "wake_progress_preserved": true,
+    "expired_memory_resolves_after_dormancy": true,
+    "duplicate_count": 0,
+    "budget_evaluator_good_case_passes": true,
+    "budget_evaluator_bad_case_rejected": true,
+    "added_request_animation_frame_calls": 0,
+    "combat_not_modified": true,
+    "runtime_external_dependencies": 0,
+    "safari_target": "16.4+",
+    "source_level": true
+  },
+  "deterministic_integration_proof": {
+    "actor_count": 192,
+    "initial_tier_counts": {
+      "NEAR": 48,
+      "MID": 48,
+      "FAR": 48,
+      "DORMANT": 48
+    },
+    "one_second_logic_ticks": {
+      "near": 4800,
+      "mid": 480,
+      "far": 96,
+      "dormant": 0,
+      "total": 5376
+    },
+    "dormant_snapshots": 48,
+    "wake_progress_preserved": true,
+    "expired_dormant_memory_resolved": true,
+    "duplicate_count": 0,
+    "budget_evaluator_known_good_passed": true,
+    "budget_evaluator_known_bad_rejected": true
+  },
+  "real_device_performance_audit": "REQUIRED",
+  "human_visual_review": "REQUIRED"
+}
