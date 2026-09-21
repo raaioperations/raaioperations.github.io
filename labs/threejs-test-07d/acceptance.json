@@ -47,5 +47,9 @@
     "production_vertical_slice_fragment": "53ff1f42ff6c43aa4211e0b2a42c75603f5dd765",
     "build_script": "b119a45bab7b59c2d58f433d6f0c887d6321d4a3"
   },
-  "user_note": "Accepted. Freeze. Proceed."
+  "user_note": "Accepted. Freeze. Proceed.",
+  "closes_roadmap": "Test07 — Production Promotion",
+  "test07_closed": true,
+  "next_milestone": "08A — Multi-Region Production World",
+  "next_milestone_authorized": true
 }
