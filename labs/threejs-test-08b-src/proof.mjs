@@ -91,7 +91,7 @@ export async function runPredictiveHandoffProof(){
   assert(regions.A.isActive,'A initial active');
   assert(factory.fallbackInstances===2,'initial A uses exactly two fallback visual instances');
   assert(factory.consumedInstances===0,'no prepared instances consumed initially');
-  const aProgress=regions.A.activeActors[0].kernel.goals.progress;
+  const aProgressInitial=regions.A.activeActors[0].kernel.goals.progress;
 
   planner.updateMotion({x:0,z:0},2000);
   planner.updateMotion({x:10,z:0},3000);
@@ -114,6 +114,8 @@ export async function runPredictiveHandoffProof(){
   assert(factory.preparedCount('B')===0,'B prepared instances consumed');
   assert(factory.consumedInstances===2,'two B prefetched instances consumed');
   assert(factory.fallbackInstances===2,'B activation adds no fallback instances');
+  const aProgressAtSnapshot=regions.A.activeActors[0].kernel.goals.progress;
+  assert(aProgressAtSnapshot>aProgressInitial,'A continues normal FOOD progress while still active before unload');
 
   await world.step({playerPosition:{x:45,z:0},dtMs:1000,now:5000,foodProgressPerSecond:.01});
   assert(!regions.A.isActive&&regions.B.isActive,'A unloads after handoff to B');
@@ -138,7 +140,7 @@ export async function runPredictiveHandoffProof(){
   assert(regions.A.restoreCount===1,'A restored from snapshot');
   assert(regions.A.lastRestoreIdsStable===true,'A IDs stable');
   assert(regions.A.lastRestoreProgressPreserved===true,'A progress preserved');
-  assert(Math.abs(regions.A.activeActors[0].kernel.goals.progress-aProgress)<1e-12,'A exact progress restored');
+  assert(Math.abs(regions.A.activeActors[0].kernel.goals.progress-aProgressAtSnapshot)<1e-12,'A exact snapshotted progress restored');
   assert(factory.consumedInstances===4,'four prepared instances consumed across B + A return');
   assert(factory.fallbackInstances===2,'fallback remains initial A only');
   assert(factory.assetCache.loadCount===1,'shared frozen asset load count remains one');
