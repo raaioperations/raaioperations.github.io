@@ -1,0 +1,30 @@
+{
+  "test": "06E",
+  "roadmap": "Test06 — Living World",
+  "status": "ACCEPTED",
+  "human_visual_acceptance": true,
+  "accepted_at": "2026-09-21T01:17:14Z",
+  "decision": "ACCEPTED",
+  "frozen": true,
+  "build_id": "20260921011401",
+  "accepted_scope": {
+    "both_foragers_visibly_distinguishable": true,
+    "frozen_a_to_b_to_reeds_chain_remains_intact": true,
+    "brown_forager_still_detours_through_memory_case": true,
+    "gray_control_reads_same_active_memory": true,
+    "gray_control_path_remains_outside_memory_location": true,
+    "gray_control_remains_direct_while_brown_actor_detours": true,
+    "effect_reads_as_spatially_local_not_global": true
+  },
+  "frozen_baseline": {
+    "control_actor": "gray stylized hare/forager",
+    "control_direct_player_trigger": false,
+    "control_arrival_delay_ms": 1800,
+    "memory_radius_m": 1.8,
+    "control_path_closest_distance_m": 3.35,
+    "expected_overlap": false,
+    "expected_route": "DIRECT",
+    "comparison": "brown accepted 06D forager detours through remembered location; gray 06E control stays outside memory zone and remains direct"
+  },
+  "user_note": "accepted"
+}
