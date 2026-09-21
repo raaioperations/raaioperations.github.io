@@ -1,0 +1,79 @@
+{
+  "build_id": "20260921055720",
+  "test": "07B",
+  "roadmap": "Test07 — Production Promotion",
+  "milestone": "Production Actor Pipeline",
+  "purpose": "prove stable production actor identity, 07A kernel ownership, cached GLB binding, skeleton-safe cloning, independent animation mixers, and explicit render binding without new AI behavior",
+  "prerequisite": {
+    "test07a": "ACCEPTED / FROZEN"
+  },
+  "inherits": "Frozen accepted 07A source and production architecture unchanged",
+  "frozen_artifact_blobs": {
+    "test07a_source_main": "387be2c85d7208259317c9a58a5a2f6cb9bc1a2b",
+    "test07a_index": "2fdcee21862cd8e33c391e88f77d3ec4f526b462",
+    "living_world_kernel": "8ff673728f18546168e339d888889bfbbc6b8828",
+    "stream_cell_core": "af77396834311e0e5b328c7c4438317202613466",
+    "simulation_lod_core": "2458e99eec9988067a9c3a62bd1c6b88ea1ab4e8",
+    "production_index": "836bf853a996dc7fbdb968aa9b12e09e32594dac"
+  },
+  "actor_pipeline": {
+    "proof_actor_count": 2,
+    "definition_count": 1,
+    "asset": "./assets/Soldier.glb",
+    "expected_pipeline_asset_loads": 1,
+    "cloning": "SkeletonUtils.clone",
+    "mixers": "one AnimationMixer per bound actor",
+    "animation_intents": [
+      "IDLE",
+      "WALK"
+    ],
+    "stable_actor_ids": [
+      "07B_ACTOR_A",
+      "07B_ACTOR_B"
+    ],
+    "kernel_per_actor": "LivingWorldKernel",
+    "shadow_policy": "proof actors do not cast dynamic shadows",
+    "region_streaming": "deferred to 07C"
+  },
+  "delegated_actor_pipeline_proof": {
+    "definitions": 1,
+    "actor_records": 2,
+    "independent_kernels": true,
+    "stable_actor_identity": true,
+    "duplicate_definition_rejected": true,
+    "duplicate_actor_id_rejected": true,
+    "duplicate_visual_binding_rejected": true,
+    "binding_release_required_before_destroy": true,
+    "actor_snapshot_version": 1,
+    "transform_survives_restore": true,
+    "animation_intent_survives_restore": true,
+    "kernel_state_survives_restore": true,
+    "offscreen_memory_resolves": true,
+    "three_adapter_uses_gltf_cache": true,
+    "skeleton_safe_clone": true,
+    "independent_animation_mixer_contract": true
+  },
+  "runtime_external_dependencies": 0,
+  "target": "safari16.4+",
+  "mobile_fps_target": 60,
+  "frame_integration": {
+    "inherited_request_animation_frame_calls": 15,
+    "final_request_animation_frame_calls": 15,
+    "added_request_animation_frame_calls": 0
+  },
+  "mechanics_changed": false,
+  "combat_changed": false,
+  "new_ai_behavior": false,
+  "streamed_production_region_started": false,
+  "acceptance_checklist": {
+    "one_definition_one_cached_asset_load": "HUMAN RUNTIME",
+    "two_visible_unique_actor_roots": "HUMAN REVIEW",
+    "two_independent_animation_states": "HUMAN REVIEW",
+    "two_production_kernel_bindings": "DELEGATED + HUMAN RUNTIME",
+    "zero_duplicate_bindings": "HUMAN RUNTIME",
+    "frozen_06j_real_device_regression_pass": "HUMAN REVIEW"
+  },
+  "human_visual_review": "REQUIRED",
+  "app_js_bytes": 749783,
+  "soldier_glb_bytes": 2160468
+}
