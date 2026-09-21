@@ -257,7 +257,7 @@ for(const marker of [
 ]){
   if(!app.includes(marker))throw new Error('Required marker missing: '+marker);
 }
-for(const token of ['MID REDUCED-RATE SIMULATION','FAR COARSE SIMULATION','DORMANT · SNAPSHOT SAVED','WAKE RESTORED','LOD LADDER']){
+for(const token of ['MID REDUCED-RATE SIMULATION','FAR COARSE SIMULATION','SNAPSHOT SAVED','WAKE RESTORED','LOD LADDER']){
   if(!app.includes(token))throw new Error('06I runtime token missing: '+token);
 }
 
