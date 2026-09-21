@@ -86,7 +86,8 @@ const app=await readFile(path.join(out,'app.js'),'utf8');
 for(const marker of ['06A_LIVING_WORLD_FLOCK','06B_WORLD_DISTURBANCE_PROPAGATION','06C_LOCAL_DISTURBANCE_MEMORY','06D_MEMORY_INFORMS_ACTOR_BEHAVIOR','06E_SPATIALLY_SCOPED_MEMORY','06F_STIMULUS_PRIORITY_ARBITRATION','06G_INTERRUPTED_GOAL_RECOVERY']){
   if(!app.includes(marker))throw new Error(`Required marker missing: ${marker}`);
 }
-if(!app.includes('INTERRUPT → RECOVER → RESUME'))throw new Error('06G recovery proof result missing');
+if(!app.includes('06G_INTERRUPTED_GOAL_RECOVERY'))throw new Error('06G recovery marker missing');
+if(!app.includes('FOOD GOAL SUSPENDED'))throw new Error('06G suspended-goal state missing');
 if(!app.includes('RESUMING ORIGINAL FOOD GOAL'))throw new Error('06G original-goal resume state missing');
 
 const sw=`self.addEventListener('install',()=>self.skipWaiting());\nself.addEventListener('activate',e=>e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k.startsWith('raai-threejs-test06g-')).map(k=>caches.delete(k)))).then(()=>self.clients.claim())));\n`;
