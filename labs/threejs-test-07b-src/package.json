@@ -1,0 +1,11 @@
+{
+  "name": "raai-threejs-test-07b",
+  "private": true,
+  "version": "0.7.1",
+  "description": "Test07B production actor pipeline for the reusable Three.js living-world stack",
+  "type": "module",
+  "engines": {"node": ">=22"},
+  "scripts": {"build": "node build.mjs"},
+  "dependencies": {"three": "0.186.0"},
+  "devDependencies": {"esbuild": "0.25.9"}
+}
