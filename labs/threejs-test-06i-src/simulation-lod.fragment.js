@@ -1,6 +1,6 @@
 
 // ---- Test 06I: Living World — simulation LOD + sleep/wake ----
-import {StreamStateStore,STREAM_CELL_SCHEMA_VERSION} from './stream-cell-core.js';
+import {StreamStateStore as StreamStateStore06I,STREAM_CELL_SCHEMA_VERSION as STREAM_CELL_SCHEMA_VERSION_06I} from './stream-cell-core.js';
 import {SimulationLODController,SIM_LOD_TIERS,DEFAULT_SIM_LOD_CONFIG} from './simulation-lod-core.js';
 
 const LIVING_WORLD_06I_MARKER='06I_SIMULATION_LOD_SLEEP_WAKE';
@@ -27,7 +27,7 @@ const lodActorDestination06I={
   z:lodCenterZ06I+lodRightZ06I*4.8+lodFwdZ06I*.9
 };
 
-const lodStore06I=new StreamStateStore();
+const lodStore06I=new StreamStateStore06I();
 let lodRoot06I=null;
 let lodVisual06I=null;
 let lodDistance06I=Infinity;
@@ -136,7 +136,7 @@ function updateLodVisual06I(){
 }
 function saveSleepSnapshot06I(wallNow){
   const snapshot={
-    version:STREAM_CELL_SCHEMA_VERSION,
+    version:STREAM_CELL_SCHEMA_VERSION_06I,
     cellId:SIM_06I.cellId,
     serializedAt:wallNow,
     actor:{
