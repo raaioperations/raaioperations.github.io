@@ -1,0 +1,52 @@
+{
+  "test": "07B",
+  "roadmap": "Test07 — Production Promotion",
+  "milestone": "Production Actor Pipeline",
+  "status": "ACCEPTED",
+  "human_visual_acceptance": true,
+  "accepted_at": "2026-09-21T06:20:22Z",
+  "decision": "ACCEPTED",
+  "frozen": true,
+  "build_id": "20260921055720",
+  "human_runtime": {
+    "platform": "iPhone Safari",
+    "status": "PASS",
+    "fps_visible": 60,
+    "draw_calls_visible": 97,
+    "triangles_visible": 310548,
+    "definitions": 1,
+    "asset_loads": 1,
+    "actor_records": "2/2",
+    "bindings": "2/2",
+    "unique_roots": "2/2",
+    "mixers": 2,
+    "animations": "Idle / Walk",
+    "core_kernels": 2,
+    "duplicate_binds": 0,
+    "inherited_06j_regression": "PASS",
+    "final_result": "ACTOR PIPELINE ✓ · ASSET CACHE ✓ · INDEPENDENT INSTANCES ✓ · 06J REGRESSION PASS ✓"
+  },
+  "accepted_scope": {
+    "stable_actor_identity": true,
+    "one_definition_one_cached_asset_load": true,
+    "two_independent_actor_records": true,
+    "two_independent_visual_roots": true,
+    "skeleton_safe_clone": true,
+    "two_independent_animation_mixers": true,
+    "two_living_world_kernels": true,
+    "zero_duplicate_bindings": true,
+    "inherited_06j_mobile_regression_pass": true,
+    "no_new_ai_behavior": true,
+    "no_combat_change": true,
+    "no_added_request_animation_frame_loop": true
+  },
+  "frozen_source_blobs": {
+    "actor_pipeline_core": "37fa1ef67038f9f14e289814eb2d07b07259b74f",
+    "three_actor_adapter": "c31460159e3d2a581cb113229b8bb2eebd70cce1",
+    "actor_pipeline_fragment": "0d6a40cfed98069380980c30ffb083e83c71b4ff",
+    "build_script": "76c8b9191f2e383075c970066aaf1e6a71415e5c"
+  },
+  "next_milestone": "07C — Streamed Production Region",
+  "next_milestone_authorized": true,
+  "user_note": "Accepted. Freeze. Proceed."
+}
