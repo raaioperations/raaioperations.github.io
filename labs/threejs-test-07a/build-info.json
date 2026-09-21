@@ -1,0 +1,97 @@
+{
+  "build_id": "20260921044235",
+  "test": "07A",
+  "roadmap": "Test07 — Production Promotion",
+  "milestone": "Production Architecture Promotion",
+  "purpose": "promote frozen Test06 living-world proofs into reusable render-independent production modules without adding gameplay behavior",
+  "prerequisite": {
+    "test06": "CLOSED / FROZEN",
+    "test06j": "ACCEPTED / FROZEN"
+  },
+  "inherits": "Frozen accepted 06J runtime unchanged as the visual/regression reference",
+  "frozen_artifact_blobs": {
+    "test06j_source_main": "5a9733ea42f68a401dfb244cd12b7f8b40ab8cc9",
+    "test06j_index": "f0625fa7266f8f2fa2bee0d949045855edbb8b49",
+    "stream_cell_core": "af77396834311e0e5b328c7c4438317202613466",
+    "simulation_lod_core": "2458e99eec9988067a9c3a62bd1c6b88ea1ab4e8"
+  },
+  "production_package": {
+    "modules": [
+      "WorldEventSequence",
+      "TimedSpatialMemory",
+      "StimulusArbiter",
+      "GoalContinuity",
+      "LivingWorldKernel",
+      "StreamStateStore",
+      "StreamCell",
+      "SimulationLODController"
+    ],
+    "state_ownership": {
+      "WorldEventSequence": "monotonic event identity only",
+      "TimedSpatialMemory": "local timed world-memory state + spatial applicability",
+      "StimulusArbiter": "stateless deterministic decision authority",
+      "GoalContinuity": "active/suspended goal + progress continuity",
+      "LivingWorldKernel": "orchestration order; no render ownership",
+      "StreamStateStore": "canonical serialized cell snapshots",
+      "StreamCell": "load/update/serialize/unload/rehydrate lifecycle",
+      "SimulationLODController": "distance tier + cadence + sleep/wake transitions"
+    },
+    "boundaries": {
+      "rendering": "external adapter; no THREE dependency in production core",
+      "dom": "none",
+      "input": "external",
+      "combat": "unchanged / external",
+      "persistenceDisk": "not included",
+      "productionActorPipeline": "deferred to 07B",
+      "streamedProductionRegion": "deferred to 07C"
+    },
+    "living_world_kernel_schema_version": 1,
+    "canonical_defaults": {
+      "memoryRadiusM": 1.8,
+      "disturbedMs": 2300,
+      "settlingMs": 2800,
+      "hazardPriority": 100,
+      "foodPriority": 40
+    }
+  },
+  "delegated_architecture_proof": {
+    "test06_closed": true,
+    "promoted_modules": 8,
+    "core_three_dependency": false,
+    "core_dom_dependency": false,
+    "canonical_memory_timing": true,
+    "spatial_scope": true,
+    "priority_over_recency": true,
+    "goal_suspend_resume": true,
+    "kernel_snapshot_restore": true,
+    "stream_cell_byte_identical": true,
+    "stream_cell_sha": "af77396834311e0e5b328c7c4438317202613466",
+    "simulation_lod_byte_identical": true,
+    "simulation_lod_sha": "2458e99eec9988067a9c3a62bd1c6b88ea1ab4e8",
+    "no_new_behavior": true,
+    "actor_pipeline_deferred_to_07b": true,
+    "production_region_deferred_to_07c": true
+  },
+  "runtime_external_dependencies": 0,
+  "target": "safari16.4+",
+  "mobile_fps_target": 60,
+  "frame_integration": {
+    "inherited_request_animation_frame_calls": 15,
+    "final_request_animation_frame_calls": 15,
+    "added_request_animation_frame_calls": 0
+  },
+  "mechanics_changed": false,
+  "combat_changed": false,
+  "production_actor_pipeline_started": false,
+  "streamed_production_region_started": false,
+  "acceptance_checklist": {
+    "production_core_imports_in_browser": "DELEGATED + HUMAN RUNTIME",
+    "canonical_behavior_parity": "DELEGATED PASS",
+    "stream_and_lod_byte_parity": "DELEGATED PASS",
+    "frozen_06j_visual_behavior_unchanged": "HUMAN REVIEW",
+    "frozen_06j_real_device_regression_pass": "HUMAN REVIEW"
+  },
+  "human_visual_review": "REQUIRED ONLY FOR REGRESSION / NO VISIBLE BREAKAGE",
+  "app_js_bytes": 736421,
+  "soldier_glb_bytes": 2160468
+}
