@@ -1,0 +1,29 @@
+{
+  "test": "06G",
+  "status": "PASS",
+  "build_id": "20260921013901",
+  "delegated_nonvisual_checks": {
+    "accepted_06f_frozen_required": true,
+    "accepted_test04_blob_verified": true,
+    "accepted_06a_fragment_reused_unchanged": true,
+    "accepted_06b_r1_fragment_reused_unchanged": true,
+    "accepted_06c_fragment_reused_unchanged": true,
+    "accepted_06d_fragment_reused_unchanged": true,
+    "accepted_06e_fragment_reused_unchanged": true,
+    "accepted_06f_fragment_reused_unchanged": true,
+    "recovery_actor_direct_player_trigger": false,
+    "original_goal": "FOOD",
+    "interruption": "HAZARD",
+    "original_goal_is_suspended_not_deleted": true,
+    "evade_travel_ms": 1450,
+    "recovery_requires_memory_calm": true,
+    "clear_hold_ms": 450,
+    "resumed_goal": "FOOD",
+    "resume_travel_ms": 3000,
+    "expected_terminal_goal": "FOOD REACHED",
+    "added_draw_call_budget": 3,
+    "combat_not_modified": true,
+    "source_level": true
+  },
+  "human_visual_review": "REQUIRED"
+}

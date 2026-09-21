@@ -1,0 +1,67 @@
+{
+  "build_id": "20260921013901",
+  "test": "06G",
+  "roadmap": "Test06 — Living World",
+  "purpose": "prove an autonomous actor preserves and resumes its original goal after a higher-priority world-state interruption resolves",
+  "prerequisite": {
+    "test06f": "ACCEPTED / FROZEN"
+  },
+  "inherits": "Frozen accepted 06A + 06B-R1 + 06C + 06D + 06E + 06F unchanged; accepted Test04 environment",
+  "base_blob": "8ec3761c2cf4a507a072d79307220c0b315a8261",
+  "frozen_source_blobs": {
+    "test06a": "e79d37ccb063aeb3cd1852ecabeefdea25089a3f",
+    "test06b_r1": "0a7725c5f53c0f6ed582456a6baceaa886af2ade",
+    "test06c": "4016f6780987bc33dc3bc353b9d0ec507bde7215",
+    "test06d": "c5b73ef81dd2752c1d357c0178f0c33b1ce415ab",
+    "test06e": "cf0a28460679adc2f2cd05fa9458e376d901400c",
+    "test06f": "458af887ded745b9252be59d12a41fe488c19b2f"
+  },
+  "three": "0.186.0",
+  "pipeline": "source-level frozen 06A–06F + isolated goal-recovery fragment + esbuild local bundle",
+  "runtime_external_dependencies": 0,
+  "service_worker_cache": false,
+  "target": "safari16.4+",
+  "mobile_fps_target": 60,
+  "new_actor": {
+    "type": "teal stylized hare/forager",
+    "geometry_draw_call_budget_added": 2,
+    "direct_player_trigger": false,
+    "initial_goal": "FOOD"
+  },
+  "goal_target": {
+    "type": "dedicated visible food patch",
+    "draw_call_budget_added": 1
+  },
+  "recovery": {
+    "pre_goal_visual_cap": 0.34,
+    "interruption": "HAZARD memory event",
+    "suspended_goal": "FOOD",
+    "evade_travel_ms": 1450,
+    "wait_until": "06C memory state returns CALM",
+    "clear_hold_ms": 450,
+    "resumed_goal": "FOOD",
+    "resume_travel_ms": 3000,
+    "expected_terminal_state": "FOOD REACHED"
+  },
+  "mechanics_changed": false,
+  "combat_changed": false,
+  "accepted_06a_changed": false,
+  "accepted_06b_changed": false,
+  "accepted_06c_changed": false,
+  "accepted_06d_changed": false,
+  "accepted_06e_changed": false,
+  "accepted_06f_changed": false,
+  "acceptance_checklist": {
+    "teal_forager_and_food_target_visibly_readable": "HUMAN REVIEW",
+    "food_goal_is_visibly_active_before_interruption": "HUMAN REVIEW",
+    "hazard_visibly_interrupts_food_pursuit": "HUMAN REVIEW",
+    "food_goal_is_shown_suspended_not_deleted": "HUMAN REVIEW",
+    "actor_waits_until_world_memory_clears": "HUMAN REVIEW",
+    "same_food_goal_resumes_after_clear": "HUMAN REVIEW",
+    "actor_reaches_original_food_target": "HUMAN REVIEW",
+    "sequence_reads_as_interrupt_recover_resume_not_random_retasking": "HUMAN REVIEW"
+  },
+  "human_visual_review": "REQUIRED",
+  "app_js_bytes": 689902,
+  "soldier_glb_bytes": 2160468
+}
