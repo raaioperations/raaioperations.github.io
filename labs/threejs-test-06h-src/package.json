@@ -1,0 +1,11 @@
+{
+  "name": "raai-threejs-test-06h",
+  "private": true,
+  "version": "0.6.8",
+  "description": "Living World streamed persistence proof: serialized local state survives unload, wall-clock decay resolves offscreen, and actor restores without replaying events",
+  "type": "module",
+  "engines": {"node": ">=22"},
+  "scripts": {"build": "node build.mjs"},
+  "dependencies": {"three": "0.186.0"},
+  "devDependencies": {"esbuild": "0.25.9"}
+}
