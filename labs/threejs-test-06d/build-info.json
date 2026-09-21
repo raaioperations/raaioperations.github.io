@@ -1,0 +1,61 @@
+{
+  "build_id": "20260921010638",
+  "test": "06D",
+  "roadmap": "Test06 — Living World",
+  "purpose": "prove persistent local world memory can affect a later autonomous actor decision rather than remaining purely visual",
+  "prerequisite": {
+    "test06c": "ACCEPTED / FROZEN"
+  },
+  "inherits": "Frozen accepted 06A + 06B-R1 + 06C behavior unchanged; accepted Test04 environment",
+  "base_blob": "8ec3761c2cf4a507a072d79307220c0b315a8261",
+  "frozen_source_blobs": {
+    "test06a": "e79d37ccb063aeb3cd1852ecabeefdea25089a3f",
+    "test06b_r1": "0a7725c5f53c0f6ed582456a6baceaa886af2ade",
+    "test06c": "4016f6780987bc33dc3bc353b9d0ec507bde7215"
+  },
+  "three": "0.186.0",
+  "pipeline": "source-level frozen 06A/06B-R1/06C + isolated behavior fragment + esbuild local bundle",
+  "runtime_external_dependencies": 0,
+  "service_worker_cache": false,
+  "target": "safari16.4+",
+  "mobile_fps_target": 60,
+  "autonomous_actor": {
+    "type": "stylized low-poly hare/forager",
+    "geometry_draw_call_budget_added": 2,
+    "direct_player_trigger": false,
+    "source_of_decision": "06C persistent memory state at late arrival"
+  },
+  "decision": {
+    "arrival_delay_ms": 1800,
+    "memory_present_route": "quadratic detour around reed patch",
+    "detour_offset_m": 2.8,
+    "detour_travel_ms": 2450,
+    "memory_clear_route": "direct return through normal route",
+    "calm_hold_ms": 550,
+    "direct_return_ms": 2500
+  },
+  "behavior_states": [
+    "WAITING",
+    "ARRIVAL_DELAY",
+    "AVOIDING",
+    "HOLDING",
+    "DIRECT_RETURN",
+    "COMPLETE"
+  ],
+  "mechanics_changed": false,
+  "combat_changed": false,
+  "accepted_06a_changed": false,
+  "accepted_06b_changed": false,
+  "accepted_06c_changed": false,
+  "acceptance_checklist": {
+    "forager_visibly_readable": "HUMAN REVIEW",
+    "accepted_a_to_b_to_reeds_chain_remains_intact": "HUMAN REVIEW",
+    "forager_arrives_after_original_bird_disturbance": "HUMAN REVIEW",
+    "active_world_memory_produces_clear_detour": "HUMAN REVIEW",
+    "cleared_world_memory_allows_direct_return": "HUMAN REVIEW",
+    "route_difference_reads_as_world_state_affecting_behavior": "HUMAN REVIEW"
+  },
+  "human_visual_review": "REQUIRED",
+  "app_js_bytes": 676600,
+  "soldier_glb_bytes": 2160468
+}

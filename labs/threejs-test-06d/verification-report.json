@@ -1,0 +1,24 @@
+{
+  "test": "06D",
+  "status": "PASS",
+  "build_id": "20260921010638",
+  "delegated_nonvisual_checks": {
+    "accepted_06c_frozen_required": true,
+    "accepted_test04_blob_verified": true,
+    "accepted_06a_fragment_reused_unchanged": true,
+    "accepted_06b_r1_fragment_reused_unchanged": true,
+    "accepted_06c_fragment_reused_unchanged": true,
+    "autonomous_actor_direct_player_trigger": false,
+    "decision_reads_06c_memory_state": true,
+    "actor_arrival_delay_ms": 1800,
+    "memory_present_selects_detour": true,
+    "memory_clear_selects_direct_return": true,
+    "detour_offset_m": 2.8,
+    "detour_travel_ms": 2450,
+    "direct_return_ms": 2500,
+    "added_draw_call_budget": 2,
+    "combat_not_modified": true,
+    "source_level": true
+  },
+  "human_visual_review": "REQUIRED"
+}
