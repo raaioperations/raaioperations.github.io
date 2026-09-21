@@ -1,0 +1,11 @@
+{
+  "name": "raai-threejs-test-07c",
+  "private": true,
+  "version": "0.7.2",
+  "description": "Test07C streamed production region for the reusable Three.js living-world stack",
+  "type": "module",
+  "engines": {"node": ">=22"},
+  "scripts": {"build": "node build.mjs"},
+  "dependencies": {"three": "0.186.0"},
+  "devDependencies": {"esbuild": "0.25.9"}
+}
