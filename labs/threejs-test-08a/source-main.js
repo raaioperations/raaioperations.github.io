@@ -2978,10 +2978,13 @@ function localPoint08A(forward,right){
   };
 }
 
+// Keep the diagnostic route inside the frozen player controller's ±112 m
+// world clamp. The previous B/C layout extended past z=112 and was
+// physically unreachable on-device.
 const centers08A={
   A:localPoint08A(18,0),
-  B:localPoint08A(64,22),
-  C:localPoint08A(66,-42)
+  B:localPoint08A(18,48),
+  C:localPoint08A(-30,48)
 };
 
 const sharedStore08A=new ProductionRegionStateStore08A();
