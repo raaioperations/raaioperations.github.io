@@ -1,0 +1,11 @@
+{
+  "name": "raai-threejs-test-07d",
+  "private": true,
+  "version": "0.7.3",
+  "description": "Test07D production vertical slice for the reusable Three.js living-world stack",
+  "type": "module",
+  "engines": {"node": ">=22"},
+  "scripts": {"build": "node build.mjs"},
+  "dependencies": {"three": "0.186.0"},
+  "devDependencies": {"esbuild": "0.25.9"}
+}
