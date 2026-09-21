@@ -1,0 +1,53 @@
+{
+  "test": "08A",
+  "roadmap": "Test08 — World Expansion",
+  "milestone": "Multi-Region Production World",
+  "status": "ACCEPTED",
+  "human_visual_acceptance": true,
+  "accepted_at": "2026-09-21T23:43:18Z",
+  "decision": "ACCEPTED",
+  "frozen": true,
+  "build_id": "20260921072955",
+  "human_runtime": {
+    "platform": "iPhone Safari",
+    "status": "PASS",
+    "fps_visible": 60,
+    "draw_calls_visible": 100,
+    "triangles_visible": 321926,
+    "world": "PASS",
+    "nearest": "A · 19.7 m",
+    "states_abc": "A/U/U",
+    "active_region": "A",
+    "visited": "ABC",
+    "snapshots_abc": "S/S/S",
+    "return_progress": "PRESERVED ✓",
+    "asset_loads": 1,
+    "duplicates": 0,
+    "inherited_06j_regression": "PASS",
+    "final_result": "MULTI-REGION WORLD ✓ · A/B/C VISITED ✓ · STATE ISOLATED ✓ · RETURN RESTORED ✓ · ASSET LOAD 1 ✓ · PERFORMANCE PASS ✓"
+  },
+  "accepted_scope": {
+    "three_independent_production_regions": true,
+    "route_a_b_c_a": true,
+    "one_active_proof_region": true,
+    "per_region_snapshots": true,
+    "return_actor_ids_stable": true,
+    "return_progress_preserved": true,
+    "state_isolated_between_regions": true,
+    "shared_asset_load_count_one": true,
+    "zero_duplicate_region_state": true,
+    "zero_duplicate_bindings": true,
+    "reachable_route_inside_world_bounds": true,
+    "inherited_06j_mobile_regression_pass": true,
+    "no_new_ai_behavior": true,
+    "no_combat_change": true,
+    "no_new_assets": true,
+    "no_added_request_animation_frame_loop": true
+  },
+  "frozen_source_blobs": {
+    "production_world_manager": "a7a2a38ce2efd495aa0d6d01ed11b5c5dca825e5",
+    "multi_region_world_fragment": "f0f51e7e1a51f0ea85c7bc94a6c28e965739b2b5",
+    "build_script": "78feb0e64090e1544f2bfffed81c3e300ca0678c"
+  },
+  "user_note": "Accepted. Freeze. Proceed."
+}
