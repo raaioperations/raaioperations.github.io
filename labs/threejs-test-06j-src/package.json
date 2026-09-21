@@ -1,0 +1,11 @@
+{
+  "name": "raai-threejs-test-06j",
+  "private": true,
+  "version": "0.6.10",
+  "description": "Living World integration/scale audit with explicit browser performance budgets",
+  "type": "module",
+  "engines": {"node": ">=22"},
+  "scripts": {"build": "node build.mjs"},
+  "dependencies": {"three": "0.186.0"},
+  "devDependencies": {"esbuild": "0.25.9"}
+}
