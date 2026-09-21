@@ -1,0 +1,51 @@
+{
+  "test": "07D",
+  "roadmap": "Test07 — Production Promotion",
+  "milestone": "Production Vertical Slice",
+  "status": "ACCEPTED",
+  "human_visual_acceptance": true,
+  "accepted_at": "2026-09-21T07:11:41Z",
+  "decision": "ACCEPTED",
+  "frozen": true,
+  "build_id": "20260921063759",
+  "human_runtime": {
+    "platform": "iPhone Safari",
+    "status": "PASS",
+    "fps_visible": 59,
+    "draw_calls_visible": 104,
+    "triangles_visible": 287388,
+    "slice": "PASS",
+    "region": "ACTIVE",
+    "actor_a_goal": "FOOD",
+    "memory": "CALM",
+    "animation": "Walk",
+    "behavior_loop": "PASS ✓",
+    "stream_restore": "PASS ✓",
+    "actor_ids": "STABLE ✓",
+    "progress": "35%",
+    "asset_loads": 1,
+    "duplicates": 0,
+    "inherited_06j_regression": "PASS",
+    "final_result": "PRODUCTION VERTICAL SLICE ✓ · BEHAVIOR LOOP ✓ · STREAM RESTORE ✓ · ASSET PIPELINE ✓ · PERFORMANCE PASS ✓"
+  },
+  "accepted_scope": {
+    "production_behavior_cycle_visible": true,
+    "behavior_loop_pass": true,
+    "stream_restore_pass": true,
+    "actor_ids_stable": true,
+    "progress_preserved": true,
+    "asset_load_count_one": true,
+    "zero_duplicate_bindings": true,
+    "inherited_06j_mobile_regression_pass": true,
+    "no_new_ai_behavior": true,
+    "no_combat_change": true,
+    "no_new_assets": true,
+    "no_added_request_animation_frame_loop": true
+  },
+  "frozen_source_blobs": {
+    "production_vertical_slice_core": "94140d67efc32d1260bd1576251787a7fbb3df24",
+    "production_vertical_slice_fragment": "53ff1f42ff6c43aa4211e0b2a42c75603f5dd765",
+    "build_script": "b119a45bab7b59c2d58f433d6f0c887d6321d4a3"
+  },
+  "user_note": "Accepted. Freeze. Proceed."
+}
