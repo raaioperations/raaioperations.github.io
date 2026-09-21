@@ -1,0 +1,34 @@
+{
+  "test": "06C",
+  "roadmap": "Test06 — Living World",
+  "status": "ACCEPTED",
+  "human_visual_acceptance": true,
+  "accepted_at": "2026-09-21T01:03:10Z",
+  "decision": "ACCEPTED",
+  "frozen": true,
+  "build_id": "20260918070057",
+  "accepted_scope": {
+    "reed_patch_visibly_present": true,
+    "flock_a_and_b_chain_remains_intact": true,
+    "flock_b_takeoff_visibly_disturbs_reeds": true,
+    "reeds_remain_disturbed_after_birds_move_on": true,
+    "reeds_gradually_settle_without_player_input": true,
+    "lingering_state_reads_as_world_memory_not_one_frame_vfx": true
+  },
+  "frozen_baseline": {
+    "memory_actor": "instanced tall-reed patch",
+    "memory_actor_count": 28,
+    "memory_added_draw_call_budget": 1,
+    "memory_direct_player_trigger": false,
+    "memory_trigger": "accepted 06B Flock B transition into FLEEING",
+    "states": [
+      "CALM",
+      "DISTURBED",
+      "SETTLING"
+    ],
+    "disturbed_ms": 2300,
+    "settling_ms": 2800,
+    "total_memory_ms": 5100
+  },
+  "user_note": "accepted"
+}
