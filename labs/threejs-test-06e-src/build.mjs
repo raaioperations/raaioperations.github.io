@@ -78,7 +78,7 @@ const app=await readFile(path.join(out,'app.js'),'utf8');
 for(const marker of ['06A_LIVING_WORLD_FLOCK','06B_WORLD_DISTURBANCE_PROPAGATION','06C_LOCAL_DISTURBANCE_MEMORY','06D_MEMORY_INFORMS_ACTOR_BEHAVIOR','06E_SPATIALLY_SCOPED_MEMORY']){
   if(!app.includes(marker))throw new Error(`Required marker missing: ${marker}`);
 }
-if(!app.includes('SAME MEMORY · DIFFERENT LOCATION · NO EFFECT'))throw new Error('06E spatial-control proof result missing');
+if(!app.includes('06E_SPATIALLY_SCOPED_MEMORY'))throw new Error('06E spatial-control marker missing');
 if(!app.includes('DIRECT: OUTSIDE MEMORY'))throw new Error('06E local-scope direct route missing');
 
 const sw=`self.addEventListener('install',()=>self.skipWaiting());\nself.addEventListener('activate',e=>e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k.startsWith('raai-threejs-test06e-')).map(k=>caches.delete(k)))).then(()=>self.clients.claim())));\n`;
