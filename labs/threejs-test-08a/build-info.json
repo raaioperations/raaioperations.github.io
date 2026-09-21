@@ -1,5 +1,5 @@
 {
-  "build_id": "20260921071701",
+  "build_id": "20260921072305",
   "test": "08A",
   "roadmap": "Test08 — World Expansion",
   "milestone": "Multi-Region Production World",
@@ -91,6 +91,6 @@
     "inherited_06j_real_device_regression_pass": "HUMAN REVIEW"
   },
   "human_visual_review": "REQUIRED",
-  "app_js_bytes": 775494,
+  "app_js_bytes": 775954,
   "soldier_glb_bytes": 2160468
 }
