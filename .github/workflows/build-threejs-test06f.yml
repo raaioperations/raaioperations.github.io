@@ -1,0 +1,50 @@
+name: Build Three.js Test 06F
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'labs/threejs-test-06f-src/**'
+      - '.github/workflows/build-threejs-test06f.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install pinned dependencies
+        working-directory: labs/threejs-test-06f-src
+        run: npm install --no-audit --no-fund --no-package-lock
+
+      - name: Build 06F
+        working-directory: labs/threejs-test-06f-src
+        run: npm run build
+
+      - name: Verify 06F
+        run: |
+          node -e "const fs=require('fs'); const v=JSON.parse(fs.readFileSync('labs/threejs-test-06f/verification-report.json','utf8')); if(v.status!=='PASS') process.exit(1); console.log(v);"
+
+      - name: Publish 06F
+        run: |
+          git config user.name "raaioperations"
+          git config user.email "alanhasan87@gmail.com"
+          git add labs/threejs-test-06f
+          if git diff --cached --quiet; then
+            echo "No generated changes"
+          else
+            git commit -m "Build Test 06F stimulus arbitration"
+            git push
+          fi
