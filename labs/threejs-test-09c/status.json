@@ -1,0 +1,18 @@
+{
+  "test": "09C",
+  "roadmap": "Test09 — Presentation Foundation",
+  "milestone": "Sunlit Basin Production Asset Kit",
+  "status": "AUTHORIZED_BUILDING",
+  "authorized_at": "2026-09-22T06:03:41Z",
+  "source_of_authorization": "User: 09c",
+  "supports_open_milestone": "09B — Vertical Beauty Slice",
+  "test09a": "ACCEPTED / FROZEN / CANONICAL",
+  "test08": "CLOSED / ACCEPTED / FROZEN",
+  "asset_count_target": 13,
+  "format": "GLB / glTF 2.0",
+  "original_assets_only": true,
+  "human_asset_review_required": true,
+  "integration_back_into_09b_required": true,
+  "broad_content_expansion_authorized": false,
+  "frozen": false
+}
