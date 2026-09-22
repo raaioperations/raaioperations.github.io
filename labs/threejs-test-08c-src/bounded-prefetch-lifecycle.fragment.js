@@ -114,6 +114,39 @@ for(const [index,key] of ['A','B'].entries()){
 ringMesh08C.instanceMatrix.needsUpdate=true;
 scene.add(ringMesh08C);
 
+// Diagnostic-only B beacon: make the human route unambiguous without changing
+// region coordinates, activation radii, simulation, or predictive logic.
+const bGround08C=groundHeight(centers08C.B.x,centers08C.B.z);
+const bBeaconGroup08C=new THREE.Group();
+bBeaconGroup08C.userData.boundedPrefetchBeacon08C=true;
+const bBeam08C=new THREE.Mesh(
+  new THREE.CylinderGeometry(.13,.13,18,10,1,true),
+  new THREE.MeshBasicMaterial({
+    color:0x67f4ff,
+    transparent:true,
+    opacity:.62,
+    depthTest:false,
+    depthWrite:false
+  })
+);
+bBeam08C.position.set(centers08C.B.x,bGround08C+9,centers08C.B.z);
+bBeam08C.renderOrder=999;
+bBeaconGroup08C.add(bBeam08C);
+const bCap08C=new THREE.Mesh(
+  new THREE.SphereGeometry(.75,12,8),
+  new THREE.MeshBasicMaterial({
+    color:0xb8fbff,
+    transparent:true,
+    opacity:.88,
+    depthTest:false,
+    depthWrite:false
+  })
+);
+bCap08C.position.set(centers08C.B.x,bGround08C+18.5,centers08C.B.z);
+bCap08C.renderOrder=1000;
+bBeaconGroup08C.add(bCap08C);
+scene.add(bBeaconGroup08C);
+
 let logicPending08C=false;
 let logicNext08C=0;
 let logicAccumMs08C=0;
@@ -134,6 +167,8 @@ let cancellationAt08C=0;
 
 const stageEl08C=document.getElementById('boundedStage08C');
 const targetEl08C=document.getElementById('boundedTarget08C');
+const distanceBEl08C=document.getElementById('boundedDistanceB08C');
+const bearingBEl08C=document.getElementById('boundedBearingB08C');
 const preparedEl08C=document.getElementById('boundedPrepared08C');
 const cancelEl08C=document.getElementById('boundedCancel08C');
 const evictedEl08C=document.getElementById('boundedEvicted08C');
@@ -152,6 +187,31 @@ function setBoundedText08C(el,value,color){
   if(!el)return;
   if(el.textContent!==value)el.textContent=value;
   if(color&&el.style.color!==color)el.style.color=color;
+}
+
+const cameraForward08C=new THREE.Vector3();
+function bGuidance08C(){
+  const dx=centers08C.B.x-playerRoot.position.x;
+  const dz=centers08C.B.z-playerRoot.position.z;
+  const distance=Math.hypot(dx,dz);
+  if(distance<.001)return {distance:0,label:'HERE',degrees:0};
+
+  camera.getWorldDirection(cameraForward08C);
+  let fx=cameraForward08C.x;
+  let fz=cameraForward08C.z;
+  const fl=Math.hypot(fx,fz)||1;
+  fx/=fl; fz/=fl;
+  const tx=dx/distance;
+  const tz=dz/distance;
+  const degrees=Math.atan2(fx*tz-fz*tx,fx*tx+fz*tz)*180/Math.PI;
+  const abs=Math.abs(degrees);
+  let label;
+  if(abs<=22.5)label='FORWARD';
+  else if(abs<=67.5)label=degrees>0?'FORWARD-RIGHT':'FORWARD-LEFT';
+  else if(abs<=112.5)label=degrees>0?'RIGHT':'LEFT';
+  else if(abs<=157.5)label=degrees>0?'BACK-RIGHT':'BACK-LEFT';
+  else label='BACK';
+  return {distance,label,degrees};
 }
 
 function activeKeys08C(){
@@ -294,6 +354,9 @@ function updateBoundedHud08C(){
   setBoundedText08C(stageEl08C,proof.pass?'PASS':logicError08C?'FAIL':proof.regression==='PASS'?'READY':'WAITING REGRESSION',
     proof.pass?'#a8f0b5':logicError08C?'#ff9b9b':'#ffe59a');
   setBoundedText08C(targetEl08C,(boundedPrefetch08C.targetId||'NONE')+' · '+boundedPrefetch08C.lastAction);
+  const guidance=bGuidance08C();
+  setBoundedText08C(distanceBEl08C,guidance.distance.toFixed(1)+' m');
+  setBoundedText08C(bearingBEl08C,guidance.label+' · '+Math.round(Math.abs(guidance.degrees))+'°');
   setBoundedText08C(preparedEl08C,'A:'+boundedPrefetch08C.preparedCount('A')+' · B:'+boundedPrefetch08C.preparedCount('B'));
   setBoundedText08C(cancelEl08C,String(budget.cancellations),budget.cancellations>=1?'#a8f0b5':'#ffe59a');
   setBoundedText08C(evictedEl08C,String(budget.evictedInstances),budget.evictedInstances>=2?'#a8f0b5':'#ffe59a');
