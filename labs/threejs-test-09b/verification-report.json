@@ -1,0 +1,41 @@
+{
+  "test": "09B",
+  "status": "PASS",
+  "build_id": "20260922042752",
+  "classification": "PRESENTATION PROOF CANDIDATE",
+  "delegated_nonvisual_checks": {
+    "accepted_09a_frozen_required": true,
+    "accepted_08d_frozen_required": true,
+    "frozen_runtime_reused_unchanged": true,
+    "six_material_families": true,
+    "five_depth_layers": true,
+    "four_ambient_motion_systems": true,
+    "deterministic_authored_layout": true,
+    "authored_drawables_within_budget": true,
+    "authored_triangles_within_budget": true,
+    "frozen_06j_draw_ceiling_preserved": true,
+    "frozen_06j_triangle_ceiling_preserved": true,
+    "presentation_created_only_after_06j_pass": true,
+    "broad_content_expansion": false,
+    "added_request_animation_frame_calls": 0,
+    "runtime_external_dependencies": 0,
+    "safari_target": "16.4+"
+  },
+  "presentation_proof": {
+    "name": "Sunlit Basin",
+    "material_families": 6,
+    "depth_layers": 5,
+    "ambient_motion_systems": 4,
+    "authored_drawables": 12,
+    "authored_triangles": 6828,
+    "added_draw_call_budget": 14,
+    "added_triangle_budget": 18000,
+    "absolute_draw_call_ceiling": 120,
+    "absolute_triangle_ceiling": 350000,
+    "deterministic_layout": true,
+    "broad_content_expansion": false
+  },
+  "real_device_runtime_review": "REQUIRED",
+  "human_presentation_review": "REQUIRED",
+  "acceptance_authority": "USER"
+}
