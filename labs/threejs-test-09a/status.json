@@ -2,7 +2,7 @@
   "test": "09A",
   "roadmap": "Test09 — Presentation Foundation",
   "milestone": "RAAI 3D Presentation Standard / Art Direction Contract",
-  "status": "ACCEPTANCE_CANDIDATE",
+  "status": "ACCEPTED",
   "implementation_authorized": false,
   "source_basis": "User-established standing 3D visual/feel benchmark and the agreed presentation pivot after Test08.",
   "doctrine": "Stylized Physical Realism",
@@ -18,5 +18,11 @@
   "test08_prerequisite": "CLOSED / ACCEPTED / FROZEN",
   "next_on_acceptance": "09B — Vertical Beauty Slice",
   "broad_content_expansion_authorized": false,
-  "requires_user_acceptance": true
+  "requires_user_acceptance": true,
+  "frozen": true,
+  "accepted_at": "2026-09-22T03:29:57Z",
+  "decision": "ACCEPTED",
+  "next_milestone": "09B — Vertical Beauty Slice",
+  "next_milestone_authorized": false,
+  "note": "Accepted. 09A frozen. 09B not yet authorized."
 }
