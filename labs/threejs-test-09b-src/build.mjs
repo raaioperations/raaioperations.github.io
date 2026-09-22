@@ -115,12 +115,9 @@ for(const marker of ['08D_WORLD_EXPANSION_CERTIFICATION','09B_VERTICAL_BEAUTY_SL
   assert(app.includes(marker),'runtime marker missing '+marker);
 }
 for(const token of [
-  'VERTICAL BEAUTY SLICE READY',
-  '6 MATERIAL FAMILIES',
-  '5 DEPTH LAYERS',
-  '4 MOTION SYSTEMS',
-  'RUNTIME PRESERVED',
-  'PRESENTATION BUDGET PASS'
+  'STRUCTURAL/RUNTIME PASS',
+  'PRESENTATION PASS 2',
+  'HUMAN VISUAL REVIEW REQUIRED'
 ]){
   assert(app.includes(token),'09B runtime token missing '+token);
 }
@@ -137,15 +134,18 @@ const info={
   roadmap:'Test09 — Presentation Foundation',
   milestone:'Vertical Beauty Slice',
   environment:'Sunlit Basin',
-  classification:'PRESENTATION PROOF CANDIDATE',
+  classification:'PRESENTATION PASS 2 / HUMAN REVIEW CANDIDATE',
   doctrine:'Stylized Physical Realism',
   prerequisite:{
     test08:'CLOSED / ACCEPTED / FROZEN',
     test09a:'ACCEPTED / FROZEN / CANONICAL'
   },
-  purpose:'create one small deliberately authored near-final-quality playable area that demonstrates the frozen 09A presentation doctrine while preserving the frozen Test08 runtime',
+  purpose:'raise the Sunlit Basin structural/runtime proof into a human-review presentation candidate through authored terrain, material response, atmospheric depth, layered ridges, vegetation hierarchy, water/shore treatment, environmental motion, and camera/light tuning while preserving frozen Test08',
   inherits:'Frozen accepted 08D runtime and all 07A–08D production systems unchanged',
   presentation:{
+    presentation_pass:delegated.presentation_pass,
+    automated_presentation_acceptance:false,
+    human_presentation_review_required:true,
     material_families:delegated.material_families,
     depth_layers:delegated.depth_layers,
     ambient_motion_systems:delegated.ambient_motion_systems,
@@ -206,7 +206,7 @@ await writeFile(path.join(out,'verification-report.json'),JSON.stringify({
   test:'09B',
   status:'PASS',
   build_id:buildId,
-  classification:'PRESENTATION PROOF CANDIDATE',
+  classification:'PRESENTATION PASS 2 / HUMAN REVIEW CANDIDATE',
   delegated_nonvisual_checks:{
     accepted_09a_frozen_required:true,
     accepted_08d_frozen_required:true,

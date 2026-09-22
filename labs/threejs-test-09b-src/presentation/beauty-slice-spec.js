@@ -1,8 +1,9 @@
 export const BEAUTY_SLICE_09B=Object.freeze({
-  version:1,
+  version:2,
   milestone:'09B — Vertical Beauty Slice',
   name:'Sunlit Basin',
   radiusM:33,
+  presentationPass:2,
   materialFamilies:Object.freeze([
     'meadow-ground',
     'soil-path',
@@ -15,23 +16,27 @@ export const BEAUTY_SLICE_09B=Object.freeze({
     'foreground-ground-cover',
     'gameplay-plane',
     'midground-stone-gate',
-    'distant-cliff-silhouette',
+    'distant-ridge-silhouette',
     'atmosphere-sky'
   ]),
   ambientMotionSystems:Object.freeze([
-    'canopy-wind',
+    'canopy-understory-wind',
     'grass-wind',
     'water-ripples',
     'airborne-pollen'
   ]),
   layout:Object.freeze({
-    trees:22,
-    grassTufts:160,
-    flowers:48,
-    rocks:16,
-    distantCliffs:10,
-    pollen:180,
-    pathSegments:30
+    trees:28,
+    grassTufts:320,
+    shrubs:42,
+    flowers:96,
+    rocks:28,
+    ridgeLayers:3,
+    ridgeSegments:12,
+    gateBlocks:14,
+    pollen:240,
+    pathSegments:42,
+    shoreSegments:72
   }),
   presentationBudget:Object.freeze({
     addedDrawCallsMax:14,
@@ -49,6 +54,8 @@ export const BEAUTY_SLICE_09B=Object.freeze({
       'character',
       'gameplay purpose'
     ],
+    automatedProofIsPresentationAcceptance:false,
+    humanPresentationReviewRequired:true,
     preserve06J:true,
     preserveTest08:true,
     broadContentExpansion:false
