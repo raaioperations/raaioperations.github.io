@@ -1,8 +1,8 @@
 {
   "test": "09B",
   "status": "PASS",
-  "build_id": "20260922042752",
-  "classification": "PRESENTATION PROOF CANDIDATE",
+  "build_id": "20260922044911",
+  "classification": "PRESENTATION PASS 2 / HUMAN REVIEW CANDIDATE",
   "delegated_nonvisual_checks": {
     "accepted_09a_frozen_required": true,
     "accepted_08d_frozen_required": true,
@@ -23,16 +23,19 @@
   },
   "presentation_proof": {
     "name": "Sunlit Basin",
+    "presentation_pass": 2,
     "material_families": 6,
     "depth_layers": 5,
     "ambient_motion_systems": 4,
-    "authored_drawables": 12,
-    "authored_triangles": 6828,
+    "authored_drawables": 13,
+    "authored_triangles": 11928,
     "added_draw_call_budget": 14,
     "added_triangle_budget": 18000,
     "absolute_draw_call_ceiling": 120,
     "absolute_triangle_ceiling": 350000,
     "deterministic_layout": true,
+    "automated_presentation_acceptance": false,
+    "human_presentation_review_required": true,
     "broad_content_expansion": false
   },
   "real_device_runtime_review": "REQUIRED",
