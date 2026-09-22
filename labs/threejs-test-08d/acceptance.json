@@ -1,0 +1,81 @@
+{
+  "test": "08D",
+  "roadmap": "Test08 — World Expansion",
+  "milestone": "World Expansion Certification",
+  "status": "ACCEPTED",
+  "human_visual_acceptance": true,
+  "accepted_at": "2026-09-22T03:03:50Z",
+  "decision": "ACCEPTED",
+  "frozen": true,
+  "build_id": "20260922024726",
+  "classification": "TEST08 CLOSEOUT",
+  "human_runtime": {
+    "status": "PASS",
+    "certification": "PASS",
+    "visits": "A→B→A→B→A",
+    "live_window_seconds": 47,
+    "required_live_window_seconds": 30,
+    "a_cycles": {
+      "restore": 2,
+      "unload": 2
+    },
+    "b_cycles": {
+      "restore": 1,
+      "unload": 2
+    },
+    "active_region_actors": {
+      "final": 2,
+      "peak": 4,
+      "ceiling": 4
+    },
+    "region_bindings": {
+      "final": 2,
+      "peak": 4,
+      "ceiling": 4
+    },
+    "prepared": {
+      "final": 0,
+      "peak": 2,
+      "ceiling": 2
+    },
+    "prepared_consumed": 8,
+    "fallback_instances": 2,
+    "asset_loads": 1,
+    "duplicates": 0,
+    "inherited_06j_regression": "PASS",
+    "final_result": "WORLD EXPANSION CERTIFIED ✓ · 4 HANDOFFS ✓ · REPEATED RESTORE ✓ · ACTORS BOUNDED 4 ✓ · BINDINGS BOUNDED 4 ✓ · PREFETCH BOUNDED 2 ✓ · ASSET LOAD 1 ✓ · NO DUPLICATES ✓ · PERFORMANCE PASS ✓"
+  },
+  "accepted_scope": {
+    "four_real_device_handoffs": true,
+    "minimum_live_window_met": true,
+    "repeated_a_restore": true,
+    "repeated_b_restore": true,
+    "active_actor_ceiling_four": true,
+    "binding_ceiling_four": true,
+    "prefetch_ceiling_two": true,
+    "final_prepared_pool_zero": true,
+    "initial_fallback_instances_only": 2,
+    "shared_asset_load_count_one": true,
+    "zero_duplicate_bindings": true,
+    "zero_duplicate_region_state": true,
+    "inherited_06j_regression_pass": true,
+    "no_new_gameplay_mechanic": true,
+    "no_new_ai_behavior": true,
+    "no_combat_change": true,
+    "no_new_assets": true,
+    "no_added_request_animation_frame_loop": true
+  },
+  "frozen_source_blobs": {
+    "world_expansion_certification_fragment": "9902a7c68b0b1f5c175173cb62c0f7e02d2e5451",
+    "page": "ffd717aacbc7082cff4a3de95a09afdba5d09874",
+    "build_script": "f34414a89ce96e8889be01e5df880c0122893337",
+    "generated_source_main": "32bb0b9483e3fab848154414410a1a9067fe8716",
+    "generated_index": "e8d88818dc64d387a03302eddd0eaba6cdda99cc"
+  },
+  "user_note": "Accepted. Freeze. Proceed.",
+  "closes_roadmap": "Test08 — World Expansion",
+  "test08_closed": true,
+  "next_phase": "Test09 — Presentation Foundation",
+  "next_milestone": "09A — RAAI 3D Presentation Standard / Art Direction Contract",
+  "next_milestone_authorized": true
+}
