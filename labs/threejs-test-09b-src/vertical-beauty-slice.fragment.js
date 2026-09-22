@@ -276,7 +276,6 @@ function makeWater09B(){
   const m=new THREE.ShaderMaterial({
     transparent:true,
     depthWrite:false,
-    fog:true,
     side:THREE.DoubleSide,
     uniforms:{
       uBeautyTime:{value:0},
@@ -287,7 +286,6 @@ function makeWater09B(){
       uSunDir:{value:new THREE.Vector3(-.56,.78,.20).normalize()}
     },
     vertexShader:[
-      '#include <fog_pars_vertex>',
       'uniform float uBeautyTime;',
       'varying vec2 vLocal;',
       'varying vec3 vWorld;',
@@ -307,11 +305,9 @@ function makeWater09B(){
       ' vLocal=p.xz/8.4;',
       ' vec4 mvPosition=viewMatrix*wp;',
       ' gl_Position=projectionMatrix*mvPosition;',
-      ' #include <fog_vertex>',
       '}'
     ].join('\n'),
     fragmentShader:[
-      '#include <fog_pars_fragment>',
       'uniform vec3 uDeep;',
       'uniform vec3 uShallow;',
       'uniform vec3 uSky;',
@@ -336,7 +332,6 @@ function makeWater09B(){
       ' col=mix(col,vec3(.82,.90,.82),foam*.48);',
       ' float alpha=(.72+.12*fres)*(1.0-smoothstep(.985,1.0,r));',
       ' gl_FragColor=vec4(col,alpha);',
-      ' #include <fog_fragment>',
       '}'
     ].join('\n')
   });
@@ -689,10 +684,8 @@ function makePollen09B(rand){
     transparent:true,
     depthWrite:false,
     blending:THREE.AdditiveBlending,
-    fog:true,
     uniforms:{uBeautyTime:{value:0}},
     vertexShader:[
-      '#include <fog_pars_vertex>',
       'uniform float uBeautyTime;',
       'void main(){',
       ' vec3 p=position;',
@@ -703,17 +696,14 @@ function makePollen09B(rand){
       ' vec4 mvPosition=modelViewMatrix*vec4(p,1.0);',
       ' gl_Position=projectionMatrix*mvPosition;',
       ' gl_PointSize=clamp(18.0/max(1.0,-mvPosition.z),1.0,3.0);',
-      ' #include <fog_vertex>',
       '}'
     ].join('\n'),
     fragmentShader:[
-      '#include <fog_pars_fragment>',
       'void main(){',
       ' vec2 q=gl_PointCoord-.5;',
       ' float d=length(q);',
       ' float a=smoothstep(.5,.06,d)*.40;',
       ' gl_FragColor=vec4(1.0,.84,.50,a);',
-      ' #include <fog_fragment>',
       '}'
     ].join('\n')
   });
