@@ -140,8 +140,8 @@ await writeFile(path.join(out,'verification-report.json'),JSON.stringify({
   build_id:buildId,
   classification:'ASSET PIPELINE / RUNTIME INTEGRATION PROOF',
   delegated_nonvisual_checks:{
-    09b_source_reused_unchanged:true,
-    09c_asset_hashes_verified:true,
+    '09b_source_reused_unchanged':true,
+    '09c_asset_hashes_verified':true,
     all_13_glbs_referenced:true,
     all_13_asset_families_have_placements:true,
     eight_prototype_families_targeted_for_replacement:true,
