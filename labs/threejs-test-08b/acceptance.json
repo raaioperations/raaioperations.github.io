@@ -1,0 +1,53 @@
+{
+  "test": "08B",
+  "roadmap": "Test08 — World Expansion",
+  "milestone": "Predictive Region Handoff",
+  "status": "ACCEPTED",
+  "human_visual_acceptance": true,
+  "accepted_at": "2026-09-22T00:55:14Z",
+  "decision": "ACCEPTED",
+  "frozen": true,
+  "build_id": "20260921235022",
+  "human_runtime": {
+    "platform": "iPhone Safari",
+    "status": "PASS",
+    "fps_visible": 58,
+    "draw_calls_visible": 89,
+    "triangles_visible": 289470,
+    "handoff": "PASS",
+    "route": "A→B→A",
+    "prepared_consumed": 4,
+    "fallback_instances": 2,
+    "states_ab": "A/U",
+    "active": "A",
+    "return_state": "STABLE ✓",
+    "asset_loads": 1,
+    "duplicates": 0,
+    "inherited_06j_regression": "PASS",
+    "final_result": "PREDICTIVE HANDOFF ✓ · B PREFETCHED ✓ · A RETURN PREFETCHED ✓ · PREPARED CONSUMED ✓ · STATE RESTORED ✓ · ASSET LOAD 1 ✓ · NO DUPLICATES ✓ · PERFORMANCE PASS ✓"
+  },
+  "accepted_scope": {
+    "b_prefetched_before_activation": true,
+    "a_return_prefetched_before_activation": true,
+    "prepared_instances_consumed": 4,
+    "initial_fallback_instances_only": 2,
+    "return_actor_ids_stable": true,
+    "return_progress_preserved": true,
+    "shared_asset_load_count_one": true,
+    "zero_duplicate_bindings": true,
+    "zero_duplicate_region_state": true,
+    "inherited_06j_mobile_regression_pass": true,
+    "no_prefetch_simulation_records": true,
+    "no_new_ai_behavior": true,
+    "no_combat_change": true,
+    "no_new_assets": true,
+    "no_added_request_animation_frame_loop": true
+  },
+  "frozen_source_blobs": {
+    "predictive_region_prefetch_core": "0976d7547e412afa6f65259c33fae09358e14fea",
+    "three_predictive_actor_factory": "a6d9a10fd8cbd1a931959d0ef2ed1d2002639d21",
+    "predictive_region_handoff_fragment": "e0422ce86a165eb2376f27e8243f61f632375d7a",
+    "build_script": "6dfc633b9e17759fc7251c62d35513c10b835dad"
+  },
+  "user_note": "Accepted. Freeze. Proceed."
+}
