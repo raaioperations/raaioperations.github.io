@@ -49,5 +49,7 @@
     "predictive_region_handoff_fragment": "e0422ce86a165eb2376f27e8243f61f632375d7a",
     "build_script": "6dfc633b9e17759fc7251c62d35513c10b835dad"
   },
-  "user_note": "Accepted. Freeze. Proceed."
+  "user_note": "Accepted. Freeze. Proceed.",
+  "next_milestone": "08C — Bounded Prefetch Lifecycle",
+  "next_milestone_authorized": true
 }
