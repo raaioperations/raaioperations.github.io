@@ -1,5 +1,5 @@
 {
-  "build_id": "20260922044911",
+  "build_id": "20260922045902",
   "test": "09B",
   "roadmap": "Test09 — Presentation Foundation",
   "milestone": "Vertical Beauty Slice",
@@ -83,6 +83,6 @@
   "multiplayer": false,
   "human_presentation_review": "REQUIRED",
   "human_acceptance_required": true,
-  "app_js_bytes": 827567,
+  "app_js_bytes": 827329,
   "soldier_glb_bytes": 2160468
 }
