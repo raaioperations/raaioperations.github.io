@@ -1,0 +1,183 @@
+{
+  "version": "1.0.0",
+  "milestone": "09C \u2014 Sunlit Basin Production Asset Kit",
+  "format": "glTF 2.0 binary (.glb)",
+  "coordinate_system": "Y-up / meters / ground-contact local origin",
+  "assets": {
+    "tree_a_tall_broad.glb": {
+      "triangles": 440,
+      "bounds_m": [
+        5.9,
+        9.0,
+        4.75
+      ],
+      "materials": [
+        "MAT_BARK_DARK",
+        "MAT_FOLIAGE_DARK",
+        "MAT_FOLIAGE_LIGHT",
+        "MAT_FOLIAGE_MID"
+      ],
+      "bytes": 9156
+    },
+    "tree_b_short_wide.glb": {
+      "triangles": 356,
+      "bounds_m": [
+        6.9,
+        6.968,
+        5.6
+      ],
+      "materials": [
+        "MAT_BARK_WARM",
+        "MAT_FOLIAGE_DARK",
+        "MAT_FOLIAGE_LIGHT",
+        "MAT_FOLIAGE_MID"
+      ],
+      "bytes": 6988
+    },
+    "tree_c_leaning_asym.glb": {
+      "triangles": 364,
+      "bounds_m": [
+        5.1,
+        8.404,
+        3.95
+      ],
+      "materials": [
+        "MAT_BARK_DARK",
+        "MAT_FOLIAGE_DARK",
+        "MAT_FOLIAGE_LIGHT",
+        "MAT_FOLIAGE_MID"
+      ],
+      "bytes": 8276
+    },
+    "rock_a_medium_angular.glb": {
+      "triangles": 28,
+      "bounds_m": [
+        2.587,
+        1.361,
+        1.979
+      ],
+      "materials": [
+        "MAT_STONE_WARM"
+      ],
+      "bytes": 1500
+    },
+    "rock_b_flat_shore.glb": {
+      "triangles": 38,
+      "bounds_m": [
+        3.12,
+        0.787,
+        2.136
+      ],
+      "materials": [
+        "MAT_STONE_DARK"
+      ],
+      "bytes": 1680
+    },
+    "rock_c_hero_boulder.glb": {
+      "triangles": 60,
+      "bounds_m": [
+        3.671,
+        3.186,
+        3.054
+      ],
+      "materials": [
+        "MAT_STONE_DARK",
+        "MAT_STONE_WARM"
+      ],
+      "bytes": 2840
+    },
+    "shrub_a_round.glb": {
+      "triangles": 60,
+      "bounds_m": [
+        2.913,
+        1.446,
+        1.871
+      ],
+      "materials": [
+        "MAT_FOLIAGE_DARK",
+        "MAT_FOLIAGE_LIGHT",
+        "MAT_FOLIAGE_MID"
+      ],
+      "bytes": 2912
+    },
+    "shrub_b_spreading.glb": {
+      "triangles": 120,
+      "bounds_m": [
+        3.494,
+        1.601,
+        2.337
+      ],
+      "materials": [
+        "MAT_BARK_WARM",
+        "MAT_FOLIAGE_DARK",
+        "MAT_FOLIAGE_LIGHT",
+        "MAT_FOLIAGE_MID"
+      ],
+      "bytes": 5120
+    },
+    "grass_tuft_a.glb": {
+      "triangles": 28,
+      "bounds_m": [
+        0.799,
+        1.2,
+        0.865
+      ],
+      "materials": [
+        "MAT_GRASS_MEADOW"
+      ],
+      "bytes": 1924
+    },
+    "flower_patch_a.glb": {
+      "triangles": 240,
+      "bounds_m": [
+        1.384,
+        0.781,
+        1.334
+      ],
+      "materials": [
+        "MAT_FLOWER_BLUE",
+        "MAT_FLOWER_GOLD",
+        "MAT_FLOWER_ROSE",
+        "MAT_GRASS_DARK"
+      ],
+      "bytes": 8352
+    },
+    "gate_sunlit_basin.glb": {
+      "triangles": 198,
+      "bounds_m": [
+        6.313,
+        8.356,
+        1.56
+      ],
+      "materials": [
+        "MAT_STONE_DARK",
+        "MAT_STONE_WARM"
+      ],
+      "bytes": 8064
+    },
+    "ridge_a_layered.glb": {
+      "triangles": 68,
+      "bounds_m": [
+        24.0,
+        8.8,
+        2.2
+      ],
+      "materials": [
+        "MAT_STONE_WARM"
+      ],
+      "bytes": 2144
+    },
+    "ridge_b_spur.glb": {
+      "triangles": 84,
+      "bounds_m": [
+        24.0,
+        8.8,
+        2.2
+      ],
+      "materials": [
+        "MAT_STONE_DARK"
+      ],
+      "bytes": 2436
+    }
+  }
+}
