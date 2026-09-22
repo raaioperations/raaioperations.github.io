@@ -1,7 +1,7 @@
 
 // ---- Test 09D: Sunlit Basin Asset Integration Proof ----
-import {GLTFLoader} from 'three/addons/loaders/GLTFLoader.js';
-import {mergeGeometries} from 'three/addons/utils/BufferGeometryUtils.js';
+import {GLTFLoader as GLTFLoader09D} from 'three/addons/loaders/GLTFLoader.js';
+import {mergeGeometries as mergeGeometries09D} from 'three/addons/utils/BufferGeometryUtils.js';
 import {
   ASSET_BASE_09D,
   ASSET_FILES_09D,
@@ -96,7 +96,7 @@ async function integrateAssets09D(){
   integrationStarted09D=true;
   stage09D='LOADING GLBs';
 
-  const loader=new GLTFLoader();
+  const loader=new GLTFLoader09D();
   const loaded=new Map();
   const tLoad=performance.now();
 
@@ -167,7 +167,7 @@ async function integrateAssets09D(){
   }
 
   for(const [materialName,geometries] of buckets){
-    const merged=mergeGeometries(geometries,false);
+    const merged=mergeGeometries09D(geometries,false);
     if(!merged)throw new Error('09D merge failed for '+materialName);
 
     const material=materialTemplates.get(materialName).clone();
