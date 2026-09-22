@@ -18,7 +18,7 @@
   "test08_prerequisite": "CLOSED / ACCEPTED / FROZEN",
   "next_on_acceptance": "09B — Vertical Beauty Slice",
   "broad_content_expansion_authorized": false,
-  "requires_user_acceptance": true,
+  "requires_user_acceptance": false,
   "frozen": true,
   "accepted_at": "2026-09-22T03:29:57Z",
   "decision": "ACCEPTED",
