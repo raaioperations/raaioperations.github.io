@@ -18,7 +18,8 @@
   "core_frame_rule": "Every important frame should communicate place, physical substance, atmosphere, scale, motion, character, and gameplay purpose simultaneously where appropriate.",
   "core_action_rule": "Every important gameplay action should communicate intent → motion → contact → consequence.",
   "next_milestone": "09B — Vertical Beauty Slice",
-  "next_milestone_authorized": false,
+  "next_milestone_authorized": true,
   "broad_content_expansion_authorized": false,
-  "user_note": "Accepted"
+  "user_note": "Accepted",
+  "authorization_note": "User authorized 09B on 2026-09-22T04:19:39Z."
 }
