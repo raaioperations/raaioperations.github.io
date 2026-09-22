@@ -1,5 +1,5 @@
 {
-  "build_id": "20260922010114",
+  "build_id": "20260922022250",
   "test": "08C",
   "roadmap": "Test08 — World Expansion",
   "milestone": "Bounded Prefetch Lifecycle",
@@ -103,6 +103,6 @@
     "final_performance_pass": "HUMAN REVIEW"
   },
   "human_visual_review": "REQUIRED",
-  "app_js_bytes": 798947,
+  "app_js_bytes": 800083,
   "soldier_glb_bytes": 2160468
 }
