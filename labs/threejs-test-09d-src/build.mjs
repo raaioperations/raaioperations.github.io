@@ -25,7 +25,7 @@ const assert=(c,m)=>{if(!c)throw new Error('09D build proof failed: '+m);};
 const source09B=await readFile(path.join(labs,'threejs-test-09b','source-main.js'),'utf8');
 const index09B=await readFile(path.join(labs,'threejs-test-09b','index.html'),'utf8');
 const build09B=JSON.parse(await readFile(path.join(labs,'threejs-test-09b','build-info.json'),'utf8'));
-const verify09B=JSON.parse(await readFile(path.join(labs,'threejs-test-09b','verification-report.json'),'utf8');
+const verify09B=JSON.parse(await readFile(path.join(labs,'threejs-test-09b','verification-report.json'),'utf8'));
 const manifest09C=JSON.parse(await readFile(path.join(assetRoot,'asset_manifest.generated.json'),'utf8'));
 const verify09C=JSON.parse(await readFile(path.join(labs,'threejs-test-09c','verification-report.json'),'utf8'));
 const status09C=JSON.parse(await readFile(path.join(labs,'threejs-test-09c','status.json'),'utf8'));
