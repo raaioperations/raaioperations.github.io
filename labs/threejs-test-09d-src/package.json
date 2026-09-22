@@ -1,0 +1,11 @@
+{
+  "name":"raai-threejs-test-09d",
+  "private":true,
+  "version":"0.9.3",
+  "description":"Test09D Sunlit Basin asset integration proof",
+  "type":"module",
+  "engines":{"node":">=22"},
+  "scripts":{"build":"node build.mjs"},
+  "dependencies":{"three":"0.186.0"},
+  "devDependencies":{"esbuild":"0.25.9"}
+}
