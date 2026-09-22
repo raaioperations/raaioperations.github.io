@@ -3,10 +3,10 @@
   "roadmap": "Test09 — Presentation Foundation",
   "milestone": "RAAI 3D Presentation Standard / Art Direction Contract",
   "status": "ACCEPTED",
-  "frozen": true,
-  "accepted_at": "2026-09-22T03:29:57Z",
   "decision": "ACCEPTED",
-  "canonical_standard": "RAAI 3D Presentation Standard — Stylized Physical Realism v1.0",
+  "frozen": true,
+  "canonical": true,
+  "accepted_at": "2026-09-22T03:29:57Z",
   "doctrine": "Stylized Physical Realism",
   "acceptance_chain": [
     "Structural Proof",
@@ -15,16 +15,10 @@
     "Presentation Proof",
     "Human Acceptance"
   ],
-  "governing_rules": {
-    "frame": "Every important frame should communicate place, physical substance, atmosphere, scale, motion, character, and gameplay purpose simultaneously where appropriate.",
-    "action": "Every important gameplay action should communicate intent → motion → contact → consequence."
-  },
-  "frozen_source_blobs": {
-    "presentation_standard": "58acb4bf8120b2612b61df9952ed8da8393b92a7"
-  },
-  "test08_prerequisite": "CLOSED / ACCEPTED / FROZEN",
-  "broad_content_expansion_authorized": false,
+  "core_frame_rule": "Every important frame should communicate place, physical substance, atmosphere, scale, motion, character, and gameplay purpose simultaneously where appropriate.",
+  "core_action_rule": "Every important gameplay action should communicate intent → motion → contact → consequence.",
   "next_milestone": "09B — Vertical Beauty Slice",
   "next_milestone_authorized": false,
+  "broad_content_expansion_authorized": false,
   "user_note": "Accepted"
 }
