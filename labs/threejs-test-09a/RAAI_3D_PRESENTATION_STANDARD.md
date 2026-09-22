@@ -2,7 +2,7 @@
 
 **Roadmap:** Test09 — Presentation Foundation  
 **Milestone:** 09A — RAAI 3D Presentation Standard / Art Direction Contract  
-**Status:** ACCEPTANCE CANDIDATE  
+**Status:** ACCEPTED / FROZEN / CANONICAL  
 **Runtime target:** Engine-portable; current implementation target is Three.js/browser  
 **Reference intent:** Formalize the visual, motion, camera, material, atmosphere, interaction, and presentation principles previously extracted from the standing 3D benchmark.
 
