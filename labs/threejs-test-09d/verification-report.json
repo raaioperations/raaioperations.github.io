@@ -1,0 +1,39 @@
+{
+  "test": "09D",
+  "status": "PASS",
+  "build_id": "20260922062453",
+  "classification": "ASSET PIPELINE / RUNTIME INTEGRATION PROOF",
+  "delegated_nonvisual_checks": {
+    "09b_source_reused_unchanged": true,
+    "09c_asset_hashes_verified": true,
+    "all_13_glbs_referenced": true,
+    "all_13_asset_families_have_placements": true,
+    "eight_prototype_families_targeted_for_replacement": true,
+    "placement_transforms_finite": true,
+    "approved_material_families_only": true,
+    "static_material_batch_count_within_12": true,
+    "integrated_asset_triangle_plan_within_18000": true,
+    "frozen_06j_draw_ceiling_preserved": 120,
+    "frozen_06j_triangle_ceiling_preserved": 350000,
+    "added_request_animation_frame_calls": 0,
+    "external_runtime_dependencies": 0,
+    "safari_target": "16.4+"
+  },
+  "integration_plan": {
+    "assets_required": 13,
+    "assets_integrated": 13,
+    "prototype_families_replaced": 8,
+    "placements": 124,
+    "material_batches": 12,
+    "integrated_asset_triangles": 13274,
+    "max_integrated_asset_triangles": 18000,
+    "absolute_draw_call_ceiling": 120,
+    "absolute_triangle_ceiling": 350000,
+    "broad_content_expansion": false,
+    "presentation_acceptance": false,
+    "human_runtime_review_required": true
+  },
+  "human_runtime_asset_review": "REQUIRED",
+  "presentation_acceptance": false,
+  "acceptance_authority": "USER"
+}

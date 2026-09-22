@@ -1,0 +1,53 @@
+{
+  "build_id": "20260922062453",
+  "test": "09D",
+  "roadmap": "Test09 — Presentation Foundation",
+  "milestone": "Sunlit Basin Asset Integration Proof",
+  "classification": "ASSET PIPELINE / RUNTIME INTEGRATION PROOF",
+  "purpose": "load all 13 verified 09C GLBs into the live Sunlit Basin, replace eight 09B prototype drawable families, batch static placements by PBR material family, and prove frozen Test08 runtime/performance invariants remain intact",
+  "prerequisites": {
+    "test08": "CLOSED / ACCEPTED / FROZEN",
+    "test09a": "ACCEPTED / FROZEN / CANONICAL",
+    "test09b": "OPEN / STRUCTURAL+RUNTIME PASS / PRESENTATION NOT ACCEPTED",
+    "test09c": "13 GLBs GENERATED / AUTOMATED VERIFICATION PASS"
+  },
+  "frozen_inputs": {
+    "test09b_build": "20260922045902",
+    "test09b_source_main": "d08363c52fc6e3858f50942d51aab6401292e4a5",
+    "test09b_index": "43529c044dd3b5474696bc9414318d25d7671878",
+    "asset_manifest_09c_blob": "4e6cfab00a4e89de7767c35c418f55a30bdcd67e",
+    "asset_verification_09c_blob": "15018ccd298ec6f60ef28ede6b194179297ec3f3"
+  },
+  "integration": {
+    "assets_required": 13,
+    "assets_integrated": 13,
+    "prototype_families_replaced": 8,
+    "placements": 124,
+    "material_batches": 12,
+    "integrated_asset_triangles": 13274,
+    "max_integrated_asset_triangles": 18000,
+    "absolute_draw_call_ceiling": 120,
+    "absolute_triangle_ceiling": 350000,
+    "broad_content_expansion": false,
+    "presentation_acceptance": false,
+    "human_runtime_review_required": true
+  },
+  "batching": "static geometry merged by approved 09C PBR material family",
+  "runtime_external_dependencies": 0,
+  "target": "safari16.4+",
+  "mobile_fps_target": 60,
+  "frame_integration": {
+    "inherited_request_animation_frame_calls": 15,
+    "final_request_animation_frame_calls": 15,
+    "added_request_animation_frame_calls": 0
+  },
+  "mechanics_changed": false,
+  "combat_changed": false,
+  "ai_changed": false,
+  "persistence_changed": false,
+  "streaming_semantics_changed": false,
+  "broad_content_expansion": false,
+  "presentation_acceptance": false,
+  "human_runtime_asset_review": "REQUIRED",
+  "app_js_bytes": 840883
+}
