@@ -103,7 +103,7 @@ export const PLACEMENTS_09D=Object.freeze([
 export const INTEGRATION_BUDGET_09D=Object.freeze({
   requiredAssetLoads:13,
   requiredPrototypeReplacements:8,
-  maxMaterialBatches:12,
+  maxMaterialBatches:8,
   maxPlacementCount:130,
   maxAddedTriangles:18000,
   absoluteDrawCallsMax:120,
