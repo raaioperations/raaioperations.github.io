@@ -1,0 +1,49 @@
+{
+  "test": "09D",
+  "roadmap": "Test09 — Presentation Foundation",
+  "milestone": "Sunlit Basin Asset Integration Proof",
+  "status": "ACCEPTED / FROZEN / CANONICAL",
+  "accepted_at": "2026-09-23T03:44:46Z",
+  "accepted_by": "user",
+  "acceptance_text": "Okay. Accepted. Freeze. Proceed.",
+  "accepted_build": "20260923033144",
+  "human_runtime_evidence": {
+    "glbs_loaded": "13 / 13",
+    "prototype_families_removed": "8 / 8",
+    "asset_placements": 124,
+    "runtime_material_batches": "8 / 8",
+    "integrated_asset_triangles": "13,274 / 18,000",
+    "total_draw_calls": "114 / 120",
+    "total_triangles": "292,312 / 350,000",
+    "soldier_asset_loads": 1,
+    "runtime_duplicates": 0,
+    "regression_06j": "PASS"
+  },
+  "frozen_artifacts": {
+    "source_main": "004f4c587a3ba764712f2de6a96b7cc0aa6266da",
+    "index": "9d1583636d20f232ce894ea4afd83f59ad6259a8",
+    "build_info": "63521693920c164d42537b34f1fd465da48c6427",
+    "verification_report": "e499257b342031c7370996a65b12635d6ccd215d",
+    "integration_fragment": "cecc7718ca0c20b5c9bf563ff3dc5149ceeb8b04",
+    "integration_spec": "927c6ba99fba3da45679f186244d975f5382758b",
+    "proof": "770af4783d99aa0958239a10692951ffc1dcb3ce",
+    "page": "cd6436bce81f5e77e9454713c7f225adf8c2c64e",
+    "build_script": "ce17ee05e0ac417f64bc12233ca2898cd498bea3"
+  },
+  "meaning": {
+    "asset_pipeline_integration_pass": true,
+    "runtime_pass": true,
+    "performance_pass": true,
+    "test08_preserved": true,
+    "asset_art_final": false,
+    "test09b_presentation_acceptance": false
+  },
+  "next": {
+    "milestone": "09B — Vertical Beauty Slice",
+    "iteration": "Presentation Pass 3",
+    "foundation": "Accepted/frozen 09D asset-integrated runtime",
+    "authorized": true
+  },
+  "frozen": true,
+  "canonical": true
+}
