@@ -1,0 +1,51 @@
+name: Agent Playthrough Pilot
+
+on:
+  push:
+    branches:
+      - test/agent-playthrough-pilot
+  workflow_dispatch:
+
+jobs:
+  playthrough:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Use Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Install playthrough dependencies
+        working-directory: tests/playthrough
+        run: npm install
+
+      - name: Install Chromium
+        working-directory: tests/playthrough
+        run: npx playwright install --with-deps chromium
+
+      - name: Start local static server
+        run: |
+          python3 -m http.server 4173 --bind 127.0.0.1 > /tmp/raai-playthrough-http.log 2>&1 &
+          echo $! > /tmp/raai-playthrough-http.pid
+          sleep 2
+          curl --fail --silent http://127.0.0.1:4173/labs/threejs-test-09b/ > /dev/null
+
+      - name: Run 09B playthrough
+        working-directory: tests/playthrough
+        run: npm test
+
+      - name: Upload playthrough evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: agent-playthrough-pilot
+          path: |
+            tests/playthrough/test-results/
+            tests/playthrough/playwright-report/
+            /tmp/raai-playthrough-http.log
+          if-no-files-found: warn
