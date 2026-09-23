@@ -2,7 +2,7 @@
   "test": "09B",
   "iteration": "Presentation Pass 5",
   "status": "PASS",
-  "build_id": "20260923042814",
+  "build_id": "20260923044415",
   "classification": "ENVIRONMENT ART PRODUCTION / GEOMETRY-REPAIRED HUMAN REVIEW CANDIDATE",
   "delegated_nonvisual_checks": {
     "accepted_09d_frozen_required": true,
@@ -12,6 +12,7 @@
     "strip_winding_qa": true,
     "strip_outer_skirts_buried_qa": true,
     "shoreline_winding_qa": true,
+    "shoreline_edges_buried_qa": true,
     "geometry_fix_does_not_use_double_side": true,
     "runtime_batch_ceiling": 6,
     "legacy_gate_clip_runtime_hook": true,
