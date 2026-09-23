@@ -1,0 +1,10 @@
+{
+  "test": "09B",
+  "milestone": "Vertical Beauty Slice",
+  "iteration": "Presentation Pass 3",
+  "status": "DEPLOYED_HUMAN_PRESENTATION_REVIEW_REQUIRED",
+  "build_id": "20260923035027",
+  "foundation": "Accepted/frozen 09D build 20260923033144",
+  "automated_presentation_acceptance": false,
+  "frozen": false
+}
