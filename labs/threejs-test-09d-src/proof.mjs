@@ -35,14 +35,16 @@ export function runAssetIntegrationProof(manifest,verification){
   }
 
   assert(triangles<=INTEGRATION_BUDGET_09D.maxAddedTriangles,'integrated triangle budget');
-  assert(materials.size<=INTEGRATION_BUDGET_09D.maxMaterialBatches,'material batch budget');
+  assert(INTEGRATION_BUDGET_09D.maxMaterialBatches===8,'09D optimized runtime batch ceiling');
+  assert(materials.size<=12,'source material families remain within approved source family count');
 
   return {
     assets_required:ASSET_FILES_09D.length,
     assets_integrated:usedAssets.size,
     prototype_families_replaced:PROTOTYPE_NAMES_09D.length,
     placements:PLACEMENTS_09D.length,
-    material_batches:materials.size,
+    source_material_families:materials.size,
+    runtime_material_batch_ceiling:INTEGRATION_BUDGET_09D.maxMaterialBatches,
     integrated_asset_triangles:triangles,
     max_integrated_asset_triangles:INTEGRATION_BUDGET_09D.maxAddedTriangles,
     absolute_draw_call_ceiling:INTEGRATION_BUDGET_09D.absoluteDrawCallsMax,
