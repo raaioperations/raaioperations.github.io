@@ -1,15 +1,16 @@
 {
-  "build_id": "20260923041922",
+  "build_id": "20260923042814",
   "test": "09B",
   "roadmap": "Test09 — Presentation Foundation",
   "milestone": "Vertical Beauty Slice",
   "iteration": "Presentation Pass 5",
   "environment": "Sunlit Basin",
-  "classification": "ENVIRONMENT ART PRODUCTION / HUMAN REVIEW CANDIDATE",
+  "classification": "ENVIRONMENT ART PRODUCTION / GEOMETRY-REPAIRED HUMAN REVIEW CANDIDATE",
   "doctrine": "Stylized Physical Realism",
   "foundations": {
     "test09d": "ACCEPTED / FROZEN / CANONICAL",
     "pass4_build": "20260923040859",
+    "pass4_commit": "4d294732fb2a49b604c12e89758fa00d7a5840db",
     "pass4_source": "5a5baf46ef5e650188e9974e11ae65e853c25305",
     "pass4_index": "d05f33ddba7ac5612842eb982954265e7a6b1352"
   },
@@ -35,7 +36,11 @@
     "ruin_v2": true,
     "two_additional_tree_silhouettes": true,
     "wetland_ecology_clusters": true,
-    "legacy_gate_presentation_clipped": true
+    "legacy_gate_presentation_clipped": true,
+    "corrective_geometry_revision": "3.0.1",
+    "strip_winding_repaired": true,
+    "strip_outer_skirts_buried": true,
+    "shoreline_winding_validated": true
   },
   "hard_limits": {
     "draw_calls_max": 120,

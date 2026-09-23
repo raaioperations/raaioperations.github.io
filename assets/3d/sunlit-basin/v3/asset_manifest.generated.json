@@ -1,14 +1,20 @@
 {
-  "version": "3.0.0",
-  "milestone": "09B Presentation Pass 5 \u2014 Environment Art Production",
+  "version": "3.0.1",
+  "milestone": "09B Presentation Pass 5 \u2014 Environment Art Production / Geometry Repair",
   "format": "glTF 2.0 binary (.glb)",
+  "geometry_qa": {
+    "strip_faces_upward": true,
+    "strip_outer_skirts_buried": true,
+    "shore_faces_upward": true,
+    "no_double_side_geometry_fix": true
+  },
   "assets": {
     "terrain_bank_a.glb": {
       "triangles": 84,
       "budget": 220,
       "bounds_m": [
         10.0,
-        1.082,
+        1.375,
         4.277
       ],
       "materials": [
@@ -21,26 +27,26 @@
       "budget": 200,
       "bounds_m": [
         8.5,
-        0.821,
+        1.13,
         3.661
       ],
       "materials": [
         "MAT_EARTH_DAMP"
       ],
-      "bytes": 2420
+      "bytes": 2416
     },
     "path_cut_berms.glb": {
       "triangles": 144,
       "budget": 420,
       "bounds_m": [
         8.0,
-        0.434,
+        0.758,
         5.819
       ],
       "materials": [
         "MAT_EARTH_WARM"
       ],
-      "bytes": 3428
+      "bytes": 3424
     },
     "shoreline_shelf.glb": {
       "triangles": 48,
