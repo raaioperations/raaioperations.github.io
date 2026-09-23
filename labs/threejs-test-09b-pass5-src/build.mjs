@@ -30,10 +30,11 @@ const buildPass4=JSON.parse(gitShow('labs/threejs-test-09b/build-info.json'));
 const verifyPass4=JSON.parse(gitShow('labs/threejs-test-09b/verification-report.json'));
 const accept09D=JSON.parse(await readFile(path.join(labs,'threejs-test-09d','acceptance.json'),'utf8'));
 const manifest=JSON.parse(await readFile(path.join(envRoot,'asset_manifest.generated.json'),'utf8'));
-assert(manifest.version==='3.0.1','Pass 5 repaired v3 manifest required');
+assert(manifest.version==='3.0.2','Pass 5 repaired v3 manifest required');
 assert(manifest.geometry_qa?.strip_faces_upward===true,'strip winding QA required');
 assert(manifest.geometry_qa?.strip_outer_skirts_buried===true,'buried strip skirts QA required');
 assert(manifest.geometry_qa?.shore_faces_upward===true,'shore winding QA required');
+assert(manifest.geometry_qa?.shore_edges_buried===true,'shore edge burial QA required');
 assert(manifest.geometry_qa?.no_double_side_geometry_fix===true,'geometry repair must not rely on DoubleSide');
 
 const expectedPass4Source='5a5baf46ef5e650188e9974e11ae65e853c25305';
@@ -152,10 +153,11 @@ await writeFile(path.join(out,'build-info.json'),JSON.stringify({
     two_additional_tree_silhouettes:true,
     wetland_ecology_clusters:true,
     legacy_gate_presentation_clipped:true,
-    corrective_geometry_revision:'3.0.1',
+    corrective_geometry_revision:'3.0.2',
     strip_winding_repaired:true,
     strip_outer_skirts_buried:true,
-    shoreline_winding_validated:true
+    shoreline_winding_validated:true,
+    shoreline_edges_buried:true
   },
   hard_limits:{draw_calls_max:120,triangles_max:350000,regression_06j_required:'PASS'},
   runtime_external_dependencies:0,
@@ -191,6 +193,7 @@ await writeFile(path.join(out,'verification-report.json'),JSON.stringify({
     strip_winding_qa:true,
     strip_outer_skirts_buried_qa:true,
     shoreline_winding_qa:true,
+    shoreline_edges_buried_qa:true,
     geometry_fix_does_not_use_double_side:true,
     runtime_batch_ceiling:6,
     legacy_gate_clip_runtime_hook:true,
