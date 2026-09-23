@@ -1,0 +1,32 @@
+{
+  "version": "2.0.0",
+  "milestone": "09B Presentation Pass 4 \u2014 Horizon Assetization",
+  "format": "glTF 2.0 binary (.glb)",
+  "material": "MAT_RIDGE_SLATE",
+  "assets": {
+    "ridge_erosion_a.glb": {
+      "triangles": 196,
+      "bounds_m": [
+        30.0,
+        7.4,
+        5.5
+      ],
+      "materials": [
+        "MAT_RIDGE_SLATE"
+      ],
+      "bytes": 4448
+    },
+    "ridge_erosion_b.glb": {
+      "triangles": 196,
+      "bounds_m": [
+        30.0,
+        6.8,
+        5.5
+      ],
+      "materials": [
+        "MAT_RIDGE_SLATE"
+      ],
+      "bytes": 4448
+    }
+  }
+}

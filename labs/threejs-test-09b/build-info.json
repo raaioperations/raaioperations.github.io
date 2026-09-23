@@ -1,25 +1,32 @@
 {
-  "build_id": "20260923035027",
+  "build_id": "20260923040859",
   "test": "09B",
   "roadmap": "Test09 — Presentation Foundation",
   "milestone": "Vertical Beauty Slice",
-  "iteration": "Presentation Pass 3",
+  "iteration": "Presentation Pass 4",
   "environment": "Sunlit Basin",
-  "classification": "ASSET-INTEGRATED PRESENTATION PASS 3 / HUMAN REVIEW CANDIDATE",
+  "classification": "SCENE ASSETIZATION + COMPOSITION / HUMAN REVIEW CANDIDATE",
   "doctrine": "Stylized Physical Realism",
-  "foundation": {
+  "foundations": {
     "test09d": "ACCEPTED / FROZEN / CANONICAL",
-    "build": "20260923033144",
-    "source_main": "004f4c587a3ba764712f2de6a96b7cc0aa6266da",
-    "index": "9d1583636d20f232ce894ea4afd83f59ad6259a8"
+    "pass3_build": "20260923035027",
+    "pass3_source": "18ea5fcef2bf12855e17de8728ead0f1da6e560e",
+    "pass3_index": "d99699770ee4da49653409bcf13cb5de78e3bb5f"
   },
-  "corrections": {
-    "legacy_cone_mountain_meshes_hidden": 2,
-    "local_player_glb_packaged": true,
-    "player_glb_bytes": 2160468,
-    "exposure_rebalanced": true,
-    "material_hierarchy_rebalanced": true,
-    "presentation_fov_enforced": true
+  "new_asset_family": {
+    "root": "/assets/3d/sunlit-basin/v2/",
+    "assets": [
+      "ridge_erosion_a.glb",
+      "ridge_erosion_b.glb"
+    ],
+    "material": "MAT_RIDGE_SLATE",
+    "runtime_batch_target": 1
+  },
+  "presentation_changes": {
+    "far_v1_ridge_fragments_presentation_clipped": true,
+    "proof_visuals_suppressed_without_stopping_simulation": true,
+    "terrain_material_hierarchy_rebalanced": true,
+    "local_player_glb_packaged": true
   },
   "hard_limits": {
     "draw_calls_max": 120,
@@ -42,5 +49,5 @@
   "automated_presentation_acceptance": false,
   "human_presentation_review": "REQUIRED",
   "frozen": false,
-  "app_js_bytes": 845966
+  "app_js_bytes": 851999
 }
