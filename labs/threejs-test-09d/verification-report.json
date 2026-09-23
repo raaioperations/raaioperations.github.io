@@ -1,7 +1,7 @@
 {
   "test": "09D",
   "status": "PASS",
-  "build_id": "20260923033122",
+  "build_id": "20260923033144",
   "classification": "ASSET PIPELINE / RUNTIME INTEGRATION PROOF",
   "delegated_nonvisual_checks": {
     "09b_source_reused_unchanged": true,
@@ -11,7 +11,7 @@
     "eight_prototype_families_targeted_for_replacement": true,
     "placement_transforms_finite": true,
     "approved_material_families_only": true,
-    "static_material_batch_count_within_12": true,
+    "static_material_batch_count_within_8": true,
     "integrated_asset_triangle_plan_within_18000": true,
     "frozen_06j_draw_ceiling_preserved": 120,
     "frozen_06j_triangle_ceiling_preserved": 350000,
