@@ -23,6 +23,11 @@ const buildPass4=JSON.parse(await readFile(path.join(out,'build-info.json'),'utf
 const verifyPass4=JSON.parse(await readFile(path.join(out,'verification-report.json'),'utf8'));
 const accept09D=JSON.parse(await readFile(path.join(labs,'threejs-test-09d','acceptance.json'),'utf8'));
 const manifest=JSON.parse(await readFile(path.join(envRoot,'asset_manifest.generated.json'),'utf8'));
+assert(manifest.version==='3.0.1','Pass 5 repaired v3 manifest required');
+assert(manifest.geometry_qa?.strip_faces_upward===true,'strip winding QA required');
+assert(manifest.geometry_qa?.strip_outer_skirts_buried===true,'buried strip skirts QA required');
+assert(manifest.geometry_qa?.shore_faces_upward===true,'shore winding QA required');
+assert(manifest.geometry_qa?.no_double_side_geometry_fix===true,'geometry repair must not rely on DoubleSide');
 
 const expectedPass4Source='5a5baf46ef5e650188e9974e11ae65e853c25305';
 const expectedPass4Index='d05f33ddba7ac5612842eb982954265e7a6b1352';
@@ -117,7 +122,7 @@ await writeFile(path.join(out,'build-info.json'),JSON.stringify({
   milestone:'Vertical Beauty Slice',
   iteration:'Presentation Pass 5',
   environment:'Sunlit Basin',
-  classification:'ENVIRONMENT ART PRODUCTION / HUMAN REVIEW CANDIDATE',
+  classification:'ENVIRONMENT ART PRODUCTION / GEOMETRY-REPAIRED HUMAN REVIEW CANDIDATE',
   doctrine:'Stylized Physical Realism',
   foundations:{
     test09d:'ACCEPTED / FROZEN / CANONICAL',
@@ -138,7 +143,11 @@ await writeFile(path.join(out,'build-info.json'),JSON.stringify({
     ruin_v2:true,
     two_additional_tree_silhouettes:true,
     wetland_ecology_clusters:true,
-    legacy_gate_presentation_clipped:true
+    legacy_gate_presentation_clipped:true,
+    corrective_geometry_revision:'3.0.1',
+    strip_winding_repaired:true,
+    strip_outer_skirts_buried:true,
+    shoreline_winding_validated:true
   },
   hard_limits:{draw_calls_max:120,triangles_max:350000,regression_06j_required:'PASS'},
   runtime_external_dependencies:0,
@@ -165,12 +174,16 @@ await writeFile(path.join(out,'verification-report.json'),JSON.stringify({
   iteration:'Presentation Pass 5',
   status:'PASS',
   build_id:buildId,
-  classification:'ENVIRONMENT ART PRODUCTION / HUMAN REVIEW CANDIDATE',
+  classification:'ENVIRONMENT ART PRODUCTION / GEOMETRY-REPAIRED HUMAN REVIEW CANDIDATE',
   delegated_nonvisual_checks:{
     accepted_09d_frozen_required:true,
     pass4_source_reused_unchanged:true,
     eight_v3_environment_glbs_generated:true,
     all_v3_asset_budgets_pass:true,
+    strip_winding_qa:true,
+    strip_outer_skirts_buried_qa:true,
+    shoreline_winding_qa:true,
+    geometry_fix_does_not_use_double_side:true,
     runtime_batch_ceiling:6,
     legacy_gate_clip_runtime_hook:true,
     local_player_glb_packaged:true,
