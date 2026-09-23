@@ -64,7 +64,7 @@ The original GLBs remain standalone reusable assets; static batching is only the
 - asset load errors: 0;
 - all 13 asset identities represented in placements;
 - eight prototype families removed;
-- material batches <= 12;
+- material batches <= 8;
 - integrated asset triangles <= 18,000;
 - total draw calls <= 120;
 - total triangles <= 350,000;
