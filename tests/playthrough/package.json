@@ -1,0 +1,11 @@
+{
+  "name": "raai-agent-playthrough-pilot",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "latest"
+  }
+}
