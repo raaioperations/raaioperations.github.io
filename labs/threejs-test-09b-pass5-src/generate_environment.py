@@ -127,7 +127,9 @@ def shoreline_shelf():
     r_water=6.2
     r_crown=7.45
     r_land=8.7
-    # Half-ring asset: two placements at yaw 0 / PI cover the shoreline without overlap.\n    seam=.02\n    a0=-math.pi/2+seam;a1=math.pi/2-seam
+    # Half-ring asset: two placements at yaw 0 / PI cover the shoreline without overlap.
+    seam=.02
+    a0=-math.pi/2+seam;a1=math.pi/2-seam
     verts=[]
     rows=((r_water,-.28),(r_crown,.22),(r_land,-.30))
     for row_index,(r,y) in enumerate(rows):
