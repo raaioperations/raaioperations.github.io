@@ -5899,6 +5899,7 @@ let legacyGateClipMaterials09B=0;
 let pass5ConformedVertices09B=0;
 let pass5MinVertexClearance09B=Infinity;
 let legacyShoreHidden09B=false;
+let legacyMeadowHidden09B=false;
 
 const pass5Root09B=new THREE.Group();
 pass5Root09B.name='09B_PASS5_ENVIRONMENT_ART';
@@ -5964,13 +5965,9 @@ function environmentPlacementY09B(x,z,asset){
 function visibleGroundYPass5_09B(localX,localZ){
   const wx=beauty09D.center.x+localX;
   const wz=beauty09D.center.z+localZ;
-  const radial=Math.hypot(localX,localZ);
-  const edgeLift=Math.max(0,(radial-21)/12);
-  const waterD=Math.hypot(localX+12,localZ-7);
-  const waterBowl=Math.max(0,1-waterD/10.2);
-  const undulation=.07*Math.sin(localX*.22)+.05*Math.cos(localZ*.19)+.025*Math.sin((localX+localZ)*.47);
-  const authoredLift=.28*edgeLift*edgeLift-.14*waterBowl*waterBowl;
-  return groundHeight(wx,wz)+.055+undulation+authoredLift;
+  // Match the actual systemic terrain mesh exactly. The base terrain geometry
+  // is authored from heightAt(x,z); the duplicate meadow overlay is suppressed.
+  return heightAt(wx,wz);
 }
 
 function conformTerrainGeometryPass5_09B(geometry,placementY,asset){
@@ -6146,16 +6143,17 @@ async function applyPresentationPass5_09B(){
 
   await loadPass5EnvironmentAssets09B();
 
-  // Final material hierarchy pass on existing systemic surfaces.
-  terrainMat.color.set(0x9fac8a);
-  terrainMat.roughness=1;
-  terrainMat.bumpScale=.18;
+  // The systemic terrain becomes the sole visible ground surface. Preserve the
+  // Pass-5 presentation look through its existing vertex colors/material rather
+  // than stacking a second near-coplanar meadow mesh above it.
+  terrainMat.color.set(0xa9b59a);
+  terrainMat.roughness=.99;
+  terrainMat.bumpScale=.14;
 
   const meadow=objectByNameP3('09B meadow ground p2');
-  if(meadow?.material){
-    meadow.material.color.set(0xa4b58e);
-    meadow.material.roughness=1;
-    meadow.material.bumpScale=.12;
+  if(meadow){
+    meadow.visible=false;
+    legacyMeadowHidden09B=true;
   }
 
   const path=objectByNameP3('09B soil path p2');
@@ -6189,6 +6187,7 @@ function pass5Proof09B(){
     terrain_conformance:pass5ConformedVertices09B>0,
     terrain_clearance:Number.isFinite(pass5MinVertexClearance09B)&&pass5MinVertexClearance09B>=.10,
     legacy_shore_hidden:legacyShoreHidden09B===true,
+    legacy_meadow_hidden:legacyMeadowHidden09B===true,
     player_glb:characterMode==='GLB',
     draw_calls:calls<=120,
     triangles:triangles<=350000,
@@ -6219,7 +6218,7 @@ function updatePass5Hud09B(){
   }else if(p.automatedReady){
     setP5Text09B(
       p5ResultEl09B,
-      'ENVIRONMENT GLBs ✓ · TERRAIN-CONFORMED BANKS/PATH/SHORE ✓ · LEGACY SHORE HIDDEN ✓ · RUIN V2 ✓ · TREE VARIANTS ✓ · WETLAND ECOLOGY ✓ · PERFORMANCE PASS ✓ · HUMAN PRESENTATION REVIEW REQUIRED',
+      'ENVIRONMENT GLBs ✓ · SYSTEMIC GROUND ONLY ✓ · TERRAIN-CONFORMED BANKS/PATH/SHORE ✓ · LEGACY SHORE HIDDEN ✓ · RUIN V2 ✓ · TREE VARIANTS ✓ · WETLAND ECOLOGY ✓ · PERFORMANCE PASS ✓ · HUMAN PRESENTATION REVIEW REQUIRED',
       '#ffe59a'
     );
   }else{
@@ -6257,5 +6256,6 @@ globalThis.__presentationPass5_09B={
   get conformedVertices(){return pass5ConformedVertices09B;},
   get minVertexClearance(){return pass5MinVertexClearance09B;},
   get legacyShoreHidden(){return legacyShoreHidden09B;},
+  get legacyMeadowHidden(){return legacyMeadowHidden09B;},
   get proof(){return pass5Proof09B();}
 };

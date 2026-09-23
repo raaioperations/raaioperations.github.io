@@ -2,7 +2,7 @@
   "test": "09B",
   "iteration": "Presentation Pass 5",
   "status": "PASS",
-  "build_id": "20260923045255",
+  "build_id": "20260923050442",
   "classification": "ENVIRONMENT ART PRODUCTION / GEOMETRY-REPAIRED HUMAN REVIEW CANDIDATE",
   "delegated_nonvisual_checks": {
     "accepted_09d_frozen_required": true,
@@ -16,6 +16,8 @@
     "shoreline_half_arc_nonoverlap_qa": true,
     "runtime_vertex_terrain_conformance_required": true,
     "legacy_wet_shoreline_hidden_required": true,
+    "duplicate_meadow_ground_hidden_required": true,
+    "systemic_terrain_surface_sampler_required": true,
     "geometry_fix_does_not_use_double_side": true,
     "runtime_batch_ceiling": 6,
     "legacy_gate_clip_runtime_hook": true,
