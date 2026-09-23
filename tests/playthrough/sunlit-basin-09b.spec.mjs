@@ -22,6 +22,46 @@ function writeReport(data) {
   );
 }
 
+async function readPlayerTransform(page) {
+  return page.evaluate(() => {
+    const scene = globalThis.__verticalBeautySlice09B?.root?.parent;
+    if (!scene?.children) return null;
+
+    const candidates = [];
+    for (const child of scene.children) {
+      let skinnedMeshes = 0;
+      child.traverse?.(object => {
+        if (object?.isSkinnedMesh) skinnedMeshes++;
+      });
+      if (!skinnedMeshes) continue;
+
+      const x = Number(child.position?.x ?? 0);
+      const y = Number(child.position?.y ?? 0);
+      const z = Number(child.position?.z ?? 0);
+
+      // The local player spawns at approximately x=5, z=60.
+      // Production/world actors are nested beneath their own system roots.
+      const spawnDistance = Math.hypot(x - 5, z - 60);
+      candidates.push({
+        name: child.name || '',
+        uuid: child.uuid || '',
+        skinnedMeshes,
+        x,
+        y,
+        z,
+        spawnDistance
+      });
+    }
+
+    candidates.sort((a, b) => a.spawnDistance - b.spawnDistance);
+    return candidates[0] ?? null;
+  });
+}
+
+function planarDistance(a, b) {
+  return Math.hypot((b?.x ?? 0) - (a?.x ?? 0), (b?.z ?? 0) - (a?.z ?? 0));
+}
+
 test('09B Pass 5 automated playthrough pilot', async ({ page }) => {
   const pageErrors = [];
   const consoleErrors = [];
@@ -123,75 +163,113 @@ test('09B Pass 5 automated playthrough pilot', async ({ page }) => {
     return globalThis.__presentationPass5_09B?.proof?.checks?.v3_assets === true;
   }, null, { timeout: 45000 });
 
-  const beforeMove = await page.evaluate(() => ({
-    flockDistance: globalThis.__livingWorld06A?.distance ?? null,
-    zone: document.getElementById('zone')?.textContent ?? '',
-    pass5: globalThis.__presentationPass5_09B?.proof ?? null,
-    beauty: globalThis.__verticalBeautySlice09B?.proof ?? null,
-    auditStageVisibleToPipeline: globalThis.__livingWorld06J?.stage ?? null
-  }));
+  const beforeMove = {
+    player: await readPlayerTransform(page),
+    runtime: await page.evaluate(() => ({
+      zone: document.getElementById('zone')?.textContent ?? '',
+      pass5: globalThis.__presentationPass5_09B?.proof ?? null,
+      beauty: globalThis.__verticalBeautySlice09B?.proof ?? null,
+      auditStageVisibleToPipeline: globalThis.__livingWorld06J?.stage ?? null
+    }))
+  };
 
-  expect(beforeMove.pass5?.automatedReady).toBe(true);
-  expect(beforeMove.pass5?.failed ?? []).toEqual([]);
-  expect(beforeMove.pass5?.checks?.v3_assets).toBe(true);
-  expect(beforeMove.pass5?.checks?.v3_batches).toBe(true);
-  expect(beforeMove.pass5?.checks?.terrain_conformance).toBe(true);
-  expect(beforeMove.pass5?.checks?.terrain_clearance).toBe(true);
-  expect(beforeMove.pass5?.checks?.legacy_shore_hidden).toBe(true);
-  expect(beforeMove.pass5?.checks?.legacy_meadow_hidden).toBe(true);
-  expect(beforeMove.pass5?.checks?.draw_calls).toBe(true);
-  expect(beforeMove.pass5?.checks?.triangles).toBe(true);
-  expect(beforeMove.pass5?.checks?.duplicates).toBe(true);
-  expect(beforeMove.pass5?.checks?.no_error).toBe(true);
+  expect(beforeMove.player, 'Could not locate the local GLB player root').not.toBeNull();
+  expect(beforeMove.runtime.pass5?.automatedReady).toBe(true);
+  expect(beforeMove.runtime.pass5?.failed ?? []).toEqual([]);
+  expect(beforeMove.runtime.pass5?.checks?.v3_assets).toBe(true);
+  expect(beforeMove.runtime.pass5?.checks?.v3_batches).toBe(true);
+  expect(beforeMove.runtime.pass5?.checks?.terrain_conformance).toBe(true);
+  expect(beforeMove.runtime.pass5?.checks?.terrain_clearance).toBe(true);
+  expect(beforeMove.runtime.pass5?.checks?.legacy_shore_hidden).toBe(true);
+  expect(beforeMove.runtime.pass5?.checks?.legacy_meadow_hidden).toBe(true);
+  expect(beforeMove.runtime.pass5?.checks?.draw_calls).toBe(true);
+  expect(beforeMove.runtime.pass5?.checks?.triangles).toBe(true);
+  expect(beforeMove.runtime.pass5?.checks?.duplicates).toBe(true);
+  expect(beforeMove.runtime.pass5?.checks?.no_error).toBe(true);
 
-  expect(beforeMove.beauty?.checks?.total_draw_calls).toBe(true);
-  expect(beforeMove.beauty?.checks?.total_triangles).toBe(true);
-  expect(beforeMove.beauty?.checks?.duplicates_zero).toBe(true);
-  expect(beforeMove.beauty?.checks?.regression).toBe(true);
+  expect(beforeMove.runtime.beauty?.checks?.total_draw_calls).toBe(true);
+  expect(beforeMove.runtime.beauty?.checks?.total_triangles).toBe(true);
+  expect(beforeMove.runtime.beauty?.checks?.duplicates_zero).toBe(true);
+  expect(beforeMove.runtime.beauty?.checks?.regression).toBe(true);
 
-  expect(beforeMove.flockDistance).not.toBeNull();
+  // Real browser keyboard input. CI may render at extremely low software-WebGL
+  // frame rates, so assert direct transform response rather than real-time speed.
+  await page.keyboard.down('w');
+  await page.waitForTimeout(2600);
+  await page.keyboard.up('w');
+  await page.waitForTimeout(400);
 
-  await page.keyboard.down('KeyW');
-  await page.waitForTimeout(1200);
-  await page.keyboard.up('KeyW');
-  await page.waitForTimeout(250);
+  const afterForwardPlayer = await readPlayerTransform(page);
+  const forwardDisplacement = planarDistance(beforeMove.player, afterForwardPlayer);
+  expect(
+    forwardDisplacement,
+    JSON.stringify({ before: beforeMove.player, after: afterForwardPlayer }, null, 2)
+  ).toBeGreaterThan(0.02);
 
-  const afterForward = await page.evaluate(() => ({
-    flockDistance: globalThis.__livingWorld06A?.distance ?? null,
-    zone: document.getElementById('zone')?.textContent ?? ''
-  }));
+  // Exercise sprint + strafe and verify additional planar motion.
+  await page.keyboard.down('Shift');
+  await page.keyboard.down('d');
+  await page.waitForTimeout(1800);
+  await page.keyboard.up('d');
+  await page.keyboard.up('Shift');
+  await page.waitForTimeout(350);
 
-  expect(Math.abs(afterForward.flockDistance - beforeMove.flockDistance)).toBeGreaterThan(0.20);
+  const afterSprintStrafePlayer = await readPlayerTransform(page);
+  const sprintStrafeDisplacement = planarDistance(afterForwardPlayer, afterSprintStrafePlayer);
+  expect(
+    sprintStrafeDisplacement,
+    JSON.stringify({ before: afterForwardPlayer, after: afterSprintStrafePlayer }, null, 2)
+  ).toBeGreaterThan(0.01);
 
-  await page.keyboard.down('ShiftLeft');
-  await page.keyboard.down('KeyD');
-  await page.waitForTimeout(900);
-  await page.keyboard.up('KeyD');
-  await page.keyboard.up('ShiftLeft');
-  await page.waitForTimeout(250);
-
+  // Exercise jump and observe the actual player Y transform.
+  const jumpBaseY = afterSprintStrafePlayer?.y ?? 0;
   await page.keyboard.press('Space');
-  await page.waitForTimeout(500);
-
-  const finalState = await page.evaluate(() => ({
-    flockDistance: globalThis.__livingWorld06A?.distance ?? null,
-    zone: document.getElementById('zone')?.textContent ?? '',
-    pass5: globalThis.__presentationPass5_09B?.proof ?? null,
-    auditStageVisibleToPipeline: globalThis.__livingWorld06J?.stage ?? null,
-    auditResultVisibleToPipeline: globalThis.__livingWorld06J?.result ?? null,
-    playerCharacter: document.getElementById('char')?.textContent ?? '',
-    p5Hud: {
-      stage: document.getElementById('p5Stage09B')?.textContent ?? '',
-      assets: document.getElementById('p5Assets09B')?.textContent ?? '',
-      draw: document.getElementById('p5Draw09B')?.textContent ?? '',
-      triangles: document.getElementById('p5Triangles09B')?.textContent ?? '',
-      regression: document.getElementById('p5Regression09B')?.textContent ?? '',
-      result: document.getElementById('p5Result09B')?.textContent ?? ''
+  await expect.poll(
+    async () => {
+      const p = await readPlayerTransform(page);
+      return (p?.y ?? jumpBaseY) - jumpBaseY;
+    },
+    {
+      timeout: 5000,
+      intervals: [250, 400, 600, 800],
+      message: 'Player Y should rise after Space'
     }
-  }));
+  ).toBeGreaterThan(0.02);
 
-  expect(finalState.pass5?.automatedReady).toBe(true);
-  expect(finalState.playerCharacter).not.toBe('BOOT');
+  // Exercise camera drag without making visual/pixel identity part of functional acceptance.
+  const canvas = page.locator('canvas').first();
+  const box = await canvas.boundingBox();
+  if (box) {
+    const sx = box.x + box.width * 0.62;
+    const sy = box.y + box.height * 0.45;
+    await page.mouse.move(sx, sy);
+    await page.mouse.down();
+    await page.mouse.move(sx + 90, sy + 25, { steps: 6 });
+    await page.mouse.up();
+    await page.waitForTimeout(300);
+  }
+
+  const finalState = {
+    player: await readPlayerTransform(page),
+    runtime: await page.evaluate(() => ({
+      zone: document.getElementById('zone')?.textContent ?? '',
+      pass5: globalThis.__presentationPass5_09B?.proof ?? null,
+      auditStageVisibleToPipeline: globalThis.__livingWorld06J?.stage ?? null,
+      auditResultVisibleToPipeline: globalThis.__livingWorld06J?.result ?? null,
+      playerCharacter: document.getElementById('char')?.textContent ?? '',
+      p5Hud: {
+        stage: document.getElementById('p5Stage09B')?.textContent ?? '',
+        assets: document.getElementById('p5Assets09B')?.textContent ?? '',
+        draw: document.getElementById('p5Draw09B')?.textContent ?? '',
+        triangles: document.getElementById('p5Triangles09B')?.textContent ?? '',
+        regression: document.getElementById('p5Regression09B')?.textContent ?? '',
+        result: document.getElementById('p5Result09B')?.textContent ?? ''
+      }
+    }))
+  };
+
+  expect(finalState.runtime.pass5?.automatedReady).toBe(true);
+  expect(finalState.runtime.playerCharacter).toBe('GLB');
   expect(failedCoreRequests).toEqual([]);
   expect(pageErrors).toEqual([]);
 
@@ -213,9 +291,18 @@ test('09B Pass 5 automated playthrough pilot', async ({ page }) => {
     auditOriginal,
     structuralAuditChecks,
     ciPerformanceBypassApplied,
-    beforeMove,
-    afterForward,
-    finalState,
+    movement: {
+      before: beforeMove.player,
+      afterForward: afterForwardPlayer,
+      forwardDisplacement,
+      afterSprintStrafe: afterSprintStrafePlayer,
+      sprintStrafeDisplacement,
+      final: finalState.player
+    },
+    presentation: {
+      before: beforeMove.runtime,
+      final: finalState.runtime
+    },
     diagnostics: {
       pageErrors,
       consoleErrors,
@@ -224,9 +311,11 @@ test('09B Pass 5 automated playthrough pilot', async ({ page }) => {
     assertions: {
       structural_06j_checks_pass: true,
       pass5_automated_ready: true,
-      keyboard_movement_observed: true,
-      sprint_input_exercised: true,
-      jump_input_exercised: true,
+      player_root_identified: true,
+      keyboard_forward_movement_observed: true,
+      sprint_strafe_movement_observed: true,
+      jump_vertical_motion_observed: true,
+      camera_drag_exercised: true,
       core_asset_requests_ok: true,
       uncaught_page_errors_zero: true
     },
