@@ -1,9 +1,17 @@
 {
   "test": "09D",
   "milestone": "Sunlit Basin Asset Integration Proof",
-  "status": "DEPLOYED_HUMAN_REVIEW_REQUIRED",
+  "status": "ACCEPTED_FROZEN_CANONICAL",
   "build_id": "20260923033144",
   "supports_open_milestone": "09B — Vertical Beauty Slice",
   "presentation_acceptance": false,
-  "frozen": false
+  "frozen": true,
+  "accepted_at": "2026-09-23T03:44:46Z",
+  "accepted_build": "20260923033144",
+  "human_runtime_review": "PASS",
+  "total_draw_calls": 114,
+  "total_triangles": 292312,
+  "next": "09B — Vertical Beauty Slice / Presentation Pass 3",
+  "next_authorized": true,
+  "canonical": true
 }
