@@ -72,8 +72,10 @@ const finalRaf=(source.match(/requestAnimationFrame\s*\(/g)||[]).length;
 assert(finalRaf===inheritedRaf,'Pass 5 must not add RAF loop');
 assert(!/requestAnimationFrame\s*\(/.test(frag),'Pass 5 fragment contains prohibited RAF');
 assert(frag.includes('visibleGroundYPass5_09B'),'terrain-conformance ground sampler required');
+assert(frag.includes('return heightAt(wx,wz);'),'systemic terrain surface sampler required');
 assert(frag.includes('conformTerrainGeometryPass5_09B'),'terrain-conformance deformation required');
 assert(frag.includes('legacyShoreHidden09B=true'),'legacy wet shoreline suppression required');
+assert(frag.includes('legacyMeadowHidden09B=true'),'duplicate meadow suppression required');
 
 const buildId=new Date().toISOString().replace(/\D/g,'').slice(0,14);
 
@@ -112,6 +114,7 @@ for(const marker of [
 
 for(const token of [
   'ENVIRONMENT GLBs',
+  'SYSTEMIC GROUND ONLY',
   'TERRAIN-CONFORMED BANKS/PATH/SHORE',
   'LEGACY SHORE HIDDEN',
   'RUIN V2',
@@ -165,7 +168,9 @@ await writeFile(path.join(out,'build-info.json'),JSON.stringify({
     shoreline_edges_buried:true,
     shoreline_half_arc_nonoverlap:true,
     runtime_vertex_terrain_conformance:true,
-    legacy_wet_shoreline_hidden:true
+    legacy_wet_shoreline_hidden:true,
+    duplicate_meadow_ground_hidden:true,
+    systemic_terrain_is_visible_ground:true
   },
   hard_limits:{draw_calls_max:120,triangles_max:350000,regression_06j_required:'PASS'},
   runtime_external_dependencies:0,
@@ -205,6 +210,8 @@ await writeFile(path.join(out,'verification-report.json'),JSON.stringify({
     shoreline_half_arc_nonoverlap_qa:true,
     runtime_vertex_terrain_conformance_required:true,
     legacy_wet_shoreline_hidden_required:true,
+    duplicate_meadow_ground_hidden_required:true,
+    systemic_terrain_surface_sampler_required:true,
     geometry_fix_does_not_use_double_side:true,
     runtime_batch_ceiling:6,
     legacy_gate_clip_runtime_hook:true,
