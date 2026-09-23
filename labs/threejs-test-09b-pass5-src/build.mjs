@@ -2,6 +2,7 @@ import {build} from 'esbuild';
 import {mkdir,writeFile,readFile,stat,rm,copyFile} from 'node:fs/promises';
 import path from 'node:path';
 import crypto from 'node:crypto';
+import {execFileSync} from 'node:child_process';
 import {makePass5Html09B} from './page.mjs';
 
 const root=process.cwd();
@@ -17,10 +18,16 @@ const blobSha=text=>{
 };
 const assert=(c,m)=>{if(!c)throw new Error('09B Pass 5 build proof failed: '+m);};
 
-const sourcePass4=await readFile(path.join(out,'source-main.js'),'utf8');
-const indexPass4=await readFile(path.join(out,'index.html'),'utf8');
-const buildPass4=JSON.parse(await readFile(path.join(out,'build-info.json'),'utf8'));
-const verifyPass4=JSON.parse(await readFile(path.join(out,'verification-report.json'),'utf8'));
+const frozenPass4Commit='4d294732fb2a49b604c12e89758fa00d7a5840db';
+const gitShow=(file)=>execFileSync(
+  'git',
+  ['show',frozenPass4Commit+':'+file],
+  {cwd:repo,encoding:'utf8',maxBuffer:32*1024*1024}
+);
+const sourcePass4=gitShow('labs/threejs-test-09b/source-main.js');
+const indexPass4=gitShow('labs/threejs-test-09b/index.html');
+const buildPass4=JSON.parse(gitShow('labs/threejs-test-09b/build-info.json'));
+const verifyPass4=JSON.parse(gitShow('labs/threejs-test-09b/verification-report.json'));
 const accept09D=JSON.parse(await readFile(path.join(labs,'threejs-test-09d','acceptance.json'),'utf8'));
 const manifest=JSON.parse(await readFile(path.join(envRoot,'asset_manifest.generated.json'),'utf8'));
 assert(manifest.version==='3.0.1','Pass 5 repaired v3 manifest required');
@@ -127,6 +134,7 @@ await writeFile(path.join(out,'build-info.json'),JSON.stringify({
   foundations:{
     test09d:'ACCEPTED / FROZEN / CANONICAL',
     pass4_build:'20260923040859',
+    pass4_commit:frozenPass4Commit,
     pass4_source:expectedPass4Source,
     pass4_index:expectedPass4Index
   },
