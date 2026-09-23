@@ -1,0 +1,63 @@
+name: Build Three.js Test 09B Pass 4
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'labs/threejs-test-09b-pass4-src/**'
+      - '.github/workflows/build-threejs-test09b-pass4.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install ridge authoring dependencies
+        run: python -m pip install --disable-pip-version-check numpy scipy trimesh
+
+      - name: Generate Pass 4 ridge GLBs
+        run: |
+          rm -rf assets/3d/sunlit-basin/v2
+          ASSET_OUT=assets/3d/sunlit-basin/v2 python labs/threejs-test-09b-pass4-src/generate_ridges.py
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install pinned dependencies
+        working-directory: labs/threejs-test-09b-pass4-src
+        run: npm install --no-audit --no-fund --no-package-lock
+
+      - name: Build 09B Pass 4
+        working-directory: labs/threejs-test-09b-pass4-src
+        run: npm run build
+
+      - name: Verify Pass 4
+        run: |
+          node -e "const fs=require('fs'); const v=JSON.parse(fs.readFileSync('labs/threejs-test-09b/verification-report.json','utf8')); if(v.status!=='PASS'||v.iteration!=='Presentation Pass 4') process.exit(1); console.log(v);"
+
+      - name: Publish Pass 4
+        run: |
+          git config user.name "raaioperations"
+          git config user.email "alanhasan87@gmail.com"
+          git add assets/3d/sunlit-basin/v2 labs/threejs-test-09b
+          if git diff --cached --quiet; then
+            echo "No generated changes"
+          else
+            git commit -m "Build 09B Presentation Pass 4 scene assetization"
+            git push
+          fi

@@ -1,0 +1,11 @@
+{
+  "name":"raai-threejs-test-09b-pass4",
+  "private":true,
+  "version":"0.9.5",
+  "description":"09B Vertical Beauty Slice — Presentation Pass 4 scene assetization",
+  "type":"module",
+  "engines":{"node":">=22"},
+  "scripts":{"build":"node build.mjs"},
+  "dependencies":{"three":"0.186.0"},
+  "devDependencies":{"esbuild":"0.25.9"}
+}
