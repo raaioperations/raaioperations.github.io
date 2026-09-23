@@ -1,7 +1,7 @@
 {
   "test": "09D",
   "status": "PASS",
-  "build_id": "20260922062453",
+  "build_id": "20260923033122",
   "classification": "ASSET PIPELINE / RUNTIME INTEGRATION PROOF",
   "delegated_nonvisual_checks": {
     "09b_source_reused_unchanged": true,
@@ -24,7 +24,8 @@
     "assets_integrated": 13,
     "prototype_families_replaced": 8,
     "placements": 124,
-    "material_batches": 12,
+    "source_material_families": 12,
+    "runtime_material_batch_ceiling": 8,
     "integrated_asset_triangles": 13274,
     "max_integrated_asset_triangles": 18000,
     "absolute_draw_call_ceiling": 120,

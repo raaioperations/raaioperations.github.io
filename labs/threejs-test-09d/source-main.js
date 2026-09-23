@@ -5171,6 +5171,26 @@ function normalizedGeometry09D(mesh,placementMatrix){
   return g;
 }
 
+function consolidatedBucket09D(materialName){
+  if(materialName.startsWith('MAT_FOLIAGE_'))return 'MAT_FOLIAGE_BATCH';
+  if(materialName.startsWith('MAT_FLOWER_'))return 'MAT_FLOWER_BATCH';
+  return materialName;
+}
+
+function bakeMaterialColor09D(geometry,material){
+  const count=geometry.getAttribute('position')?.count||0;
+  const color=material?.color?.isColor?material.color:new THREE.Color(0xffffff);
+  const values=new Float32Array(count*3);
+  for(let i=0;i<count;i++){
+    const j=i*3;
+    values[j]=color.r;
+    values[j+1]=color.g;
+    values[j+2]=color.b;
+  }
+  geometry.setAttribute('color',new THREE.BufferAttribute(values,3));
+  return geometry;
+}
+
 function groundY09D(x,z,asset){
   // Ridges are distant silhouettes, not ground-contact gameplay props.
   if(asset.startsWith('ridge_')){
@@ -5241,11 +5261,15 @@ async function integrateAssets09D(){
         throw new Error('09D unapproved material '+materialName+' in '+placement.asset);
       }
 
-      const g=normalizedGeometry09D(obj,placementMatrix);
-      const list=buckets.get(materialName)||[];
+      const bucketName=consolidatedBucket09D(materialName);
+      let g=normalizedGeometry09D(obj,placementMatrix);
+      if(bucketName==='MAT_FOLIAGE_BATCH'||bucketName==='MAT_FLOWER_BATCH'){
+        g=bakeMaterialColor09D(g,material);
+      }
+      const list=buckets.get(bucketName)||[];
       list.push(g);
-      buckets.set(materialName,list);
-      if(!materialTemplates.has(materialName))materialTemplates.set(materialName,material);
+      buckets.set(bucketName,list);
+      if(!materialTemplates.has(bucketName))materialTemplates.set(bucketName,material);
     });
   }
 
@@ -5260,13 +5284,19 @@ async function integrateAssets09D(){
 
     const material=materialTemplates.get(materialName).clone();
     material.name=materialName;
-    material.vertexColors=false;
+    const consolidatedColors=
+      materialName==='MAT_FOLIAGE_BATCH'||
+      materialName==='MAT_FLOWER_BATCH';
+    material.vertexColors=consolidatedColors;
+    if(consolidatedColors&&material.color?.isColor)material.color.set(0xffffff);
     if(materialName.startsWith('MAT_GRASS_'))material.side=THREE.DoubleSide;
     material.needsUpdate=true;
 
     const mesh=new THREE.Mesh(merged,material);
     mesh.name='09D_BATCH_'+materialName;
-    mesh.castShadow=!materialName.startsWith('MAT_GRASS_')&&!materialName.startsWith('MAT_FLOWER_');
+    mesh.castShadow=
+      !materialName.startsWith('MAT_GRASS_')&&
+      materialName!=='MAT_FLOWER_BATCH';
     mesh.receiveShadow=true;
     integrationRoot09D.add(mesh);
 
@@ -5321,7 +5351,7 @@ function updateHud09D(){
   set09D(loadsEl09D,loadedCount09D+' / 13'+(loadErrors09D?' · errors '+loadErrors09D:''));
   set09D(removedEl09D,prototypeRemoved09D+' / 8');
   set09D(placedEl09D,String(PLACEMENTS_09D.length));
-  set09D(batchesEl09D,materialBatches09D+' / 12');
+  set09D(batchesEl09D,materialBatches09D+' / 8');
   set09D(assetTriEl09D,integratedTriangles09D.toLocaleString()+' / 18,000');
   set09D(drawEl09D,p.calls+' / 120',p.calls<=120?'#bdf3c8':'#ff9b9b');
   set09D(triEl09D,p.triangles.toLocaleString()+' / 350,000',p.triangles<=350000?'#bdf3c8':'#ff9b9b');
