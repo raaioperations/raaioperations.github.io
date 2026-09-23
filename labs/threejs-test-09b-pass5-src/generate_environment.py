@@ -248,6 +248,7 @@ manifest={
         "strip_outer_skirts_buried":True,
         "shore_faces_upward":True,
         "shore_edges_buried":True,
+        "shore_half_arc_nonoverlap":True,
         "no_double_side_geometry_fix":True
     },
     "assets":{}
