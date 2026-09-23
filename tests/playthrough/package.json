@@ -5,7 +5,7 @@
   "scripts": {
     "test": "playwright test",
     "test:ci": "RAAI_PERF_MODE=ci-structural playwright test",
-    "test:reference": "RAAI_PERF_MODE=reference playwright test"
+    "test:reference": "RAAI_PERF_MODE=reference RAAI_HEADED=1 playwright test"
   },
   "devDependencies": {
     "@playwright/test": "latest"
