@@ -1,5 +1,5 @@
 {
-  "build_id": "20260923044415",
+  "build_id": "20260923045255",
   "test": "09B",
   "roadmap": "Test09 — Presentation Foundation",
   "milestone": "Vertical Beauty Slice",
@@ -37,11 +37,14 @@
     "two_additional_tree_silhouettes": true,
     "wetland_ecology_clusters": true,
     "legacy_gate_presentation_clipped": true,
-    "corrective_geometry_revision": "3.0.2",
+    "corrective_geometry_revision": "3.0.3",
     "strip_winding_repaired": true,
     "strip_outer_skirts_buried": true,
     "shoreline_winding_validated": true,
-    "shoreline_edges_buried": true
+    "shoreline_edges_buried": true,
+    "shoreline_half_arc_nonoverlap": true,
+    "runtime_vertex_terrain_conformance": true,
+    "legacy_wet_shoreline_hidden": true
   },
   "hard_limits": {
     "draw_calls_max": 120,
@@ -64,5 +67,5 @@
   "automated_presentation_acceptance": false,
   "human_presentation_review": "REQUIRED",
   "frozen": false,
-  "app_js_bytes": 859654
+  "app_js_bytes": 860745
 }

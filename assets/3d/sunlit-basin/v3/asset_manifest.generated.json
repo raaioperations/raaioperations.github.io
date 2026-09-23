@@ -1,5 +1,5 @@
 {
-  "version": "3.0.2",
+  "version": "3.0.3",
   "milestone": "09B Presentation Pass 5 \u2014 Environment Art Production / Geometry Repair",
   "format": "glTF 2.0 binary (.glb)",
   "geometry_qa": {
@@ -7,6 +7,7 @@
     "strip_outer_skirts_buried": true,
     "shore_faces_upward": true,
     "shore_edges_buried": true,
+    "shore_half_arc_nonoverlap": true,
     "no_double_side_geometry_fix": true
   },
   "assets": {
@@ -53,9 +54,9 @@
       "triangles": 96,
       "budget": 120,
       "bounds_m": [
-        7.402,
+        8.643,
         0.57,
-        16.73
+        17.438
       ],
       "materials": [
         "MAT_EARTH_DAMP"

@@ -5896,6 +5896,9 @@ let pass5Loaded09B=0;
 let pass5Batches09B=0;
 let pass5Triangles09B=0;
 let legacyGateClipMaterials09B=0;
+let pass5ConformedVertices09B=0;
+let pass5MinVertexClearance09B=Infinity;
+let legacyShoreHidden09B=false;
 
 const pass5Root09B=new THREE.Group();
 pass5Root09B.name='09B_PASS5_ENVIRONMENT_ART';
@@ -5958,6 +5961,49 @@ function environmentPlacementY09B(x,z,asset){
   return y;
 }
 
+function visibleGroundYPass5_09B(localX,localZ){
+  const wx=beauty09D.center.x+localX;
+  const wz=beauty09D.center.z+localZ;
+  const radial=Math.hypot(localX,localZ);
+  const edgeLift=Math.max(0,(radial-21)/12);
+  const waterD=Math.hypot(localX+12,localZ-7);
+  const waterBowl=Math.max(0,1-waterD/10.2);
+  const undulation=.07*Math.sin(localX*.22)+.05*Math.cos(localZ*.19)+.025*Math.sin((localX+localZ)*.47);
+  const authoredLift=.28*edgeLift*edgeLift-.14*waterBowl*waterBowl;
+  return groundHeight(wx,wz)+.055+undulation+authoredLift;
+}
+
+function conformTerrainGeometryPass5_09B(geometry,placementY,asset){
+  if(![
+    'terrain_bank_a.glb',
+    'terrain_bank_b.glb',
+    'path_cut_berms.glb',
+    'shoreline_shelf.glb'
+  ].includes(asset))return geometry;
+
+  const pos=geometry.getAttribute('position');
+  if(!pos)throw new Error('Pass 5 conform geometry missing position '+asset);
+
+  for(let i=0;i<pos.count;i++){
+    const x=pos.getX(i);
+    const z=pos.getZ(i);
+    const authoredOffset=pos.getY(i)-placementY;
+    const clearance=Math.abs(authoredOffset);
+    if(clearance<.10){
+      throw new Error('Pass 5 terrain vertex entered coplanar band '+asset+' '+clearance.toFixed(4));
+    }
+    pass5MinVertexClearance09B=Math.min(pass5MinVertexClearance09B,clearance);
+    pos.setY(i,visibleGroundYPass5_09B(x,z)+authoredOffset);
+    pass5ConformedVertices09B++;
+  }
+
+  pos.needsUpdate=true;
+  geometry.computeVertexNormals();
+  geometry.computeBoundingBox();
+  geometry.computeBoundingSphere();
+  return geometry;
+}
+
 async function loadPass5EnvironmentAssets09B(){
   const loader=new GLTFLoader09D();
   const loaded=new Map();
@@ -5987,8 +6033,9 @@ async function loadPass5EnvironmentAssets09B(){
     {asset:'path_cut_berms.glb',x:1.8,z:-2,scale:.95,yaw:Math.PI/2+.04},
     {asset:'path_cut_berms.glb',x:4.3,z:12,scale:.92,yaw:Math.PI/2+.06},
 
-    // Authored shoreline shelf around the systemic water.
-    {asset:'shoreline_shelf.glb',x:-12,z:7,scale:1.08,yaw:.22},
+    // Authored shoreline: two half-ring placements, no coplanar overlap.
+    {asset:'shoreline_shelf.glb',x:-12,z:7,scale:1.04,yaw:0},
+    {asset:'shoreline_shelf.glb',x:-12,z:7,scale:1.04,yaw:Math.PI},
 
     // Hero ruin replaces presentation of old gate region.
     {asset:'ruin_sunlit_gate_v2.glb',x:5,z:25,scale:1.05,yaw:.03},
@@ -6040,7 +6087,12 @@ async function loadPass5EnvironmentAssets09B(){
         'MAT_WETLAND_REED'
       ].includes(name))throw new Error('Pass 5 material not approved '+name);
 
-      const g=normalizedGeometry09D(obj,matrix);
+      const placementY=environmentPlacementY09B(p.x,p.z,p.asset);
+      const g=conformTerrainGeometryPass5_09B(
+        normalizedGeometry09D(obj,matrix),
+        placementY,
+        p.asset
+      );
       const list=buckets.get(name)||[];
       list.push(g);
       buckets.set(name,list);
@@ -6114,10 +6166,9 @@ async function applyPresentationPass5_09B(){
   }
 
   const shore=objectByNameP3('09B wet shoreline p2');
-  if(shore?.material){
-    shore.material.color.set(0x74776b);
-    shore.material.roughness=.97;
-    shore.material.bumpScale=.10;
+  if(shore){
+    shore.visible=false;
+    legacyShoreHidden09B=true;
   }
 
   pass5Applied09B=true;
@@ -6135,6 +6186,9 @@ function pass5Proof09B(){
     v3_assets:pass5Loaded09B===8,
     v3_batches:pass5Batches09B<=6,
     gate_clip:legacyGateClipMaterials09B===2,
+    terrain_conformance:pass5ConformedVertices09B>0,
+    terrain_clearance:Number.isFinite(pass5MinVertexClearance09B)&&pass5MinVertexClearance09B>=.10,
+    legacy_shore_hidden:legacyShoreHidden09B===true,
     player_glb:characterMode==='GLB',
     draw_calls:calls<=120,
     triangles:triangles<=350000,
@@ -6165,7 +6219,7 @@ function updatePass5Hud09B(){
   }else if(p.automatedReady){
     setP5Text09B(
       p5ResultEl09B,
-      'ENVIRONMENT GLBs ✓ · AUTHORED BANKS/PATH/SHORE ✓ · RUIN V2 ✓ · TREE VARIANTS ✓ · WETLAND ECOLOGY ✓ · PERFORMANCE PASS ✓ · HUMAN PRESENTATION REVIEW REQUIRED',
+      'ENVIRONMENT GLBs ✓ · TERRAIN-CONFORMED BANKS/PATH/SHORE ✓ · LEGACY SHORE HIDDEN ✓ · RUIN V2 ✓ · TREE VARIANTS ✓ · WETLAND ECOLOGY ✓ · PERFORMANCE PASS ✓ · HUMAN PRESENTATION REVIEW REQUIRED',
       '#ffe59a'
     );
   }else{
@@ -6200,5 +6254,8 @@ globalThis.__presentationPass5_09B={
   get assetsLoaded(){return pass5Loaded09B;},
   get batches(){return pass5Batches09B;},
   get triangles(){return pass5Triangles09B;},
+  get conformedVertices(){return pass5ConformedVertices09B;},
+  get minVertexClearance(){return pass5MinVertexClearance09B;},
+  get legacyShoreHidden(){return legacyShoreHidden09B;},
   get proof(){return pass5Proof09B();}
 };
