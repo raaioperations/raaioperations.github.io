@@ -35,9 +35,9 @@ jobs:
           sleep 2
           curl --fail --silent http://127.0.0.1:4173/labs/threejs-test-09b/ > /dev/null
 
-      - name: Run 09B playthrough
+      - name: Run 09B CI structural playthrough
         working-directory: tests/playthrough
-        run: npm test
+        run: npm run test:ci
 
       - name: Upload playthrough evidence
         if: always()
