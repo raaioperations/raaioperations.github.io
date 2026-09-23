@@ -127,7 +127,7 @@ def shoreline_shelf():
     r_water=6.2
     r_crown=7.45
     r_land=8.7
-    a0=-1.25;a1=1.35
+    # Half-ring asset: two placements at yaw 0 / PI cover the shoreline without overlap.\n    seam=.02\n    a0=-math.pi/2+seam;a1=math.pi/2-seam
     verts=[]
     rows=((r_water,-.28),(r_crown,.22),(r_land,-.30))
     for row_index,(r,y) in enumerate(rows):
@@ -238,7 +238,7 @@ BUDGETS={
 }
 
 manifest={
-    "version":"3.0.2",
+    "version":"3.0.3",
     "milestone":"09B Presentation Pass 5 — Environment Art Production / Geometry Repair",
     "format":"glTF 2.0 binary (.glb)",
     "geometry_qa":{
