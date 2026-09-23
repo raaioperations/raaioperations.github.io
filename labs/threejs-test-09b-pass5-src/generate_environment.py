@@ -120,26 +120,36 @@ def path_cut():
 
 def shoreline_shelf():
     s=trimesh.Scene()
-    # crescent shelf with sloped wet edge
+    # Three radial rows: buried wet edge -> raised authored shelf -> buried
+    # terrain-side skirt. This keeps the visible shelf physically separated
+    # from the systemic ground while both transitions disappear into it.
     seg=24
-    r0=6.2;r1=8.3
+    r_water=6.2
+    r_crown=7.45
+    r_land=8.7
     a0=-1.25;a1=1.35
     verts=[]
-    for r,y in ((r0,-.22),(r1,.16)):
+    rows=((r_water,-.28),(r_crown,.22),(r_land,-.30))
+    for row_index,(r,y) in enumerate(rows):
         for i in range(seg+1):
             a=a0+(a1-a0)*(i/seg)
-            jitter=.10*math.sin(i*1.71)
+            jitter=.10*math.sin(i*1.71+row_index*.37)
             rr=r+jitter
-            verts.append([math.cos(a)*rr,y+(.05*math.sin(i*.7) if r==r1 else 0),math.sin(a)*rr])
+            crown_detail=.05*math.sin(i*.7) if row_index==1 else 0
+            verts.append([math.cos(a)*rr,y+crown_detail,math.sin(a)*rr])
     faces=[]
     row=seg+1
-    for i in range(seg):
-        a=i;b=i+1;c=row+i;d=row+i+1
-        faces += [[a,b,c],[b,d,c]]
+    for band in range(2):
+        for i in range(seg):
+            a=band*row+i;b=a+1;c=(band+1)*row+i;d=c+1
+            faces += [[a,b,c],[b,d,c]]
     mesh=trimesh.Trimesh(vertices=np.asarray(verts,float),faces=np.asarray(faces,int),process=False)
-    # The shoreline is an upward-facing shelf. Validate winding explicitly so
-    # this can never regress into a dark back-facing ribbon.
+    # Both authored shelf bands must remain upward-facing; neither side may
+    # be repaired with DoubleSide or a shader workaround.
     assert float(mesh.face_normals[:,1].min()) > .80, ("shore winding",float(mesh.face_normals[:,1].min()))
+    verts_np=np.asarray(mesh.vertices)
+    assert float(verts_np[:row,1].max()) <= -.25
+    assert float(verts_np[2*row:3*row,1].max()) <= -.25
     setmat(mesh,M["earth_damp"]);add(s,mesh,"shore")
     return s
 
@@ -228,13 +238,14 @@ BUDGETS={
 }
 
 manifest={
-    "version":"3.0.1",
+    "version":"3.0.2",
     "milestone":"09B Presentation Pass 5 — Environment Art Production / Geometry Repair",
     "format":"glTF 2.0 binary (.glb)",
     "geometry_qa":{
         "strip_faces_upward":True,
         "strip_outer_skirts_buried":True,
         "shore_faces_upward":True,
+        "shore_edges_buried":True,
         "no_double_side_geometry_fix":True
     },
     "assets":{}
