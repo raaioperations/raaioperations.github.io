@@ -57,27 +57,44 @@ def irregular_strip(length,width,height,seed,material,segments=12,side_bias=0.0)
     rng=np.random.default_rng(seed)
     xs=np.linspace(-length/2,length/2,segments+1)
     verts=[]
-    # four longitudinal rows: outside base, outside crest, inside crest, inside base
+    # Four longitudinal rows. The outer rows are intentionally buried below
+    # the base terrain so the authored strip cannot become coplanar with the
+    # systemic ground and z-fight on mobile GPUs.
+    skirt_y=-.34
     for row in range(4):
         for i,x in enumerate(xs):
             jitter=(rng.random()-.5)*.18
             if row==0:
-                z=-width/2-.25+jitter; y=0
+                z=-width/2-.25+jitter; y=skirt_y
             elif row==1:
                 z=-width/2*.35+jitter; y=height*(.78+.22*math.sin((i/(segments))*math.pi))
             elif row==2:
                 z= width/2*.35+jitter; y=height*(.68+.18*math.cos((i/(segments))*math.pi))
             else:
-                z= width/2+.25+jitter; y=0
-            y += side_bias*(z/width)
+                z= width/2+.25+jitter; y=skirt_y
+            # Bias only the raised rows. Keeping buried skirts at a fixed depth
+            # prevents one edge from resurfacing as terrain elevation changes.
+            if row in (1,2):
+                y += side_bias*(z/width)
             verts.append([x,y,z])
     faces=[]
     rown=segments+1
     for row in range(3):
         for i in range(segments):
             a=row*rown+i;b=a+1;c=(row+1)*rown+i;d=c+1
-            faces += [[a,b,c],[b,d,c]]
+            # Wound CCW as viewed from above (+Y). The original Pass-5 strip
+            # wound these faces downward.
+            faces += [[a,c,b],[b,c,d]]
     mesh=trimesh.Trimesh(vertices=np.asarray(verts,float),faces=np.asarray(faces,int),process=False)
+
+    # Geometry QA: every authored surface triangle must face generally upward.
+    up=mesh.face_normals[:,1]
+    assert float(up.min()) > .55, ("strip winding",float(up.min()))
+    # Both outside skirt rows must stay below the ground-contact plane.
+    verts_np=np.asarray(mesh.vertices)
+    assert float(verts_np[:rown,1].max()) <= -.30
+    assert float(verts_np[3*rown:4*rown,1].max()) <= -.30
+
     setmat(mesh,material)
     return mesh
 
@@ -120,6 +137,9 @@ def shoreline_shelf():
         a=i;b=i+1;c=row+i;d=row+i+1
         faces += [[a,b,c],[b,d,c]]
     mesh=trimesh.Trimesh(vertices=np.asarray(verts,float),faces=np.asarray(faces,int),process=False)
+    # The shoreline is an upward-facing shelf. Validate winding explicitly so
+    # this can never regress into a dark back-facing ribbon.
+    assert float(mesh.face_normals[:,1].min()) > .80, ("shore winding",float(mesh.face_normals[:,1].min()))
     setmat(mesh,M["earth_damp"]);add(s,mesh,"shore")
     return s
 
@@ -208,9 +228,15 @@ BUDGETS={
 }
 
 manifest={
-    "version":"3.0.0",
-    "milestone":"09B Presentation Pass 5 — Environment Art Production",
+    "version":"3.0.1",
+    "milestone":"09B Presentation Pass 5 — Environment Art Production / Geometry Repair",
     "format":"glTF 2.0 binary (.glb)",
+    "geometry_qa":{
+        "strip_faces_upward":True,
+        "strip_outer_skirts_buried":True,
+        "shore_faces_upward":True,
+        "no_double_side_geometry_fix":True
+    },
     "assets":{}
 }
 
