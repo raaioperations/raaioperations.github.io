@@ -89,6 +89,7 @@ def irregular_strip(length,width,height,seed,side_material,top_material,segments
 
             if row in (1,2):
                 y += side_bias*(z/max(width,.001))
+                y=max(.14,y)
             verts.append([x,y,z])
 
     verts_np=np.asarray(verts,float)
