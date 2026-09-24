@@ -21,6 +21,7 @@ let conformedVertices10A=0;
 let minClearance10A=Infinity;
 let hudNext10A=0;
 let playerMoved10A=false;
+let firstLookApplied10A=false;
 
 const stageEl10A=document.getElementById('repStage10A');
 const assetsEl10A=document.getElementById('repAssets10A');
@@ -211,15 +212,37 @@ async function buildWindcutShelf10A(){
   scene.add(root10A);
 
   if(!playerMoved10A){
-    const sx=center10A.x-4;
-    const sz=center10A.z-16;
+    const first=PRESENTATION_REPLICATION_10A.composition.firstLook;
+    const sx=center10A.x+first.spawn.x;
+    const sz=center10A.z+first.spawn.z;
+    const vx=center10A.x+first.vista.x;
+    const vz=center10A.z+first.vista.z;
+    const dx=vx-sx;
+    const dz=vz-sz;
+
     playerRoot.position.set(sx,groundHeight(sx,sz),sz);
     velocity.set(0,0,0);
     verticalVel=0;
-    yaw=.36;
-    pitch=.29;
-    camDist=8.2;
+
+    // Camera forward is (-sin(yaw), 0, -cos(yaw)); solve yaw from the
+    // authored vista so the first frame points at the identity anchors.
+    yaw=Math.atan2(-dx,-dz);
+    pitch=.22;
+    camDist=7.4;
+    playerRoot.rotation.y=Math.atan2(dx,dz);
+
+    const target=playerRoot.position.clone().add(new THREE.Vector3(0,1.42,0));
+    const desired=target.clone().add(new THREE.Vector3(
+      Math.sin(yaw)*Math.cos(pitch)*camDist,
+      Math.sin(pitch)*camDist+1.0,
+      Math.cos(yaw)*Math.cos(pitch)*camDist
+    ));
+    camera.position.copy(cameraCollision(target,desired));
+    camera.lookAt(target);
+    camera.updateProjectionMatrix();
+
     playerMoved10A=true;
+    firstLookApplied10A=true;
   }
 
   applied10A=true;
@@ -244,6 +267,7 @@ function proof10A(){
     duplicates:duplicates===0,
     regression:regression==='PASS',
     player_glb:characterMode==='GLB',
+    first_look:firstLookApplied10A===true,
     no_error:!error10A
   };
   const failed=Object.entries(checks).filter(([,ok])=>!ok).map(([k])=>k);
@@ -264,7 +288,7 @@ function updateHud10A(){
   if(error10A){
     set10A(resultEl10A,'10A FAIL · '+error10A,'#ff9b9b');
   }else if(p.automatedReady){
-    set10A(resultEl10A,'WINDCUT IDENTITY KIT 4/4 ✓ · MACRO SHELF/ROCK/RUIN/DEADWOOD ✓ · DISTINCT REGION B ENVIRONMENT ✓ · <=6 BATCHES ✓ · PERFORMANCE PASS ✓ · HUMAN PRESENTATION REVIEW REQUIRED','#ffe59a');
+    set10A(resultEl10A,'WINDCUT IDENTITY KIT 4/4 ✓ · FIRST-LOOK VISTA ✓ · MACRO SHELF/ROCK/RUIN/DEADWOOD ✓ · DISTINCT REGION B ENVIRONMENT ✓ · <=6 BATCHES ✓ · PERFORMANCE PASS ✓ · HUMAN PRESENTATION REVIEW REQUIRED','#ffe59a');
   }else{
     set10A(resultEl10A,'BUILDING WINDCUT SHELF REPLICATION PROOF','#ffe59a');
   }
@@ -272,7 +296,7 @@ function updateHud10A(){
 
 const hooks10A=globalThis.__raaiFrameHooks||(globalThis.__raaiFrameHooks=[]);
 const hook10A=(now)=>{
-  if(zoneEl10A)zoneEl10A.textContent='10A · WINDCUT SHELF · REPLICATION PROOF';
+  if(zoneEl10A)zoneEl10A.textContent='10A · WINDCUT SHELF · AUTHORED VISTA';
 
   if(!started10A&&acceptedPresentation10A?.applied&&globalThis.__livingWorld06J?.stage==='PASS'){
     started10A=true;
@@ -298,5 +322,6 @@ globalThis.__presentationReplication10A={
   get assetLoads(){return loadedAssets10A;},
   get batches(){return runtimeBatches10A;},
   get presentationTriangles(){return presentationTriangles10A;},
+  get firstLookApplied(){return firstLookApplied10A;},
   get proof(){return proof10A();}
 };
