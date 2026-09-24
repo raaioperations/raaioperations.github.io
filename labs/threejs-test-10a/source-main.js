@@ -6291,6 +6291,7 @@ export const PRESENTATION_REPLICATION_10A = Object.freeze({
   assets: Object.freeze({
     v3Base: '/assets/3d/sunlit-basin/v3/',
     v1Base: '/assets/3d/sunlit-basin/v1/',
+    w1Base: '/assets/3d/windcut-shelf/v1/',
     allowed: Object.freeze([
       'terrain_bank_a.glb',
       'terrain_bank_b.glb',
@@ -6305,7 +6306,11 @@ export const PRESENTATION_REPLICATION_10A = Object.freeze({
       'rock_b_flat_shore.glb',
       'rock_c_hero_boulder.glb',
       'shrub_a_round.glb',
-      'shrub_b_spreading.glb'
+      'shrub_b_spreading.glb',
+      'shelf_escarpment_a.glb',
+      'windcut_rock_spine_a.glb',
+      'ruin_windcut_fragment_a.glb',
+      'deadwood_windswept_a.glb'
     ])
   }),
   composition: Object.freeze({
@@ -6319,30 +6324,38 @@ export const PRESENTATION_REPLICATION_10A = Object.freeze({
     macroFirst: true
   }),
   placements: Object.freeze([
-    {asset:'terrain_bank_a.glb',version:'v3',x:-11,z:-7,scale:.88,yaw:.30},
-    {asset:'terrain_bank_b.glb',version:'v3',x:10,z:8,scale:.84,yaw:2.25},
-    {asset:'terrain_bank_b.glb',version:'v3',x:17,z:-10,scale:.78,yaw:1.62},
-    {asset:'path_cut_berms.glb',version:'v3',x:-2,z:-10,scale:.92,yaw:1.08},
-    {asset:'path_cut_berms.glb',version:'v3',x:5,z:8,scale:.84,yaw:1.14},
-    {asset:'ruin_sunlit_gate_v2.glb',version:'v3',x:18,z:22,scale:.96,yaw:-.18},
+    // Windcut-specific macro anchors: these establish place identity first.
+    {asset:'shelf_escarpment_a.glb',version:'w1',x:-3,z:22,scale:1.00,yaw:.10},
+    {asset:'shelf_escarpment_a.glb',version:'w1',x:17,z:27,scale:.72,yaw:-.34},
+    {asset:'windcut_rock_spine_a.glb',version:'w1',x:-14,z:13,scale:1.00,yaw:.24},
+    {asset:'windcut_rock_spine_a.glb',version:'w1',x:18,z:11,scale:.72,yaw:1.42},
+    {asset:'ruin_windcut_fragment_a.glb',version:'w1',x:10,z:20,scale:1.06,yaw:-.38},
+    {asset:'deadwood_windswept_a.glb',version:'w1',x:-6,z:8,scale:1.00,yaw:.48},
+    {asset:'deadwood_windswept_a.glb',version:'w1',x:20,z:1,scale:.82,yaw:-.72},
 
-    {asset:'tree_d_forked.glb',version:'v3',x:-22,z:16,scale:1.00,yaw:.42},
-    {asset:'tree_e_windswept.glb',version:'v3',x:22,z:3,scale:.92,yaw:-.74},
-    {asset:'tree_a_tall_broad.glb',version:'v1',x:-25,z:-11,scale:.92,yaw:.08},
-    {asset:'tree_b_short_wide.glb',version:'v1',x:14,z:-22,scale:.86,yaw:1.14},
-    {asset:'tree_c_leaning_asym.glb',version:'v1',x:-12,z:24,scale:.92,yaw:-.42},
+    // Existing terrain grammar frames the diagonal traversal opening.
+    {asset:'terrain_bank_a.glb',version:'v3',x:-10,z:-3,scale:.78,yaw:.92},
+    {asset:'terrain_bank_b.glb',version:'v3',x:11,z:5,scale:.72,yaw:2.04},
+    {asset:'path_cut_berms.glb',version:'v3',x:-1,z:2,scale:.86,yaw:1.02},
+    {asset:'path_cut_berms.glb',version:'v3',x:6,z:13,scale:.76,yaw:1.08},
 
-    {asset:'rock_c_hero_boulder.glb',version:'v1',x:-18,z:4,scale:1.15,yaw:.24},
-    {asset:'rock_c_hero_boulder.glb',version:'v1',x:10,z:19,scale:.92,yaw:1.20},
-    {asset:'rock_a_medium_angular.glb',version:'v1',x:-5,z:16,scale:.90,yaw:.66},
-    {asset:'rock_a_medium_angular.glb',version:'v1',x:14,z:-4,scale:.82,yaw:2.10},
-    {asset:'rock_b_flat_shore.glb',version:'v1',x:-15,z:-16,scale:1.00,yaw:.48},
-    {asset:'rock_b_flat_shore.glb',version:'v1',x:20,z:14,scale:.88,yaw:1.76},
+    // Sparse canopy: intentionally fewer large trees than Sunlit Basin.
+    {asset:'tree_d_forked.glb',version:'v3',x:-22,z:19,scale:.92,yaw:.42},
+    {asset:'tree_e_windswept.glb',version:'v3',x:23,z:16,scale:.88,yaw:-.74},
+    {asset:'tree_a_tall_broad.glb',version:'v1',x:-25,z:-9,scale:.86,yaw:.08},
+    {asset:'tree_b_short_wide.glb',version:'v1',x:-19,z:2,scale:.78,yaw:1.14},
+    {asset:'tree_c_leaning_asym.glb',version:'v1',x:18,z:-14,scale:.86,yaw:-.42},
 
-    {asset:'shrub_a_round.glb',version:'v1',x:-8,z:5,scale:.82,yaw:.10},
-    {asset:'shrub_a_round.glb',version:'v1',x:7,z:-15,scale:.76,yaw:.90},
-    {asset:'shrub_b_spreading.glb',version:'v1',x:-20,z:11,scale:.82,yaw:1.40},
-    {asset:'shrub_b_spreading.glb',version:'v1',x:17,z:6,scale:.78,yaw:-.60}
+    // Rock punctuation supports the shelf/ruin silhouettes without filling space.
+    {asset:'rock_c_hero_boulder.glb',version:'v1',x:-18,z:3,scale:.96,yaw:.24},
+    {asset:'rock_c_hero_boulder.glb',version:'v1',x:12,z:14,scale:.82,yaw:1.20},
+    {asset:'rock_a_medium_angular.glb',version:'v1',x:-5,z:16,scale:.78,yaw:.66},
+    {asset:'rock_b_flat_shore.glb',version:'v1',x:15,z:-6,scale:.84,yaw:1.76},
+
+    // Minimal understory preserves negative space.
+    {asset:'shrub_a_round.glb',version:'v1',x:-9,z:5,scale:.72,yaw:.10},
+    {asset:'shrub_a_round.glb',version:'v1',x:8,z:-12,scale:.68,yaw:.90},
+    {asset:'shrub_b_spreading.glb',version:'v1',x:16,z:7,scale:.70,yaw:-.60}
   ])
 });
 
@@ -6391,6 +6404,7 @@ function set10A(el,value,color){
 function assetUrl10A(name,version){
   if(version==='v3')return PRESENTATION_REPLICATION_10A.assets.v3Base+name;
   if(version==='v1')return PRESENTATION_REPLICATION_10A.assets.v1Base+name;
+  if(version==='w1')return PRESENTATION_REPLICATION_10A.assets.w1Base+name;
   throw new Error('10A unsupported asset version '+version);
 }
 
@@ -6406,7 +6420,8 @@ function bucket10A(materialName){
 function terrainIntegratedAsset10A(asset){
   return asset==='terrain_bank_a.glb'||
     asset==='terrain_bank_b.glb'||
-    asset==='path_cut_berms.glb';
+    asset==='path_cut_berms.glb'||
+    asset==='shelf_escarpment_a.glb';
 }
 
 function conform10A(geometry,placementY,asset){
@@ -6581,7 +6596,7 @@ function proof10A(){
     applied:applied10A,
     frozen_09b:acceptedPresentation10A?.applied===true,
     assets:loadedAssets10A===expectedAssets,
-    placements:PRESENTATION_REPLICATION_10A.placements.length===21,
+    placements:PRESENTATION_REPLICATION_10A.placements.length===23,
     batches:runtimeBatches10A<=PRESENTATION_REPLICATION_10A.budgets.runtimeBatchesMax,
     terrain_conformance:conformedVertices10A>0,
     terrain_clearance:Number.isFinite(minClearance10A)&&minClearance10A>=.10,
@@ -6600,7 +6615,7 @@ function updateHud10A(){
   const p=proof10A();
   set10A(stageEl10A,p.automatedReady?'HUMAN REVIEW':error10A?'FAIL':'BUILDING',p.automatedReady?'#ffe59a':error10A?'#ff9b9b':'#ffe59a');
   set10A(assetsEl10A,loadedAssets10A+' / '+p.expectedAssets);
-  set10A(placementsEl10A,PRESENTATION_REPLICATION_10A.placements.length+' / 21');
+  set10A(placementsEl10A,PRESENTATION_REPLICATION_10A.placements.length+' / 23');
   set10A(batchesEl10A,runtimeBatches10A+' / 6');
   set10A(drawEl10A,p.calls+' / 120',p.calls<=120?'#bdf3c8':'#ff9b9b');
   set10A(triEl10A,p.triangles.toLocaleString()+' / 350,000',p.triangles<=350000?'#bdf3c8':'#ff9b9b');
@@ -6610,7 +6625,7 @@ function updateHud10A(){
   if(error10A){
     set10A(resultEl10A,'10A FAIL · '+error10A,'#ff9b9b');
   }else if(p.automatedReady){
-    set10A(resultEl10A,'REUSE-ONLY COMPOSITION ✓ · DISTINCT REGION B ENVIRONMENT ✓ · <=6 BATCHES ✓ · PERFORMANCE PASS ✓ · HUMAN PRESENTATION REVIEW REQUIRED','#ffe59a');
+    set10A(resultEl10A,'WINDCUT IDENTITY KIT 4/4 ✓ · MACRO SHELF/ROCK/RUIN/DEADWOOD ✓ · DISTINCT REGION B ENVIRONMENT ✓ · <=6 BATCHES ✓ · PERFORMANCE PASS ✓ · HUMAN PRESENTATION REVIEW REQUIRED','#ffe59a');
   }else{
     set10A(resultEl10A,'BUILDING WINDCUT SHELF REPLICATION PROOF','#ffe59a');
   }

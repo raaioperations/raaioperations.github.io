@@ -1,0 +1,64 @@
+{
+  "version": "1.0.0",
+  "milestone": "10A \u2014 Windcut Shelf Identity Kit",
+  "format": "glTF 2.0 binary (.glb)",
+  "coordinate_system": "Y-up / meters / ground-contact local origin",
+  "assets": {
+    "shelf_escarpment_a.glb": {
+      "triangles": 60,
+      "budget": 180,
+      "bounds_m": [
+        18.0,
+        4.45,
+        5.28
+      ],
+      "materials": [
+        "MAT_EARTH_DAMP",
+        "MAT_EARTH_WARM",
+        "MAT_STONE_DARK"
+      ],
+      "bytes": 3132
+    },
+    "windcut_rock_spine_a.glb": {
+      "triangles": 144,
+      "budget": 220,
+      "bounds_m": [
+        11.27,
+        11.386,
+        3.797
+      ],
+      "materials": [
+        "MAT_STONE_DARK",
+        "MAT_STONE_WARM"
+      ],
+      "bytes": 5500
+    },
+    "ruin_windcut_fragment_a.glb": {
+      "triangles": 188,
+      "budget": 260,
+      "bounds_m": [
+        6.393,
+        7.76,
+        2.743
+      ],
+      "materials": [
+        "MAT_STONE_DARK",
+        "MAT_STONE_WARM"
+      ],
+      "bytes": 7504
+    },
+    "deadwood_windswept_a.glb": {
+      "triangles": 156,
+      "budget": 220,
+      "bounds_m": [
+        5.142,
+        7.296,
+        1.451
+      ],
+      "materials": [
+        "MAT_BARK_DARK"
+      ],
+      "bytes": 5308
+    }
+  }
+}
