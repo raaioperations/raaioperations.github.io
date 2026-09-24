@@ -1,0 +1,11 @@
+{
+  "name":"raai-threejs-test-10a",
+  "private":true,
+  "version":"0.10.1",
+  "description":"10A Second Environment Replication Proof — Windcut Shelf",
+  "type":"module",
+  "engines":{"node":">=22"},
+  "scripts":{"build":"node build.mjs"},
+  "dependencies":{"three":"0.186.0"},
+  "devDependencies":{"esbuild":"0.25.9"}
+}
