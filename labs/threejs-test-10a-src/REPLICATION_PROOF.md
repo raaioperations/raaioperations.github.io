@@ -1,7 +1,7 @@
 # Test10 — Presentation Replication
 ## 10A — Second Environment Replication Proof
 
-**Status:** HUMAN REVIEW ITERATE / IDENTITY KIT AUTHORIZED  
+**Status:** HUMAN REVIEW ITERATE / COMPOSITION CORRECTION AUTHORIZED  
 **Foundation:** accepted/frozen/canonical 09B build `20260924205044`  
 **Doctrine:** Stylized Physical Realism
 
@@ -153,3 +153,21 @@ one accepted beauty slice
 ```
 
 Only after that proof should broad presentation expansion be considered.
+
+
+## Composition correction — authorized after identity-kit review
+
+The four-asset identity kit passed production/runtime validation but did not yet control the normal-play frame.
+
+The next iteration is composition-only:
+
+- create no new assets;
+- place the primary escarpment 12–18 m from spawn;
+- frame rock spine and broken ruin on opposite thirds;
+- keep windswept deadwood readable in midground;
+- move authored trees to flanks/back;
+- spawn at local (-3,-12);
+- aim the initial camera at local vista (2,8);
+- preserve all runtime budgets and systems.
+
+Acceptance requires the first-look frame to communicate Windcut Shelf before the player moves.
