@@ -1,10 +1,17 @@
 {
   "test": "09B",
+  "roadmap": "Test09 — Presentation Foundation",
   "milestone": "Vertical Beauty Slice",
   "iteration": "Presentation Pass 5",
-  "status": "DEPLOYED_HUMAN_PRESENTATION_REVIEW_REQUIRED",
+  "status": "ACCEPTED_FROZEN_CANONICAL",
   "build_id": "20260924205044",
-  "foundation": "Accepted/frozen 09D + Pass 4",
-  "automated_presentation_acceptance": false,
-  "frozen": false
+  "accepted_at": "2026-09-24T22:25:07Z",
+  "accepted_build": "20260924205044",
+  "human_presentation_review": "PASS",
+  "automated_verification": "PASS",
+  "regression_06j": "PASS",
+  "frozen": true,
+  "canonical": true,
+  "next": "Test10 — Presentation Replication / 10A — Second Environment Replication Proof",
+  "next_authorized": true
 }
