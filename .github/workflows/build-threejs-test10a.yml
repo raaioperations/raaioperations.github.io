@@ -20,6 +20,19 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install identity-kit authoring dependencies
+        run: python -m pip install --disable-pip-version-check numpy scipy trimesh
+
+      - name: Generate Windcut Shelf identity kit
+        run: |
+          rm -rf assets/3d/windcut-shelf/v1
+          ASSET_OUT=assets/3d/windcut-shelf/v1 python labs/threejs-test-10a-src/generate_identity_kit.py
+
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
@@ -41,7 +54,7 @@ jobs:
         run: |
           git config user.name "raaioperations"
           git config user.email "alanhasan87@gmail.com"
-          git add labs/threejs-test-10a
+          git add assets/3d/windcut-shelf/v1 labs/threejs-test-10a
           if git diff --cached --quiet; then
             echo "No generated changes"
           else

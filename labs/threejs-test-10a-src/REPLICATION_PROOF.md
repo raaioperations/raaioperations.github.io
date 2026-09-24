@@ -1,7 +1,7 @@
 # Test10 — Presentation Replication
 ## 10A — Second Environment Replication Proof
 
-**Status:** AUTHORIZED / FOUNDATION OPEN  
+**Status:** HUMAN REVIEW ITERATE / IDENTITY KIT AUTHORIZED  
 **Foundation:** accepted/frozen/canonical 09B build `20260924205044`  
 **Doctrine:** Stylized Physical Realism
 
@@ -56,7 +56,17 @@ The first 10A proof may use only assets already produced for Sunlit Basin:
 - shrub_a_round.glb
 - shrub_b_spreading.glb
 
-No new GLB is authorized until this reuse-only composition has been judged insufficient.
+The first reuse-only composition was reviewed on-device and judged insufficient for distinct place identity.
+
+That result authorizes exactly four Windcut-specific identity anchors:
+
+### Windcut Shelf v1 identity kit
+- shelf_escarpment_a.glb
+- windcut_rock_spine_a.glb
+- ruin_windcut_fragment_a.glb
+- deadwood_windswept_a.glb
+
+These four assets must reuse the existing material/runtime grammar and must not create a new renderer architecture or broaden world production.
 
 ## Runtime strategy
 
@@ -130,7 +140,7 @@ Do not:
 - alter persistence;
 - change streaming semantics;
 - lower budgets;
-- generate a new asset family before reuse-only composition is evaluated.
+- expand beyond the four authorized Windcut identity anchors before this iteration is evaluated.
 
 ## Completion meaning
 

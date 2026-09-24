@@ -43,6 +43,7 @@ function set10A(el,value,color){
 function assetUrl10A(name,version){
   if(version==='v3')return PRESENTATION_REPLICATION_10A.assets.v3Base+name;
   if(version==='v1')return PRESENTATION_REPLICATION_10A.assets.v1Base+name;
+  if(version==='w1')return PRESENTATION_REPLICATION_10A.assets.w1Base+name;
   throw new Error('10A unsupported asset version '+version);
 }
 
@@ -58,7 +59,8 @@ function bucket10A(materialName){
 function terrainIntegratedAsset10A(asset){
   return asset==='terrain_bank_a.glb'||
     asset==='terrain_bank_b.glb'||
-    asset==='path_cut_berms.glb';
+    asset==='path_cut_berms.glb'||
+    asset==='shelf_escarpment_a.glb';
 }
 
 function conform10A(geometry,placementY,asset){
@@ -233,7 +235,7 @@ function proof10A(){
     applied:applied10A,
     frozen_09b:acceptedPresentation10A?.applied===true,
     assets:loadedAssets10A===expectedAssets,
-    placements:PRESENTATION_REPLICATION_10A.placements.length===21,
+    placements:PRESENTATION_REPLICATION_10A.placements.length===23,
     batches:runtimeBatches10A<=PRESENTATION_REPLICATION_10A.budgets.runtimeBatchesMax,
     terrain_conformance:conformedVertices10A>0,
     terrain_clearance:Number.isFinite(minClearance10A)&&minClearance10A>=.10,
@@ -252,7 +254,7 @@ function updateHud10A(){
   const p=proof10A();
   set10A(stageEl10A,p.automatedReady?'HUMAN REVIEW':error10A?'FAIL':'BUILDING',p.automatedReady?'#ffe59a':error10A?'#ff9b9b':'#ffe59a');
   set10A(assetsEl10A,loadedAssets10A+' / '+p.expectedAssets);
-  set10A(placementsEl10A,PRESENTATION_REPLICATION_10A.placements.length+' / 21');
+  set10A(placementsEl10A,PRESENTATION_REPLICATION_10A.placements.length+' / 23');
   set10A(batchesEl10A,runtimeBatches10A+' / 6');
   set10A(drawEl10A,p.calls+' / 120',p.calls<=120?'#bdf3c8':'#ff9b9b');
   set10A(triEl10A,p.triangles.toLocaleString()+' / 350,000',p.triangles<=350000?'#bdf3c8':'#ff9b9b');
@@ -262,7 +264,7 @@ function updateHud10A(){
   if(error10A){
     set10A(resultEl10A,'10A FAIL · '+error10A,'#ff9b9b');
   }else if(p.automatedReady){
-    set10A(resultEl10A,'REUSE-ONLY COMPOSITION ✓ · DISTINCT REGION B ENVIRONMENT ✓ · <=6 BATCHES ✓ · PERFORMANCE PASS ✓ · HUMAN PRESENTATION REVIEW REQUIRED','#ffe59a');
+    set10A(resultEl10A,'WINDCUT IDENTITY KIT 4/4 ✓ · MACRO SHELF/ROCK/RUIN/DEADWOOD ✓ · DISTINCT REGION B ENVIRONMENT ✓ · <=6 BATCHES ✓ · PERFORMANCE PASS ✓ · HUMAN PRESENTATION REVIEW REQUIRED','#ffe59a');
   }else{
     set10A(resultEl10A,'BUILDING WINDCUT SHELF REPLICATION PROOF','#ffe59a');
   }

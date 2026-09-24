@@ -29,20 +29,29 @@ assert(blobSha(index09B)===acceptance.frozen_artifacts.index,'frozen 09B index h
 assert(PRESENTATION_REPLICATION_10A.foundation.acceptedBuild09B===acceptance.accepted_build,'recipe foundation mismatch');
 
 const allowed=new Set(PRESENTATION_REPLICATION_10A.assets.allowed);
-assert(PRESENTATION_REPLICATION_10A.placements.length===21,'expected 21 authored placements');
+assert(PRESENTATION_REPLICATION_10A.placements.length===23,'expected 23 authored placements');
+const assetPathFor=p=>{
+  if(p.version==='v1'||p.version==='v3')return path.join(repo,'assets','3d','sunlit-basin',p.version,p.asset);
+  if(p.version==='w1')return path.join(repo,'assets','3d','windcut-shelf','v1',p.asset);
+  throw new Error('unsupported asset version '+p.version);
+};
 for(const p of PRESENTATION_REPLICATION_10A.placements){
   assert(allowed.has(p.asset),'placement uses non-approved asset '+p.asset);
-  assert(p.version==='v1'||p.version==='v3','unsupported asset version '+p.version);
-  const assetPath=path.join(repo,'assets','3d','sunlit-basin',p.version,p.asset);
+  assert(p.version==='v1'||p.version==='v3'||p.version==='w1','unsupported asset version '+p.version);
+  const assetPath=assetPathFor(p);
   const s=await stat(assetPath);
   assert(s.size>0,'missing asset '+p.asset);
 }
 
 const manifestV1=JSON.parse(await readFile(path.join(repo,'assets','3d','sunlit-basin','v1','asset_manifest.generated.json'),'utf8'));
 const manifestV3=JSON.parse(await readFile(path.join(repo,'assets','3d','sunlit-basin','v3','asset_manifest.generated.json'),'utf8'));
+const manifestW1=JSON.parse(await readFile(path.join(repo,'assets','3d','windcut-shelf','v1','asset_manifest.generated.json'),'utf8'));
+const identityKitAssets=new Set(PRESENTATION_REPLICATION_10A.placements.filter(p=>p.version==='w1').map(p=>p.asset));
+assert(identityKitAssets.size===4,'expected four Windcut identity-kit GLBs');
 let authoredPlacementTriangles=0;
 for(const p of PRESENTATION_REPLICATION_10A.placements){
-  const meta=(p.version==='v1'?manifestV1:manifestV3).assets[p.asset];
+  const manifest=p.version==='v1'?manifestV1:p.version==='v3'?manifestV3:manifestW1;
+  const meta=manifest.assets[p.asset];
   assert(meta,'manifest missing '+p.version+'/'+p.asset);
   authoredPlacementTriangles+=meta.triangles;
 }
@@ -96,7 +105,7 @@ for(const marker of [
 ])assert(app.includes(marker),'runtime marker missing '+marker);
 
 for(const token of [
-  'REUSE-ONLY COMPOSITION',
+  'WINDCUT IDENTITY KIT 4/4',
   'DISTINCT REGION B ENVIRONMENT',
   'HUMAN PRESENTATION REVIEW REQUIRED'
 ])assert(app.includes(token),'runtime token missing '+token);
@@ -114,7 +123,7 @@ await writeFile(path.join(out,'build-info.json'),JSON.stringify({
   roadmap:'Test10 — Presentation Replication',
   milestone:'Second Environment Replication Proof',
   environment:'Windcut Shelf',
-  classification:'REUSE-ONLY PRESENTATION REPLICATION / HUMAN REVIEW CANDIDATE',
+  classification:'IDENTITY-KIT PRESENTATION REPLICATION / HUMAN REVIEW CANDIDATE',
   doctrine:'Stylized Physical Realism',
   frozen_foundation:{
     test09b:'ACCEPTED / FROZEN / CANONICAL',
@@ -128,7 +137,8 @@ await writeFile(path.join(out,'build-info.json'),JSON.stringify({
     authored_placements:PRESENTATION_REPLICATION_10A.placements.length,
     unique_asset_glbs:new Set(PRESENTATION_REPLICATION_10A.placements.map(p=>p.version+':'+p.asset)).size,
     authored_placement_triangles:authoredPlacementTriangles,
-    new_glbs:0,
+    new_glbs:4,
+    identity_kit_glbs:4,
     runtime_batch_ceiling:PRESENTATION_REPLICATION_10A.budgets.runtimeBatchesMax
   },
   hard_limits:PRESENTATION_REPLICATION_10A.budgets,
@@ -153,14 +163,15 @@ await writeFile(path.join(out,'verification-report.json'),JSON.stringify({
   test:'10A',
   status:'PASS',
   build_id:buildId,
-  classification:'REUSE-ONLY PRESENTATION REPLICATION / HUMAN REVIEW CANDIDATE',
+  classification:'IDENTITY-KIT PRESENTATION REPLICATION / HUMAN REVIEW CANDIDATE',
   delegated_nonvisual_checks:{
     frozen_09b_acceptance_required:true,
     frozen_09b_hashes_verified:true,
     region_b_anchor_required:true,
-    reuse_only_assets_required:true,
-    new_glbs:0,
-    authored_placements:21,
+    reuse_grammar_preserved:true,
+    identity_kit_glbs_required:4,
+    new_glbs:4,
+    authored_placements:23,
     authored_placement_triangles:authoredPlacementTriangles,
     runtime_batch_ceiling:6,
     terrain_conformance_required:true,
@@ -183,8 +194,9 @@ await writeFile(path.join(out,'status.json'),JSON.stringify({
   status:'DEPLOYED_HUMAN_PRESENTATION_REVIEW_REQUIRED',
   build_id:buildId,
   foundation:'Accepted/frozen/canonical 09B',
-  reuse_only:true,
-  new_glbs:0,
+  reuse_only:false,
+  identity_kit:true,
+  new_glbs:4,
   automated_presentation_acceptance:false,
   human_presentation_review:'REQUIRED',
   frozen:false,
