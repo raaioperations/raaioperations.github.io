@@ -1,0 +1,59 @@
+name: Agent Playthrough
+
+on:
+  push:
+    branches:
+      - test/agent-playthrough-pilot
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  playthrough-ci:
+    name: 09B Playthrough — CI Structural Gate
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout test branch
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Start Three.js test server
+        run: |
+          python3 -m http.server 4173 --bind 127.0.0.1 > /tmp/raai-http-server.log 2>&1 &
+          echo $! > /tmp/raai-http-server.pid
+          for i in {1..20}; do
+            if curl --fail --silent http://127.0.0.1:4173/labs/threejs-test-09b/ >/dev/null; then
+              exit 0
+            fi
+            sleep 1
+          done
+          cat /tmp/raai-http-server.log
+          exit 1
+
+      - name: Install playthrough dependencies
+        working-directory: tests/playthrough
+        run: |
+          npm install
+          npx playwright install --with-deps chromium
+
+      - name: Run Codex-required playthrough gate
+        working-directory: tests/playthrough
+        run: npm run test:ci
+
+      - name: Preserve playthrough evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: agent-playthrough-evidence
+          if-no-files-found: warn
+          path: |
+            tests/playthrough/test-results/
+            tests/playthrough/playwright-report/
+            /tmp/raai-http-server.log
