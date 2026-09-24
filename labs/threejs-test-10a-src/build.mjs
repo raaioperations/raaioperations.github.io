@@ -30,6 +30,15 @@ assert(PRESENTATION_REPLICATION_10A.foundation.acceptedBuild09B===acceptance.acc
 
 const allowed=new Set(PRESENTATION_REPLICATION_10A.assets.allowed);
 assert(PRESENTATION_REPLICATION_10A.placements.length===23,'expected 23 authored placements');
+const firstLook=PRESENTATION_REPLICATION_10A.composition.firstLook;
+assert(firstLook&&Number.isFinite(firstLook.spawn?.x)&&Number.isFinite(firstLook.vista?.z),'first-look composition contract required');
+const primaryEscarpment=PRESENTATION_REPLICATION_10A.placements.find(p=>p.asset==='shelf_escarpment_a.glb');
+assert(primaryEscarpment,'primary escarpment placement required');
+const primaryDistance=Math.hypot(
+  primaryEscarpment.x-firstLook.spawn.x,
+  primaryEscarpment.z-firstLook.spawn.z
+);
+assert(primaryDistance>=12&&primaryDistance<=18,'primary escarpment must sit 12–18 m from first-look spawn');
 const assetPathFor=p=>{
   if(p.version==='v1'||p.version==='v3')return path.join(repo,'assets','3d','sunlit-basin',p.version,p.asset);
   if(p.version==='w1')return path.join(repo,'assets','3d','windcut-shelf','v1',p.asset);
@@ -69,6 +78,8 @@ assert(frag.includes('root09B.visible=false'),'10A must hide frozen Sunlit Basin
 assert(frag.includes('pass5Root09B.visible=false'),'10A must hide Pass-5 environment root');
 assert(frag.includes('center10A={...replicationWorld10A.centers.B}'),'10A must anchor to frozen Region B center');
 assert(frag.includes('conform10A'),'10A terrain conformance required');
+assert(frag.includes('firstLookApplied10A=true'),'10A authored first-look camera required');
+assert(frag.includes('yaw=Math.atan2(-dx,-dz)'),'10A camera must solve yaw toward authored vista');
 
 const buildId=new Date().toISOString().replace(/\D/g,'').slice(0,14);
 
@@ -123,7 +134,7 @@ await writeFile(path.join(out,'build-info.json'),JSON.stringify({
   roadmap:'Test10 — Presentation Replication',
   milestone:'Second Environment Replication Proof',
   environment:'Windcut Shelf',
-  classification:'IDENTITY-KIT PRESENTATION REPLICATION / HUMAN REVIEW CANDIDATE',
+  classification:'IDENTITY-KIT COMPOSITION CORRECTION / HUMAN REVIEW CANDIDATE',
   doctrine:'Stylized Physical Realism',
   frozen_foundation:{
     test09b:'ACCEPTED / FROZEN / CANONICAL',
@@ -139,7 +150,10 @@ await writeFile(path.join(out,'build-info.json'),JSON.stringify({
     authored_placement_triangles:authoredPlacementTriangles,
     new_glbs:4,
     identity_kit_glbs:4,
-    runtime_batch_ceiling:PRESENTATION_REPLICATION_10A.budgets.runtimeBatchesMax
+    runtime_batch_ceiling:PRESENTATION_REPLICATION_10A.budgets.runtimeBatchesMax,
+    first_look_spawn:firstLook.spawn,
+    first_look_vista:firstLook.vista,
+    primary_escarpment_distance_m:Number(primaryDistance.toFixed(2))
   },
   hard_limits:PRESENTATION_REPLICATION_10A.budgets,
   frame_integration:{
@@ -163,7 +177,7 @@ await writeFile(path.join(out,'verification-report.json'),JSON.stringify({
   test:'10A',
   status:'PASS',
   build_id:buildId,
-  classification:'IDENTITY-KIT PRESENTATION REPLICATION / HUMAN REVIEW CANDIDATE',
+  classification:'IDENTITY-KIT COMPOSITION CORRECTION / HUMAN REVIEW CANDIDATE',
   delegated_nonvisual_checks:{
     frozen_09b_acceptance_required:true,
     frozen_09b_hashes_verified:true,
@@ -172,6 +186,8 @@ await writeFile(path.join(out,'verification-report.json'),JSON.stringify({
     identity_kit_glbs_required:4,
     new_glbs:4,
     authored_placements:23,
+    authored_first_look_required:true,
+    primary_escarpment_range_m:[12,18],
     authored_placement_triangles:authoredPlacementTriangles,
     runtime_batch_ceiling:6,
     terrain_conformance_required:true,
@@ -196,6 +212,7 @@ await writeFile(path.join(out,'status.json'),JSON.stringify({
   foundation:'Accepted/frozen/canonical 09B',
   reuse_only:false,
   identity_kit:true,
+  composition_correction:true,
   new_glbs:4,
   automated_presentation_acceptance:false,
   human_presentation_review:'REQUIRED',

@@ -3,25 +3,41 @@
   "roadmap": "Test10 — Presentation Replication",
   "milestone": "Second Environment Replication Proof",
   "environment": "Windcut Shelf",
-  "status": "HUMAN_REVIEW_ITERATE_IDENTITY_KIT_AUTHORIZED",
+  "status": "HUMAN_REVIEW_ITERATE_COMPOSITION_CORRECTION",
   "foundation": {
     "test09b": "ACCEPTED / FROZEN / CANONICAL",
     "accepted_build": "20260924205044"
   },
-  "first_runtime_candidate": {
-    "build_id": "20260924223441",
+  "identity_kit_build": {
+    "build_id": "20260924232800",
     "automated_runtime": "PASS",
+    "identity_kit": "PASS",
     "human_presentation": "ITERATE",
-    "finding": "Reuse-only composition did not establish sufficiently distinct Windcut Shelf identity."
+    "finding": "Identity anchors existed but did not control the normal-play composition."
   },
-  "authorized_identity_kit": [
-    "shelf_escarpment_a.glb",
-    "windcut_rock_spine_a.glb",
-    "ruin_windcut_fragment_a.glb",
-    "deadwood_windswept_a.glb"
-  ],
+  "correction": {
+    "new_assets": 0,
+    "authored_first_look": true,
+    "spawn": {
+      "x": -3,
+      "z": -12
+    },
+    "vista": {
+      "x": 2,
+      "z": 8
+    },
+    "primary_escarpment_range_m": [
+      12,
+      18
+    ],
+    "tree_placements_moved_to_flanks": true,
+    "camera_aimed_at_vista": true
+  },
   "broad_world_expansion": false,
-  "implementation_started": true,
+  "gameplay_changed": false,
+  "ai_changed": false,
+  "persistence_changed": false,
+  "streaming_semantics_changed": false,
   "human_review": "REQUIRED_AFTER_REBUILD",
   "frozen": false,
   "canonical": false
