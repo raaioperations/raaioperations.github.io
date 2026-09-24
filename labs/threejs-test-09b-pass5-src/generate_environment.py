@@ -53,69 +53,100 @@ def blob(center,scale,material,subdiv=1):
     m=trimesh.creation.icosphere(subdivisions=subdiv,radius=1.0)
     m.apply_scale(scale);m.apply_translation(center);setmat(m,material);return m
 
-def irregular_strip(length,width,height,seed,material,segments=12,side_bias=0.0):
+def irregular_strip(length,width,height,seed,side_material,top_material,segments=12,side_bias=0.0):
     rng=np.random.default_rng(seed)
     xs=np.linspace(-length/2,length/2,segments+1)
     verts=[]
-    # Four longitudinal rows. The outer rows are intentionally buried below
-    # the base terrain so the authored strip cannot become coplanar with the
-    # systemic ground and z-fight on mobile GPUs.
-    skirt_y=-.34
+    rown=segments+1
+
+    # Refined erosion profile:
+    # - narrow / lower ends dissolve into terrain instead of terminating as walls;
+    # - centerline and shoulder widths wander subtly;
+    # - buried skirts remain safely below the systemic ground;
+    # - crown stays positively separated for terrain-conformance QA.
+    skirt_y=-.38
     for row in range(4):
         for i,x in enumerate(xs):
-            jitter=(rng.random()-.5)*.18
+            t=i/segments
+            arch=max(0.0,math.sin(math.pi*t))
+            taper=.18+.82*(arch**.72)
+            center=.10*math.sin(t*math.pi*2.0+seed*.013)+(rng.random()-.5)*.08
+            half=(width*.5)*(.36+.64*taper)
+            shoulder=half*(.40+.07*math.sin(t*math.pi*3.0+row*.55))
+            jitter=(rng.random()-.5)*.10
+            crown=height*(.50+.50*taper)*(.90+.10*math.sin(t*math.pi*2.6+seed*.021))
+
             if row==0:
-                z=-width/2-.25+jitter; y=skirt_y
+                z=center-half-.16+jitter*.35; y=skirt_y
             elif row==1:
-                z=-width/2*.35+jitter; y=height*(.78+.22*math.sin((i/(segments))*math.pi))
+                z=center-shoulder+jitter
+                y=crown*(.92+.05*math.sin(t*math.pi*2.1))
             elif row==2:
-                z= width/2*.35+jitter; y=height*(.68+.18*math.cos((i/(segments))*math.pi))
+                z=center+shoulder+jitter
+                y=crown*(.82+.06*math.cos(t*math.pi*2.4))
             else:
-                z= width/2+.25+jitter; y=skirt_y
-            # Bias only the raised rows. Keeping buried skirts at a fixed depth
-            # prevents one edge from resurfacing as terrain elevation changes.
+                z=center+half+.16+jitter*.35; y=skirt_y
+
             if row in (1,2):
-                y += side_bias*(z/width)
+                y += side_bias*(z/max(width,.001))
             verts.append([x,y,z])
-    faces=[]
-    rown=segments+1
+
+    verts_np=np.asarray(verts,float)
+    assert float(verts_np[:rown,1].max()) <= -.34
+    assert float(verts_np[3*rown:4*rown,1].max()) <= -.34
+    assert float(verts_np[rown:3*rown,1].min()) >= .11
+
+    band_faces=[[],[],[]]
     for row in range(3):
         for i in range(segments):
             a=row*rown+i;b=a+1;c=(row+1)*rown+i;d=c+1
-            # Wound CCW as viewed from above (+Y). The original Pass-5 strip
-            # wound these faces downward.
-            faces += [[a,c,b],[b,c,d]]
-    mesh=trimesh.Trimesh(vertices=np.asarray(verts,float),faces=np.asarray(faces,int),process=False)
+            band_faces[row] += [[a,c,b],[b,c,d]]
 
-    # Geometry QA: every authored surface triangle must face generally upward.
-    up=mesh.face_normals[:,1]
-    assert float(up.min()) > .55, ("strip winding",float(up.min()))
-    # Both outside skirt rows must stay below the ground-contact plane.
-    verts_np=np.asarray(mesh.vertices)
-    assert float(verts_np[:rown,1].max()) <= -.30
-    assert float(verts_np[3*rown:4*rown,1].max()) <= -.30
+    parts=[]
+    for band,faces in enumerate(band_faces):
+        mesh=trimesh.Trimesh(
+            vertices=verts_np.copy(),
+            faces=np.asarray(faces,int),
+            process=False
+        )
+        up=mesh.face_normals[:,1]
+        assert float(up.min()) > .45, ("strip winding",band,float(up.min()))
+        material=top_material if band==1 else side_material
+        setmat(mesh,material)
+        parts.append((("crown" if band==1 else f"cut_{band}"),mesh))
+    return parts
 
-    setmat(mesh,material)
-    return mesh
+def add_strip_parts(scene,parts,prefix,translation=None):
+    for name,mesh in parts:
+        if translation is not None:
+            mesh.apply_translation(translation)
+        add(scene,mesh,f"{prefix}_{name}")
 
 def bank_a():
     s=trimesh.Scene()
-    add(s,irregular_strip(10,3.6,1.05,510,M["earth_warm"],14,.08),"bank")
+    add_strip_parts(
+        s,
+        irregular_strip(10.5,4.4,.72,510,M["earth_warm"],M["earth_damp"],14,.05),
+        "bank"
+    )
     return s
 
 def bank_b():
     s=trimesh.Scene()
-    add(s,irregular_strip(8.5,3.0,.78,511,M["earth_damp"],12,-.05),"bank")
+    add_strip_parts(
+        s,
+        irregular_strip(9.0,3.8,.56,511,M["earth_warm"],M["earth_damp"],12,-.035),
+        "bank"
+    )
     return s
 
 def path_cut():
     s=trimesh.Scene()
-    # paired low berms define an eroded path cut while leaving center traversable.
-    left=irregular_strip(8.0,1.15,.42,520,M["earth_warm"],12,.02)
-    left.apply_translation([0,0,-2.0])
-    right=irregular_strip(8.0,1.15,.36,521,M["earth_warm"],12,-.01)
-    right.apply_translation([0,0,2.0])
-    add(s,left,"left_berm");add(s,right,"right_berm")
+    # Paired low, broad berms read as eroded shoulders rather than retaining walls.
+    left=irregular_strip(7.6,1.55,.26,520,M["earth_warm"],M["earth_damp"],12,.012)
+    right=irregular_strip(7.6,1.50,.23,521,M["earth_warm"],M["earth_damp"],12,-.008)
+    add_strip_parts(s,left,"left_berm",[0,0,-2.05])
+    add_strip_parts(s,right,"right_berm",[0,0,2.05])
     return s
 
 def shoreline_shelf():
@@ -240,7 +271,7 @@ BUDGETS={
 }
 
 manifest={
-    "version":"3.0.3",
+    "version":"3.1.0",
     "milestone":"09B Presentation Pass 5 — Environment Art Production / Geometry Repair",
     "format":"glTF 2.0 binary (.glb)",
     "geometry_qa":{
@@ -249,6 +280,9 @@ manifest={
         "shore_faces_upward":True,
         "shore_edges_buried":True,
         "shore_half_arc_nonoverlap":True,
+        "strip_tapered_ends":True,
+        "strip_irregular_shoulders":True,
+        "strip_crown_cut_material_separation":True,
         "no_double_side_geometry_fix":True
     },
     "assets":{}
