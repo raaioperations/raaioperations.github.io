@@ -1,8 +1,8 @@
 {
   "test": "10A",
   "status": "PASS",
-  "build_id": "20260924232800",
-  "classification": "IDENTITY-KIT PRESENTATION REPLICATION / HUMAN REVIEW CANDIDATE",
+  "build_id": "20260924235039",
+  "classification": "IDENTITY-KIT COMPOSITION CORRECTION / HUMAN REVIEW CANDIDATE",
   "delegated_nonvisual_checks": {
     "frozen_09b_acceptance_required": true,
     "frozen_09b_hashes_verified": true,
@@ -11,6 +11,11 @@
     "identity_kit_glbs_required": 4,
     "new_glbs": 4,
     "authored_placements": 23,
+    "authored_first_look_required": true,
+    "primary_escarpment_range_m": [
+      12,
+      18
+    ],
     "authored_placement_triangles": 3698,
     "runtime_batch_ceiling": 6,
     "terrain_conformance_required": true,
