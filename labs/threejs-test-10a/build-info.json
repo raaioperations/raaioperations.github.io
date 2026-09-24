@@ -1,0 +1,47 @@
+{
+  "build_id": "20260924223441",
+  "test": "10A",
+  "roadmap": "Test10 — Presentation Replication",
+  "milestone": "Second Environment Replication Proof",
+  "environment": "Windcut Shelf",
+  "classification": "REUSE-ONLY PRESENTATION REPLICATION / HUMAN REVIEW CANDIDATE",
+  "doctrine": "Stylized Physical Realism",
+  "frozen_foundation": {
+    "test09b": "ACCEPTED / FROZEN / CANONICAL",
+    "accepted_build": "20260924205044",
+    "source_main": "c03038d502c4813e5b9e47cf801b121a12580bc0",
+    "index": "0f134ecb5f74da79895babd7762b180a0f751785",
+    "acceptance_blob_expected": true
+  },
+  "composition": {
+    "region": "B",
+    "authored_placements": 21,
+    "unique_asset_glbs": 14,
+    "authored_placement_triangles": 3296,
+    "new_glbs": 0,
+    "runtime_batch_ceiling": 6
+  },
+  "hard_limits": {
+    "drawCallsMax": 120,
+    "trianglesMax": 350000,
+    "runtimeBatchesMax": 6,
+    "runtimeDuplicatesMax": 0,
+    "addedRafLoopsMax": 0,
+    "regression06J": "PASS"
+  },
+  "frame_integration": {
+    "inherited_request_animation_frame_calls": 15,
+    "final_request_animation_frame_calls": 15,
+    "added_request_animation_frame_calls": 0
+  },
+  "mechanics_changed": false,
+  "combat_changed": false,
+  "ai_changed": false,
+  "persistence_changed": false,
+  "streaming_semantics_changed": false,
+  "broad_world_expansion": false,
+  "automated_presentation_acceptance": false,
+  "human_presentation_review": "REQUIRED",
+  "frozen": false,
+  "app_js_bytes": 870132
+}

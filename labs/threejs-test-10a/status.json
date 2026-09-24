@@ -1,0 +1,15 @@
+{
+  "test": "10A",
+  "roadmap": "Test10 — Presentation Replication",
+  "milestone": "Second Environment Replication Proof",
+  "environment": "Windcut Shelf",
+  "status": "DEPLOYED_HUMAN_PRESENTATION_REVIEW_REQUIRED",
+  "build_id": "20260924223441",
+  "foundation": "Accepted/frozen/canonical 09B",
+  "reuse_only": true,
+  "new_glbs": 0,
+  "automated_presentation_acceptance": false,
+  "human_presentation_review": "REQUIRED",
+  "frozen": false,
+  "canonical": false
+}

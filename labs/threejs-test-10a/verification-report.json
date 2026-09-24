@@ -1,0 +1,25 @@
+{
+  "test": "10A",
+  "status": "PASS",
+  "build_id": "20260924223441",
+  "classification": "REUSE-ONLY PRESENTATION REPLICATION / HUMAN REVIEW CANDIDATE",
+  "delegated_nonvisual_checks": {
+    "frozen_09b_acceptance_required": true,
+    "frozen_09b_hashes_verified": true,
+    "region_b_anchor_required": true,
+    "reuse_only_assets_required": true,
+    "new_glbs": 0,
+    "authored_placements": 21,
+    "authored_placement_triangles": 3296,
+    "runtime_batch_ceiling": 6,
+    "terrain_conformance_required": true,
+    "frozen_06j_draw_ceiling_preserved": 120,
+    "frozen_06j_triangle_ceiling_preserved": 350000,
+    "added_request_animation_frame_calls": 0,
+    "external_runtime_dependencies": 0,
+    "safari_target": "16.4+"
+  },
+  "real_device_runtime_review": "REQUIRED",
+  "human_presentation_review": "REQUIRED",
+  "acceptance_authority": "USER"
+}
