@@ -69,9 +69,9 @@ export const PRESENTATION_REPLICATION_10A = Object.freeze({
   }),
   placements: Object.freeze([
     // First-look composition: primary identity anchors sit directly beyond spawn.
-    {asset:'shelf_escarpment_a.glb',version:'w1',x:1,z:6,scale:1.04,yaw:.08},
-    {asset:'windcut_rock_spine_a.glb',version:'w1',x:-9,z:9,scale:1.08,yaw:.28},
-    {asset:'ruin_windcut_fragment_a.glb',version:'w1',x:9,z:11,scale:1.12,yaw:-.42},
+    {asset:'shelf_escarpment_a.glb',version:'w1',x:1,z:5,scale:1.04,yaw:.08},
+    {asset:'windcut_rock_spine_a.glb',version:'w1',x:-8,z:8,scale:1.12,yaw:.28},
+    {asset:'ruin_windcut_fragment_a.glb',version:'w1',x:8,z:10,scale:1.16,yaw:-.42},
     {asset:'deadwood_windswept_a.glb',version:'w1',x:-4,z:2,scale:1.06,yaw:.54},
 
     // Secondary identity echoes extend the shelf rather than competing with the vista.
