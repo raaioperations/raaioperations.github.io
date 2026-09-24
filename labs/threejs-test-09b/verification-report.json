@@ -2,7 +2,7 @@
   "test": "09B",
   "iteration": "Presentation Pass 5",
   "status": "PASS",
-  "build_id": "20260923050442",
+  "build_id": "20260924205044",
   "classification": "ENVIRONMENT ART PRODUCTION / GEOMETRY-REPAIRED HUMAN REVIEW CANDIDATE",
   "delegated_nonvisual_checks": {
     "accepted_09d_frozen_required": true,
@@ -18,6 +18,9 @@
     "legacy_wet_shoreline_hidden_required": true,
     "duplicate_meadow_ground_hidden_required": true,
     "systemic_terrain_surface_sampler_required": true,
+    "tapered_bank_berm_ends_required": true,
+    "irregular_bank_berm_shoulders_required": true,
+    "bank_berm_crown_cut_material_hierarchy_required": true,
     "geometry_fix_does_not_use_double_side": true,
     "runtime_batch_ceiling": 6,
     "legacy_gate_clip_runtime_hook": true,

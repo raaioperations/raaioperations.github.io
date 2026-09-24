@@ -1,5 +1,5 @@
 {
-  "build_id": "20260923050442",
+  "build_id": "20260924205044",
   "test": "09B",
   "roadmap": "Test09 — Presentation Foundation",
   "milestone": "Vertical Beauty Slice",
@@ -38,6 +38,7 @@
     "wetland_ecology_clusters": true,
     "legacy_gate_presentation_clipped": true,
     "corrective_geometry_revision": "3.0.3",
+    "bank_berm_art_revision": "3.1.0",
     "strip_winding_repaired": true,
     "strip_outer_skirts_buried": true,
     "shoreline_winding_validated": true,
@@ -46,7 +47,11 @@
     "runtime_vertex_terrain_conformance": true,
     "legacy_wet_shoreline_hidden": true,
     "duplicate_meadow_ground_hidden": true,
-    "systemic_terrain_is_visible_ground": true
+    "systemic_terrain_is_visible_ground": true,
+    "tapered_bank_berm_ends": true,
+    "irregular_bank_berm_shoulders": true,
+    "lower_broader_bank_berm_profiles": true,
+    "green_crown_brown_cut_material_hierarchy": true
   },
   "hard_limits": {
     "draw_calls_max": 120,
@@ -69,5 +74,5 @@
   "automated_presentation_acceptance": false,
   "human_presentation_review": "REQUIRED",
   "frozen": false,
-  "app_js_bytes": 860599
+  "app_js_bytes": 860634
 }
