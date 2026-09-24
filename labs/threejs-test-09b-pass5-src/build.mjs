@@ -30,12 +30,15 @@ const buildPass4=JSON.parse(gitShow('labs/threejs-test-09b/build-info.json'));
 const verifyPass4=JSON.parse(gitShow('labs/threejs-test-09b/verification-report.json'));
 const accept09D=JSON.parse(await readFile(path.join(labs,'threejs-test-09d','acceptance.json'),'utf8'));
 const manifest=JSON.parse(await readFile(path.join(envRoot,'asset_manifest.generated.json'),'utf8'));
-assert(manifest.version==='3.0.3','Pass 5 repaired v3 manifest required');
+assert(manifest.version==='3.1.0','Pass 5 repaired v3 manifest required');
 assert(manifest.geometry_qa?.strip_faces_upward===true,'strip winding QA required');
 assert(manifest.geometry_qa?.strip_outer_skirts_buried===true,'buried strip skirts QA required');
 assert(manifest.geometry_qa?.shore_faces_upward===true,'shore winding QA required');
 assert(manifest.geometry_qa?.shore_edges_buried===true,'shore edge burial QA required');
 assert(manifest.geometry_qa?.shore_half_arc_nonoverlap===true,'shore half-arc non-overlap QA required');
+assert(manifest.geometry_qa?.strip_tapered_ends===true,'tapered bank/berm ends QA required');
+assert(manifest.geometry_qa?.strip_irregular_shoulders===true,'irregular bank/berm shoulders QA required');
+assert(manifest.geometry_qa?.strip_crown_cut_material_separation===true,'bank/berm crown-cut material separation QA required');
 assert(manifest.geometry_qa?.no_double_side_geometry_fix===true,'geometry repair must not rely on DoubleSide');
 
 const expectedPass4Source='5a5baf46ef5e650188e9974e11ae65e853c25305';
@@ -116,6 +119,7 @@ for(const token of [
   'ENVIRONMENT GLBs',
   'SYSTEMIC GROUND ONLY',
   'TERRAIN-CONFORMED BANKS/PATH/SHORE',
+  'ERODED BANK/BERM FORMS',
   'LEGACY SHORE HIDDEN',
   'RUIN V2',
   'TREE VARIANTS',
@@ -162,6 +166,7 @@ await writeFile(path.join(out,'build-info.json'),JSON.stringify({
     wetland_ecology_clusters:true,
     legacy_gate_presentation_clipped:true,
     corrective_geometry_revision:'3.0.3',
+    bank_berm_art_revision:'3.1.0',
     strip_winding_repaired:true,
     strip_outer_skirts_buried:true,
     shoreline_winding_validated:true,
@@ -170,7 +175,11 @@ await writeFile(path.join(out,'build-info.json'),JSON.stringify({
     runtime_vertex_terrain_conformance:true,
     legacy_wet_shoreline_hidden:true,
     duplicate_meadow_ground_hidden:true,
-    systemic_terrain_is_visible_ground:true
+    systemic_terrain_is_visible_ground:true,
+    tapered_bank_berm_ends:true,
+    irregular_bank_berm_shoulders:true,
+    lower_broader_bank_berm_profiles:true,
+    green_crown_brown_cut_material_hierarchy:true
   },
   hard_limits:{draw_calls_max:120,triangles_max:350000,regression_06j_required:'PASS'},
   runtime_external_dependencies:0,
@@ -212,6 +221,9 @@ await writeFile(path.join(out,'verification-report.json'),JSON.stringify({
     legacy_wet_shoreline_hidden_required:true,
     duplicate_meadow_ground_hidden_required:true,
     systemic_terrain_surface_sampler_required:true,
+    tapered_bank_berm_ends_required:true,
+    irregular_bank_berm_shoulders_required:true,
+    bank_berm_crown_cut_material_hierarchy_required:true,
     geometry_fix_does_not_use_double_side:true,
     runtime_batch_ceiling:6,
     legacy_gate_clip_runtime_hook:true,
