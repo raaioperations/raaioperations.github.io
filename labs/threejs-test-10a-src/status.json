@@ -1,0 +1,18 @@
+{
+  "test": "10A",
+  "roadmap": "Test10 — Presentation Replication",
+  "milestone": "Second Environment Replication Proof",
+  "environment": "Windcut Shelf",
+  "status": "AUTHORIZED_FOUNDATION_OPEN",
+  "foundation": {
+    "test09b": "ACCEPTED / FROZEN / CANONICAL",
+    "accepted_build": "20260924205044"
+  },
+  "asset_policy": "REUSE_ONLY_FIRST_PROOF",
+  "broad_world_expansion": false,
+  "implementation_started": true,
+  "runtime_build": false,
+  "human_review": "NOT_STARTED",
+  "frozen": false,
+  "canonical": false
+}
