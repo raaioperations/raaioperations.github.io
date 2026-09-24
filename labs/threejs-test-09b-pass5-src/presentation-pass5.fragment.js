@@ -233,8 +233,8 @@ async function loadPass5EnvironmentAssets09B(){
     material.name=name;
     material.metalness=0;
 
-    if(name==='MAT_EARTH_WARM')material.color.set(0x766a4f);
-    if(name==='MAT_EARTH_DAMP')material.color.set(0x596150);
+    if(name==='MAT_EARTH_WARM')material.color.set(0x72684f);
+    if(name==='MAT_EARTH_DAMP')material.color.set(0x66755b);
     if(name==='MAT_RUIN_STONE')material.color.set(0x77796f);
     if(name==='MAT_BARK_DARK')material.color.set(0x503526);
     if(name==='MAT_FOLIAGE_MID')material.color.set(0x3f7242);
@@ -343,7 +343,7 @@ function updatePass5Hud09B(){
   }else if(p.automatedReady){
     setP5Text09B(
       p5ResultEl09B,
-      'ENVIRONMENT GLBs ✓ · SYSTEMIC GROUND ONLY ✓ · TERRAIN-CONFORMED BANKS/PATH/SHORE ✓ · LEGACY SHORE HIDDEN ✓ · RUIN V2 ✓ · TREE VARIANTS ✓ · WETLAND ECOLOGY ✓ · PERFORMANCE PASS ✓ · HUMAN PRESENTATION REVIEW REQUIRED',
+      'ENVIRONMENT GLBs ✓ · SYSTEMIC GROUND ONLY ✓ · TERRAIN-CONFORMED BANKS/PATH/SHORE ✓ · ERODED BANK/BERM FORMS ✓ · LEGACY SHORE HIDDEN ✓ · RUIN V2 ✓ · TREE VARIANTS ✓ · WETLAND ECOLOGY ✓ · PERFORMANCE PASS ✓ · HUMAN PRESENTATION REVIEW REQUIRED',
       '#ffe59a'
     );
   }else{
