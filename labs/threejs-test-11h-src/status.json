@@ -1,0 +1,33 @@
+{
+  "test": "11H",
+  "roadmap": "Test11 — Greenfield Production Rebuild",
+  "milestone": "Combat Action Foundation",
+  "environment": "Copperwash Reach — Combat Action",
+  "status": "IMPLEMENTATION_OPEN",
+  "baseline": "Greenfield Gameplay Foundation v0.7",
+  "goals": [
+    "deterministic soft combat targeting",
+    "keyboard and touch attack input",
+    "explicit attack phases",
+    "one hit per attack",
+    "persistent actor health",
+    "bounded stagger state",
+    "combat target feedback",
+    "recovery gating",
+    "single scheduler / single RAF"
+  ],
+  "non_goals": [
+    "weapons",
+    "combos",
+    "stamina",
+    "blocking",
+    "dodging",
+    "parries",
+    "limb damage",
+    "ragdolls",
+    "loot",
+    "quests"
+  ],
+  "frozen": false,
+  "canonical": false
+}
