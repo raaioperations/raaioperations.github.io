@@ -1,0 +1,61 @@
+{
+  "name": "Greenfield Combat Foundation v0.8",
+  "source_tests": [
+    "11A",
+    "11B",
+    "11C",
+    "11D",
+    "11E",
+    "11F",
+    "11G",
+    "11H"
+  ],
+  "status": "ACCEPTED_DEVELOPMENT_BASELINE",
+  "accepted_build": "20260925190629",
+  "parent_baseline": "Greenfield Gameplay Foundation v0.7",
+  "renderer": "WebGLRenderer",
+  "three": "0.186.0",
+  "invariants": {
+    "request_animation_frame_source_calls": 1,
+    "renderer_owner": 1,
+    "scheduler_owner": 1,
+    "deterministic_phases": true,
+    "active_chunk_pool_size": 9,
+    "active_actor_capacity": 27,
+    "movement_update_budget_per_frame": 12,
+    "behavior_evaluation_budget_per_frame": 6,
+    "interaction_action_budget_per_frame": 1,
+    "attack_start_budget_per_frame": 1
+  },
+  "promoted_capabilities": {
+    "deterministic_soft_combat_targeting": true,
+    "keyboard_touch_attack_input": true,
+    "explicit_attack_state_machine": [
+      "READY",
+      "WINDUP",
+      "ACTIVE",
+      "RECOVERY"
+    ],
+    "one_hit_per_attack": true,
+    "recovery_gating": true,
+    "persistent_actor_health": true,
+    "persistent_actor_hit_count": true,
+    "bounded_stagger_state": true,
+    "persistent_defeated_state": true,
+    "combat_target_indicator": true
+  },
+  "observed_mobile_result": {
+    "attack_starts": 4,
+    "attack_peak": 1,
+    "hits": 4,
+    "misses": 0,
+    "duplicate_hit_blocks": 16,
+    "recovery_rejects": 6,
+    "last_damage": 25,
+    "defeats": 1,
+    "defeated_actors": 1
+  },
+  "frozen": false,
+  "canonical": false,
+  "next_test": "11I — Reciprocal Combat Foundation"
+}
