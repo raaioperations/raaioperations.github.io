@@ -1,0 +1,34 @@
+{
+  "test": "11I",
+  "roadmap": "Test11 — Greenfield Production Rebuild",
+  "milestone": "Reciprocal Combat Foundation",
+  "environment": "Copperwash Reach — Reciprocal Combat",
+  "status": "IMPLEMENTATION_OPEN",
+  "baseline": "Greenfield Combat Foundation v0.8",
+  "goals": [
+    "retaliation threat state",
+    "enemy telegraph/strike/recovery state machine",
+    "bounded enemy combat evaluation",
+    "player health",
+    "invulnerability frames",
+    "player stagger/control lock",
+    "player downed state",
+    "enemy attack visual feedback",
+    "single scheduler / single RAF"
+  ],
+  "non_goals": [
+    "dodge",
+    "block",
+    "parry",
+    "stamina",
+    "combos",
+    "weapons",
+    "group tactics",
+    "healing",
+    "respawn",
+    "ragdolls",
+    "loot"
+  ],
+  "frozen": false,
+  "canonical": false
+}
