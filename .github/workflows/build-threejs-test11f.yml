@@ -1,0 +1,101 @@
+name: Build Three.js Test 11F
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'labs/threejs-test-11e-src/status.json'
+      - 'labs/threejs-test-11e-src/GREENFIELD_BASELINE.json'
+      - 'labs/threejs-test-11f-src/**'
+      - '.github/workflows/build-threejs-test11f.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install pinned dependencies
+        working-directory: labs/threejs-test-11f-src
+        run: npm install --no-audit --no-fund --no-package-lock
+
+      - name: Unit tests
+        working-directory: labs/threejs-test-11f-src
+        run: npm test
+
+      - name: Build 11F
+        working-directory: labs/threejs-test-11f-src
+        run: npm run build
+
+      - name: Setup Chrome
+        id: chrome
+        uses: browser-actions/setup-chrome@v1
+
+      - name: Browser behavior-interaction smoke
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m http.server 4178 --directory labs/threejs-test-11f >/tmp/test11f-server.log 2>&1 &
+          SERVER_PID=$!
+          CHROME='${{ steps.chrome.outputs.chrome-path }}'
+          "$CHROME" \
+            --headless=new \
+            --no-sandbox \
+            --disable-dev-shm-usage \
+            --ignore-gpu-blocklist \
+            --enable-webgl \
+            --enable-unsafe-swiftshader \
+            --use-angle=swiftshader \
+            --remote-debugging-port=9222 \
+            --remote-allow-origins='*' \
+            about:blank >/tmp/test11f-chrome.log 2>&1 &
+          CHROME_PID=$!
+          trap 'kill "$CHROME_PID" "$SERVER_PID" >/dev/null 2>&1 || true' EXIT
+
+          CDP_ENDPOINT='http://127.0.0.1:9222' \
+          TEST_URL='http://127.0.0.1:4178/?smoke=1' \
+          node labs/threejs-test-11f-src/browser-smoke.mjs
+
+      - name: Finalize verification
+        working-directory: labs/threejs-test-11f-src
+        run: npm run finalize -- PASS
+
+      - name: Verify report
+        run: |
+          node - <<'NODE'
+          const fs=require('fs');
+          const info=JSON.parse(fs.readFileSync('labs/threejs-test-11f/build-info.json','utf8'));
+          const report=JSON.parse(fs.readFileSync('labs/threejs-test-11f/verification-report.json','utf8'));
+          if(report.status!=='PASS') throw new Error('11F verification failed');
+          if(info.source_gates.request_animation_frame_calls!==1) throw new Error('one-RAF invariant failed');
+          if(info.browser_smoke!=='PASS') throw new Error('browser smoke missing');
+          if(info.capabilities.active_actor_capacity!==27) throw new Error('actor capacity failed');
+          if(info.capabilities.behavior_evaluation_budget_per_frame!==6) throw new Error('behavior budget failed');
+          if(info.capabilities.interaction_budget_per_frame!==2) throw new Error('interaction budget failed');
+          console.log({build_id:info.build_id,status:report.status});
+          NODE
+
+      - name: Publish Test11F
+        run: |
+          git config user.name "raaioperations"
+          git config user.email "alanhasan87@gmail.com"
+          git add labs/threejs-test-11f
+          if git diff --cached --quiet; then
+            echo 'No generated changes'
+          else
+            git commit -m 'Build Test11F entity behavior interaction'
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
