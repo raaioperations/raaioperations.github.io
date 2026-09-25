@@ -4227,7 +4227,7 @@ void main() {
       <span>Behavior eval/peak</span><b data-k="behaviorEval">\u2014 / \u2014</b><span>Behavior budget</span><b data-k="behaviorBudget">\u2014 / ${Se.behaviorBudgetPerFrame}</b>
       <span>Behaviors W/O/A/S</span><b data-k="states">\u2014</b><span>Awareness transitions</span><b data-k="awareness">\u2014</b>
       <span>Avoid transitions</span><b data-k="avoid">\u2014</b><span>Social interactions</span><b data-k="social">\u2014</b>
-      <span>Interaction peak</span><b data-k="interactionPeak">\u2014 / ${Se.interactionBudgetPerFrame}</b><span>Pair duplicates</span><b data-k="pairDuplicates">\u2014</b>
+      <span>Interaction peak</span><b data-k="interactionPeak">\u2014 / ${Se.interactionBudgetPerFrame}</b><span>Pair dupes blocked</span><b data-k="pairDuplicates">\u2014</b>
       <span>Perception candidates peak</span><b data-k="perception">\u2014</b><span>Min actor spacing</span><b data-k="spacing">\u2014</b>
       <span>Restored actors</span><b data-k="restored">\u2014</b><span>State store E/C</span><b data-k="store">\u2014</b>
       <span>Spatial entries</span><b data-k="spatial">\u2014</b><span>Camera candidates</span><b data-k="candidates">\u2014</b>

@@ -1,5 +1,5 @@
 {
-  "build_id": "20260925182647",
+  "build_id": "20260925182853",
   "test": "11F",
   "roadmap": "Test11 — Greenfield Production Rebuild",
   "milestone": "Entity Behavior & World Interaction",
@@ -65,7 +65,7 @@
     }
   },
   "browser_smoke": "PASS",
-  "app_js_bytes": 698394,
+  "app_js_bytes": 698397,
   "frozen": false,
   "canonical": false
 }
