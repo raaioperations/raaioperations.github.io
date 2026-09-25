@@ -77,6 +77,17 @@ export class BehaviorSystem{
   }
 
   evaluateRecord(record,frame,playerPosition,worldSpatialIndex){
+    if(
+      record.lastPlayerInteractionFrame>=0&&
+      frame<record.lastPlayerInteractionFrame+ACTORS.playerInteractionHoldFrames
+    ){
+      const dx=playerPosition.x-record.x,dz=playerPosition.z-record.z;
+      record.behavior=BEHAVIOR.OBSERVE_PLAYER;
+      record.behaviorUntilFrame=record.lastPlayerInteractionFrame+ACTORS.playerInteractionHoldFrames;
+      record.awareness=1;
+      record.desiredHeading=Math.atan2(dx,dz);
+      return;
+    }
     if(record.behavior===BEHAVIOR.SOCIAL&&frame<record.behaviorUntilFrame){
       const partner=this.neighborhood.records.get(record.interactionPartner);
       if(partner){
