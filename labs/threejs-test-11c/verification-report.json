@@ -1,0 +1,24 @@
+{
+  "test": "11C",
+  "status": "PASS",
+  "build_id": "20260925091729",
+  "checks": {
+    "test11b_pass_closed": true,
+    "baseline_not_frozen": true,
+    "one_raf_preserved": true,
+    "no_set_animation_loop": true,
+    "three_version_pinned": true,
+    "deterministic_terrain": true,
+    "instanced_vegetation": true,
+    "water": true,
+    "sky_fog_lighting": true,
+    "authored_assets_present": true,
+    "terrain_aware_player": true,
+    "terrain_aware_camera": true,
+    "explicit_world_disposal": true,
+    "unit_tests_required": true,
+    "browser_smoke_required": true,
+    "browser_smoke": true,
+    "unit_tests": true
+  }
+}
