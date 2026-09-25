@@ -17,6 +17,6 @@ export class RendererService{
     this.renderer.setPixelRatio(dpr);this.renderer.setSize(width,height,false);camera.aspect=width/height;camera.updateProjectionMatrix();return true;
   }
   render(scene,camera){this.renderer.render(scene,camera);}
-  snapshot(){return Object.freeze({renderer:'WebGLRenderer',width:this.lastWidth,height:this.lastHeight,dpr:this.lastDpr,drawCalls:this.renderer.info.render.calls,triangles:this.renderer.info.render.triangles});}
+  snapshot(){return Object.freeze({renderer:'WebGLRenderer',width:this.lastWidth,height:this.lastHeight,dpr:this.lastDpr,drawCalls:this.renderer.info.render.calls,triangles:this.renderer.info.render.triangles,geometries:this.renderer.info.memory.geometries,textures:this.renderer.info.memory.textures});}
   dispose(){this.renderer.dispose();this.renderer.forceContextLoss?.();}
 }
