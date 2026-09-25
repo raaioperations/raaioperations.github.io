@@ -30,7 +30,9 @@ export class LivingWorldSystem{
     this.bodies.name='ActorBodies';
     this.heads.name='ActorHeads';
     this.bodies.count=0;this.heads.count=0;
-    this.bodies.frustumCulled=true;this.heads.frustumCulled=true;
+    // The fixed 27-instance pool is cheap enough to render directly; disabling
+    // object-level frustum culling avoids stale InstancedMesh bounds after chunk rebinds.
+    this.bodies.frustumCulled=false;this.heads.frustumCulled=false;
     this.actorRoot.add(this.bodies,this.heads);
 
     this.dummy=new THREE.Object3D();
