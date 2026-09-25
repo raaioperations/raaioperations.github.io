@@ -34,7 +34,7 @@ test('PerformanceMonitor calculates bounded rolling statistics', () => {
   const stats = monitor.stats();
 
   assert.equal(stats.count, 4);
-  assert.equal(stats.avgMs, 35);
-  assert.equal(stats.p95Ms, 50);
-  assert.equal(stats.p99Ms, 50);
+  assert.ok(Math.abs(stats.avgMs - 35) < 1e-9);
+  assert.ok(Math.abs(stats.p95Ms - 50) < 1e-9);
+  assert.ok(Math.abs(stats.p99Ms - 50) < 1e-9);
 });
