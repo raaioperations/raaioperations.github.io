@@ -1,0 +1,85 @@
+import * as THREE from 'three';
+import {CAMERA} from '../config.js';
+
+export function segmentCylinderHitFraction(ax,az,bx,bz,cx,cz,r){
+  const dx=bx-ax,dz=bz-az,fx=ax-cx,fz=az-cz,a=dx*dx+dz*dz;
+  if(a<=1e-9)return null;
+  const b=2*(fx*dx+fz*dz),c=fx*fx+fz*fz-r*r,disc=b*b-4*a*c;
+  if(disc<0)return null;
+  const root=Math.sqrt(disc),t1=(-b-root)/(2*a),t2=(-b+root)/(2*a);
+  const t=[t1,t2].filter(v=>v>=0&&v<=1).sort((x,y)=>x-y)[0];
+  return Number.isFinite(t)?t:null;
+}
+
+export class ThirdPersonCamera{
+  constructor(camera,{spatialIndex=null,groundHeight=(x,z)=>0}={}){
+    this.camera=camera;this.spatialIndex=spatialIndex;this.groundHeight=groundHeight;
+    this.yaw=CAMERA.defaultYaw;this.pitch=CAMERA.defaultPitch;this.distance=CAMERA.defaultDistance;this.actualDistance=this.distance;
+    this.target=new THREE.Vector3();this.desired=new THREE.Vector3();this.resolved=new THREE.Vector3();this.initialized=false;
+    this.lastCandidateCount=0;
+  }
+
+  applyLook(dx,dy){
+    this.yaw-=dx*.0055;
+    this.pitch=THREE.MathUtils.clamp(this.pitch+dy*.0045,CAMERA.minPitch,CAMERA.maxPitch);
+  }
+
+  zoom(delta){this.distance=THREE.MathUtils.clamp(this.distance+delta,CAMERA.minDistance,CAMERA.maxDistance);}
+
+  solveCollision(target,desired){
+    let best=1;
+    const pad=1.2;
+    const candidates=this.spatialIndex?.queryAABB(
+      Math.min(target.x,desired.x)-pad,
+      Math.min(target.z,desired.z)-pad,
+      Math.max(target.x,desired.x)+pad,
+      Math.max(target.z,desired.z)+pad
+    )||[];
+    this.lastCandidateCount=candidates.length;
+
+    for(const o of candidates){
+      const t=segmentCylinderHitFraction(target.x,target.z,desired.x,desired.z,o.x,o.z,(o.r||0)+CAMERA.collisionPadding);
+      if(t===null)continue;
+      const y=THREE.MathUtils.lerp(target.y,desired.y,t);
+      if(y<=(o.height||0)+CAMERA.collisionPadding)best=Math.min(best,Math.max(.13,t-.045));
+    }
+
+    for(let i=1;i<=8;i++){
+      const t=i/8;
+      const x=THREE.MathUtils.lerp(target.x,desired.x,t);
+      const z=THREE.MathUtils.lerp(target.z,desired.z,t);
+      const y=THREE.MathUtils.lerp(target.y,desired.y,t);
+      const terrainY=this.groundHeight(x,z)+CAMERA.terrainPadding;
+      if(y<terrainY){best=Math.min(best,Math.max(.13,t-.07));break;}
+    }
+
+    this.resolved.copy(target).lerp(desired,best);
+    const floor=this.groundHeight(this.resolved.x,this.resolved.z)+CAMERA.terrainPadding;
+    if(this.resolved.y<floor)this.resolved.y=floor;
+    return this.resolved;
+  }
+
+  update({dt},playerPosition,input){
+    if(input)this.applyLook(input.lookDX||0,input.lookDY||0);
+    this.target.set(playerPosition.x,playerPosition.y+1.45,playerPosition.z);
+    const cp=Math.cos(this.pitch);
+    this.desired.set(
+      this.target.x+Math.sin(this.yaw)*cp*this.distance,
+      this.target.y+Math.sin(this.pitch)*this.distance+1,
+      this.target.z+Math.cos(this.yaw)*cp*this.distance
+    );
+    const resolved=this.solveCollision(this.target,this.desired);
+    if(!this.initialized){this.camera.position.copy(resolved);this.initialized=true;}
+    else this.camera.position.lerp(resolved,1-Math.exp(-CAMERA.damping*dt));
+    this.camera.lookAt(this.target);
+    this.actualDistance=this.camera.position.distanceTo(this.target);
+  }
+
+  snapshot(){
+    const terrainClearance=this.camera.position.y-this.groundHeight(this.camera.position.x,this.camera.position.z);
+    return Object.freeze({
+      yaw:this.yaw,pitch:this.pitch,targetDistance:this.distance,actualDistance:this.actualDistance,
+      terrainClearance,candidates:this.lastCandidateCount
+    });
+  }
+}

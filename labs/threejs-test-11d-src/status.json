@@ -3,20 +3,66 @@
   "roadmap": "Test11 — Greenfield Production Rebuild",
   "milestone": "Production World Systems",
   "environment": "Copperwash Reach — Production Runtime",
-  "status": "IMPLEMENTATION_OPEN",
-  "baseline": "Greenfield World Foundation v0.3",
-  "goals": [
-    "3x3 deterministic pooled chunk window",
-    "bounded chunk lifecycle",
-    "distance vegetation LOD and culling",
-    "spatial-hash broad phase",
-    "camera collision via spatial query",
-    "parsed GLB cache and clone path",
-    "adaptive quality hysteresis",
-    "DPR response to quality tier",
-    "runtime production diagnostics",
-    "single scheduler / single RAF"
-  ],
+  "status": "PASS_CLOSED",
+  "accepted_by": "user",
+  "accepted_at": "2026-09-25T17:48:21Z",
+  "accepted_build": "20260925172857",
+  "baseline_in": "Greenfield Production World Foundation v0.4",
+  "real_device_evidence": {
+    "raf_loops": "1 / 1",
+    "active_chunks": "9 / 9",
+    "chunk_refreshes_observed": [
+      10,
+      17
+    ],
+    "chunk_centers_observed": [
+      [
+        -5,
+        -2
+      ],
+      [
+        0,
+        -4
+      ]
+    ],
+    "pool_realloc": 0,
+    "lod_near_mid_far": [
+      1,
+      4,
+      4
+    ],
+    "visible_vegetation_chunks": [
+      8,
+      9
+    ],
+    "spatial_entries": 35,
+    "camera_candidates": [
+      0,
+      1
+    ],
+    "asset_cache_hits": 2,
+    "asset_cache_misses": 5,
+    "quality": "BALANCED",
+    "dpr": 1.1,
+    "ground_error_m": 0,
+    "camera_clearance_m": [
+      3.91,
+      4.29
+    ],
+    "draw_calls_observed": [
+      21,
+      24
+    ],
+    "draw_calls_limit": 64,
+    "triangles_observed": [
+      14372,
+      15324
+    ],
+    "triangles_limit": 90000,
+    "avg_frame_ms": 16.67,
+    "p95_frame_ms": 17
+  },
   "frozen": false,
-  "canonical": false
+  "canonical": false,
+  "next": "11E — Living World Runtime"
 }
