@@ -1,0 +1,19 @@
+{
+  "test": "11A",
+  "status": "PASS",
+  "build_id": "20260925082724",
+  "checks": {
+    "exact_one_raf_source_call": true,
+    "no_set_animation_loop": true,
+    "three_version_pinned": true,
+    "webgl_renderer_selected": true,
+    "explicit_lifecycle": true,
+    "resource_tracker_present": true,
+    "mobile_dpr_caps_present": true,
+    "deterministic_scheduler_order_unit_test_required": true,
+    "browser_webgl_smoke_required": true,
+    "frozen_reference_preserved": true,
+    "browser_webgl_smoke": true,
+    "unit_tests": true
+  }
+}
