@@ -1,0 +1,106 @@
+name: Build Three.js Test 11B
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'labs/threejs-test-11a-src/status.json'
+      - 'labs/threejs-test-11a-src/GREENFIELD_BASELINE.json'
+      - 'labs/threejs-test-11b-src/**'
+      - '.github/workflows/build-threejs-test11b.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install pinned dependencies
+        working-directory: labs/threejs-test-11b-src
+        run: npm install --no-audit --no-fund --no-package-lock
+
+      - name: Unit tests
+        working-directory: labs/threejs-test-11b-src
+        run: npm test
+
+      - name: Build 11B
+        working-directory: labs/threejs-test-11b-src
+        run: npm run build
+
+      - name: Setup Chrome
+        id: chrome
+        uses: browser-actions/setup-chrome@v1
+
+      - name: Browser player-camera smoke
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m http.server 4174 --directory labs/threejs-test-11b >/tmp/test11b-server.log 2>&1 &
+          SERVER_PID=$!
+          trap 'kill "$SERVER_PID" >/dev/null 2>&1 || true' EXIT
+          sleep 1
+          CHROME='${{ steps.chrome.outputs.chrome-path }}'
+          "$CHROME" \
+            --headless=new \
+            --no-sandbox \
+            --disable-dev-shm-usage \
+            --ignore-gpu-blocklist \
+            --enable-webgl \
+            --enable-unsafe-swiftshader \
+            --use-angle=swiftshader \
+            --virtual-time-budget=5500 \
+            --dump-dom \
+            'http://127.0.0.1:4174/?smoke=1' \
+            >/tmp/test11b-dom.html
+
+          if ! grep -q 'data-browser-smoke="PASS"' /tmp/test11b-dom.html; then
+            echo 'Test11B browser smoke DOM:'
+            cat /tmp/test11b-dom.html
+            exit 1
+          fi
+          grep 'data-raf-loops="1"' /tmp/test11b-dom.html
+          grep 'data-renderer="WebGLRenderer"' /tmp/test11b-dom.html
+          grep 'data-runtime-error="0"' /tmp/test11b-dom.html
+          grep 'data-soldier="PASS"' /tmp/test11b-dom.html
+          grep 'data-movement="PASS"' /tmp/test11b-dom.html
+          grep 'data-jump="PASS"' /tmp/test11b-dom.html
+
+      - name: Finalize verification
+        working-directory: labs/threejs-test-11b-src
+        run: npm run finalize -- PASS
+
+      - name: Verify report
+        run: |
+          node - <<'NODE'
+          const fs=require('fs');
+          const info=JSON.parse(fs.readFileSync('labs/threejs-test-11b/build-info.json','utf8'));
+          const report=JSON.parse(fs.readFileSync('labs/threejs-test-11b/verification-report.json','utf8'));
+          if(report.status!=='PASS') throw new Error('11B verification failed');
+          if(info.source_gates.request_animation_frame_calls!==1) throw new Error('one-RAF invariant failed');
+          if(info.browser_smoke!=='PASS') throw new Error('browser smoke missing');
+          console.log({build_id:info.build_id,status:report.status});
+          NODE
+
+      - name: Publish Test11B
+        run: |
+          git config user.name "raaioperations"
+          git config user.email "alanhasan87@gmail.com"
+          git add labs/threejs-test-11b
+          if git diff --cached --quiet; then
+            echo 'No generated changes'
+          else
+            git commit -m 'Build Test11B player camera mobile foundation'
+            git push
+          fi

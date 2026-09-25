@@ -1,0 +1,21 @@
+{
+  "test": "11B",
+  "roadmap": "Test11 — Greenfield Production Rebuild",
+  "milestone": "Player + Camera + Mobile Control Foundation",
+  "status": "IMPLEMENTATION_OPEN",
+  "baseline": "Greenfield Production Kernel v0.1",
+  "baseline_frozen": false,
+  "goals": [
+    "Soldier GLB asset pipeline",
+    "idle/walk/sprint/jump player controller",
+    "AnimationMixer state mapping",
+    "keyboard controls",
+    "touch joystick, sprint, jump",
+    "drag-to-orbit third-person camera",
+    "analytic camera collision",
+    "single scheduler / single RAF",
+    "explicit disposal"
+  ],
+  "frozen": false,
+  "canonical": false
+}
