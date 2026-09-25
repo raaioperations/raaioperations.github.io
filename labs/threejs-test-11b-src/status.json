@@ -2,10 +2,12 @@
   "test": "11B",
   "roadmap": "Test11 — Greenfield Production Rebuild",
   "milestone": "Player + Camera + Mobile Control Foundation",
-  "status": "IMPLEMENTATION_OPEN",
-  "baseline": "Greenfield Production Kernel v0.1",
-  "baseline_frozen": false,
-  "goals": [
+  "status": "PASS_CLOSED",
+  "accepted_by": "user",
+  "accepted_at": "2026-09-25T09:06:56Z",
+  "accepted_build": "20260925085827",
+  "baseline_in": "Greenfield Player / Camera Foundation v0.2",
+  "proven_capabilities": [
     "Soldier GLB asset pipeline",
     "idle/walk/sprint/jump player controller",
     "AnimationMixer state mapping",
@@ -16,6 +18,16 @@
     "single scheduler / single RAF",
     "explicit disposal"
   ],
+  "inherited_invariants": [
+    "exactly one requestAnimationFrame source call",
+    "one renderer owner",
+    "deterministic scheduler phases",
+    "explicit mount/start/pause/resize/dispose lifecycle",
+    "resource ownership/disposal",
+    "mobile DPR policy",
+    "WebGLRenderer production path"
+  ],
   "frozen": false,
-  "canonical": false
+  "canonical": false,
+  "next": "11C — World Foundation"
 }
