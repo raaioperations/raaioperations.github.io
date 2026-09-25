@@ -1,0 +1,72 @@
+{
+  "build_id": "20260925192432",
+  "test": "11I",
+  "roadmap": "Test11 — Greenfield Production Rebuild",
+  "milestone": "Reciprocal Combat Foundation",
+  "environment_name": "Copperwash Reach — Reciprocal Combat",
+  "baseline": "Greenfield Combat Foundation v0.8",
+  "architecture": "GREENFIELD_RECIPROCAL_COMBAT_FOUNDATION",
+  "environment": {
+    "three": "0.186.0",
+    "renderer": "WebGLRenderer",
+    "framework": "vanilla",
+    "build_tool": "esbuild"
+  },
+  "source_gates": {
+    "request_animation_frame_calls": 1,
+    "renderer_set_animation_loop_calls": 0,
+    "timer_owned_combat": false
+  },
+  "capabilities": {
+    "retaliation_threat_state": true,
+    "enemy_attack_phases": [
+      "READY",
+      "TELEGRAPH",
+      "STRIKE",
+      "RECOVERY"
+    ],
+    "enemy_evaluation_budget_per_frame": 4,
+    "enemy_attack_start_budget_per_frame": 1,
+    "max_concurrent_enemy_attackers": 2,
+    "player_max_health": 100,
+    "enemy_damage_per_hit": 15,
+    "player_invulnerability_frames": 18,
+    "player_stagger_frames": 14,
+    "player_control_lock": true,
+    "player_downed_state": true,
+    "persistent_enemy_combat_state": true,
+    "player_status_hud": true,
+    "active_actor_capacity": 27
+  },
+  "limits": {
+    "draw_calls_max": 84,
+    "triangles_max": 112000,
+    "raf_loops": 1
+  },
+  "assets": {
+    "Soldier.glb": {
+      "source": "labs/threejs-test-09b/assets/Soldier.glb",
+      "bytes": 2160468
+    },
+    "rock_c_hero_boulder.glb": {
+      "source": "assets/3d/sunlit-basin/v1/rock_c_hero_boulder.glb",
+      "bytes": 2840
+    },
+    "tree_e_windswept.glb": {
+      "source": "assets/3d/sunlit-basin/v3/tree_e_windswept.glb",
+      "bytes": 8404
+    },
+    "ruin_windcut_fragment_a.glb": {
+      "source": "assets/3d/windcut-shelf/v1/ruin_windcut_fragment_a.glb",
+      "bytes": 7504
+    },
+    "deadwood_windswept_a.glb": {
+      "source": "assets/3d/windcut-shelf/v1/deadwood_windswept_a.glb",
+      "bytes": 5308
+    }
+  },
+  "browser_smoke": "PASS",
+  "app_js_bytes": 724318,
+  "frozen": false,
+  "canonical": false
+}

@@ -1,0 +1,24 @@
+{
+  "test": "11I",
+  "status": "PASS",
+  "build_id": "20260925192432",
+  "checks": {
+    "test11h_pass_closed": true,
+    "baseline_v08": true,
+    "one_raf_preserved": true,
+    "no_set_animation_loop": true,
+    "no_timer_owned_combat": true,
+    "retaliation_state": true,
+    "enemy_attack_state_machine": true,
+    "bounded_enemy_combat": true,
+    "player_health": true,
+    "invulnerability_frames": true,
+    "stagger_control_lock": true,
+    "downed_state": true,
+    "persistent_reciprocal_state": true,
+    "unit_tests_required": true,
+    "browser_smoke_required": true,
+    "browser_smoke": true,
+    "unit_tests": true
+  }
+}
