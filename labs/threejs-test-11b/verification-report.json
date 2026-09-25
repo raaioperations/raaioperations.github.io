@@ -1,0 +1,25 @@
+{
+  "test": "11B",
+  "status": "PASS",
+  "build_id": "20260925085827",
+  "checks": {
+    "test11a_pass_closed": true,
+    "baseline_not_frozen": true,
+    "baseline_one_raf_preserved": true,
+    "exact_one_raf_source_call": true,
+    "no_set_animation_loop": true,
+    "three_version_pinned": true,
+    "webgl_renderer": true,
+    "soldier_asset_present": true,
+    "keyboard_contract": true,
+    "touch_contract": true,
+    "player_controller": true,
+    "camera_collision": true,
+    "animation_mixer": true,
+    "explicit_disposal": true,
+    "unit_tests_required": true,
+    "browser_smoke_required": true,
+    "browser_smoke": true,
+    "unit_tests": true
+  }
+}

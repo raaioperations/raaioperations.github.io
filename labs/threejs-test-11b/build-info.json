@@ -1,0 +1,42 @@
+{
+  "build_id": "20260925085827",
+  "test": "11B",
+  "roadmap": "Test11 — Greenfield Production Rebuild",
+  "milestone": "Player + Camera + Mobile Control Foundation",
+  "baseline": "Greenfield Production Kernel v0.1",
+  "architecture": "GREENFIELD_EXTENSION",
+  "environment": {
+    "three": "0.186.0",
+    "renderer": "WebGLRenderer",
+    "framework": "vanilla",
+    "build_tool": "esbuild"
+  },
+  "source_gates": {
+    "request_animation_frame_calls": 1,
+    "renderer_set_animation_loop_calls": 0
+  },
+  "capabilities": {
+    "soldier_glb": true,
+    "keyboard": true,
+    "touch_joystick": true,
+    "touch_sprint": true,
+    "touch_jump": true,
+    "pointer_camera": true,
+    "camera_collision": "analytic segment-cylinder",
+    "animation_mixer": true,
+    "explicit_disposal": true
+  },
+  "limits": {
+    "draw_calls_max": 20,
+    "triangles_max": 20000,
+    "raf_loops": 1
+  },
+  "reference_asset": {
+    "soldier_source": "labs/threejs-test-09b/assets/Soldier.glb",
+    "bytes": 2160468
+  },
+  "browser_smoke": "PASS",
+  "app_js_bytes": 654925,
+  "frozen": false,
+  "canonical": false
+}
