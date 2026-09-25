@@ -94,6 +94,7 @@ const buildInfo = {
     'dispose'
   ],
   browser_smoke: 'PENDING',
+  browser_smoke_mode: 'deterministic FrameScheduler.step in headless Chromium',
   app_js_bytes: appStat.size,
   frozen: false,
   canonical: false
