@@ -1,0 +1,24 @@
+{
+  "test": "11F",
+  "status": "PASS",
+  "build_id": "20260925182647",
+  "checks": {
+    "test11e_pass_closed": true,
+    "baseline_v05": true,
+    "one_raf_preserved": true,
+    "no_set_animation_loop": true,
+    "deterministic_behavior_states": true,
+    "bounded_perception": true,
+    "player_awareness": true,
+    "local_avoidance": true,
+    "pair_interaction_scheduler": true,
+    "behavior_persistence": true,
+    "movement_budget": true,
+    "behavior_budget": true,
+    "interaction_budget": true,
+    "unit_tests_required": true,
+    "browser_smoke_required": true,
+    "browser_smoke": true,
+    "unit_tests": true
+  }
+}
