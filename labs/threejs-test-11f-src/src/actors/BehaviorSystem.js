@@ -167,7 +167,16 @@ export class BehaviorSystem{
 
   snapshot(activeRecords){
     const states={WANDER:0,OBSERVE_PLAYER:0,AVOID:0,SOCIAL:0};
-    for(const record of activeRecords)states[record.behavior]=(states[record.behavior]||0)+1;
+    const activeByLod={NEAR:0,MID:0,FAR:0};
+    for(const record of activeRecords){
+      states[record.behavior]=(states[record.behavior]||0)+1;
+      activeByLod[record.lod]=(activeByLod[record.lod]||0)+1;
+    }
+    const averageEvaluationsByLod={
+      NEAR:activeByLod.NEAR?this.evaluationsByLod.NEAR/activeByLod.NEAR:0,
+      MID:activeByLod.MID?this.evaluationsByLod.MID/activeByLod.MID:0,
+      FAR:activeByLod.FAR?this.evaluationsByLod.FAR/activeByLod.FAR:0
+    };
 
     return Object.freeze({
       evaluationsThisFrame:this.evaluationsThisFrame,
@@ -175,6 +184,7 @@ export class BehaviorSystem{
       evaluationBudget:ACTORS.behaviorBudgetPerFrame,
       totalEvaluations:this.totalEvaluations,
       evaluationsByLod:Object.freeze({...this.evaluationsByLod}),
+      averageEvaluationsByLod:Object.freeze(averageEvaluationsByLod),
       playerAwarenessTransitions:this.playerAwarenessTransitions,
       avoidanceTransitions:this.avoidanceTransitions,
       wanderTransitions:this.wanderTransitions,
