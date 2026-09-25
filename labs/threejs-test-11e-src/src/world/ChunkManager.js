@@ -155,6 +155,12 @@ export class ChunkManager{
     this.visibleVegetationChunks=visible;
   }
 
+  activeDescriptors(){
+    return this.slots.map(slot=>Object.freeze({
+      cx:slot.cx,cz:slot.cz,lod:slot.lod,owner:slot.owner
+    }));
+  }
+
   dispose(){
     for(const slot of this.slots){
       this.spatialIndex.removeOwner(slot.owner);
