@@ -1,3 +1,11 @@
+window.addEventListener('error', () => {
+  document.documentElement.dataset.runtimeError = '1';
+});
+
+window.addEventListener('unhandledrejection', () => {
+  document.documentElement.dataset.runtimeError = '1';
+});
+
 import { GameApp } from './app/GameApp.js';
 
 const host = document.getElementById('app');
