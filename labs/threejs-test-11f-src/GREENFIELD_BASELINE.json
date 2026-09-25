@@ -1,0 +1,70 @@
+{
+  "name": "Greenfield Interactive World Foundation v0.6",
+  "source_tests": [
+    "11A",
+    "11B",
+    "11C",
+    "11D",
+    "11E",
+    "11F"
+  ],
+  "status": "ACCEPTED_DEVELOPMENT_BASELINE",
+  "accepted_build": "20260925182853",
+  "parent_baseline": "Greenfield Living World Foundation v0.5",
+  "renderer": "WebGLRenderer",
+  "three": "0.186.0",
+  "invariants": {
+    "request_animation_frame_source_calls": 1,
+    "renderer_owner": 1,
+    "scheduler_owner": 1,
+    "deterministic_phases": true,
+    "explicit_lifecycle": [
+      "mount",
+      "start",
+      "pause",
+      "resize",
+      "dispose"
+    ],
+    "active_chunk_pool_size": 9,
+    "active_actor_capacity": 27,
+    "movement_update_budget_per_frame": 12,
+    "behavior_evaluation_budget_per_frame": 6,
+    "interaction_creation_budget_per_frame": 2
+  },
+  "promoted_capabilities": {
+    "stable_actor_ids": true,
+    "persistent_actor_state": true,
+    "chunk_aware_population": true,
+    "actor_simulation_lod": true,
+    "deterministic_behavior_states": [
+      "WANDER",
+      "OBSERVE_PLAYER",
+      "AVOID",
+      "SOCIAL"
+    ],
+    "bounded_perception": true,
+    "player_awareness": true,
+    "actor_local_avoidance": true,
+    "world_obstacle_avoidance": true,
+    "lightweight_steering": true,
+    "pair_interaction_scheduler": true,
+    "duplicate_pair_suppression": true,
+    "behavior_state_persistence": true,
+    "adaptive_quality": true,
+    "cached_asset_pipeline": true,
+    "spatial_hash_broadphase": true
+  },
+  "observed_mobile_result": {
+    "draw_calls": 17,
+    "triangles": 14796,
+    "movement_peak": 11,
+    "behavior_peak": 5,
+    "interaction_peak": 1,
+    "avg_frame_ms": 16.67,
+    "p95_frame_ms": 17,
+    "dpr": 1.1
+  },
+  "frozen": false,
+  "canonical": false,
+  "next_test": "11G — Gameplay Interaction Foundation"
+}
