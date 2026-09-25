@@ -105,7 +105,7 @@ async function runSmoke(){
     restoredNpc?.lastPlayerInteractionFrame>=0;
 
   // Explicit one-action-per-frame arbitration.
-  app.interaction.evaluateTarget(app.world.playerRoot.position);
+  app.interaction.update({frame:app.scheduler.frameCount+1},app.world.playerRoot.position,{interact:false});
   const first=app.interaction.executeCurrent({frame:app.scheduler.frameCount+1},app.world.playerRoot.position);
   const second=app.interaction.executeCurrent({frame:app.scheduler.frameCount+1},app.world.playerRoot.position);
   const oneActionPerFrame=first===true&&second===false&&app.interaction.actionsThisFrame===1;
