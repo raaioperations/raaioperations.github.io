@@ -130,6 +130,15 @@ async function runSmoke(){
     dormant?.enemyHitCount===persistentBefore.enemyHitCount&&
     persistentAfter?.enemyHitCount===persistentBefore.enemyHitCount;
 
+  // End the smoke fixture's threat after persistence is proven so final metrics
+  // are not changed by a second legitimate retaliation attack.
+  const restoredRecord=app.actors.store.get(actorId);
+  restoredRecord.hostileToPlayer=false;
+  restoredRecord.threatLevel=0;
+  restoredRecord.enemyCombatPhase=ENEMY_COMBAT_PHASE.READY;
+  restoredRecord.enemyStrikeResolved=false;
+  app.actors.refreshActorVisual(actorId);
+
   // Let the player recover before final metrics.
   for(let i=412;i<=450;i++){
     app.input.setTestIntent({moveY:0});
