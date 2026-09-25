@@ -1,0 +1,99 @@
+name: Build Three.js Test 11E
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'labs/threejs-test-11d-src/status.json'
+      - 'labs/threejs-test-11d-src/GREENFIELD_BASELINE.json'
+      - 'labs/threejs-test-11e-src/**'
+      - '.github/workflows/build-threejs-test11e.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install pinned dependencies
+        working-directory: labs/threejs-test-11e-src
+        run: npm install --no-audit --no-fund --no-package-lock
+
+      - name: Unit tests
+        working-directory: labs/threejs-test-11e-src
+        run: npm test
+
+      - name: Build 11E
+        working-directory: labs/threejs-test-11e-src
+        run: npm run build
+
+      - name: Setup Chrome
+        id: chrome
+        uses: browser-actions/setup-chrome@v1
+
+      - name: Browser living-world smoke
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m http.server 4177 --directory labs/threejs-test-11e >/tmp/test11e-server.log 2>&1 &
+          SERVER_PID=$!
+          CHROME='${{ steps.chrome.outputs.chrome-path }}'
+          "$CHROME" \
+            --headless=new \
+            --no-sandbox \
+            --disable-dev-shm-usage \
+            --ignore-gpu-blocklist \
+            --enable-webgl \
+            --enable-unsafe-swiftshader \
+            --use-angle=swiftshader \
+            --remote-debugging-port=9222 \
+            --remote-allow-origins='*' \
+            about:blank >/tmp/test11e-chrome.log 2>&1 &
+          CHROME_PID=$!
+          trap 'kill "$CHROME_PID" "$SERVER_PID" >/dev/null 2>&1 || true' EXIT
+
+          CDP_ENDPOINT='http://127.0.0.1:9222' \
+          TEST_URL='http://127.0.0.1:4177/?smoke=1' \
+          node labs/threejs-test-11e-src/browser-smoke.mjs
+
+      - name: Finalize verification
+        working-directory: labs/threejs-test-11e-src
+        run: npm run finalize -- PASS
+
+      - name: Verify report
+        run: |
+          node - <<'NODE'
+          const fs=require('fs');
+          const info=JSON.parse(fs.readFileSync('labs/threejs-test-11e/build-info.json','utf8'));
+          const report=JSON.parse(fs.readFileSync('labs/threejs-test-11e/verification-report.json','utf8'));
+          if(report.status!=='PASS') throw new Error('11E verification failed');
+          if(info.source_gates.request_animation_frame_calls!==1) throw new Error('one-RAF invariant failed');
+          if(info.browser_smoke!=='PASS') throw new Error('browser smoke missing');
+          if(info.capabilities.active_actor_capacity!==27) throw new Error('active actor capacity failed');
+          if(info.capabilities.actor_update_budget_per_frame!==12) throw new Error('actor update budget failed');
+          console.log({build_id:info.build_id,status:report.status});
+          NODE
+
+      - name: Publish Test11E
+        run: |
+          git config user.name "raaioperations"
+          git config user.email "alanhasan87@gmail.com"
+          git add labs/threejs-test-11e
+          if git diff --cached --quiet; then
+            echo 'No generated changes'
+          else
+            git commit -m 'Build Test11E living world runtime'
+            git push
+          fi
