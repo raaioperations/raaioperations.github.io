@@ -34,6 +34,8 @@ const drawEl10A=document.getElementById('repDraw10A');
 const triEl10A=document.getElementById('repTriangles10A');
 const dupEl10A=document.getElementById('repDuplicates10A');
 const regressionEl10A=document.getElementById('repRegression10A');
+const forestEl10A=document.getElementById('repForest10A');
+const forestCollisionEl10A=document.getElementById('repForestCollision10A');
 const resultEl10A=document.getElementById('repResult10A');
 const zoneEl10A=document.getElementById('zone');
 
@@ -364,6 +366,8 @@ function updateHud10A(){
   set10A(triEl10A,p.triangles.toLocaleString()+' / 350,000',p.triangles<=350000?'#bdf3c8':'#ff9b9b');
   set10A(dupEl10A,String(p.duplicates),p.duplicates===0?'#bdf3c8':'#ff9b9b');
   set10A(regressionEl10A,p.regression,p.regression==='PASS'?'#bdf3c8':'#ffe59a');
+  set10A(forestEl10A,systemicTreesCleared10A+' cleared',forestCorridorApplied10A&&systemicTreesCleared10A>0?'#bdf3c8':'#ffe59a');
+  set10A(forestCollisionEl10A,systemicTreeCollidersCleared10A+' cleared',systemicTreeCollidersCleared10A===systemicTreesCleared10A&&systemicTreesCleared10A>0?'#bdf3c8':'#ffe59a');
 
   if(error10A){
     set10A(resultEl10A,'10A FAIL · '+error10A,'#ff9b9b');
