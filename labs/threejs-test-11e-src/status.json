@@ -1,0 +1,30 @@
+{
+  "test": "11E",
+  "roadmap": "Test11 — Greenfield Production Rebuild",
+  "milestone": "Living World Runtime",
+  "environment": "Copperwash Reach — Living World",
+  "status": "IMPLEMENTATION_OPEN",
+  "baseline": "Greenfield Production World Foundation v0.4",
+  "goals": [
+    "deterministic stable actor identities",
+    "chunk-aware active population",
+    "persistent in-session actor state",
+    "fixed actor visual pool",
+    "simulation LOD NEAR/MID/FAR",
+    "hard actor update budget",
+    "state restoration after unload/reload",
+    "bounded dormant state store",
+    "single scheduler / single RAF"
+  ],
+  "non_goals": [
+    "dialogue",
+    "combat",
+    "quests",
+    "navmesh pathfinding",
+    "networking",
+    "disk persistence",
+    "final NPC models"
+  ],
+  "frozen": false,
+  "canonical": false
+}
