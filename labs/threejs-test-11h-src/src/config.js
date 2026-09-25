@@ -123,6 +123,7 @@ export const INTERACTION=Object.freeze({
 });
 
 export const COMBAT=Object.freeze({
+  targetRange:4.6,
   attackRange:2.65,
   facingMinDot:-0.10,
   facingPenalty:.90,
