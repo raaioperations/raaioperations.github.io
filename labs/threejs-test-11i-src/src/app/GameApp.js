@@ -168,7 +168,7 @@ export class GameApp{
       update:frame=>this.interaction.update(
         frame,
         this.world.playerRoot.position,
-        this.playerVitals.downed?this.disabledInteractionInput:this.lastInput
+        this.playerVitals.isControlLocked(frame.frame)?this.disabledInteractionInput:this.lastInput
       )
     });
 
@@ -178,7 +178,7 @@ export class GameApp{
       update:frame=>this.combat.update(
         frame,
         this.world.playerRoot.position,
-        this.playerVitals.downed?this.disabledCombatInput:this.lastInput
+        this.playerVitals.isControlLocked(frame.frame)?this.disabledCombatInput:this.lastInput
       )
     });
 
