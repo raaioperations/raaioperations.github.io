@@ -1,0 +1,22 @@
+{
+  "test": "11E",
+  "status": "PASS",
+  "build_id": "20260925180113",
+  "checks": {
+    "test11d_pass_closed": true,
+    "baseline_v04": true,
+    "one_raf_preserved": true,
+    "no_set_animation_loop": true,
+    "stable_actor_store": true,
+    "fixed_actor_visual_pool": true,
+    "simulation_lod": true,
+    "hard_actor_update_budget": true,
+    "chunk_state_persistence": true,
+    "bounded_state_store": true,
+    "world_systems_preserved": true,
+    "unit_tests_required": true,
+    "browser_smoke_required": true,
+    "browser_smoke": true,
+    "unit_tests": true
+  }
+}
