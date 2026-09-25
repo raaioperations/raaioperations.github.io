@@ -1,0 +1,22 @@
+{
+  "test": "11D",
+  "roadmap": "Test11 — Greenfield Production Rebuild",
+  "milestone": "Production World Systems",
+  "environment": "Copperwash Reach — Production Runtime",
+  "status": "IMPLEMENTATION_OPEN",
+  "baseline": "Greenfield World Foundation v0.3",
+  "goals": [
+    "3x3 deterministic pooled chunk window",
+    "bounded chunk lifecycle",
+    "distance vegetation LOD and culling",
+    "spatial-hash broad phase",
+    "camera collision via spatial query",
+    "parsed GLB cache and clone path",
+    "adaptive quality hysteresis",
+    "DPR response to quality tier",
+    "runtime production diagnostics",
+    "single scheduler / single RAF"
+  ],
+  "frozen": false,
+  "canonical": false
+}
