@@ -1,0 +1,23 @@
+{
+  "test": "11G",
+  "status": "PASS",
+  "build_id": "20260925184728",
+  "checks": {
+    "test11f_pass_closed": true,
+    "baseline_v06": true,
+    "one_raf_preserved": true,
+    "no_set_animation_loop": true,
+    "target_arbitration": true,
+    "prompt_system": true,
+    "keyboard_touch_interact": true,
+    "one_action_per_frame": true,
+    "pickup_state": true,
+    "use_state": true,
+    "npc_interaction": true,
+    "interaction_state_persistence": true,
+    "unit_tests_required": true,
+    "browser_smoke_required": true,
+    "browser_smoke": true,
+    "unit_tests": true
+  }
+}
