@@ -1,0 +1,102 @@
+name: Build Three.js Test 11A
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'labs/threejs-test-11a-src/**'
+      - '.github/workflows/build-threejs-test11a.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install pinned dependencies
+        working-directory: labs/threejs-test-11a-src
+        run: npm install --no-audit --no-fund --no-package-lock
+
+      - name: Unit tests
+        working-directory: labs/threejs-test-11a-src
+        run: npm test
+
+      - name: Build greenfield kernel
+        working-directory: labs/threejs-test-11a-src
+        run: npm run build
+
+      - name: Setup Chrome
+        id: chrome
+        uses: browser-actions/setup-chrome@v1
+
+      - name: Browser WebGL smoke test
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m http.server 4173 --directory labs/threejs-test-11a >/tmp/test11a-server.log 2>&1 &
+          SERVER_PID=$!
+          trap 'kill "$SERVER_PID" >/dev/null 2>&1 || true' EXIT
+          sleep 1
+
+          CHROME='${{ steps.chrome.outputs.chrome-path }}'
+          "$CHROME" \
+            --headless=new \
+            --no-sandbox \
+            --disable-dev-shm-usage \
+            --ignore-gpu-blocklist \
+            --enable-webgl \
+            --enable-unsafe-swiftshader \
+            --use-angle=swiftshader \
+            --run-all-compositor-stages-before-draw \
+            --virtual-time-budget=4500 \
+            --dump-dom \
+            'http://127.0.0.1:4173/?smoke=1' \
+            >/tmp/test11a-dom.html
+
+          grep 'data-browser-smoke="PASS"' /tmp/test11a-dom.html
+          grep 'data-raf-loops="1"' /tmp/test11a-dom.html
+          grep 'data-renderer="WebGLRenderer"' /tmp/test11a-dom.html
+          grep 'data-runtime-error="0"' /tmp/test11a-dom.html
+          grep 'data-frame-count="' /tmp/test11a-dom.html
+
+      - name: Finalize verification
+        working-directory: labs/threejs-test-11a-src
+        run: npm run finalize -- PASS
+
+      - name: Verify final report
+        run: |
+          node - <<'NODE'
+          const fs=require('fs');
+          const report=JSON.parse(fs.readFileSync('labs/threejs-test-11a/verification-report.json','utf8'));
+          const info=JSON.parse(fs.readFileSync('labs/threejs-test-11a/build-info.json','utf8'));
+          if(report.status!=='PASS') throw new Error('11A verification not PASS');
+          if(info.source_gates.request_animation_frame_calls!==1) throw new Error('11A RAF gate failed');
+          if(info.environment.renderer!=='WebGLRenderer') throw new Error('11A renderer gate failed');
+          if(info.browser_smoke!=='PASS') throw new Error('11A browser smoke missing');
+          console.log({build_id:info.build_id,status:report.status});
+          NODE
+
+      - name: Publish Test11A
+        run: |
+          git config user.name "raaioperations"
+          git config user.email "alanhasan87@gmail.com"
+          git add labs/threejs-test-11a
+          if git diff --cached --quiet; then
+            echo "No generated changes"
+          else
+            git commit -m "Build Test11A greenfield production kernel"
+            git push
+          fi
