@@ -1,0 +1,23 @@
+{
+  "test": "11H",
+  "status": "PASS",
+  "build_id": "20260925190629",
+  "checks": {
+    "test11g_pass_closed": true,
+    "baseline_v07": true,
+    "one_raf_preserved": true,
+    "no_set_animation_loop": true,
+    "deterministic_combat_targeting": true,
+    "attack_state_machine": true,
+    "one_hit_per_attack": true,
+    "recovery_gate": true,
+    "persistent_health": true,
+    "persistent_defeat": true,
+    "keyboard_touch_attack": true,
+    "combat_target_indicator": true,
+    "unit_tests_required": true,
+    "browser_smoke_required": true,
+    "browser_smoke": true,
+    "unit_tests": true
+  }
+}

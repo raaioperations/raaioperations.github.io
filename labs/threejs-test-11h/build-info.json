@@ -1,0 +1,70 @@
+{
+  "build_id": "20260925190629",
+  "test": "11H",
+  "roadmap": "Test11 — Greenfield Production Rebuild",
+  "milestone": "Combat Action Foundation",
+  "environment_name": "Copperwash Reach — Combat Action",
+  "baseline": "Greenfield Gameplay Foundation v0.7",
+  "architecture": "GREENFIELD_COMBAT_ACTION_FOUNDATION",
+  "environment": {
+    "three": "0.186.0",
+    "renderer": "WebGLRenderer",
+    "framework": "vanilla",
+    "build_tool": "esbuild"
+  },
+  "source_gates": {
+    "request_animation_frame_calls": 1,
+    "renderer_set_animation_loop_calls": 0
+  },
+  "capabilities": {
+    "deterministic_soft_targeting": true,
+    "keyboard_attack_key": "F",
+    "touch_attack_button": "ATTACK",
+    "attack_phases": [
+      "READY",
+      "WINDUP",
+      "ACTIVE",
+      "RECOVERY"
+    ],
+    "attack_start_budget_per_frame": 1,
+    "damage_per_hit": 25,
+    "actor_max_health": 100,
+    "one_hit_per_attack": true,
+    "persistent_health": true,
+    "persistent_defeat": true,
+    "bounded_stagger": true,
+    "combat_target_indicator": true,
+    "active_actor_capacity": 27
+  },
+  "limits": {
+    "draw_calls_max": 82,
+    "triangles_max": 110000,
+    "raf_loops": 1
+  },
+  "assets": {
+    "Soldier.glb": {
+      "source": "labs/threejs-test-09b/assets/Soldier.glb",
+      "bytes": 2160468
+    },
+    "rock_c_hero_boulder.glb": {
+      "source": "assets/3d/sunlit-basin/v1/rock_c_hero_boulder.glb",
+      "bytes": 2840
+    },
+    "tree_e_windswept.glb": {
+      "source": "assets/3d/sunlit-basin/v3/tree_e_windswept.glb",
+      "bytes": 8404
+    },
+    "ruin_windcut_fragment_a.glb": {
+      "source": "assets/3d/windcut-shelf/v1/ruin_windcut_fragment_a.glb",
+      "bytes": 7504
+    },
+    "deadwood_windswept_a.glb": {
+      "source": "assets/3d/windcut-shelf/v1/deadwood_windswept_a.glb",
+      "bytes": 5308
+    }
+  },
+  "browser_smoke": "PASS",
+  "app_js_bytes": 713840,
+  "frozen": false,
+  "canonical": false
+}
