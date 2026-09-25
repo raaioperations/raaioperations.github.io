@@ -1,0 +1,21 @@
+{
+  "test": "11D",
+  "status": "PASS",
+  "build_id": "20260925172628",
+  "checks": {
+    "test11c_pass_closed": true,
+    "baseline_v03": true,
+    "one_raf_preserved": true,
+    "no_set_animation_loop": true,
+    "pooled_chunk_manager": true,
+    "spatial_hash": true,
+    "vegetation_lod_culling": true,
+    "asset_cache": true,
+    "adaptive_quality": true,
+    "explicit_disposal": true,
+    "unit_tests_required": true,
+    "browser_smoke_required": true,
+    "browser_smoke": true,
+    "unit_tests": true
+  }
+}

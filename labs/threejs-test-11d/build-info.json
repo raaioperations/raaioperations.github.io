@@ -1,0 +1,64 @@
+{
+  "build_id": "20260925172628",
+  "test": "11D",
+  "roadmap": "Test11 — Greenfield Production Rebuild",
+  "milestone": "Production World Systems",
+  "environment_name": "Copperwash Reach — Production Runtime",
+  "baseline": "Greenfield World Foundation v0.3",
+  "architecture": "GREENFIELD_PRODUCTION_WORLD_SYSTEMS",
+  "environment": {
+    "three": "0.186.0",
+    "renderer": "WebGLRenderer",
+    "framework": "vanilla",
+    "build_tool": "esbuild"
+  },
+  "source_gates": {
+    "request_animation_frame_calls": 1,
+    "renderer_set_animation_loop_calls": 0
+  },
+  "capabilities": {
+    "pooled_world_chunks": true,
+    "active_chunk_count": 9,
+    "chunk_size_m": 28,
+    "distance_vegetation_lod": true,
+    "vegetation_culling": true,
+    "spatial_hash": true,
+    "camera_spatial_broadphase": true,
+    "parsed_glb_cache": true,
+    "cloned_asset_instances": true,
+    "adaptive_quality_hysteresis": true,
+    "dynamic_dpr": true,
+    "explicit_disposal": true
+  },
+  "limits": {
+    "draw_calls_max": 64,
+    "triangles_max": 90000,
+    "raf_loops": 1
+  },
+  "assets": {
+    "Soldier.glb": {
+      "source": "labs/threejs-test-09b/assets/Soldier.glb",
+      "bytes": 2160468
+    },
+    "rock_c_hero_boulder.glb": {
+      "source": "assets/3d/sunlit-basin/v1/rock_c_hero_boulder.glb",
+      "bytes": 2840
+    },
+    "tree_e_windswept.glb": {
+      "source": "assets/3d/sunlit-basin/v3/tree_e_windswept.glb",
+      "bytes": 8404
+    },
+    "ruin_windcut_fragment_a.glb": {
+      "source": "assets/3d/windcut-shelf/v1/ruin_windcut_fragment_a.glb",
+      "bytes": 7504
+    },
+    "deadwood_windswept_a.glb": {
+      "source": "assets/3d/windcut-shelf/v1/deadwood_windswept_a.glb",
+      "bytes": 5308
+    }
+  },
+  "browser_smoke": "PASS",
+  "app_js_bytes": 675691,
+  "frozen": false,
+  "canonical": false
+}
