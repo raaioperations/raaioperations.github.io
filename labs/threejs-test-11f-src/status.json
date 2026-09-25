@@ -3,31 +3,64 @@
   "roadmap": "Test11 — Greenfield Production Rebuild",
   "milestone": "Entity Behavior & World Interaction",
   "environment": "Copperwash Reach — Interactive Population",
-  "status": "IMPLEMENTATION_OPEN",
-  "baseline": "Greenfield Living World Foundation v0.5",
-  "goals": [
-    "deterministic behavior states",
-    "bounded perception",
-    "player awareness",
-    "actor spacing and local avoidance",
-    "world obstacle avoidance",
-    "lightweight steering",
-    "pairwise social interaction scheduling",
-    "behavior persistence",
-    "hard behavior and interaction budgets",
-    "single scheduler / single RAF"
-  ],
-  "non_goals": [
-    "combat",
-    "dialogue generation",
-    "navmesh",
-    "path search",
-    "quests",
-    "factions",
-    "LLM agents",
-    "networking",
-    "disk persistence"
-  ],
+  "status": "PASS_CLOSED",
+  "accepted_by": "user",
+  "accepted_at": "2026-09-25T18:35:32Z",
+  "accepted_build": "20260925182853",
+  "baseline_in": "Greenfield Interactive World Foundation v0.6",
+  "real_device_evidence": {
+    "raf_loops": "1 / 1",
+    "active_chunks": "9 / 9",
+    "chunk_refreshes": 10,
+    "active_actors": "27 / 27",
+    "actor_pool_realloc": 0,
+    "duplicate_actor_ids": 0,
+    "actor_lod_near_mid_far": [
+      3,
+      12,
+      12
+    ],
+    "movement_peak": 11,
+    "movement_budget": 12,
+    "behavior_peak": 5,
+    "behavior_budget": 6,
+    "awareness_transitions": 13,
+    "avoid_transitions": [
+      33,
+      39
+    ],
+    "social_interactions": [
+      12,
+      14
+    ],
+    "interaction_peak": 1,
+    "interaction_budget": 2,
+    "perception_candidates_peak": 3,
+    "min_actor_spacing_m": [
+      2.04,
+      2.8
+    ],
+    "state_store_entities": 108,
+    "state_store_chunks": 36,
+    "spatial_entries": 35,
+    "camera_candidates": [
+      0,
+      2
+    ],
+    "asset_cache_hits": 2,
+    "asset_cache_misses": 5,
+    "quality": "BALANCED",
+    "dpr": 1.1,
+    "ground_error_m": 0,
+    "camera_clearance_m": 2.67,
+    "draw_calls": 17,
+    "draw_calls_limit": 72,
+    "triangles": 14796,
+    "triangles_limit": 100000,
+    "avg_frame_ms": 16.67,
+    "p95_frame_ms": 17
+  },
   "frozen": false,
-  "canonical": false
+  "canonical": false,
+  "next": "11G — Gameplay Interaction Foundation"
 }
