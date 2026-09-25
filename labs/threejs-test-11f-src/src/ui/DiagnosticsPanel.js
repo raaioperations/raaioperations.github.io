@@ -14,7 +14,7 @@ export class DiagnosticsPanel{
       <span>Behavior eval/peak</span><b data-k="behaviorEval">— / —</b><span>Behavior budget</span><b data-k="behaviorBudget">— / ${ACTORS.behaviorBudgetPerFrame}</b>
       <span>Behaviors W/O/A/S</span><b data-k="states">—</b><span>Awareness transitions</span><b data-k="awareness">—</b>
       <span>Avoid transitions</span><b data-k="avoid">—</b><span>Social interactions</span><b data-k="social">—</b>
-      <span>Interaction peak</span><b data-k="interactionPeak">— / ${ACTORS.interactionBudgetPerFrame}</b><span>Pair duplicates</span><b data-k="pairDuplicates">—</b>
+      <span>Interaction peak</span><b data-k="interactionPeak">— / ${ACTORS.interactionBudgetPerFrame}</b><span>Pair dupes blocked</span><b data-k="pairDuplicates">—</b>
       <span>Perception candidates peak</span><b data-k="perception">—</b><span>Min actor spacing</span><b data-k="spacing">—</b>
       <span>Restored actors</span><b data-k="restored">—</b><span>State store E/C</span><b data-k="store">—</b>
       <span>Spatial entries</span><b data-k="spatial">—</b><span>Camera candidates</span><b data-k="candidates">—</b>
