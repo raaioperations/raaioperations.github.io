@@ -1,0 +1,29 @@
+{
+  "test": "11C",
+  "roadmap": "Test11 — Greenfield Production Rebuild",
+  "milestone": "World Foundation",
+  "environment": "Copperwash Reach",
+  "status": "IMPLEMENTATION_OPEN",
+  "baseline": "Greenfield Player / Camera Foundation v0.2",
+  "goals": [
+    "deterministic procedural terrain",
+    "water basin",
+    "sky/fog/lighting",
+    "deterministic instanced vegetation",
+    "four authored GLB anchors",
+    "terrain-aware player grounding",
+    "terrain-aware camera clearance",
+    "single scheduler / single RAF"
+  ],
+  "non_goals": [
+    "streaming",
+    "AI",
+    "persistence",
+    "combat",
+    "post-processing",
+    "weather simulation",
+    "WebGPU"
+  ],
+  "frozen": false,
+  "canonical": false
+}
