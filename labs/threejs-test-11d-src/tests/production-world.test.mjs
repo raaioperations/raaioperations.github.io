@@ -46,7 +46,7 @@ test('spatial hash broad phase returns a strict subset when query is local',()=>
 
 test('quality manager degrades and improves only after sustained thresholds',()=>{
   const fakeWindow={
-    innerWidth:1200,innerHeight:800,devicePixelRatio:2,
+    innerWidth:1440,innerHeight:900,devicePixelRatio:2,
     matchMedia:()=>({matches:false})
   };
   const quality=new QualityManager(fakeWindow);
