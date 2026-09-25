@@ -114,7 +114,7 @@ export class WorldFoundationScene{
         });
         this.root.add(model);
         this.authoredModels.push(model);
-        this.obstacles.push({x:spec.x,z:spec.z,r:spec.r*spec.scale,height:spec.height*spec.scale});
+        this.obstacles.push({x:spec.x,z:spec.z,r:spec.r*spec.scale,height:heightAt(spec.x,spec.z)+spec.height*spec.scale});
         this.authoredLoaded++;
         loaded.push(model);
       }catch(error){
