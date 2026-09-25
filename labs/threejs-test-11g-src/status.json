@@ -1,0 +1,32 @@
+{
+  "test": "11G",
+  "roadmap": "Test11 — Greenfield Production Rebuild",
+  "milestone": "Gameplay Interaction Foundation",
+  "environment": "Copperwash Reach — Gameplay Interaction",
+  "status": "IMPLEMENTATION_OPEN",
+  "baseline": "Greenfield Interactive World Foundation v0.6",
+  "goals": [
+    "deterministic target arbitration",
+    "context interaction prompt",
+    "keyboard and touch INTERACT input",
+    "one action per frame",
+    "pickup state",
+    "usable world-object state",
+    "NPC interaction initiation",
+    "persistent in-session interaction state",
+    "single scheduler / single RAF"
+  ],
+  "non_goals": [
+    "combat",
+    "inventory UI",
+    "dialogue content",
+    "quests",
+    "shops",
+    "crafting",
+    "equipment",
+    "networking",
+    "disk persistence"
+  ],
+  "frozen": false,
+  "canonical": false
+}
