@@ -1,5 +1,5 @@
 {
-  "build_id": "20260925172628",
+  "build_id": "20260925172857",
   "test": "11D",
   "roadmap": "Test11 — Greenfield Production Rebuild",
   "milestone": "Production World Systems",
@@ -58,7 +58,7 @@
     }
   },
   "browser_smoke": "PASS",
-  "app_js_bytes": 675691,
+  "app_js_bytes": 675713,
   "frozen": false,
   "canonical": false
 }
