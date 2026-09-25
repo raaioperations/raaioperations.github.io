@@ -1,0 +1,65 @@
+{
+  "name": "Greenfield Living World Foundation v0.5",
+  "source_tests": [
+    "11A",
+    "11B",
+    "11C",
+    "11D",
+    "11E"
+  ],
+  "status": "ACCEPTED_DEVELOPMENT_BASELINE",
+  "accepted_build": "20260925180113",
+  "parent_baseline": "Greenfield Production World Foundation v0.4",
+  "renderer": "WebGLRenderer",
+  "three": "0.186.0",
+  "invariants": {
+    "request_animation_frame_source_calls": 1,
+    "renderer_owner": 1,
+    "scheduler_owner": 1,
+    "deterministic_phases": true,
+    "explicit_lifecycle": [
+      "mount",
+      "start",
+      "pause",
+      "resize",
+      "dispose"
+    ],
+    "mobile_dpr_policy": true,
+    "resource_ownership": true,
+    "active_chunk_pool_size": 9,
+    "active_actor_capacity": 27,
+    "actor_update_budget_per_frame": 12
+  },
+  "promoted_capabilities": {
+    "player_camera_mobile": true,
+    "deterministic_chunked_terrain": true,
+    "pooled_world_chunks": true,
+    "vegetation_lod_culling": true,
+    "spatial_hash_broadphase": true,
+    "cached_glb_clone_pipeline": true,
+    "adaptive_quality": true,
+    "stable_actor_ids": true,
+    "persistent_actor_state": true,
+    "chunk_aware_population": true,
+    "fixed_actor_visual_pool": true,
+    "actor_simulation_lod": true,
+    "bounded_actor_state_store": true,
+    "actor_state_reactivation_restore": true
+  },
+  "observed_mobile_result": {
+    "chunk_refreshes_max_observed": 19,
+    "reactivations_max_observed": 21,
+    "restored_actors_max_observed": 63,
+    "store_chunks_max_observed": 42,
+    "draw_calls_max_observed": 56,
+    "triangles_max_observed": 17684,
+    "actor_peak_updates": 11,
+    "actor_update_budget": 12,
+    "avg_frame_ms_max_observed": 16.76,
+    "p95_frame_ms": 17,
+    "dpr": 1.1
+  },
+  "frozen": false,
+  "canonical": false,
+  "next_test": "11F — Entity Behavior & World Interaction"
+}

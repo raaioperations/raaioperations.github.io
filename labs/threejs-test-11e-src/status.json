@@ -3,28 +3,69 @@
   "roadmap": "Test11 — Greenfield Production Rebuild",
   "milestone": "Living World Runtime",
   "environment": "Copperwash Reach — Living World",
-  "status": "IMPLEMENTATION_OPEN",
-  "baseline": "Greenfield Production World Foundation v0.4",
-  "goals": [
-    "deterministic stable actor identities",
-    "chunk-aware active population",
-    "persistent in-session actor state",
-    "fixed actor visual pool",
-    "simulation LOD NEAR/MID/FAR",
-    "hard actor update budget",
-    "state restoration after unload/reload",
-    "bounded dormant state store",
-    "single scheduler / single RAF"
-  ],
-  "non_goals": [
-    "dialogue",
-    "combat",
-    "quests",
-    "navmesh pathfinding",
-    "networking",
-    "disk persistence",
-    "final NPC models"
-  ],
+  "status": "PASS_CLOSED",
+  "accepted_by": "user",
+  "accepted_at": "2026-09-25T18:15:52Z",
+  "accepted_build": "20260925180113",
+  "baseline_in": "Greenfield Living World Foundation v0.5",
+  "real_device_evidence": {
+    "raf_loops": "1 / 1",
+    "active_chunks": "9 / 9",
+    "active_actors": "27 / 27",
+    "visual_bindings": 27,
+    "actor_pool_realloc": 0,
+    "duplicate_actor_ids": 0,
+    "actor_lod_near_mid_far": [
+      3,
+      12,
+      12
+    ],
+    "peak_actor_updates": 11,
+    "actor_update_budget": 12,
+    "chunk_refreshes_observed": [
+      7,
+      18,
+      19
+    ],
+    "reactivations_observed": [
+      0,
+      18,
+      21
+    ],
+    "restored_actors_observed": [
+      0,
+      54,
+      63
+    ],
+    "store_entities_max_observed": 126,
+    "store_chunks_max_observed": 42,
+    "store_chunk_limit": 48,
+    "quality": "BALANCED",
+    "dpr": 1.1,
+    "ground_error_m": 0,
+    "camera_clearance_m": [
+      2.88,
+      4.39
+    ],
+    "draw_calls_observed": [
+      28,
+      45,
+      46,
+      56
+    ],
+    "draw_calls_limit": 70,
+    "triangles_observed": [
+      15900,
+      17684
+    ],
+    "triangles_limit": 95000,
+    "avg_frame_ms": [
+      16.67,
+      16.76
+    ],
+    "p95_frame_ms": 17
+  },
   "frozen": false,
-  "canonical": false
+  "canonical": false,
+  "next": "11F — Entity Behavior & World Interaction"
 }
