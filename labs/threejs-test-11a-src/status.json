@@ -2,40 +2,22 @@
   "test": "11A",
   "roadmap": "Test11 — Greenfield Production Rebuild",
   "milestone": "Production Kernel",
-  "status": "IMPLEMENTATION_OPEN",
+  "status": "PASS_CLOSED",
+  "accepted_by": "user",
+  "accepted_at": "2026-09-25T08:38:04Z",
   "architecture": "GREENFIELD",
-  "reference_platform": {
-    "name": "RAAI Three.js Experimental Reference Platform v1",
-    "accepted_09b_build": "20260924205044",
-    "mutation_allowed": false
-  },
-  "renderer": "WebGLRenderer",
-  "three": "0.186.0",
-  "framework": "vanilla",
-  "frame_scheduler": {
-    "authoritative": true,
-    "target_raf_loops": 1
-  },
-  "scope": [
-    "renderer",
-    "frame scheduler",
-    "lifecycle",
-    "resize/orientation",
-    "mobile DPR caps",
-    "resource ownership",
-    "performance telemetry",
-    "browser smoke testing"
-  ],
-  "excluded": [
-    "player",
-    "camera controls",
-    "world streaming",
-    "AI",
-    "persistence",
-    "production assets",
-    "water",
-    "WebGPU"
+  "accepted_build": "20260925082724",
+  "promoted_baseline": "Greenfield Production Kernel v0.1",
+  "invariants": [
+    "exactly one requestAnimationFrame source call",
+    "one renderer owner",
+    "deterministic scheduler phases",
+    "explicit mount/start/pause/resize/dispose lifecycle",
+    "resource ownership/disposal",
+    "mobile DPR policy",
+    "WebGLRenderer production path"
   ],
   "frozen": false,
-  "canonical": false
+  "canonical": false,
+  "next": "11B — Player + Camera + Mobile Control Foundation"
 }
