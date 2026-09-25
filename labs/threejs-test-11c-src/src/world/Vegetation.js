@@ -30,7 +30,7 @@ export function createVegetation({root,resources,layout,obstacles}){
     dummy.updateMatrix();
     crowns.setMatrixAt(i,dummy.matrix);
 
-    obstacles.push({x:item.x,z:item.z,r:.30*item.scale,height:4.5*item.scale});
+    obstacles.push({x:item.x,z:item.z,r:.30*item.scale,height:item.y+4.5*item.scale});
   }
 
   for(let i=0;i<layout.shrubs.length;i++){
