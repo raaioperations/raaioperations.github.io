@@ -15,7 +15,9 @@ export class QualityManager{
 
   profile(){return QUALITY[this.tier];}
   pixelRatio(){
-    return Math.max(.7,Math.min(this.baseMaxDpr,(this.win.devicePixelRatio||1)*this.profile().dprScale));
+    const device=Math.max(1,this.win.devicePixelRatio||1);
+    const capped=Math.min(this.baseMaxDpr,device);
+    return Math.max(.7,capped*this.profile().dprScale);
   }
 
   update(frameMs){
