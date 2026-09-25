@@ -69,12 +69,13 @@ export class LivingWorldSystem{
       nextChunkKeys.add(key);
       const wasActive=previous.has(key);
       const seenBefore=this.seenChunkKeys.has(key);
+      const persistedBefore=this.store.getChunk(descriptor.cx,descriptor.cz);
       const ids=this.store.ensureChunk(descriptor.cx,descriptor.cz,frame);
       this.store.touchChunk(descriptor.cx,descriptor.cz,frame);
 
       if(!wasActive){
         this.activations+=ids.length;
-        if(seenBefore){
+        if(seenBefore&&persistedBefore){
           this.reactivations++;
           this.restoredEntities+=ids.length;
         }
