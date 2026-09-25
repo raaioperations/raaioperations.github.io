@@ -1,0 +1,33 @@
+{
+  "test": "11F",
+  "roadmap": "Test11 — Greenfield Production Rebuild",
+  "milestone": "Entity Behavior & World Interaction",
+  "environment": "Copperwash Reach — Interactive Population",
+  "status": "IMPLEMENTATION_OPEN",
+  "baseline": "Greenfield Living World Foundation v0.5",
+  "goals": [
+    "deterministic behavior states",
+    "bounded perception",
+    "player awareness",
+    "actor spacing and local avoidance",
+    "world obstacle avoidance",
+    "lightweight steering",
+    "pairwise social interaction scheduling",
+    "behavior persistence",
+    "hard behavior and interaction budgets",
+    "single scheduler / single RAF"
+  ],
+  "non_goals": [
+    "combat",
+    "dialogue generation",
+    "navmesh",
+    "path search",
+    "quests",
+    "factions",
+    "LLM agents",
+    "networking",
+    "disk persistence"
+  ],
+  "frozen": false,
+  "canonical": false
+}
