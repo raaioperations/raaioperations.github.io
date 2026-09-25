@@ -1,8 +1,8 @@
 {
   "test": "10A",
   "status": "PASS",
-  "build_id": "20260924235039",
-  "classification": "IDENTITY-KIT COMPOSITION CORRECTION / HUMAN REVIEW CANDIDATE",
+  "build_id": "20260925002502",
+  "classification": "SYSTEMIC-FOREST CORRIDOR CORRECTION / HUMAN REVIEW CANDIDATE",
   "delegated_nonvisual_checks": {
     "frozen_09b_acceptance_required": true,
     "frozen_09b_hashes_verified": true,
@@ -16,6 +16,8 @@
       12,
       18
     ],
+    "systemic_forest_corridor_required": true,
+    "matching_tree_collider_clearance_required": true,
     "authored_placement_triangles": 3698,
     "runtime_batch_ceiling": 6,
     "terrain_conformance_required": true,

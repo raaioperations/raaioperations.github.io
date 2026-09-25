@@ -1,10 +1,10 @@
 {
-  "build_id": "20260924235039",
+  "build_id": "20260925002502",
   "test": "10A",
   "roadmap": "Test10 — Presentation Replication",
   "milestone": "Second Environment Replication Proof",
   "environment": "Windcut Shelf",
-  "classification": "IDENTITY-KIT COMPOSITION CORRECTION / HUMAN REVIEW CANDIDATE",
+  "classification": "SYSTEMIC-FOREST CORRIDOR CORRECTION / HUMAN REVIEW CANDIDATE",
   "doctrine": "Stylized Physical Realism",
   "frozen_foundation": {
     "test09b": "ACCEPTED / FROZEN / CANONICAL",
@@ -29,7 +29,9 @@
       "x": 2,
       "z": 8
     },
-    "primary_escarpment_distance_m": 17.46
+    "primary_escarpment_distance_m": 17.46,
+    "systemic_forest_corridor_required": true,
+    "matching_tree_collider_clearance_required": true
   },
   "hard_limits": {
     "drawCallsMax": 120,
@@ -53,5 +55,5 @@
   "automated_presentation_acceptance": false,
   "human_presentation_review": "REQUIRED",
   "frozen": false,
-  "app_js_bytes": 871124
+  "app_js_bytes": 872552
 }
