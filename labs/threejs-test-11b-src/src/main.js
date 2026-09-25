@@ -31,5 +31,6 @@ async function runSmoke(){
 }
 
 window.__RAAI_TEST11B__=Object.freeze({app,snapshot:()=>app.snapshot(),setTestIntent:i=>app.input.setTestIntent(i),dispose:()=>app.dispose()});
-if(smoke)runSmoke();else app.ready.then(()=>app.start('BOOT'));
+if(smoke)await runSmoke();
+else app.ready.then(()=>app.start('BOOT'));
 window.addEventListener('pagehide',()=>app.dispose(),{once:true});
