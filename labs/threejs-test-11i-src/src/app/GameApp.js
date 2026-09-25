@@ -76,6 +76,8 @@ export class GameApp{
     });
     this.playerVitals=new PlayerVitalState();
     this.lockedPlayerInput={moveX:0,moveY:0,sprint:false,jump:false,interact:false,attack:false,lookDX:0,lookDY:0};
+    this.disabledInteractionInput={interact:false};
+    this.disabledCombatInput={attack:false};
     this.character=new CharacterVisual({
       root:this.world.playerRoot,
       assetManager:this.assets
@@ -166,7 +168,7 @@ export class GameApp{
       update:frame=>this.interaction.update(
         frame,
         this.world.playerRoot.position,
-        this.playerVitals.downed?{...this.lastInput,interact:false}:this.lastInput
+        this.playerVitals.downed?this.disabledInteractionInput:this.lastInput
       )
     });
 
@@ -176,7 +178,7 @@ export class GameApp{
       update:frame=>this.combat.update(
         frame,
         this.world.playerRoot.position,
-        this.playerVitals.downed?{...this.lastInput,attack:false}:this.lastInput
+        this.playerVitals.downed?this.disabledCombatInput:this.lastInput
       )
     });
 
