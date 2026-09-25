@@ -49,8 +49,6 @@ jobs:
           set -euo pipefail
           python3 -m http.server 4174 --directory labs/threejs-test-11b >/tmp/test11b-server.log 2>&1 &
           SERVER_PID=$!
-          trap 'kill "$SERVER_PID" >/dev/null 2>&1 || true' EXIT
-          sleep 1
           CHROME='${{ steps.chrome.outputs.chrome-path }}'
           "$CHROME" \
             --headless=new \
@@ -60,22 +58,15 @@ jobs:
             --enable-webgl \
             --enable-unsafe-swiftshader \
             --use-angle=swiftshader \
-            --virtual-time-budget=5500 \
-            --dump-dom \
-            'http://127.0.0.1:4174/?smoke=1' \
-            >/tmp/test11b-dom.html
+            --remote-debugging-port=9222 \
+            --remote-allow-origins='*' \
+            about:blank >/tmp/test11b-chrome.log 2>&1 &
+          CHROME_PID=$!
+          trap 'kill "$CHROME_PID" "$SERVER_PID" >/dev/null 2>&1 || true' EXIT
 
-          if ! grep -q 'data-browser-smoke="PASS"' /tmp/test11b-dom.html; then
-            echo 'Test11B browser smoke DOM:'
-            cat /tmp/test11b-dom.html
-            exit 1
-          fi
-          grep 'data-raf-loops="1"' /tmp/test11b-dom.html
-          grep 'data-renderer="WebGLRenderer"' /tmp/test11b-dom.html
-          grep 'data-runtime-error="0"' /tmp/test11b-dom.html
-          grep 'data-soldier="PASS"' /tmp/test11b-dom.html
-          grep 'data-movement="PASS"' /tmp/test11b-dom.html
-          grep 'data-jump="PASS"' /tmp/test11b-dom.html
+          CDP_ENDPOINT='http://127.0.0.1:9222' \
+          TEST_URL='http://127.0.0.1:4174/?smoke=1' \
+          node labs/threejs-test-11b-src/browser-smoke.mjs
 
       - name: Finalize verification
         working-directory: labs/threejs-test-11b-src
