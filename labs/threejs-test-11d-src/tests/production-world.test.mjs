@@ -63,6 +63,23 @@ test('quality manager degrades and improves only after sustained thresholds',()=
   assert.equal(quality.tier,'HIGH');
 });
 
+test('mobile DPR decreases across BALANCED and LOW tiers',()=>{
+  const fakeWindow={
+    innerWidth:390,innerHeight:844,devicePixelRatio:3,
+    matchMedia:()=>({matches:true})
+  };
+  const quality=new QualityManager(fakeWindow);
+  assert.equal(quality.tier,'BALANCED');
+  const balanced=quality.pixelRatio();
+  quality.setTierForTest('LOW');
+  const low=quality.pixelRatio();
+  quality.setTierForTest('HIGH');
+  const high=quality.pixelRatio();
+  assert.ok(low<balanced);
+  assert.ok(balanced<high);
+  assert.ok(Math.abs(high-1.25)<1e-9);
+});
+
 test('asset manager parses a URL once and records cache hits',async()=>{
   const assets=new AssetManager();
   let loads=0;
