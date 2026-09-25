@@ -22,6 +22,9 @@ let minClearance10A=Infinity;
 let hudNext10A=0;
 let playerMoved10A=false;
 let firstLookApplied10A=false;
+let systemicTreesCleared10A=0;
+let systemicTreeCollidersCleared10A=0;
+let forestCorridorApplied10A=false;
 
 const stageEl10A=document.getElementById('repStage10A');
 const assetsEl10A=document.getElementById('repAssets10A');
@@ -31,6 +34,8 @@ const drawEl10A=document.getElementById('repDraw10A');
 const triEl10A=document.getElementById('repTriangles10A');
 const dupEl10A=document.getElementById('repDuplicates10A');
 const regressionEl10A=document.getElementById('repRegression10A');
+const forestEl10A=document.getElementById('repForest10A');
+const forestCollisionEl10A=document.getElementById('repForestCollision10A');
 const resultEl10A=document.getElementById('repResult10A');
 const zoneEl10A=document.getElementById('zone');
 
@@ -110,6 +115,80 @@ function deactivateSunlitBasin10A(){
   pass5Root09B.visible=false;
 }
 
+function distanceToSegmentXZ10A(px,pz,ax,az,bx,bz){
+  const abx=bx-ax,abz=bz-az;
+  const len2=abx*abx+abz*abz;
+  if(len2<=1e-8)return Math.hypot(px-ax,pz-az);
+  const t=Math.max(0,Math.min(1,((px-ax)*abx+(pz-az)*abz)/len2));
+  const qx=ax+t*abx,qz=az+t*abz;
+  return Math.hypot(px-qx,pz-qz);
+}
+
+function applySystemicForestCorridor10A(){
+  if(forestCorridorApplied10A)return;
+
+  const first=PRESENTATION_REPLICATION_10A.composition.firstLook;
+  const spawnX=center10A.x+first.spawn.x;
+  const spawnZ=center10A.z+first.spawn.z;
+  const vistaX=center10A.x+first.vista.x;
+  const vistaZ=center10A.z+first.vista.z;
+
+  // Extend beyond the authored vista so the shelf/rock/ruin read together.
+  const vx=vistaX-spawnX,vz=vistaZ-spawnZ;
+  const len=Math.max(.001,Math.hypot(vx,vz));
+  const dirX=vx/len,dirZ=vz/len;
+  const endX=vistaX+dirX*12;
+  const endZ=vistaZ+dirZ*12;
+  const corridorHalfWidth=6.8;
+  const cameraSafetyRadius=8.5;
+
+  const tmp=new THREE.Matrix4();
+  const pos=new THREE.Vector3();
+  const hidden=new THREE.Matrix4().compose(
+    new THREE.Vector3(0,-1000,0),
+    new THREE.Quaternion(),
+    new THREE.Vector3(0,0,0)
+  );
+  const cleared=[];
+
+  for(let i=0;i<trunks.count;i++){
+    trunks.getMatrixAt(i,tmp);
+    pos.setFromMatrixPosition(tmp);
+
+    const inCorridor=
+      distanceToSegmentXZ10A(pos.x,pos.z,spawnX,spawnZ,endX,endZ)<=corridorHalfWidth;
+    const inCameraSafety=Math.hypot(pos.x-spawnX,pos.z-spawnZ)<=cameraSafetyRadius;
+
+    if(!(inCorridor||inCameraSafety))continue;
+
+    cleared.push({x:pos.x,z:pos.z});
+    trunks.setMatrixAt(i,hidden);
+    crown1.setMatrixAt(i,hidden);
+    crown2.setMatrixAt(i,hidden);
+    crown3.setMatrixAt(i,hidden);
+  }
+
+  for(const mesh of [trunks,crown1,crown2,crown3]){
+    mesh.instanceMatrix.needsUpdate=true;
+    if(mesh.computeBoundingSphere)mesh.computeBoundingSphere();
+  }
+
+  // Remove only colliders whose centers exactly match cleared systemic trees.
+  // Tree colliders are added from the same generated x/z pair as trunk instances.
+  for(let i=obstacles.length-1;i>=0;i--){
+    const o=obstacles[i];
+    if((o?.h||0)<3)continue;
+    const match=cleared.some(t=>Math.abs(t.x-o.x)<.02&&Math.abs(t.z-o.z)<.02);
+    if(match){
+      obstacles.splice(i,1);
+      systemicTreeCollidersCleared10A++;
+    }
+  }
+
+  systemicTreesCleared10A=cleared.length;
+  forestCorridorApplied10A=true;
+}
+
 function tuneWindcutShelf10A(){
   terrainMat.color.set(0x9da58a);
   terrainMat.roughness=.99;
@@ -143,6 +222,7 @@ function tuneWindcutShelf10A(){
 async function buildWindcutShelf10A(){
   deactivateSunlitBasin10A();
   tuneWindcutShelf10A();
+  applySystemicForestCorridor10A();
 
   const loader=new GLTFLoader09D();
   const unique=new Map();
@@ -268,6 +348,8 @@ function proof10A(){
     regression:regression==='PASS',
     player_glb:characterMode==='GLB',
     first_look:firstLookApplied10A===true,
+    forest_corridor:forestCorridorApplied10A===true&&systemicTreesCleared10A>0,
+    forest_colliders:systemicTreeCollidersCleared10A===systemicTreesCleared10A,
     no_error:!error10A
   };
   const failed=Object.entries(checks).filter(([,ok])=>!ok).map(([k])=>k);
@@ -284,11 +366,13 @@ function updateHud10A(){
   set10A(triEl10A,p.triangles.toLocaleString()+' / 350,000',p.triangles<=350000?'#bdf3c8':'#ff9b9b');
   set10A(dupEl10A,String(p.duplicates),p.duplicates===0?'#bdf3c8':'#ff9b9b');
   set10A(regressionEl10A,p.regression,p.regression==='PASS'?'#bdf3c8':'#ffe59a');
+  set10A(forestEl10A,systemicTreesCleared10A+' cleared',forestCorridorApplied10A&&systemicTreesCleared10A>0?'#bdf3c8':'#ffe59a');
+  set10A(forestCollisionEl10A,systemicTreeCollidersCleared10A+' cleared',systemicTreeCollidersCleared10A===systemicTreesCleared10A&&systemicTreesCleared10A>0?'#bdf3c8':'#ffe59a');
 
   if(error10A){
     set10A(resultEl10A,'10A FAIL · '+error10A,'#ff9b9b');
   }else if(p.automatedReady){
-    set10A(resultEl10A,'WINDCUT IDENTITY KIT 4/4 ✓ · FIRST-LOOK VISTA ✓ · MACRO SHELF/ROCK/RUIN/DEADWOOD ✓ · DISTINCT REGION B ENVIRONMENT ✓ · <=6 BATCHES ✓ · PERFORMANCE PASS ✓ · HUMAN PRESENTATION REVIEW REQUIRED','#ffe59a');
+    set10A(resultEl10A,'WINDCUT IDENTITY KIT 4/4 ✓ · FIRST-LOOK VISTA ✓ · SYSTEMIC FOREST CORRIDOR ✓ · MACRO SHELF/ROCK/RUIN/DEADWOOD ✓ · DISTINCT REGION B ENVIRONMENT ✓ · <=6 BATCHES ✓ · PERFORMANCE PASS ✓ · HUMAN PRESENTATION REVIEW REQUIRED','#ffe59a');
   }else{
     set10A(resultEl10A,'BUILDING WINDCUT SHELF REPLICATION PROOF','#ffe59a');
   }
@@ -323,5 +407,8 @@ globalThis.__presentationReplication10A={
   get batches(){return runtimeBatches10A;},
   get presentationTriangles(){return presentationTriangles10A;},
   get firstLookApplied(){return firstLookApplied10A;},
+  get systemicTreesCleared(){return systemicTreesCleared10A;},
+  get systemicTreeCollidersCleared(){return systemicTreeCollidersCleared10A;},
+  get forestCorridorApplied(){return forestCorridorApplied10A;},
   get proof(){return proof10A();}
 };

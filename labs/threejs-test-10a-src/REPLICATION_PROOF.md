@@ -1,7 +1,7 @@
 # Test10 — Presentation Replication
 ## 10A — Second Environment Replication Proof
 
-**Status:** HUMAN REVIEW ITERATE / COMPOSITION CORRECTION AUTHORIZED  
+**Status:** HUMAN REVIEW ITERATE / SYSTEMIC FOREST CORRIDOR CORRECTION AUTHORIZED  
 **Foundation:** accepted/frozen/canonical 09B build `20260924205044`  
 **Doctrine:** Stylized Physical Realism
 
@@ -171,3 +171,25 @@ The next iteration is composition-only:
 - preserve all runtime budgets and systems.
 
 Acceptance requires the first-look frame to communicate Windcut Shelf before the player moves.
+
+
+## Systemic forest corridor correction — authorized after authored-vista review
+
+The authored camera and Windcut identity anchors passed implementation checks, but inherited base-world tree instances still obstruct the first-look corridor.
+
+This iteration may:
+
+- suppress only systemic `trunks`, `crown1`, `crown2`, and `crown3` instances inside the authored corridor;
+- clear a small camera-safety radius around spawn;
+- remove only collision obstacles whose x/z centers match the suppressed systemic trees;
+- preserve all surrounding forest instances;
+- create no new assets and no new runtime architecture.
+
+Corridor contract:
+
+- half width: 6.8 m;
+- spawn camera-safety radius: 8.5 m;
+- corridor extends 12 m past the authored vista;
+- hidden systemic tree and removed tree-collider counts must match.
+
+Human acceptance requires the Windcut macro anchors to become visible from ordinary play without the forest disappearing globally.

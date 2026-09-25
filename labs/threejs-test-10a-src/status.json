@@ -3,41 +3,39 @@
   "roadmap": "Test10 — Presentation Replication",
   "milestone": "Second Environment Replication Proof",
   "environment": "Windcut Shelf",
-  "status": "HUMAN_REVIEW_ITERATE_COMPOSITION_CORRECTION",
+  "status": "HUMAN_REVIEW_ITERATE_SYSTEMIC_FOREST_CORRIDOR",
   "foundation": {
     "test09b": "ACCEPTED / FROZEN / CANONICAL",
     "accepted_build": "20260924205044"
   },
-  "identity_kit_build": {
-    "build_id": "20260924232800",
+  "prior_build": {
+    "build_id": "20260924235039",
     "automated_runtime": "PASS",
-    "identity_kit": "PASS",
+    "authored_first_look": "PASS",
     "human_presentation": "ITERATE",
-    "finding": "Identity anchors existed but did not control the normal-play composition."
+    "blocker": "Inherited systemic forest instances/colliders obstruct the authored vista and force camera compression."
   },
   "correction": {
     "new_assets": 0,
-    "authored_first_look": true,
-    "spawn": {
-      "x": -3,
-      "z": -12
-    },
-    "vista": {
-      "x": 2,
-      "z": 8
-    },
-    "primary_escarpment_range_m": [
-      12,
-      18
+    "inherited_systemic_forest_only": true,
+    "meshes": [
+      "trunks",
+      "crown1",
+      "crown2",
+      "crown3"
     ],
-    "tree_placements_moved_to_flanks": true,
-    "camera_aimed_at_vista": true
+    "corridor_half_width_m": 6.8,
+    "camera_safety_radius_m": 8.5,
+    "corridor_extension_beyond_vista_m": 12,
+    "matching_tree_colliders_removed": true,
+    "surrounding_forest_preserved": true
   },
   "broad_world_expansion": false,
   "gameplay_changed": false,
   "ai_changed": false,
   "persistence_changed": false,
   "streaming_semantics_changed": false,
+  "added_raf_loops": 0,
   "human_review": "REQUIRED_AFTER_REBUILD",
   "frozen": false,
   "canonical": false

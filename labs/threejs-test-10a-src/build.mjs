@@ -80,6 +80,10 @@ assert(frag.includes('center10A={...replicationWorld10A.centers.B}'),'10A must a
 assert(frag.includes('conform10A'),'10A terrain conformance required');
 assert(frag.includes('firstLookApplied10A=true'),'10A authored first-look camera required');
 assert(frag.includes('yaw=Math.atan2(-dx,-dz)'),'10A camera must solve yaw toward authored vista');
+assert(frag.includes('applySystemicForestCorridor10A'),'10A systemic forest corridor required');
+assert(frag.includes('trunks.setMatrixAt(i,hidden)'),'10A systemic trunk suppression required');
+assert(frag.includes('crown1.setMatrixAt(i,hidden)')&&frag.includes('crown2.setMatrixAt(i,hidden)')&&frag.includes('crown3.setMatrixAt(i,hidden)'),'10A systemic crown suppression required');
+assert(frag.includes('obstacles.splice(i,1)'),'10A matching tree collider removal required');
 
 const buildId=new Date().toISOString().replace(/\D/g,'').slice(0,14);
 
@@ -134,7 +138,7 @@ await writeFile(path.join(out,'build-info.json'),JSON.stringify({
   roadmap:'Test10 — Presentation Replication',
   milestone:'Second Environment Replication Proof',
   environment:'Windcut Shelf',
-  classification:'IDENTITY-KIT COMPOSITION CORRECTION / HUMAN REVIEW CANDIDATE',
+  classification:'SYSTEMIC-FOREST CORRIDOR CORRECTION / HUMAN REVIEW CANDIDATE',
   doctrine:'Stylized Physical Realism',
   frozen_foundation:{
     test09b:'ACCEPTED / FROZEN / CANONICAL',
@@ -153,7 +157,9 @@ await writeFile(path.join(out,'build-info.json'),JSON.stringify({
     runtime_batch_ceiling:PRESENTATION_REPLICATION_10A.budgets.runtimeBatchesMax,
     first_look_spawn:firstLook.spawn,
     first_look_vista:firstLook.vista,
-    primary_escarpment_distance_m:Number(primaryDistance.toFixed(2))
+    primary_escarpment_distance_m:Number(primaryDistance.toFixed(2)),
+    systemic_forest_corridor_required:true,
+    matching_tree_collider_clearance_required:true
   },
   hard_limits:PRESENTATION_REPLICATION_10A.budgets,
   frame_integration:{
@@ -177,7 +183,7 @@ await writeFile(path.join(out,'verification-report.json'),JSON.stringify({
   test:'10A',
   status:'PASS',
   build_id:buildId,
-  classification:'IDENTITY-KIT COMPOSITION CORRECTION / HUMAN REVIEW CANDIDATE',
+  classification:'SYSTEMIC-FOREST CORRIDOR CORRECTION / HUMAN REVIEW CANDIDATE',
   delegated_nonvisual_checks:{
     frozen_09b_acceptance_required:true,
     frozen_09b_hashes_verified:true,
@@ -188,6 +194,8 @@ await writeFile(path.join(out,'verification-report.json'),JSON.stringify({
     authored_placements:23,
     authored_first_look_required:true,
     primary_escarpment_range_m:[12,18],
+    systemic_forest_corridor_required:true,
+    matching_tree_collider_clearance_required:true,
     authored_placement_triangles:authoredPlacementTriangles,
     runtime_batch_ceiling:6,
     terrain_conformance_required:true,
@@ -213,6 +221,7 @@ await writeFile(path.join(out,'status.json'),JSON.stringify({
   reuse_only:false,
   identity_kit:true,
   composition_correction:true,
+  systemic_forest_corridor_correction:true,
   new_glbs:4,
   automated_presentation_acceptance:false,
   human_presentation_review:'REQUIRED',
