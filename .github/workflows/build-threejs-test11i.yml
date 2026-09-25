@@ -1,0 +1,101 @@
+name: Build Three.js Test 11I
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'labs/threejs-test-11h-src/status.json'
+      - 'labs/threejs-test-11h-src/GREENFIELD_BASELINE.json'
+      - 'labs/threejs-test-11i-src/**'
+      - '.github/workflows/build-threejs-test11i.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install pinned dependencies
+        working-directory: labs/threejs-test-11i-src
+        run: npm install --no-audit --no-fund --no-package-lock
+
+      - name: Unit tests
+        working-directory: labs/threejs-test-11i-src
+        run: npm test
+
+      - name: Build 11I
+        working-directory: labs/threejs-test-11i-src
+        run: npm run build
+
+      - name: Setup Chrome
+        id: chrome
+        uses: browser-actions/setup-chrome@v1
+
+      - name: Browser reciprocal-combat smoke
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m http.server 4181 --directory labs/threejs-test-11i >/tmp/test11i-server.log 2>&1 &
+          SERVER_PID=$!
+          CHROME='${{ steps.chrome.outputs.chrome-path }}'
+          "$CHROME" \
+            --headless=new \
+            --no-sandbox \
+            --disable-dev-shm-usage \
+            --ignore-gpu-blocklist \
+            --enable-webgl \
+            --enable-unsafe-swiftshader \
+            --use-angle=swiftshader \
+            --remote-debugging-port=9222 \
+            --remote-allow-origins='*' \
+            about:blank >/tmp/test11i-chrome.log 2>&1 &
+          CHROME_PID=$!
+          trap 'kill "$CHROME_PID" "$SERVER_PID" >/dev/null 2>&1 || true' EXIT
+
+          CDP_ENDPOINT='http://127.0.0.1:9222' \
+          TEST_URL='http://127.0.0.1:4181/?smoke=1' \
+          node labs/threejs-test-11i-src/browser-smoke.mjs
+
+      - name: Finalize verification
+        working-directory: labs/threejs-test-11i-src
+        run: npm run finalize -- PASS
+
+      - name: Verify report
+        run: |
+          node - <<'NODE'
+          const fs=require('fs');
+          const info=JSON.parse(fs.readFileSync('labs/threejs-test-11i/build-info.json','utf8'));
+          const report=JSON.parse(fs.readFileSync('labs/threejs-test-11i/verification-report.json','utf8'));
+          if(report.status!=='PASS') throw new Error('11I verification failed');
+          if(info.source_gates.request_animation_frame_calls!==1) throw new Error('one-RAF invariant failed');
+          if(info.browser_smoke!=='PASS') throw new Error('browser smoke missing');
+          if(info.capabilities.enemy_evaluation_budget_per_frame!==4) throw new Error('enemy evaluation budget failed');
+          if(info.capabilities.enemy_attack_start_budget_per_frame!==1) throw new Error('enemy attack budget failed');
+          if(info.capabilities.player_max_health!==100) throw new Error('player health contract failed');
+          console.log({build_id:info.build_id,status:report.status});
+          NODE
+
+      - name: Publish Test11I
+        run: |
+          git config user.name "raaioperations"
+          git config user.email "alanhasan87@gmail.com"
+          git add labs/threejs-test-11i
+          if git diff --cached --quiet; then
+            echo 'No generated changes'
+          else
+            git commit -m 'Build Test11I reciprocal combat foundation'
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi
