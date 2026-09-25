@@ -60,17 +60,24 @@ jobs:
             --enable-webgl \
             --enable-unsafe-swiftshader \
             --use-angle=swiftshader \
-            --run-all-compositor-stages-before-draw \
-            --virtual-time-budget=4500 \
+            --virtual-time-budget=1500 \
             --dump-dom \
             'http://127.0.0.1:4173/?smoke=1' \
             >/tmp/test11a-dom.html
 
-          grep 'data-browser-smoke="PASS"' /tmp/test11a-dom.html
+          if ! grep -q 'data-browser-smoke="PASS"' /tmp/test11a-dom.html; then
+            echo "Test11A browser smoke DOM:"
+            cat /tmp/test11a-dom.html
+            exit 1
+          fi
+
           grep 'data-raf-loops="1"' /tmp/test11a-dom.html
           grep 'data-renderer="WebGLRenderer"' /tmp/test11a-dom.html
           grep 'data-runtime-error="0"' /tmp/test11a-dom.html
-          grep 'data-frame-count="' /tmp/test11a-dom.html
+          grep 'data-lifecycle-probe="PASS"' /tmp/test11a-dom.html
+          grep 'data-resize-probe="PASS"' /tmp/test11a-dom.html
+          grep 'data-smoke-mode="deterministic-scheduler-step"' /tmp/test11a-dom.html
+          grep 'data-frame-count="16"' /tmp/test11a-dom.html
 
       - name: Finalize verification
         working-directory: labs/threejs-test-11a-src
