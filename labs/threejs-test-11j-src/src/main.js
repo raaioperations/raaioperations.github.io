@@ -232,10 +232,13 @@ async function runLifecycleSmoke(){
   await app.ready;app.start('LIFECYCLE_SMOKE');app.pause('LIFECYCLE_SMOKE');
   const base=performance.now();
   const actor=[...app.actors.activeRecords].filter(r=>!r.defeated).sort((a,b)=>Math.hypot(a.x-app.world.playerRoot.position.x,a.z-app.world.playerRoot.position.z)-Math.hypot(b.x-app.world.playerRoot.position.x,b.z-app.world.playerRoot.position.z))[0];
-  teleportPlayer(actor.x-1.5,actor.z);
-  app.actors.applyDamage(actor.id,COMBAT.damage,app.scheduler.frameCount+1);
-  const travelerDamaged=actor.health===75&&actor.hostileToPlayer;
+  const facing=app.combat.forward.clone();app.world.camera.getWorldDirection(facing);facing.y=0;
+  if(facing.lengthSq()<1e-6)facing.set(0,0,-1);facing.normalize();
+  teleportPlayer(actor.x-facing.x*1.55,actor.z-facing.z*1.55);
   let timestamp=base;
+  app.input.setTestIntent({attack:true});
+  for(let i=1;i<=COMBAT.windupFrames+2;i++){timestamp+=16.6667;app.scheduler.step(timestamp);}
+  const travelerDamaged=actor.health===75&&actor.hostileToPlayer;
   let guard=0;
   while(!app.playerVitals.downed&&guard++<550){
     timestamp+=16.6667;app.scheduler.step(timestamp);

@@ -1,5 +1,5 @@
 {
-  "build_id": "20261002063500",
+  "build_id": "20261002063932",
   "test": "11J",
   "roadmap": "Test11 — Greenfield Production Rebuild",
   "milestone": "Player Lifecycle / Respawn Foundation",
@@ -75,7 +75,7 @@
     }
   },
   "browser_smoke": "PASS",
-  "app_js_bytes": 729758,
+  "app_js_bytes": 729938,
   "frozen": false,
   "canonical": false,
   "browser": "Firefox",
@@ -89,7 +89,7 @@
     "respawn_requests": 1,
     "rejected_respawn_requests": 1,
     "stale_enemy_hits_rejected": 0,
-    "last_respawn_frame": 410,
+    "last_respawn_frame": 418,
     "health_after_respawn_and_retaliation": 85,
     "state_after_respawn_and_retaliation": "STAGGER"
   },
@@ -100,7 +100,7 @@
     "move_peak": 11,
     "behavior_peak": 4,
     "interaction_peak": 0,
-    "player_attack_peak": 0,
+    "player_attack_peak": 1,
     "enemy_eval_peak": 1,
     "enemy_attack_peak": 1,
     "concurrent_attackers_peak": 1,
