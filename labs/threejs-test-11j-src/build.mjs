@@ -28,6 +28,7 @@ assert(pkg.dependencies.three==='0.186.0','Three.js must remain pinned to 0.186.
 assert(automatedTestCount===27,'expected 27 automated unit cases, found '+automatedTestCount);
 
 const baseline=JSON.parse(await readFile(path.join(root,'GREENFIELD_BASELINE.json'),'utf8'));
+const governance=JSON.parse(await readFile(path.join(root,'status.json'),'utf8'));
 assert(baseline.name==='Greenfield Reciprocal Combat Foundation v0.9','v0.9 baseline required');
 assert(baseline.status==='ACCEPTED_DEVELOPMENT_BASELINE','accepted development baseline required');
 assert(baseline.invariants.request_animation_frame_source_calls===1,'one-RAF baseline invariant required');
@@ -104,6 +105,8 @@ const buildInfo={
   milestone:'Player Lifecycle / Respawn Foundation',
   environment_name:'Copperwash Reach — Combat Lifecycle',
   baseline:'Greenfield Reciprocal Combat Foundation v0.9',
+  governance_status:governance.status,
+  human_inspection:governance.human_inspection,
   architecture:'GREENFIELD_RECIPROCAL_COMBAT_FOUNDATION',
   environment:{three:pkg.dependencies.three,renderer:'WebGLRenderer',framework:'vanilla',build_tool:'esbuild',browser:'Firefox'},
   source_gates:{request_animation_frame_calls:rafCalls,renderer_set_animation_loop_calls:animationLoops,timer_owned_combat:false},
@@ -144,7 +147,8 @@ await writeFile(path.join(out,'verification-report.json'),JSON.stringify({
   status:'UNIT_PASS_BROWSER_PENDING',
   build_id:buildId,
   automated_test_count:automatedTestCount,
-  governance_status:'OPEN',
+  governance_status:governance.status,
+  human_inspection:governance.human_inspection,
   checks:{
     test11i_human_accepted:true,
     baseline_v09:true,
@@ -162,6 +166,7 @@ await writeFile(path.join(out,'verification-report.json'),JSON.stringify({
     player_life_epoch:true,
     persistent_reciprocal_state:true,
     unit_tests_required:true,
+    human_device_inspection:governance.status==='PASS_CLOSED'&&governance.human_inspection?.checks_passed===7,
     browser_smoke_required:true
   }
 },null,2)+'\n');

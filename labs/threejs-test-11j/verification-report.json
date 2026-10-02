@@ -1,9 +1,15 @@
 {
   "test": "11J",
   "status": "PASS",
-  "build_id": "20261002064349",
+  "build_id": "20261002072249",
   "automated_test_count": 27,
-  "governance_status": "OPEN",
+  "governance_status": "PASS_CLOSED",
+  "human_inspection": {
+    "status": "PASS",
+    "checks_passed": 7,
+    "accepted_by": "HUMAN",
+    "date": "2026-10-02"
+  },
   "checks": {
     "test11i_human_accepted": true,
     "baseline_v09": true,
@@ -21,6 +27,7 @@
     "player_life_epoch": true,
     "persistent_reciprocal_state": true,
     "unit_tests_required": true,
+    "human_device_inspection": true,
     "browser_smoke_required": true,
     "browser_smoke": true,
     "unit_tests": true

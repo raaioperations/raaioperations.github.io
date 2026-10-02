@@ -3,7 +3,7 @@
 **Roadmap:** Test11 — Greenfield Production Rebuild  
 **Environment:** Copperwash Reach — Combat Lifecycle  
 **Baseline:** Greenfield Reciprocal Combat Foundation v0.9  
-**Status:** OPEN
+**Status:** PASS / CLOSED — human inspection accepted (7/7)
 
 The accepted Test11I reciprocal combat capabilities are carried forward without modifying the Test11I deployment. Test11J adds deterministic player-life and respawn transitions owned by the existing scheduler.
 
@@ -17,4 +17,4 @@ Respawn availability is reached after a fixed scheduler-frame delay. Desktop use
 
 Preserve one RAF, 27 active actors, zero actor-pool reallocations, existing movement/behavior/interaction/combat budgets, at most one lifecycle transition per frame, draw calls ≤86, triangles ≤114,000, and zero runtime errors. Browser and real-device inspection are required. A successful build does not close this test.
 
-Test11J remains mutable, unfrozen, and noncanonical. Close only after implementation, unit verification, browser verification, GitHub Pages deployment, and real-device human inspection.
+Test11J is PASS / CLOSED after implementation, unit verification, browser verification, GitHub Pages deployment, and 7/7 real-device inspection checks. It remains mutable, unfrozen, and noncanonical.
