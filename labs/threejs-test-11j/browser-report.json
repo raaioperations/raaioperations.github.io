@@ -1,0 +1,45 @@
+{
+  "browser": "Firefox",
+  "browser_version": "155.0",
+  "result": "PASS",
+  "renderer_mode": "NO_WEBGL_LIFECYCLE_FALLBACK",
+  "lifecycle": {
+    "player_lives": 2,
+    "player_downs": 1,
+    "player_respawns": 1,
+    "respawn_state": "READY",
+    "respawn_requests": 1,
+    "rejected_respawn_requests": 1,
+    "stale_enemy_hits_rejected": 0,
+    "last_respawn_frame": 410,
+    "health_after_respawn_and_retaliation": 85,
+    "state_after_respawn_and_retaliation": "STAGGER"
+  },
+  "performance": {
+    "raf_loops": 1,
+    "active_actors": 27,
+    "actor_pool_reallocations": 0,
+    "move_peak": 11,
+    "behavior_peak": 4,
+    "interaction_peak": 0,
+    "player_attack_peak": 0,
+    "enemy_eval_peak": 1,
+    "enemy_attack_peak": 1,
+    "concurrent_attackers_peak": 1,
+    "draw_calls": 0,
+    "triangles": 0,
+    "runtime_errors": 0
+  },
+  "proofs": {
+    "damage": "PASS",
+    "downed": "PASS",
+    "early_respawn_rejected": "PASS",
+    "controls_locked": "PASS",
+    "availability": "PASS",
+    "restored": "PASS",
+    "spawn": "PASS",
+    "camera": "PASS",
+    "npc_persistence": "PASS",
+    "post_respawn_combat": "PASS"
+  }
+}

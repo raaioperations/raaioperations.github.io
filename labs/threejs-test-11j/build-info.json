@@ -1,0 +1,111 @@
+{
+  "build_id": "20261002062858",
+  "test": "11J",
+  "roadmap": "Test11 — Greenfield Production Rebuild",
+  "milestone": "Player Lifecycle / Respawn Foundation",
+  "environment_name": "Copperwash Reach — Combat Lifecycle",
+  "baseline": "Greenfield Reciprocal Combat Foundation v0.9",
+  "architecture": "GREENFIELD_RECIPROCAL_COMBAT_FOUNDATION",
+  "environment": {
+    "three": "0.186.0",
+    "renderer": "WebGLRenderer",
+    "framework": "vanilla",
+    "build_tool": "esbuild",
+    "browser": "Firefox"
+  },
+  "source_gates": {
+    "request_animation_frame_calls": 1,
+    "renderer_set_animation_loop_calls": 0,
+    "timer_owned_combat": false
+  },
+  "capabilities": {
+    "retaliation_threat_state": true,
+    "enemy_attack_phases": [
+      "READY",
+      "TELEGRAPH",
+      "STRIKE",
+      "RECOVERY"
+    ],
+    "enemy_evaluation_budget_per_frame": 4,
+    "enemy_attack_start_budget_per_frame": 1,
+    "max_concurrent_enemy_attackers": 2,
+    "player_max_health": 100,
+    "enemy_damage_per_hit": 15,
+    "player_invulnerability_frames": 18,
+    "player_stagger_frames": 14,
+    "player_control_lock": true,
+    "player_downed_state": true,
+    "player_life_generation": true,
+    "respawn_availability_frames": 60,
+    "lifecycle_transitions_per_frame": 1,
+    "respawn_input_desktop": "R",
+    "respawn_input_touch": "conditional-button",
+    "persistent_world_on_respawn": true,
+    "persistent_enemy_combat_state": true,
+    "player_status_hud": true,
+    "active_actor_capacity": 27
+  },
+  "limits": {
+    "draw_calls_max": 86,
+    "triangles_max": 114000,
+    "raf_loops": 1,
+    "lifecycle_transitions_per_frame": 1
+  },
+  "automated_test_count": 27,
+  "assets": {
+    "Soldier.glb": {
+      "source": "labs/threejs-test-09b/assets/Soldier.glb",
+      "bytes": 2160468
+    },
+    "rock_c_hero_boulder.glb": {
+      "source": "assets/3d/sunlit-basin/v1/rock_c_hero_boulder.glb",
+      "bytes": 2840
+    },
+    "tree_e_windswept.glb": {
+      "source": "assets/3d/sunlit-basin/v3/tree_e_windswept.glb",
+      "bytes": 8404
+    },
+    "ruin_windcut_fragment_a.glb": {
+      "source": "assets/3d/windcut-shelf/v1/ruin_windcut_fragment_a.glb",
+      "bytes": 7504
+    },
+    "deadwood_windswept_a.glb": {
+      "source": "assets/3d/windcut-shelf/v1/deadwood_windswept_a.glb",
+      "bytes": 5308
+    }
+  },
+  "browser_smoke": "PASS",
+  "app_js_bytes": 729758,
+  "frozen": false,
+  "canonical": false,
+  "browser": "Firefox",
+  "browser_version": "155.0",
+  "browser_renderer_mode": "NO_WEBGL_LIFECYCLE_FALLBACK",
+  "lifecycle_telemetry": {
+    "player_lives": 2,
+    "player_downs": 1,
+    "player_respawns": 1,
+    "respawn_state": "READY",
+    "respawn_requests": 1,
+    "rejected_respawn_requests": 1,
+    "stale_enemy_hits_rejected": 0,
+    "last_respawn_frame": 410,
+    "health_after_respawn_and_retaliation": 85,
+    "state_after_respawn_and_retaliation": "STAGGER"
+  },
+  "performance_telemetry": {
+    "raf_loops": 1,
+    "active_actors": 27,
+    "actor_pool_reallocations": 0,
+    "move_peak": 11,
+    "behavior_peak": 4,
+    "interaction_peak": 0,
+    "player_attack_peak": 0,
+    "enemy_eval_peak": 1,
+    "enemy_attack_peak": 1,
+    "concurrent_attackers_peak": 1,
+    "draw_calls": 0,
+    "triangles": 0,
+    "runtime_errors": 0
+  }
+}

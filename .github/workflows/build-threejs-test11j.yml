@@ -1,0 +1,78 @@
+name: Build Three.js Test 11J
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'labs/threejs-test-11j-src/**'
+      - '.github/workflows/build-threejs-test11j.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install pinned dependencies
+        working-directory: labs/threejs-test-11j-src
+        run: npm install --no-audit --no-fund --no-package-lock
+
+      - name: Install Playwright Firefox
+        working-directory: labs/threejs-test-11j-src
+        run: npx playwright install firefox
+
+      - name: Unit tests
+        working-directory: labs/threejs-test-11j-src
+        run: npm test
+
+      - name: Build 11J
+        working-directory: labs/threejs-test-11j-src
+        run: npm run build
+
+      - name: Browser Firefox lifecycle-respawn smoke
+        working-directory: labs/threejs-test-11j-src
+        run: npm run test:browser
+
+      - name: Finalize verification
+        working-directory: labs/threejs-test-11j-src
+        run: npm run finalize -- PASS
+
+      - name: Verify report
+        run: |
+          node - <<'NODE'
+          const fs=require('fs');
+          const info=JSON.parse(fs.readFileSync('labs/threejs-test-11j/build-info.json','utf8'));
+          const report=JSON.parse(fs.readFileSync('labs/threejs-test-11j/verification-report.json','utf8'));
+          if(report.status!=='PASS') throw new Error('11J verification failed');
+          if(info.source_gates.request_animation_frame_calls!==1) throw new Error('one-RAF invariant failed');
+          if(info.browser_smoke!=='PASS') throw new Error('browser smoke missing');
+          if(info.capabilities.enemy_evaluation_budget_per_frame!==4) throw new Error('enemy evaluation budget failed');
+          if(info.capabilities.enemy_attack_start_budget_per_frame!==1) throw new Error('enemy attack budget failed');
+          if(info.capabilities.player_max_health!==100) throw new Error('player health contract failed');
+          console.log({build_id:info.build_id,status:report.status});
+          NODE
+
+      - name: Publish Test11J
+        run: |
+          git config user.name "raaioperations"
+          git config user.email "alanhasan87@gmail.com"
+          git add labs/threejs-test-11j
+          if git diff --cached --quiet; then
+            echo 'No generated changes'
+          else
+            git commit -m 'Build Test11J player lifecycle respawn foundation'
+            git pull --rebase origin main
+            git push origin HEAD:main
+          fi

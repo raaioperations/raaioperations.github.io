@@ -1,0 +1,29 @@
+{
+  "name": "Greenfield Reciprocal Combat Foundation v0.9",
+  "status": "ACCEPTED_DEVELOPMENT_BASELINE",
+  "authority": "Test11I — Reciprocal Combat Foundation: PASS / CLOSED / HUMAN ACCEPTED",
+  "mutable": true,
+  "frozen": false,
+  "canonical": false,
+  "invariants": {
+    "request_animation_frame_source_calls": 1,
+    "active_actor_capacity": 27,
+    "actor_pool_reallocations": 0,
+    "move_updates_per_frame": 12,
+    "behavior_evaluations_per_frame": 6,
+    "interaction_actions_per_frame": 1,
+    "player_attack_starts_per_frame": 1,
+    "enemy_evaluations_per_frame": 4,
+    "enemy_attack_starts_per_frame": 1,
+    "concurrent_enemy_attackers": 2,
+    "draw_calls_max": 86,
+    "triangles_max": 114000
+  },
+  "capabilities": [
+    "reciprocal retaliation threat state",
+    "deterministic READY / TELEGRAPH / STRIKE / RECOVERY enemy combat",
+    "player health, stagger, invulnerability, and downed state",
+    "persistent NPC health, defeat, interaction, and chunk state",
+    "single scheduler and single RAF"
+  ]
+}
