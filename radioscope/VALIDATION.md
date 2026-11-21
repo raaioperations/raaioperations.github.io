@@ -1,24 +1,23 @@
-# RadioScope V1.3 — validation
+# RadioScope V1.4 — Validation Report
 
-## Verified locally
+## Verified before GitHub publication
 
-- Original V1 source logic: **10/10 passed** (`node --test /mnt/data/radioscope-v1/tests/core.test.js`). The V1.3 scanner is separately tested, because it replaces the original fixed scanner implementation.
-- V1.3 Fast-Tune logic: **7/7 passed** (connect timer, post-playing dwell, failure skip, Hold/Resume, stale callbacks, single-station backoff, local health ranking, invalid saved data).
-- V1.3 desktop/mobile browser UI: passed with mock radio directory + generated WAV (local fast observation, filter, named profile save and restore, no uncaught errors, no mobile horizontal overflow).
-- Existing V1.2 audio regression: passed with synthetic PCM/WAV, including slow-start and recovery to PLAYING, broken stream transitions to STREAM ERROR.
-- JS syntax: `node --check script.js` passed (script extracted for validation only).
+- **V1 core baseline:** 10/10 logic regression tests pass (original V1 suite).
+- **V1.3 + V1.4 logic:** 14/14 pass (7 legacy Fast-Tune tests; 7 additional scan controls, storage sanitization, migration and Hold/Resume tests).
+- **V1.2 audio browser regression:** Desktop and iPhone-sized Chromium pass WAV speaker test and actual synthesized HTMLAudioElement playback. Unsupported stream displays error.
+- **V1.2 slow/failure regression:** Delayed synthetic stream correctly buffers before PLAYING; slow warning recovers; failed stream displays STREAM ERROR.
+- **V1.3 Fast-Tune browser:** Desktop and mobile pass fast label, fast filter, profile save/restore, playback, no horizontal overflow or uncaught JS errors.
+- **V1.4 advanced-controls browser:** Desktop and mobile pass create/select list, station add/remove, browser-observed verified favorite, activity history, scan Start/Stop, saved order/timeout/profile and reopen with persisted data, no horizontal overflow or uncaught JS errors.
+- **Browser-native timer defect:** The native `setTimeout`/`clearTimeout` calls are now wrapped; prior Chromium `Illegal invocation` regression test passes.
+- **V1.4 Hold/Resume:** Deterministic test confirms a held scan whose audio was paused transitions back to connecting, then starts full listening dwell when audio resumes.
 
-## Not yet verified
+## Still requires iPhone acceptance
 
-- Live broadcaster start times on iOS Safari, slow mobile networks, interruptions/CarPlay/AirPlay/background audio.
-- Actual stream bitrate or continuous uptime.
-- Cross-browser background scan timers or iOS limits on automatic next-station playback.
-- Remote SDR reception inside the RadioScope app (currently external links only).
+- Real Safari 1.4 scanning with actual broadcaster streams, selected lists, and variable network conditions.
+- Backgrounding and AutoPlay restrictions, Bluetooth output, interruptions, CarPlay/AirPlay and long-duration scanning.
+- Browser storage survival across iOS low-storage purging / private browsing.
+- Station uptime and latency outside synthetic/observed local tests.
 
-## Acceptance gate on user phone
+## Scope boundary
 
-1. Open Safari and confirm Version 1.3.
-2. Tap Listen on a working station; wait for PLAYING.
-3. Confirm a local observed connection-time label appears, and fast stations become available under Fast on this device if measurement is below 8 seconds.
-4. Stop manual playback, choose a scan source and 15/30/45s listening time, tap Start scan. Verify the scan stays on a station for the selected period **after** audio starts. Slow/unavailable streams should skip after up to 20s.
-5. Save and reload a profile, confirm source and listening time persist.
+RadioScope V1.4 plays internet audio streams; it is not a general local RF receiver, does not decrypt encrypted transmissions, and does not embed unlicensed third-party scanner audio feeds.

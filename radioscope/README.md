@@ -1,40 +1,47 @@
-# RadioScope V1.3 — Fast-Tune
+# RadioScope V1.4 — Advanced Scanning Controls
 
-Hardware-free mobile-first internet radio explorer. Deploy this folder under an HTTPS path (e.g. `/radioscope/`).
+Mobile-first hardware-free radio explorer, deployed as a static Progressive Web App. Plays public internet radio streams and links to public remote SDR interfaces. It **does not** scan arbitrary local RF signals using an iPhone.
 
-## How to use on iPhone
+## What's new in 1.4
 
-1. Open the deployed site in Safari; check `RADIO EXPLORER / VERSION 1.3`.
-2. Tap **Listen** on a station. Once the browser signals audio playback, RadioScope records the observed connection time locally and marks genuinely fast-starting stations with a lightning label.
-3. **Fast on this device** filters the station directory to streams measured to start within approximately 8 seconds on this browser (and meeting the reliability threshold). No fast entries are shown until at least one successful observation.
-4. Expand **Fast-Tune scan setup** to select Current directory, My fast stations, or My favorites. Select the listening duration (15/30/45 sec) in the sticky player. Type a profile name and tap **Save profile**; up to eight named profiles are stored on this device. Selecting a profile restores its source and duration.
-5. Tap **Start scan** in the player. Scanning attempts a station for up to 20 seconds; once the `playing` event occurs the chosen *listening* timer begins. Failed or timed-out stations are skipped. **Hold** freezes scan rotation; **Resume** restarts the applicable deadline. On iOS, automatic next-station playback may require a new tap due to Safari media policies; the scanner stops and reports this.
-6. **Stop scan** to listen manually. The speaker-check tone still works without internet.
+- **Custom scan lists**: create up to 8 named lists holding up to 40 HTTPS-compatible saved stations each. On a station card tap **＋ List** to add/remove it from the active list. Manage lists under **My Library → Scan lists**. Changing a list during scanning stops the scan; tap Start scan again.
+- **Verified favorites**: My Library → Verified includes starred stations that reached HTMLMediaElement `playing` at least once on this device. This is a playback observation, not a guarantee of audible content or current station uptime.
+- **Scan source**: Current directory, My fast stations, My favorites, Verified favorites, Selected scan list.
+- **Scan order**: Fast and reliable first (based on local observed startup) or As listed.
+- **Connection limit**: 10, 20, or 30 seconds per attempted station; listening duration remains 15, 30, or 45 seconds after playback begins.
+- **Activity**: My Library → Activity shows bounded local records for tuning, connecting, errors, timeouts, browser playback blocks and manually skipped stations; it never records actual audio. Clear locally when desired.
+- **Profile upgrades**: saved profile now captures source, list reference, scan order, per-station connection limit, and listening duration. Legacy V1.3 profiles migrate with safe defaults.
+- **Scanner stability**: native browser timers are now correctly bound and Hold/Resume after pausing can restart listening after successful playback.
 
-## Important limitations
+## Install and use on iPhone
 
-- This app plays publicly listed *internet* radio streams and links to public remotely operated SDRs. It cannot receive arbitrary nearby radio signals without a compatible RF receiver.
-- A `playing` media event and its measured startup delay are browser observations; they cannot certify audible content, station uptime or Internet performance elsewhere. Streams may redirect, buffer, go offline or disallow autoplay.
-- `Fast` ranking is local to this browser/device, not a global station rating. Observations are stored in localStorage and capped at 200 entries; profiles capped at eight. Clearing browser data clears them.
-- Scan source is a snapshot of the current directory, fast subset or favorites at **Start scan**; changing settings stops the existing scan, then requires Start again.
-- When Safari blocks programmatic playback, tap Listen or Start scan to continue. To preserve user choice, playback is never proxied through a paid or unauthorized stream service.
+1. Open `https://raaioperations.github.io/radioscope/` in Safari; confirm **VERSION 1.4** in the top hero.
+2. Tap **Listen** on a station. Wait until actual playback begins. Use the speaker test if unsure whether audio output works.
+3. Tap **＋ List** on any station to create a default **My scan list**, or open **My Library → Scan lists** and create a named list first.
+4. Save the desired stations and return to **Discover → Fast-Tune scan setup**. Set **Scan source → Selected scan list**, **Scan order**, and **Connection limit**.
+5. Choose **LISTEN FOR** in the player (15/30/45 sec). Tap **Start scan**, **Hold**, **Resume**, **Next**, or **Stop scan**.
+6. Use **My Library → Verified** or **Activity** to inspect observed station status. Save the scan setup as a named profile if needed.
 
-## Source layout
+## Storage and privacy
 
-- `index.html`: CSS, accessible UI, discovery logic, Fast-Tune state machine, playback, microphone analyzer
-- `sw.js`: offline app-shell cache, excluding external streams and APIs
-- `manifest.webmanifest`, `assets/icon.svg`: PWA shell
-- `tests/fast_tune.test.cjs`: deterministic scanner/health/settings tests
-- `tests/fast_tune_browser.py`: simulated desktop/mobile UI + audio + profile tests
-- `tests/test_audio.py`, `tests/test_state_machine.py`: inherited audio regression checks
+Favorites, recent stations, station health, scan profiles, scan lists, and activity log are kept in this browser's `localStorage`. Clearing Safari website data may erase them. The app has no account or upload system. Activity is capped at 120 entries; lists at 8×40 stations. Station directory requests and direct playback contact third-party stations. The optional microphone analyzer only handles microphone audio in the browser and does not record or transmit it.
 
-## Local test commands
+## Limitations
+
+- iOS can prevent automatic programmatic playback after the next-station transition. When the browser blocks playback, re-tap a Listen or Start scan button.
+- Remote broadcaster startup latency cannot be made instantaneous or guaranteed. Local rankings reflect *this* device's browser observations only.
+- Browser status `PLAYING` cannot guarantee actual audible output; test device volume, Bluetooth, AirPlay, and station content separately.
+- Saved lists and activity remain local to each browser profile, and will not synchronize across devices.
+- Remote RF scanning remains through *external* public SDR receiver sites, not a native RadioScope receiver.
+
+## Local tests
 
 ```sh
-node --test tests/fast_tune.test.cjs
-python tests/fast_tune_browser.py
+node --test tests/fast_tune.test.cjs tests/scan_controls.test.cjs
 python tests/test_audio.py
 python tests/test_state_machine.py
+python tests/fast_tune_browser.py
+python tests/scan_controls_browser.py
 ```
 
-Browser tests use synthetic WAV and fixture radio directory responses. They do not confirm third-party audio on an actual iPhone.
+Baseline V1 core regression can be run from the original V1 source tree (`node --test tests/core.test.js`). Browser tests use synthetic audio and a mock station directory; they do not replace real iPhone Safari acceptance testing.

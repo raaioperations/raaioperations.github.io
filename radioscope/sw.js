@@ -1,4 +1,4 @@
-const CACHE = 'radioscope-shell-v1.3-fast-tune';
+const CACHE = 'radioscope-shell-v1.4-scan-controls';
 const SHELL = ['./','./index.html','./manifest.webmanifest','./assets/icon.svg'];
 self.addEventListener('install', event => { event.waitUntil(caches.open(CACHE).then(c => c.addAll(SHELL)).then(() => self.skipWaiting())); });
 self.addEventListener('activate', event => { event.waitUntil(caches.keys().then(keys => Promise.all(keys.filter(key => key.startsWith('radioscope-shell-') && key !== CACHE).map(key => caches.delete(key)))).then(() => self.clients.claim())); });
