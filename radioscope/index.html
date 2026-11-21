@@ -25,8 +25,26 @@
 @media(max-width:365px){.station-grid{grid-template-columns:1fr}.hero h1{font-size:35px}.hero-stats{gap:7px}.hero-stats strong{font-size:14px}.player-live{display:none}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:0.01ms!important;transition-duration:0.01ms!important;scroll-behavior:auto!important}}
 
+
+/* V1.3 Fast-Tune local scanning controls */
+.fast-setup{border:1px solid #244958;border-radius:12px;background:#0c2230;margin:-13px 0 26px;padding:14px 18px}
+.fast-setup summary{cursor:pointer;color:#c7f9eb;font-weight:680;list-style-position:inside}
+.fast-setup summary small{color:#94acbd;font-weight:400;margin-left:10px}
+.fast-setup-grid{display:grid;grid-template-columns:repeat(2,minmax(150px,1fr));gap:12px;margin:14px 0}
+.fast-setup label{display:flex;flex-direction:column;gap:6px;font-size:11px;color:#adc5ce}
+.fast-setup select,.fast-setup input{background:#0a1a28;color:#e7fff9;border:1px solid #395365;padding:10px;border-radius:8px;min-width:0;width:100%}
+.fast-setup-actions{display:flex;flex-wrap:wrap;gap:9px;align-items:center;margin-bottom:8px}
+.fast-setup-actions input{flex:1 1 160px;max-width:240px}
+.fast-setup-actions button{padding:9px 11px}
+#profile-status,.scan-hint{font-size:11px;line-height:1.55;color:#8fb4c3;margin:5px 0 0}
+.fast-switch{background:#112e32;color:#adebd8;border:1px solid #30766a;border-radius:99px;padding:8px 12px;font-size:11px;font-weight:700;white-space:nowrap}
+.fast-switch[aria-pressed=true]{background:#66e8c8;color:#071d25}
+.station-speed{font-size:10px;color:#a4d7c5;margin-top:-7px;min-height:11px}
+.scan-readout{font-size:10px;color:#9cb7cb;white-space:nowrap;min-width:87px}
+@media(max-width:650px){.fast-setup{margin:0 0 25px}.fast-setup summary small{display:block;margin:5px 0 0}.fast-setup-grid{grid-template-columns:1fr 1fr}.scan-readout{font-size:9px;min-width:0}}
+@media(max-width:385px){.fast-setup-grid{grid-template-columns:1fr}.scan-readout{width:100%}}
 </style>
-  <title>RadioScope · Radio Explorer · V1.2</title>
+  <title>RadioScope · Radio Explorer · V1.3</title>
 </head>
 <body>
   <div class="app-shell">
@@ -46,14 +64,19 @@
     <main class="main">
       <header class="topbar"><div class="breadcrumbs">RADIOSCOPE <span>/</span> <strong id="header-route">DISCOVER</strong></div><div class="right-tools"><span class="network-label"><i id="network-dot" class="dot"></i><span id="network-text">Checking network</span></span><button class="icon-btn" id="about-btn" type="button" aria-label="About RadioScope">?</button></div></header>
       <section id="view-discover" class="view active" aria-labelledby="discover-heading">
-        <div class="hero"><div class="eyebrow"><span class="eyedot"></span> RADIO EXPLORER / VERSION 1.2</div><h1 id="discover-heading">Explore the <em>airwaves.</em></h1><p>Listen to internet radio from around the world. Find remote SDR receivers. Analyze nearby sound. No extra equipment needed.</p><div class="hero-stats"><div><strong id="results-count">—</strong><span>STATIONS FOUND</span></div><div class="stat-rule"></div><div><strong>0</strong><span>LOCAL RF RECEIVERS</span></div><div class="stat-rule"></div><div><strong>FREE</strong><span>TO EXPLORE</span></div></div><div class="hero-art" aria-hidden="true"><div class="orb orb1"></div><div class="orb orb2"></div><div class="orb orb3"></div><span class="crosshair">+</span></div></div>
+        <div class="hero"><div class="eyebrow"><span class="eyedot"></span> RADIO EXPLORER / VERSION 1.3</div><h1 id="discover-heading">Explore the <em>airwaves.</em></h1><p>Listen to internet radio from around the world. Find remote SDR receivers. Analyze nearby sound. No extra equipment needed.</p><div class="hero-stats"><div><strong id="results-count">—</strong><span>STATIONS FOUND</span></div><div class="stat-rule"></div><div><strong>0</strong><span>LOCAL RF RECEIVERS</span></div><div class="stat-rule"></div><div><strong>FREE</strong><span>TO EXPLORE</span></div></div><div class="hero-art" aria-hidden="true"><div class="orb orb1"></div><div class="orb orb2"></div><div class="orb orb3"></div><span class="crosshair">+</span></div></div>
         <section class="audio-check" aria-labelledby="audio-check-title">
           <div class="audio-check-copy"><h2 id="audio-check-title">🔊 Speaker check</h2><p id="speaker-result" role="status" aria-live="polite">No station sound? Tap <strong>Test speaker</strong> to play a short built-in tone. Then try a radio station below.</p></div>
           <div class="audio-check-actions"><button id="speaker-test" class="primary-btn" type="button">Test speaker</button><a href="https://somafm.com/groovesalad/" target="_blank" rel="noopener noreferrer" class="external-radio-test">Try official station player ↗</a></div>
         </section>
+        <details class="fast-setup" id="scan-setup"><summary>⚡ Fast-Tune scan setup <small>Smart timing · saved profiles · local station measurements</small></summary>
+          <div class="fast-setup-grid"><label>Scan source<select id="scan-source"><option value="directory">Current directory</option><option value="fast">My fast stations</option><option value="favorites">My favorites</option></select></label><label>Saved profile<select id="scan-profile"><option value="">Custom settings</option></select></label></div>
+          <div class="fast-setup-actions"><label class="sr-only" for="profile-name">Profile name</label><input id="profile-name" maxlength="32" placeholder="Name your scan profile"><button id="profile-save" class="secondary-btn" type="button">Save profile</button><button id="profile-delete" class="secondary-btn" type="button" disabled>Delete selected</button></div>
+          <p id="profile-status" role="status" aria-live="polite">Scans wait up to 20 seconds to connect; listening time begins only once audio actually starts. Profiles and speed measurements are stored on this device.</p>
+        </details>
         <div class="section-heading"><div><h2>Station directory</h2><p>Public internet streams, not locally detected radio signals.</p></div><button class="secondary-btn" id="refresh-btn" type="button">↻ Refresh</button></div>
         <form id="search-form" class="searchbar" role="search"><span aria-hidden="true">⌕</span><label class="sr-only" for="search-input">Station name</label><input id="search-input" placeholder="Search stations by name…" type="search" maxlength="80" autocomplete="off"><button type="submit" class="search-btn">Search</button></form>
-        <div class="filters" aria-label="Station filters"><div class="chip-row" id="category-chips"><button type="button" class="chip active" data-category="all">All stations</button><button type="button" class="chip" data-category="news">News</button><button type="button" class="chip" data-category="talk">Talk</button><button type="button" class="chip" data-category="jazz">Jazz</button><button type="button" class="chip" data-category="classical">Classical</button><button type="button" class="chip" data-category="electronic">Electronic</button></div><label class="country-filter">REGION<select id="country-filter"><option value="US">United States</option><option value="WORLD">Worldwide</option><option value="CA">Canada</option><option value="GB">United Kingdom</option><option value="AU">Australia</option><option value="DE">Germany</option></select></label></div>
+        <div class="filters" aria-label="Station filters"><div class="chip-row" id="category-chips"><button type="button" class="chip active" data-category="all">All stations</button><button type="button" class="chip" data-category="news">News</button><button type="button" class="chip" data-category="talk">Talk</button><button type="button" class="chip" data-category="jazz">Jazz</button><button type="button" class="chip" data-category="classical">Classical</button><button type="button" class="chip" data-category="electronic">Electronic</button></div><button id="fast-filter" class="fast-switch" type="button" aria-pressed="false">⚡ Fast on this device</button><label class="country-filter">REGION<select id="country-filter"><option value="US">United States</option><option value="WORLD">Worldwide</option><option value="CA">Canada</option><option value="GB">United Kingdom</option><option value="AU">Australia</option><option value="DE">Germany</option></select></label></div>
         <div id="station-status" class="inline-status" role="status" aria-live="polite">Connecting to station directory…</div>
         <div id="station-list" class="station-grid" aria-label="Stations"></div>
         <div class="inline-tip"><span>ⓘ</span> Some stations have offline streams or browser-incompatible formats. HTTPS playback is required on secure pages.</div>
@@ -67,10 +90,10 @@
     </main>
   </div>
 
-  <div class="player" id="player" aria-label="Audio player"><div class="player-info"><div class="player-badge">◉</div><div class="player-title-wrap"><strong id="player-title">Nothing playing</strong><span id="player-meta">Choose a station to listen</span></div></div><div class="player-controls"><button id="play-toggle" type="button" class="play-toggle" aria-label="Play or pause" disabled>▶</button><div class="player-live"><span class="live-ring"></span><span id="player-state">IDLE</span></div></div><div class="scan-controls"><label class="scan-duration">SCAN EVERY <select id="scan-delay" aria-label="Scanning interval"><option value="15000">15s</option><option value="30000" selected>30s</option><option value="45000">45s</option></select></label><button id="scan-toggle" type="button" class="scan-btn">Start scan</button><button id="scan-hold" type="button" class="mini-btn" disabled>Hold</button><button id="scan-next" type="button" class="mini-btn" disabled aria-label="Next station">⏭</button></div><div id="player-error" role="status" aria-live="polite" class="player-error" hidden></div><audio id="radio-audio" playsinline preload="none"></audio></div>
+  <div class="player" id="player" aria-label="Audio player"><div class="player-info"><div class="player-badge">◉</div><div class="player-title-wrap"><strong id="player-title">Nothing playing</strong><span id="player-meta">Choose a station to listen</span></div></div><div class="player-controls"><button id="play-toggle" type="button" class="play-toggle" aria-label="Play or pause" disabled>▶</button><div class="player-live"><span class="live-ring"></span><span id="player-state">IDLE</span></div></div><div class="scan-controls"><label class="scan-duration">LISTEN FOR <select id="scan-delay" aria-label="Listening duration after audio starts"><option value="15000">15s</option><option value="30000" selected>30s</option><option value="45000">45s</option></select></label><span id="scan-readout" class="scan-readout" role="status" aria-live="polite">READY</span><button id="scan-toggle" type="button" class="scan-btn">Start scan</button><button id="scan-hold" type="button" class="mini-btn" disabled>Hold</button><button id="scan-next" type="button" class="mini-btn" disabled aria-label="Next station">⏭</button></div><div id="player-error" role="status" aria-live="polite" class="player-error" hidden></div><audio id="radio-audio" playsinline preload="none"></audio></div>
 
   <nav class="mobile-nav" aria-label="Mobile navigation"><button class="mobile-link active" type="button" data-nav="discover"><span>⌁</span>Discover</button><button class="mobile-link" type="button" data-nav="receivers"><span>◎</span>Receivers</button><button class="mobile-link" type="button" data-nav="analyze"><span>▥</span>Analyze</button><button class="mobile-link" type="button" data-nav="library"><span>☆</span>Library</button></nav>
-  <dialog id="about-dialog" class="about-dialog"><div class="dialog-header"><h2>About RadioScope</h2><button id="close-about" aria-label="Close" type="button">✕</button></div><p>RadioScope V1.2 is a local-first directory and player for publicly listed internet-radio stations, a remote-SDR link hub, and a phone-microphone sound analyzer.</p><p><strong>It cannot detect arbitrary radio signals, police radios, nearby transmissions, Wi-Fi networks, or Bluetooth devices on your phone.</strong> Internet scanning cycles through streams listed in the directory, not RF channels.</p><p>Station data: Radio Browser community directory. Streams and remote SDR websites are provided by independent operators and may be offline or subject to terms. Use only legally accessible services.</p><button id="dialog-done" class="primary-btn" type="button">Understood</button></dialog>
+  <dialog id="about-dialog" class="about-dialog"><div class="dialog-header"><h2>About RadioScope</h2><button id="close-about" aria-label="Close" type="button">✕</button></div><p>RadioScope V1.3 is a local-first directory and player for publicly listed internet-radio stations, a remote-SDR link hub, and a phone-microphone sound analyzer.</p><p><strong>It cannot detect arbitrary radio signals, police radios, nearby transmissions, Wi-Fi networks, or Bluetooth devices on your phone.</strong> Internet scanning cycles through streams listed in the directory, not RF channels. Fast-Tune timing and saved profiles are stored locally; they are not broadcaster uptime guarantees.</p><p>Station data: Radio Browser community directory. Streams and remote SDR websites are provided by independent operators and may be offline or subject to terms. Use only legally accessible services.</p><button id="dialog-done" class="primary-btn" type="button">Understood</button></dialog>
   <script type="module">
 // format
 function safeURL(value, { httpsOnly = false } = {}) {
@@ -200,39 +223,101 @@ async function recordStationClick(id, fetchImpl = fetch) {
   catch { /* Analytics are optional; never interrupt playback. */ }
 }
 
+// Fast-Tune: strictly local observational metadata, not an external uptime guarantee.
+const HEALTH_KEY='radioscope-v13-health';
+const SETTINGS_KEY='radioscope-v13-settings';
+function readJSON(key,fallback){try{const x=JSON.parse(localStorage.getItem(key)||'null');return x??fallback;}catch{return fallback;}}
+function stationHealthKey(station){return station?.id&&station.id!=='speaker-test'?String(station.id):'';}
+function cleanHealth(raw){
+  const out={};if(!raw||typeof raw!=='object'||Array.isArray(raw))return out;
+  for(const [id,r] of Object.entries(raw).slice(0,250)){
+    if(!/^[\w-]{5,100}$/.test(id)||!r||typeof r!=='object')continue;
+    const success=Math.min(999,Math.max(0,Math.floor(Number(r.success)||0)));
+    const fail=Math.min(999,Math.max(0,Math.floor(Number(r.fail)||0)));
+    const avgMs=Math.min(120000,Math.max(0,Number(r.avgMs)||0));
+    const updated=Math.max(0,Number(r.updated)||0);
+    if(success||fail)out[id]={success,fail,avgMs,updated};
+  }
+  return out;
+}
+function updateHealth(health,id,success,ms,now=Date.now()){
+  if(!id||id==='speaker-test')return health;
+  const old=health[id]||{success:0,fail:0,avgMs:0,updated:0};
+  const next={...old,updated:now};
+  if(success){next.success=Math.min(999,old.success+1);const elapsed=Math.min(120000,Math.max(0,Number(ms)||0));next.avgMs=old.success?Math.round(old.avgMs*0.65+elapsed*0.35):Math.round(elapsed);}
+  else next.fail=Math.min(999,old.fail+1);
+  const output={...health,[id]:next};
+  if(Object.keys(output).length>200){const candidates=Object.entries(output).sort((a,b)=>b[1].updated-a[1].updated).slice(0,200);return Object.fromEntries(candidates);}
+  return output;
+}
+function healthLevel(station,health){
+  const r=health[stationHealthKey(station)];if(!r)return 'unknown';
+  const rate=r.success/Math.max(1,r.success+r.fail);
+  if(r.success>=1&&rate>=0.6&&r.avgMs<=8000)return 'fast';
+  if(r.success>=1&&rate>=0.5)return 'working';
+  if(r.fail>0)return 'failed';
+  return 'unknown';
+}
+function rankedStations(list,health){
+  const rank={fast:0,working:1,unknown:2,failed:3};
+  return [...list].sort((a,b)=>{
+    const levelA=healthLevel(a,health),levelB=healthLevel(b,health);
+    return rank[levelA]-rank[levelB]||(levelA==='fast'||levelA==='working'?(health[a.id]?.avgMs||99999)-(health[b.id]?.avgMs||99999):0);
+  });
+}
+function cleanSettings(raw){
+  const source=['directory','fast','favorites'].includes(raw?.source)?raw.source:'directory';
+  const delay=[15000,30000,45000].includes(Number(raw?.delay))?Number(raw.delay):30000;
+  const profiles=Array.isArray(raw?.profiles)?raw.profiles.slice(0,8).filter(p=>p&&typeof p.name==='string'&&p.name.trim().length>0&&['directory','fast','favorites'].includes(p.source)&&[15000,30000,45000].includes(Number(p.delay))).map((p,i)=>({id:String(p.id||('profile-'+i)).slice(0,48),name:p.name.trim().slice(0,32),source:p.source,delay:Number(p.delay)})):[];
+  return {source,delay,profiles,selected:typeof raw?.selected==='string'?raw.selected:''};
+}
 // scan
 class StreamScanner {
-  constructor({ play, onChange, setTimeoutFn = setTimeout, clearTimeoutFn = clearTimeout }) {
-    this.play=play; this.onChange=onChange;
-    this.setTimeoutFn=setTimeoutFn; this.clearTimeoutFn=clearTimeoutFn;
-    this.list=[];this.index=-1;this.timer=null;this.active=false;this.hold=false;this.delay=30000;
+  constructor({play,onChange,onTimeout,setTimeoutFn=setTimeout,clearTimeoutFn=clearTimeout,connectionLimit=20000}){
+    this.play=play;this.onChange=onChange;this.onTimeout=onTimeout;
+    this.setTimeoutFn=setTimeoutFn;this.clearTimeoutFn=clearTimeoutFn;this.connectionLimit=connectionLimit;
+    this.list=[];this.index=-1;this.timer=null;this.active=false;this.hold=false;this.delay=30000;this.phase='idle';this.attempt=0;
   }
-  async start(list, delay=30000) {
-    this.stop();
-    this.list=list.filter(x=>streamCompatibility(x,true)==='attempt');
-    if(!this.list.length) throw new Error('No HTTPS streams available for scanning.');
-    this.delay=Math.max(4000, Math.min(60000,Number(delay)||10000));
-    this.active=true;this.index=-1; await this.next();
+  emit(){this.onChange?.({active:this.active,hold:this.hold,index:this.index,length:this.list.length,phase:this.phase});}
+  clearTimer(){if(this.timer!==null){this.clearTimeoutFn(this.timer);this.timer=null;}}
+  start(list,delay=30000){
+    this.stop();this.list=list.filter(s=>streamCompatibility(s,true)==='attempt');
+    if(!this.list.length)throw new Error('No compatible streams in this scan source. Try the directory or save favorites first.');
+    this.delay=Math.max(15000,Math.min(45000,Number(delay)||30000));
+    this.active=true;this.index=-1;this.next();
   }
-  async next() {
+  current(){return this.list[this.index]||null;}
+  matches(station){return this.active&&this.current()&&this.current().id===station?.id;}
+  schedule(ms,callback){this.clearTimer();const token=this.attempt;this.timer=this.setTimeoutFn(()=>{this.timer=null;if(this.active&&!this.hold&&token===this.attempt)callback();},ms);}
+  next(){
     if(!this.active)return;
-    if(this.timer) this.clearTimeoutFn(this.timer);
-    this.index=(this.index+1)%this.list.length;
-    this.onChange?.({ active:true, index:this.index, length:this.list.length, hold:this.hold });
-    // Do not await media.play(): some broken radio streams leave that promise pending
-    // indefinitely. Scan timing must remain independent of a broadcaster's response.
-    try {
-      const pending=this.play(this.list[this.index]);
-      if(pending && typeof pending.catch==='function')void pending.catch(()=>{});
-    } catch { /* Playback layer reports the individual stream error. */ }
-    if(this.active && !this.hold) this.schedule();
+    this.clearTimer();this.attempt++;this.hold=false;
+    this.index=(this.index+1)%this.list.length;this.phase='connecting';this.emit();
+    // Always set the connection deadline BEFORE initiating playback. Never await play() here.
+    this.schedule(this.connectionLimit,()=>{const station=this.current();this.onTimeout?.(station);this.next();});
+    const station=this.current();
+    try{const promise=this.play(station);if(promise&&typeof promise.catch==='function')void promise.catch(()=>this.failed(station));}
+    catch{this.failed(station);}
   }
-  schedule(){
-    if(this.timer)this.clearTimeoutFn(this.timer);
-    this.timer=this.setTimeoutFn(()=>{this.timer=null;void this.next();},this.delay);
+  playing(station){
+    if(!this.matches(station)||this.phase==='listening'||this.phase==='failed')return;
+    this.clearTimer();this.phase='listening';this.emit();
+    if(!this.hold)this.schedule(this.delay,()=>this.next());
   }
-  setHold(hold){this.hold=!!hold;if(this.timer)this.clearTimeoutFn(this.timer);this.timer=null;if(this.active&&!this.hold)this.schedule();this.onChange?.({active:this.active,index:this.index,length:this.list.length,hold:this.hold});}
-  stop(){if(this.timer)this.clearTimeoutFn(this.timer);this.timer=null;this.active=false;this.hold=false;this.onChange?.({active:false,index:-1,length:0,hold:false});}
+  failed(station){
+    if(!this.matches(station)||this.phase==='failed')return;
+    this.clearTimer();this.phase='failed';this.emit();
+    if(!this.hold)this.schedule(this.list.length===1?10000:500,()=>this.next());
+  }
+  setHold(hold,isPlaying=false){
+    if(!this.active)return;
+    this.clearTimer();this.hold=!!hold;
+    if(!this.hold){if(this.phase==='listening'&&isPlaying)this.schedule(this.delay,()=>this.next());
+      else if(this.phase==='failed')this.schedule(500,()=>this.next());
+      else this.schedule(this.connectionLimit,()=>{this.onTimeout?.(this.current());this.next();});}
+    this.emit();
+  }
+  stop(){this.clearTimer();this.active=false;this.hold=false;this.phase='idle';this.index=-1;this.attempt++;this.emit();}
 }
 
 // analyzer
@@ -323,6 +408,44 @@ let requestToken = 0;
 let playbackTimeout = null;
 let speakerObjectURL = null;
 let diagnostics = 'idle';
+let health=cleanHealth(readJSON(HEALTH_KEY,{}));
+let scanSettings=cleanSettings(readJSON(SETTINGS_KEY,{}));
+let fastFilter=false;
+let connectionStarted=0;
+let attemptOutcome=false;
+function persistSettings(){try{localStorage.setItem(SETTINGS_KEY,JSON.stringify(scanSettings));}catch{}}
+function persistHealth(){try{localStorage.setItem(HEALTH_KEY,JSON.stringify(health));}catch{}}
+function scanSourceList(){
+  const source=$('#scan-source').value;
+  const merged=[...stations,...library.favorites.filter(f=>!stations.some(s=>s.id===f.id))];
+  if(source==='favorites')return rankedStations(library.favorites,health);
+  if(source==='fast')return rankedStations(merged.filter(s=>healthLevel(s,health)==='fast'),health);
+  return rankedStations(fastFilter?stations.filter(s=>healthLevel(s,health)==='fast'):stations,health);
+}
+function recordAttempt(success){
+  if(attemptOutcome||!currentStation||currentStation.id==='speaker-test')return;
+  attemptOutcome=true;health=updateHealth(health,stationHealthKey(currentStation),success,success?performance.now()-connectionStarted:0);
+  persistHealth();renderStations();renderLibrary();
+}
+function renderProfileOptions(){
+  const sel=$('#scan-profile');sel.replaceChildren(new Option('Custom settings',''));
+  scanSettings.profiles.forEach(p=>sel.append(new Option(p.name,p.id)));
+  sel.value=scanSettings.profiles.some(p=>p.id===scanSettings.selected)?scanSettings.selected:'';
+  $('#profile-delete').disabled=!sel.value;
+}
+function setProfileStatus(message){$('#profile-status').textContent=message;}
+function applySettings(){
+  $('#scan-delay').value=String(scanSettings.delay);
+  $('#scan-source').value=scanSettings.source;
+  renderProfileOptions();
+}
+function settingsChanged(){
+  scanSettings.source=$('#scan-source').value;
+  scanSettings.delay=Number($('#scan-delay').value);
+  scanSettings.selected='';persistSettings();renderProfileOptions();
+  if(scanner.active){scanner.stop();setProfileStatus('Scan settings changed. Tap Start scan to use them.');}
+}
+
 const player = $('#radio-audio');
 const isSecure = location.protocol === 'https:'; // localhost HTTP can serve audio but secure sites cannot use HTTP streams.
 const mic = new MicAnalyzer($('#spectrum'), (active,message)=> {
@@ -404,7 +527,7 @@ function makeSpeakerTone(){
   return new Blob([bytes],{type:'audio/wav'});
 }
 function runSpeakerTest(){
-  scanner.stop();clearPlaybackTimeout();clearError();++requestToken;
+  scanner.stop();clearPlaybackTimeout();clearError();++requestToken;attemptOutcome=true;
   player.pause();revokeSpeakerAudio();speakerObjectURL=URL.createObjectURL(makeSpeakerTone());
   currentStation={id:'speaker-test',name:'Speaker test',codec:'WAV',country:'On-device',url:speakerObjectURL};
   player.muted=false;player.volume=1;player.src=speakerObjectURL;player.load();
@@ -430,6 +553,7 @@ async function playStation(station){
   }
   clearPlaybackTimeout();clearError();
   const token=++requestToken;
+  attemptOutcome=false;connectionStarted=performance.now();
   player.pause();revokeSpeakerAudio();currentStation=station;
   $('#player-title').textContent=station.name;
   $('#player-meta').textContent=metaLine(station);
@@ -448,8 +572,8 @@ async function playStation(station){
     const started=player.play(); // Immediately after user action, before any awaited operations.
     if(started)await started;
     if(token!==requestToken)return;
-    library=addRecent(library,station);saveLibrary(library);renderLibrary();
-    if(station.id!=='custom')void recordStationClick(station.id);
+    // play() resolving is not proof that the listener has heard media.
+    // The playing event commits station health and recent history.
   }catch(err){
     if(token!==requestToken)return;
     clearPlaybackTimeout();diagnostics='error';updatePlayerState();
@@ -457,6 +581,8 @@ async function playStation(station){
       err?.name==='NotSupportedError'?'This station uses an unsupported audio format. Try another station.':
       `Playback could not start (${err?.name||'stream unavailable'}). Try another station or open its website.`;
     toastError(message);
+    if(err?.name==='NotAllowedError'&&scanner.active){scanner.stop();toastError('iPhone blocked automatic playback. Tap Listen or Start scan to resume with a new user gesture.');}
+    else {recordAttempt(false);scanner.failed(station);}
   }
 }
 
@@ -477,10 +603,23 @@ function renderStation(station){
   if(safeURL(station.homepage)){
     const visit=el('a','visit','Website ↗');visit.href=station.homepage;visit.target='_blank';visit.rel='noopener noreferrer';visit.title='Open the broadcaster website';actions.append(visit);
   }
+  const performanceRecord=health[stationHealthKey(station)];
+  if(performanceRecord){
+    const level=healthLevel(station,health);
+    const label=level==='fast'?`⚡ Fast on this device · ~${(performanceRecord.avgMs/1000).toFixed(1)}s`:
+      performanceRecord.success>0?`Observed connection ~${(performanceRecord.avgMs/1000).toFixed(1)}s on this device`:
+      `${performanceRecord.fail} failed attempt${performanceRecord.fail===1?'':'s'} on this device`;
+    card.append(el('div','station-speed',label));
+  }
   card.append(top,tags,actions);return card;
 }
 function updateFavoriteButtons(){renderStations();}
-function renderStations(){const root=$('#station-list');root.replaceChildren();if(!stations.length){root.append(emptyState('No stations found','Try a different station name, category, or region.'));return;}const frag=document.createDocumentFragment();for(const s of stations)frag.append(renderStation(s));root.append(frag);}
+function renderStations(){
+  const root=$('#station-list');root.replaceChildren();
+  const display=rankedStations(fastFilter?stations.filter(s=>healthLevel(s,health)==='fast'):stations,health);
+  if(!display.length){root.append(emptyState(fastFilter?'No measured fast stations yet':'No stations found',fastFilter?'Listen to stations first. RadioScope tracks successful connection time only on this device.':'Try a different station name, category, or region.'));return;}
+  const frag=document.createDocumentFragment();for(const station of display)frag.append(renderStation(station));root.append(frag);
+}
 function emptyState(heading, description, retry){const e=el('div','empty');e.append(el('strong','',heading),el('p','',description));if(retry){const b=el('button','secondary-btn','Try again');b.type='button';b.addEventListener('click',retry);e.append(b);}return e;}
 async function loadStations(){
   if(searchController)searchController.abort();searchController=new AbortController();
@@ -518,8 +657,12 @@ function showView(name){
   window.scrollTo({top:0,behavior:'instant'});
 }
 
-const scanner=new StreamScanner({play:playStation,onChange:s=>{
+const scanner=new StreamScanner({play:playStation,onTimeout:station=>{
+  if(!station||currentStation?.id!==station.id)return;
+  recordAttempt(false);clearPlaybackTimeout();diagnostics='timeout';updatePlayerState();
+},onChange:s=>{
   $('#scan-toggle').textContent=s.active?'Stop scan':'Start scan';
+  $('#scan-readout').textContent=!s.active?'READY':s.hold?'HELD':s.phase==='connecting'?'CONNECTING · ≤20s':s.phase==='listening'?'LISTENING':s.phase==='failed'?'SKIPPING':'SCANNING';
   $('#scan-hold').disabled=!s.active;$('#scan-next').disabled=!s.active;
   $('#scan-hold').textContent=s.hold?'Resume':'Hold';
   $('#scan-toggle').setAttribute('aria-pressed',s.active?'true':'false');
@@ -539,7 +682,7 @@ $('#play-toggle').addEventListener('click',async()=>{
   if(player.paused){
     diagnostics='connecting';updatePlayerState();
     try{await player.play();}catch(e){diagnostics='error';toastError(`Could not resume playback (${e?.name||'unknown'}). Tap Listen again or try another station.`);}
-  }else{player.pause();diagnostics='paused';clearPlaybackTimeout();}
+  }else{player.pause();diagnostics='paused';clearPlaybackTimeout();if(scanner.active)scanner.setHold(true);}
   updatePlayerState();
 });
 player.addEventListener('play',updatePlayerState);
@@ -547,7 +690,13 @@ player.addEventListener('pause',()=>{if(diagnostics!=='connecting')diagnostics='
 player.addEventListener('waiting',()=>{if(diagnostics!=='error'&&diagnostics!=='timeout')diagnostics='buffering';updatePlayerState();});
 player.addEventListener('stalled',()=>{if(diagnostics!=='error'&&diagnostics!=='timeout')diagnostics='buffering';updatePlayerState();});
 player.addEventListener('playing',()=>{
+  if(currentStation?.url&&!currentStation.url.startsWith('blob:')&&player.currentSrc&&player.currentSrc!==currentStation.url)return;
   clearPlaybackTimeout();clearError();diagnostics='playing';
+  if(currentStation?.id!=='speaker-test'&&currentStation){
+    if(!attemptOutcome){recordAttempt(true);library=addRecent(library,currentStation);saveLibrary(library);renderLibrary();
+      if(currentStation.id!=='custom')void recordStationClick(currentStation.id);}
+    scanner.playing(currentStation);
+  }
   if(currentStation?.id==='speaker-test')setSpeakerResult('Speaker test started. If you heard the short tone, phone audio works; try a station below. If silent, check your output volume/Bluetooth/AirPlay.');
   updatePlayerState();
 });
@@ -560,19 +709,64 @@ player.addEventListener('error',()=>{
   // A source change can dispatch a late error event for the previous stream.
   // Ignore events that have no current MediaError payload.
   if(!player.src||!player.error)return;
+  if(currentStation?.url&&!currentStation.url.startsWith('blob:')&&player.currentSrc&&player.currentSrc!==currentStation.url)return;
   clearPlaybackTimeout();diagnostics='error';
   const msg=statusFromMediaError(player.error);
   if(currentStation?.id==='speaker-test')setSpeakerResult('Speaker test failed. Use Safari and check device audio settings.');
-  toastError(msg);updatePlayerState();
+  toastError(msg);recordAttempt(false);scanner.failed(currentStation);updatePlayerState();
 });
-$('#scan-toggle').addEventListener('click',()=>{if(scanner.active){scanner.stop();return;}const list=activeView==='library'?(libraryMode==='favorites'?library.favorites:library.recent):stations;if(!list.length){toastError('Load stations first, or open My library to scan saved stations.');return;}void scanner.start(list,Number($('#scan-delay').value)).catch(e=>toastError(e.message));});
-$('#scan-hold').addEventListener('click',()=>scanner.setHold(!scanner.hold));$('#scan-next').addEventListener('click',()=>void scanner.next());
+$('#scan-toggle').addEventListener('click',()=>{
+  if(scanner.active){scanner.stop();return;}
+  const list=scanSourceList();
+  try{scanner.start(list,Number($('#scan-delay').value));}
+  catch(e){toastError(e.message);$('#scan-setup').open=true;}
+});
+$('#scan-hold').addEventListener('click',()=>{
+  const resuming=scanner.hold;
+  if(resuming&&player.paused&&currentStation){
+    diagnostics='connecting';updatePlayerState();
+    try{const p=player.play();if(p&&typeof p.catch==='function')void p.catch(e=>{toastError(`Resume blocked (${e?.name||'unknown'}). Tap Listen to restart.`);scanner.setHold(true);});}
+    catch{toastError('Resume blocked. Tap Listen to restart.');scanner.setHold(true);}
+  }
+  scanner.setHold(!resuming,diagnostics==='playing');
+});
+$('#scan-next').addEventListener('click',()=>scanner.next());
+$('#scan-source').addEventListener('change',settingsChanged);
+$('#scan-delay').addEventListener('change',settingsChanged);
+$('#scan-profile').addEventListener('change',()=>{
+  const p=scanSettings.profiles.find(p=>p.id===$('#scan-profile').value);
+  scanSettings.selected=p?.id||'';
+  if(p){scanSettings.source=p.source;scanSettings.delay=p.delay;}
+  persistSettings();applySettings();if(scanner.active)scanner.stop();
+  setProfileStatus(p?`Loaded “${p.name}”. Tap Start scan to use these settings.`:'Custom settings selected.');
+});
+$('#profile-save').addEventListener('click',()=>{
+  const name=$('#profile-name').value.trim().replace(/[\x00-\x1f]/g,' ').slice(0,32);
+  if(!name){setProfileStatus('Enter a profile name first.');return;}
+  const existing=scanSettings.profiles.find(p=>p.name.toLowerCase()===name.toLowerCase());
+  if(!existing&&scanSettings.profiles.length>=8){setProfileStatus('You can save up to eight profiles. Delete one to make space.');return;}
+  const id=existing?.id||'profile-'+Date.now().toString(36);
+  const next={id,name,source:$('#scan-source').value,delay:Number($('#scan-delay').value)};
+  scanSettings.profiles=existing?scanSettings.profiles.map(p=>p.id===id?next:p):[...scanSettings.profiles,next];
+  scanSettings.source=next.source;scanSettings.delay=next.delay;scanSettings.selected=id;
+  persistSettings();applySettings();$('#profile-name').value='';setProfileStatus(`Saved “${name}” on this device.`);
+});
+$('#profile-delete').addEventListener('click',()=>{
+  const id=$('#scan-profile').value;const selected=scanSettings.profiles.find(p=>p.id===id);if(!selected)return;
+  scanSettings.profiles=scanSettings.profiles.filter(p=>p.id!==id);scanSettings.selected='';persistSettings();applySettings();
+  setProfileStatus(`Deleted “${selected.name}”.`);
+});
+$('#fast-filter').addEventListener('click',()=>{
+  fastFilter=!fastFilter;$('#fast-filter').setAttribute('aria-pressed',String(fastFilter));renderStations();
+});
 $('#mic-button').addEventListener('click',async()=>{const b=$('#mic-button');b.disabled=true;try{if(mic.active)await mic.stop();else await mic.start();}catch(e){$('#mic-status').textContent=`Microphone unavailable: ${e.message}`;}finally{b.disabled=false;}});
 $('#about-btn').addEventListener('click',()=>$('#about-dialog').showModal());$('#close-about').addEventListener('click',()=>$('#about-dialog').close());$('#dialog-done').addEventListener('click',()=>$('#about-dialog').close());
 window.addEventListener('online',()=>{updateNetwork();if(!stations.length)void loadStations();});window.addEventListener('offline',()=>{updateNetwork();writeStatus('Offline: saved library available; live stations require internet.');});
-document.addEventListener('visibilitychange',()=>{if(document.hidden&&mic.active)void mic.stop();});
+document.addEventListener('visibilitychange',()=>{
+  if(document.hidden){if(mic.active)void mic.stop();if(scanner.active&&!scanner.hold)scanner.setHold(true);}
+});
 
-renderReceivers();renderLibrary();updateNetwork();
+applySettings();renderReceivers();renderLibrary();updateNetwork();
 if(library.lastCategory!=='all'){const b=$(`[data-category="${CSS.escape(library.lastCategory)}"]`);if(b){$$('[data-category]').forEach(x=>x.classList.toggle('active',x===b));}}
 showView(location.hash.slice(1)||'discover');
 void loadStations();
