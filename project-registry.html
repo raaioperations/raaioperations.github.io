@@ -44,6 +44,20 @@
       <p class="hero-copy">A single operating view for ideas, reusable infrastructure, commercial execution and regulatory feasibility. Preserve the engineering record; allocate new work by responsible income, profit, ownership and long-term leverage.</p>
       <div class="registry-meta"><span class="status">80 existing entries</span><span class="status">12 foundational priorities preserved</span><span class="status">Regulatory screen · provisional</span></div>
     </div></section>
+    <section class="registry-section" id="idea-notebook" aria-labelledby="idea-title"><div class="container">
+      <details class="project" open><summary id="idea-title" style="font-weight:800;cursor:pointer;font-size:1.2rem">Idea Notebook · review only</summary>
+      <p>Capture thoughts without authorizing work. Notes and scores are separate from the project registry, rankings, plans and action queue. Only review when explicitly requested; no research, expansion, execution or use as instructions. A 10/10 score is not approval.</p>
+      <p><small>Stored only in this browser on this device; not sent to GitHub or a server. Export a backup before clearing browser data. To request assistant review, export and share the JSON explicitly.</small></p>
+      <form id="idea-form"><label for="idea-text"><strong>New idea</strong></label><textarea id="idea-text" rows="3" maxlength="12000" required placeholder="Write a thought, improvement or possible project…" style="display:block;width:100%;box-sizing:border-box;padding:12px;margin:8px 0;font:inherit;border:1px solid var(--line);border-radius:8px;color:var(--ink);background:var(--surface)"></textarea><button class="button" type="submit">Save idea</button></form>
+      <p id="idea-message" role="status" aria-live="polite"></p>
+      <div id="idea-list"></div>
+      <details style="margin-top:16px"><summary>Review and backup</summary><p>Export ideas for rating only. The assistant should independently return a score of 0–10 for each requested idea, using usefulness, feasibility and potential value. Unrated is distinct from zero. Paste its JSON response below; importing scores does not authorize anything.</p>
+      <button type="button" class="button" id="idea-export">Export notebook JSON</button>
+      <label for="idea-ratings" style="display:block;margin-top:12px">Paste rating JSON: <code>{"ratings":[{"id":"…","text":"exact original idea","score":8}]}</code></label>
+      <textarea id="idea-ratings" rows="3" style="display:block;width:100%;box-sizing:border-box;padding:10px;margin:8px 0;font:inherit;border:1px solid var(--line);border-radius:8px;color:var(--ink);background:var(--surface)"></textarea>
+      <button type="button" class="button" id="idea-import">Apply ratings</button>
+      <p><small>Restore a notebook backup (replaces the local list after confirmation).</small></p><input type="file" id="idea-restore" accept=".json,application/json" aria-label="Restore notebook JSON backup">
+      </details></details></div></section>
     <section class="registry-section control-section"><div class="container">
 <div class="control-intro"><p class="eyebrow">01 / Capital allocation</p><h2>Commercial command center</h2><p>Proposed action queue, separate from the existing foundational rank. Demand, revenue and profitability are not assumed.</p></div>
 <div class="command-grid">
@@ -163,4 +177,21 @@
   function filter(){const term=q.value.trim().toLowerCase();let n=0;for(const c of cards){const visible=(!term||c.textContent.toLowerCase().includes(term))&&(!r.value||c.dataset.reg===r.value)&&(!t.value||c.dataset.track===t.value);c.hidden=!visible;if(visible)n++}for(const g of grids){g.hidden=!Array.from(g.children).some(c=>!c.hidden)}count.textContent=n+' of '+cards.length+' entries'}
   q.addEventListener('input',filter);r.addEventListener('change',filter);t.addEventListener('change',filter);function reset(){q.value=r.value=t.value='';filter()}document.getElementById('reset').addEventListener('click',reset);document.querySelectorAll('.command-card').forEach(a=>a.addEventListener('click',reset));panel.hidden=false;filter()})();
   </script>
+<script>
+(()=>{'use strict';
+const key='raai.idea-notebook.v1', $=id=>document.getElementById(id), list=$('idea-list'), message=$('idea-message');let ideas=[],ready=false;
+const valid=x=>x&&typeof x.id==='string'&&x.id.length>0&&typeof x.text==='string'&&x.text.trim().length>0&&x.text.length<=12000&&(x.score===null||(Number.isInteger(x.score)&&x.score>=0&&x.score<=10));
+const validList=a=>Array.isArray(a)&&a.every(valid)&&new Set(a.map(x=>x.id)).size===a.length;
+const tell=s=>{message.textContent=s};
+function save(next){if(!ready){tell('Storage unavailable; no changes saved.');return false}try{localStorage.setItem(key,JSON.stringify(next));ideas=next;render();return true}catch(e){tell('Could not save; existing notes unchanged. Export a backup.');return false}}
+function node(tag,content){const el=document.createElement(tag);el.textContent=content;return el}
+function render(){list.replaceChildren();if(!ideas.length){list.append(node('p','No ideas yet.'));return}for(const idea of ideas){const card=document.createElement('div');card.style.cssText='border-top:1px solid var(--line);padding:12px 0';const p=node('p',idea.text);p.style.whiteSpace='pre-wrap';p.style.overflowWrap='anywhere';card.append(p);const score=node('p',idea.score===null?'Not rated':'★'.repeat(idea.score)+'☆'.repeat(10-idea.score)+' · '+idea.score+'/10');score.style.fontWeight='700';card.append(score);const edit=node('button','Edit');edit.type='button';edit.className='button';edit.addEventListener('click',()=>{const revised=prompt('Edit idea (rating resets if changed):',idea.text);if(revised===null)return;const t=revised.trim();if(!t||t.length>12000){tell('Enter 1–12000 characters.');return}if(t!==idea.text&&save(ideas.map(x=>x.id===idea.id?{...x,text:t,score:null}:x)))tell('Idea updated. Rating reset.');});const del=node('button','Delete');del.type='button';del.className='button';del.style.marginLeft='8px';del.addEventListener('click',()=>{if(confirm('Delete this idea?')&&save(ideas.filter(x=>x.id!==idea.id)))tell('Idea deleted.')});card.append(edit,del);list.append(card)}}
+try{const raw=localStorage.getItem(key);if(raw!==null){const parsed=JSON.parse(raw);if(!validList(parsed))throw Error('Invalid saved data');ideas=parsed}ready=true}catch(e){tell('Notebook storage could not be loaded. Existing data will not be overwritten.')}
+render();
+$('idea-form').addEventListener('submit',e=>{e.preventDefault();const input=$('idea-text'),t=input.value.trim();if(!t)return;const id=crypto.randomUUID();if(save([...ideas,{id,text:t,score:null}])){input.value='';tell('Idea saved. No work authorized.')}});
+$('idea-export').addEventListener('click',()=>{if(!ready){tell('Storage unavailable.');return}const blob=new Blob([JSON.stringify({format:'raai.idea-notebook.v1',ideas},null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='raai-idea-notebook.json';document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);tell('Notebook exported.')});
+$('idea-import').addEventListener('click',()=>{try{const data=JSON.parse($('idea-ratings').value),r=data.ratings;if(!Array.isArray(r)||!r.length||new Set(r.map(x=>x.id)).size!==r.length||!r.every(x=>x&&Number.isInteger(x.score)&&x.score>=0&&x.score<=10&&ideas.some(i=>i.id===x.id&&i.text===x.text)))throw Error('Each rating must match an existing idea ID and exact text, with a whole-number score 0–10.');const scores=new Map(r.map(x=>[x.id,x.score]));if(save(ideas.map(i=>scores.has(i.id)?{...i,score:scores.get(i.id)}:i))){$('idea-ratings').value='';tell(r.length+' rating(s) applied. No work authorized.')}}catch(e){tell('Ratings rejected: '+e.message)}});
+$('idea-restore').addEventListener('change',async e=>{const file=e.target.files[0];if(!file)return;try{const data=JSON.parse(await file.text());if(data.format!=='raai.idea-notebook.v1'||!validList(data.ideas))throw Error('Invalid notebook backup');if(confirm('Replace all local ideas with this backup?')&&save(data.ideas))tell('Notebook restored.')}catch(e){tell('Backup rejected: '+e.message)}finally{e.target.value=''}});
+})();
+</script>
 </body></html>
